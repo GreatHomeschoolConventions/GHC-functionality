@@ -92,6 +92,8 @@ add_action( 'init', 'ghc_speakers', 0 );
 
 // GitHub updater
 if ( is_admin() ) {
+    include_once( 'updater.php' );
+
     $config = array(
         'slug'                  => plugin_basename( __FILE__ ),
         'proper_folder_name'    => 'ghc-speakers',

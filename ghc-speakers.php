@@ -42,7 +42,7 @@ function ghc_speakers() {
 	$labels = array(
 		'name'                => _x( 'Speakers', 'Post Type General Name', 'GHC' ),
 		'singular_name'       => _x( 'Speaker', 'Post Type Singular Name', 'GHC' ),
-		'menu_name'           => __( 'Speaker', 'GHC' ),
+		'menu_name'           => __( 'Speakers', 'GHC' ),
 		'name_admin_bar'      => __( 'Speaker', 'GHC' ),
 		'parent_item_colon'   => __( 'Parent Speaker:', 'GHC' ),
 		'all_items'           => __( 'All Speakers', 'GHC' ),

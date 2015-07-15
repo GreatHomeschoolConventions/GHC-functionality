@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: GHC Speakers
+ * Plugin Name: GHC Speakers and Exhibitors
  * Plugin URI: https://github.com/macbookandrew/ghc-speakers
  * Description: A simple plugin to add a “speakers” custom post type for use on Great Homeschool Convention’s website.
  * Version: 1.0.1
@@ -37,9 +37,9 @@ register_deactivation_hook( __FILE__, 'ghc_speakers_deactivate' );
 
 
 // Register Custom Post Type
-function ghc_speakers() {
+function custom_post_types() {
 
-	$labels = array(
+	$speakers_labels = array(
 		'name'                => _x( 'Speakers', 'Post Type General Name', 'GHC' ),
 		'singular_name'       => _x( 'Speaker', 'Post Type Singular Name', 'GHC' ),
 		'menu_name'           => __( 'Speakers', 'GHC' ),
@@ -56,16 +56,16 @@ function ghc_speakers() {
 		'not_found'           => __( 'Not found', 'GHC' ),
 		'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
 	);
-	$rewrite = array(
+	$speakers_rewrite = array(
 		'slug'                => 'speakers',
 		'with_front'          => true,
 		'pages'               => true,
 		'feeds'               => true,
 	);
-	$args = array(
+	$speakers_args = array(
 		'label'               => __( 'speaker', 'GHC' ),
 		'description'         => __( 'Speakers', 'GHC' ),
-		'labels'              => $labels,
+		'labels'              => $speakers_labels,
 		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
 		'taxonomies'          => array( 'ghc_speakers_taxonomy', 'ghc_conventions_taxonomy' ),
 		'hierarchical'        => true,
@@ -80,15 +80,60 @@ function ghc_speakers() {
 		'has_archive'         => 'speakers',
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
-		'rewrite'             => $rewrite,
+		'rewrite'             => $speakers_rewrite,
 		'capability_type'     => 'page',
 	);
-	register_post_type( 'speaker', $args );
+	register_post_type( 'speaker', $speakers_args );
 
+	$exhibitors_labels = array(
+		'name'                => _x( 'Exhibitors', 'Post Type General Name', 'GHC' ),
+		'singular_name'       => _x( 'Exhibitor', 'Post Type Singular Name', 'GHC' ),
+		'menu_name'           => __( 'Exhibitors', 'GHC' ),
+		'name_admin_bar'      => __( 'Exhibitor', 'GHC' ),
+		'parent_item_colon'   => __( 'Parent Exhibitor:', 'GHC' ),
+		'all_items'           => __( 'All Exhibitors', 'GHC' ),
+		'add_new_item'        => __( 'Add New Exhibitor', 'GHC' ),
+		'add_new'             => __( 'Add New', 'GHC' ),
+		'new_item'            => __( 'New Exhibitor', 'GHC' ),
+		'edit_item'           => __( 'Edit Exhibitor', 'GHC' ),
+		'update_item'         => __( 'Update Exhibitor', 'GHC' ),
+		'view_item'           => __( 'View Exhibitor', 'GHC' ),
+		'search_items'        => __( 'Search Exhibitor', 'GHC' ),
+		'not_found'           => __( 'Not found', 'GHC' ),
+		'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
+	);
+	$exhibitors_rewrite = array(
+		'slug'                => 'exhibitor',
+		'with_front'          => true,
+		'pages'               => true,
+		'feeds'               => true,
+	);
+	$exhibitors_args = array(
+		'label'               => __( 'exhibitor', 'GHC' ),
+		'description'         => __( 'Exhibitors', 'GHC' ),
+		'labels'              => $exhibitors_labels,
+		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
+		'taxonomies'          => array( 'ghc_conventions_taxonomy' ),
+		'hierarchical'        => true,
+		'public'              => true,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'menu_position'       => 5,
+		'menu_icon'           => 'dashicons-store',
+		'show_in_admin_bar'   => true,
+		'show_in_nav_menus'   => true,
+		'can_export'          => true,
+		'has_archive'         => 'exhibitors',
+		'exclude_from_search' => false,
+		'publicly_queryable'  => true,
+		'rewrite'             => $exhibitors_rewrite,
+		'capability_type'     => 'page',
+	);
+	register_post_type( 'exhibitor', $exhibitors_args );
 }
 
 // Hook into the 'init' action
-add_action( 'init', 'ghc_speakers', 0 );
+add_action( 'init', 'custom_post_types', 0 );
 
 // Register Custom Taxonomy
 function ghc_speaker_taxonomies() {
@@ -153,7 +198,7 @@ function ghc_speaker_taxonomies() {
 		'show_tagcloud'              => true,
 		'rewrite'                    => false,
 	);
-	register_taxonomy( 'ghc_conventions_taxonomy', array( 'speaker' ), $convention_args );
+	register_taxonomy( 'ghc_conventions_taxonomy', array( 'speaker', 'exhibitor' ), $convention_args );
 
 }
 

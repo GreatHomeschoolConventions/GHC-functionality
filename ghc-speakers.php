@@ -3,7 +3,7 @@
  * Plugin Name: GHC Speakers and Exhibitors
  * Plugin URI: https://github.com/macbookandrew/ghc-speakers
  * Description: A simple plugin to add a “speakers” custom post type for use on Great Homeschool Convention’s website.
- * Version: 1.0.1
+ * Version: 1.1
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com
  * Copyright: 2015 AndrewRMinion Design (andrew@andrewrminion.com)

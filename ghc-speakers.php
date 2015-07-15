@@ -112,7 +112,7 @@ function custom_post_types() {
 		'label'               => __( 'exhibitor', 'GHC' ),
 		'description'         => __( 'Exhibitors', 'GHC' ),
 		'labels'              => $exhibitors_labels,
-		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
+		'supports'            => array( 'title', 'revisions', 'page-attributes', ),
 		'taxonomies'          => array( 'ghc_conventions_taxonomy' ),
 		'hierarchical'        => true,
 		'public'              => true,
@@ -131,8 +131,7 @@ function custom_post_types() {
 	);
 	register_post_type( 'exhibitor', $exhibitors_args );
 }
-
-// Hook into the 'init' action
+// Hook into the 'init' action to register custom post types
 add_action( 'init', 'custom_post_types', 0 );
 
 // Register Custom Taxonomy
@@ -201,9 +200,48 @@ function ghc_speaker_taxonomies() {
 	register_taxonomy( 'ghc_conventions_taxonomy', array( 'speaker', 'exhibitor' ), $convention_args );
 
 }
-
-// Hook into the 'init' action
+// Hook into the 'init' action to register custom taxonomy
 add_action( 'init', 'ghc_speaker_taxonomies', 0 );
+
+// add metabox for URL
+add_action( 'add_meta_boxes', 'add_url_metabox' );
+function add_url_metabox( $post_type, $post ) {
+    add_meta_box( 'exhibitor-URL', 'Exhibitor website', 'print_url_metabox', 'exhibitor' );
+}
+
+// print metabox for URL
+function print_url_metabox( $post ) {
+    // add nonce field to check for later
+    wp_nonce_field( 'url_meta', 'url_meta_nonce' );
+
+    // get meta from database, if set
+    $custom_meta = get_post_custom( $post->ID );
+    $exhibitor_URL = isset( $custom_meta['exhibitor_URL'] ) ? esc_attr( $custom_meta['exhibitor_URL'][0] ) : '';
+
+    echo '<label for="exhibitor_URL">Enter the exhibitor&rsquo;s website:</label><br/>
+    <input type="url" name="exhibitor_URL" size="100" placeholder="http://"';
+    if ( isset( $exhibitor_URL ) ) { echo ' value="' . $exhibitor_URL . '"'; }
+    echo '>';
+}
+
+// save metabox data
+add_action( 'save_post', 'save_url_metadata' );
+function save_url_metadata( $post_id ) {
+    // bail if autosave
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+
+    // check for valid nonces
+    if ( ! isset( $_POST['url_meta_nonce'] ) || ! wp_verify_nonce( $_POST['url_meta_nonce'], 'url_meta' ) ) return;
+
+    // check the user's permissions
+    if ( ! current_user_can( 'edit_posts', $post_id ) ) return;
+
+    // sanitize user input
+    $exhibitor_URL_sanitized = sanitize_text_field( $_POST['exhibitor_URL'] );
+
+    // update the meta fields in database
+    if ( isset( $_POST['exhibitor_URL'] ) ) update_post_meta( $post_id, 'exhibitor_URL', $exhibitor_URL_sanitized );
+}
 
 // GitHub updater
 if ( is_admin() ) {

@@ -36,7 +36,7 @@ function ghc_speakers_deactivate() {
 register_deactivation_hook( __FILE__, 'ghc_speakers_deactivate' );
 
 
-// Register Custom Post Type
+// Register Custom Post Types
 function custom_post_types() {
 
 	$speakers_labels = array(
@@ -134,7 +134,7 @@ function custom_post_types() {
 // Hook into the 'init' action to register custom post types
 add_action( 'init', 'custom_post_types', 0 );
 
-// Register Custom Taxonomy
+// Register Custom Taxonomies
 function ghc_speaker_taxonomies() {
 
 	$type_labels = array(

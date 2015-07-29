@@ -130,6 +130,52 @@ function custom_post_types() {
 		'capability_type'     => 'page',
 	);
 	register_post_type( 'exhibitor', $exhibitors_args );
+
+	$sponsors_labels = array(
+		'name'                => _x( 'Sponsors', 'Post Type General Name', 'GHC' ),
+		'singular_name'       => _x( 'Sponsor', 'Post Type Singular Name', 'GHC' ),
+		'menu_name'           => __( 'Sponsors', 'GHC' ),
+		'name_admin_bar'      => __( 'Sponsor', 'GHC' ),
+		'parent_item_colon'   => __( 'Parent Sponsor:', 'GHC' ),
+		'all_items'           => __( 'All Sponsors', 'GHC' ),
+		'add_new_item'        => __( 'Add New Sponsor', 'GHC' ),
+		'add_new'             => __( 'Add New', 'GHC' ),
+		'new_item'            => __( 'New Sponsor', 'GHC' ),
+		'edit_item'           => __( 'Edit Sponsor', 'GHC' ),
+		'update_item'         => __( 'Update Sponsor', 'GHC' ),
+		'view_item'           => __( 'View Sponsor', 'GHC' ),
+		'search_items'        => __( 'Search Sponsor', 'GHC' ),
+		'not_found'           => __( 'Not found', 'GHC' ),
+		'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
+	);
+	$sponsors_rewrite = array(
+		'slug'                => 'sponsors',
+		'with_front'          => true,
+		'pages'               => true,
+		'feeds'               => true,
+	);
+	$sponsors_args = array(
+		'label'               => __( 'sponsor', 'GHC' ),
+		'description'         => __( 'Sponsors', 'GHC' ),
+		'labels'              => $sponsors_labels,
+		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
+		'hierarchical'        => true,
+		'public'              => true,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'menu_position'       => 5,
+		'menu_icon'           => 'dashicons-awards',
+		'show_in_admin_bar'   => true,
+		'show_in_nav_menus'   => true,
+		'can_export'          => true,
+		'has_archive'         => 'sponsors',
+		'exclude_from_search' => false,
+		'publicly_queryable'  => true,
+		'rewrite'             => $sponsors_rewrite,
+		'capability_type'     => 'page',
+	);
+	register_post_type( 'sponsor', $sponsors_args );
+
 }
 // Hook into the 'init' action to register custom post types
 add_action( 'init', 'custom_post_types', 0 );

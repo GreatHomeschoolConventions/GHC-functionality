@@ -3,7 +3,7 @@
  * Plugin Name: GHC Speakers and Exhibitors
  * Plugin URI: https://github.com/macbookandrew/ghc-speakers
  * Description: A simple plugin to add a “speakers” custom post type for use on Great Homeschool Convention’s website.
- * Version: 1.1
+ * Version: 1.3
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com
  * Copyright: 2015 AndrewRMinion Design (andrew@andrewrminion.com)
@@ -249,13 +249,57 @@ function ghc_speaker_taxonomies() {
 // Hook into the 'init' action to register custom taxonomy
 add_action( 'init', 'ghc_speaker_taxonomies', 0 );
 
-// add metabox for URL
+// add metabox for featured/general speakers
+add_action( 'add_meta_boxes', 'add_featured_speaker_metabox' );
+function add_featured_speaker_metabox( $post_type, $post ) {
+    add_meta_box( 'featured-speaker', 'Featured Speaker', 'print_featured_speaker_metabox', 'speaker' );
+}
+
+// print metabox for featured/general speakers
+function print_featured_speaker_metabox( $post ) {
+    // add nonce field to check for later
+    wp_nonce_field( 'featured_speaker_meta', 'featured_speaker_meta_nonce' );
+
+    // get meta from database, if set
+    $custom_meta = get_post_custom( $post->ID );
+    $featured_speaker = isset( $custom_meta['featured_speaker'] ) ? esc_attr( $custom_meta['featured_speaker'][0] ) : '';
+
+    echo '<p>Is this a featured speaker? <strong>Yes</strong> means they will be shown in the archive; <strong>No</strong> means they will be hidden from the archive.</p>
+    <input type="radio" name="featured_speaker" id="featured_speaker_yes" value="yes" ';
+    if ( ( $featured_speaker == 'yes' ) || ( $featured_speaker == NULL ) ) { echo 'checked="checked" '; }
+    echo '/>
+    <label for="featured_speaker_yes">Yes</label>&nbsp;
+    <input type="radio" name="featured_speaker" id="featured_speaker_no" value="no" ';
+    if ( isset( $featured_speaker ) && ( $featured_speaker == 'no' ) ) { echo 'checked="checked" '; }
+    echo '/><label for="featured_speaker_no">No</label>';
+}
+
+// save metabox featured/general speaker data
+add_action( 'save_post', 'save_featured_speaker_metadata' );
+function save_featured_speaker_metadata( $post_id ) {
+    // bail if autosave
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+
+    // check for valid nonces
+    if ( ! isset( $_POST['featured_speaker_meta_nonce'] ) || ! wp_verify_nonce( $_POST['featured_speaker_meta_nonce'], 'featured_speaker_meta' ) ) return;
+
+    // check the user's permissions
+    if ( ! current_user_can( 'edit_posts', $post_id ) ) return;
+
+    // sanitize user input
+    $featured_speaker_sanitized = sanitize_text_field( $_POST['featured_speaker'] );
+
+    // update the meta fields in database
+    if ( isset( $_POST['featured_speaker'] ) ) update_post_meta( $post_id, 'featured_speaker', $featured_speaker_sanitized );
+}
+
+// add metabox for exhibitor URL
 add_action( 'add_meta_boxes', 'add_url_metabox' );
 function add_url_metabox( $post_type, $post ) {
     add_meta_box( 'exhibitor-URL', 'Exhibitor website', 'print_url_metabox', 'exhibitor' );
 }
 
-// print metabox for URL
+// print metabox for exhibitor URL
 function print_url_metabox( $post ) {
     // add nonce field to check for later
     wp_nonce_field( 'url_meta', 'url_meta_nonce' );
@@ -270,7 +314,7 @@ function print_url_metabox( $post ) {
     echo '>';
 }
 
-// save metabox data
+// save metabox exhibitor URL data
 add_action( 'save_post', 'save_url_metadata' );
 function save_url_metadata( $post_id ) {
     // bail if autosave

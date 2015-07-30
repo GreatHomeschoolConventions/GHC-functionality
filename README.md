@@ -9,6 +9,9 @@ A simple plugin to add “speakers” and “exhibitors” custom post types, as
 
 #Changelog
 
+- 1.3
+    - Add support for featured/general speakers
+
 - 1.2
     - Add “sponsors” custom post type
 

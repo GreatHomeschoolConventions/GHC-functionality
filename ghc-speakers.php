@@ -252,7 +252,7 @@ add_action( 'init', 'ghc_speaker_taxonomies', 0 );
 // add metabox for featured/general speakers
 add_action( 'add_meta_boxes', 'add_featured_speaker_metabox' );
 function add_featured_speaker_metabox( $post_type, $post ) {
-    add_meta_box( 'featured-speaker', 'Featured Speaker', 'print_featured_speaker_metabox', 'speaker' );
+    add_meta_box( 'featured-speaker', 'Featured Speaker', 'print_featured_speaker_metabox', 'speaker', 'side' );
 }
 
 // print metabox for featured/general speakers

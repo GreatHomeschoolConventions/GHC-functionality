@@ -333,6 +333,12 @@ function save_url_metadata( $post_id ) {
     if ( isset( $_POST['exhibitor_URL'] ) ) update_post_meta( $post_id, 'exhibitor_URL', $exhibitor_URL_sanitized );
 }
 
+// sort by last word in post title
+function posts_orderby_lastname( $orderby_statement ) {
+    $orderby_statement = "RIGHT(post_title, LOCATE(' ', REVERSE(post_title)) - 1) DESC";
+    return $orderby_statement;
+}
+
 // GitHub updater
 if ( is_admin() ) {
     include_once( 'updater.php' );

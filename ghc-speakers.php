@@ -333,10 +333,33 @@ function save_url_metadata( $post_id ) {
     if ( isset( $_POST['exhibitor_URL'] ) ) update_post_meta( $post_id, 'exhibitor_URL', $exhibitor_URL_sanitized );
 }
 
-// sort by last word in post title
-function posts_orderby_lastname( $orderby_statement ) {
-    $orderby_statement = "RIGHT(post_title, LOCATE(' ', REVERSE(post_title)) - 1) DESC";
-    return $orderby_statement;
+// add custom field to user profile screens to match with speakers CPT
+add_action( 'show_user_profile', 'show_speaker_matching_box' );
+add_action( 'edit_user_profile', 'show_speaker_matching_box' );
+function show_speaker_matching_box( $user ) {
+    echo '<h3>Select a speaker to match to this author</h3>
+    <table class="form-table">
+        <tr>
+            <th><label for="speaker_match">Speaker</label></th>
+            <td>
+                <select name="speaker_match" id="speaker_match">
+                    <option>- Select one -</option>';
+                    $speakers_query_args = array(
+                        'post_type'              => array( 'speaker' ),
+                        'posts_per_page'         => '-1',
+                    );
+                    $speakers_query = new WP_Query( $speakers_query_args );
+    var_dump($speakers_query);
+                    if ( $speakers_query->have_posts() ) {
+                        while ( $speakers_query->have_posts() ) {
+                            $speakers_query->the_post();
+                            echo '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
+                        }
+                    }
+                echo '</select>
+            </td>
+        </tr>
+    </table>';
 }
 
 // GitHub updater

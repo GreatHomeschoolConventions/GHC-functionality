@@ -9,6 +9,9 @@ A simple plugin to add “speakers” and “exhibitors” custom post types, as
 
 #Changelog
 
+- 1.4
+    - Add support for matching WP users with speakers for use in blog posts, etc.
+
 - 1.3
     - Add support for featured/general speakers
 

@@ -349,17 +349,31 @@ function show_speaker_matching_box( $user ) {
                         'posts_per_page'         => '-1',
                     );
                     $speakers_query = new WP_Query( $speakers_query_args );
-    var_dump($speakers_query);
                     if ( $speakers_query->have_posts() ) {
                         while ( $speakers_query->have_posts() ) {
                             $speakers_query->the_post();
-                            echo '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
+                            echo '<option value="' . get_the_ID() . '"';
+                            if ( get_user_meta( $user->ID, 'speaker_match', true ) == get_the_ID() ) { echo ' selected="selected"'; }
+                            echo '>' . get_the_title() . '</option>';
                         }
                     }
                 echo '</select>
             </td>
         </tr>
     </table>';
+}
+
+// save custom user profile field
+add_action( 'personal_options_update', 'ghc_save_extra_profile_fields' );
+add_action( 'edit_user_profile_update', 'ghc_save_extra_profile_fields' );
+
+function ghc_save_extra_profile_fields( $user_id ) {
+
+	if ( !current_user_can( 'edit_user', $user_id ) ) {
+		return false;
+    }
+
+	update_usermeta( $user_id, 'speaker_match', esc_attr( $_POST['speaker_match'] ) );
 }
 
 // GitHub updater

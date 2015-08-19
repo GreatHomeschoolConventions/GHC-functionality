@@ -465,8 +465,8 @@ function print_hotel_metaboxes( $post ) {
             while ( $hotel_gallery_query->have_posts() ) {
                 $hotel_gallery_query->the_post();
                 echo '<option value="' . get_the_title() . '"';
-                if ( $hotel_gallery == get_the_title() ) { echo ' selected="selected"'; }
-                echo '>' . get_the_title() . '</option>';
+                if ( str_replace( '&amp;', '&', $hotel_gallery ) == str_replace( '&#038;', '&', get_the_title() ) ) { echo ' selected="selected"'; }
+                echo '>' . get_the_title() . '</option>'."\n";
             }
         }
     echo '</select>';

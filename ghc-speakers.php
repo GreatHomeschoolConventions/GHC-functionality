@@ -399,7 +399,7 @@ function print_hotel_metaboxes( $post ) {
     $hotel_gallery = isset( $custom_hotel_meta['hotel_gallery'] ) ? esc_attr( $custom_hotel_meta['hotel_gallery'][0] ) : '';
 
     echo '<input type="checkbox" name="sold_out" id="sold_out"';
-    if ( $sold_out == true ) { echo ' checked="checked"'; }
+    if ( $sold_out == 'true' ) { echo ' checked="checked"'; }
     echo '/><label for="sold_out">Sold Out</label><br/>';
 
     echo '<label for="discount_rate">Discounted Rate and Details:</label><br/>

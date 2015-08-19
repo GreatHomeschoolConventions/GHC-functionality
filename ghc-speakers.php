@@ -400,6 +400,7 @@ function print_hotel_metaboxes( $post ) {
     $hotel_URL = isset( $custom_hotel_meta['hotel_URL'] ) ? esc_attr( $custom_hotel_meta['hotel_URL'][0] ) : '';
     $hotel_phone = isset( $custom_hotel_meta['hotel_phone'] ) ? esc_attr( $custom_hotel_meta['hotel_phone'][0] ) : '';
     $hotel_address = isset( $custom_hotel_meta['hotel_address'] ) ? esc_attr( $custom_hotel_meta['hotel_address'][0] ) : '';
+    $hotel_gallery = isset( $custom_hotel_meta['hotel_gallery'] ) ? esc_attr( $custom_hotel_meta['hotel_gallery'][0] ) : '';
 
     echo '<input type="checkbox" name="sold_out"';
     if ( $sold_out == true ) { echo ' checked="checked"'; }
@@ -448,7 +449,7 @@ function print_hotel_metaboxes( $post ) {
 
     echo '<label for="hotel_gallery">Photo Gallery:</label><br/>
     <select name="hotel_gallery" id="hotel_gallery">
-        <option>- Select one -</option>';
+        <option>- None -</option>';
         $hotel_gallery_query_args = array(
             'post_type'              => array( 'gdl-gallery' ),
             'posts_per_page'         => '-1',
@@ -457,8 +458,8 @@ function print_hotel_metaboxes( $post ) {
         if ( $hotel_gallery_query->have_posts() ) {
             while ( $hotel_gallery_query->have_posts() ) {
                 $hotel_gallery_query->the_post();
-                echo '<option value="' . get_the_ID() . '"';
-                if ( get_user_meta( $user->ID, 'hotel_gallery', true ) == get_the_ID() ) { echo ' selected="selected"'; }
+                echo '<option value="' . get_the_title() . '"';
+                if ( $hotel_gallery == get_the_title() ) { echo ' selected="selected"'; }
                 echo '>' . get_the_title() . '</option>';
             }
         }

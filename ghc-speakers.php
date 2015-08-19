@@ -391,6 +391,8 @@ function print_hotel_metaboxes( $post ) {
     $discount_rate_details = isset( $custom_hotel_meta['discount_rate_details'] ) ? esc_attr( $custom_hotel_meta['discount_rate_details'][0] ) : '';
     $discount_rate2 = isset( $custom_hotel_meta['discount_rate2'] ) ? esc_attr( $custom_hotel_meta['discount_rate2'][0] ) : '';
     $discount_rate2_details = isset( $custom_hotel_meta['discount_rate2_details'] ) ? esc_attr( $custom_hotel_meta['discount_rate2_details'][0] ) : '';
+    $discount_rate3 = isset( $custom_hotel_meta['discount_rate3'] ) ? esc_attr( $custom_hotel_meta['discount_rate3'][0] ) : '';
+    $discount_rate3_details = isset( $custom_hotel_meta['discount_rate3_details'] ) ? esc_attr( $custom_hotel_meta['discount_rate3_details'][0] ) : '';
     $discount_valid_date = isset( $custom_hotel_meta['discount_valid_date'] ) ? esc_attr( $custom_hotel_meta['discount_valid_date'][0] ) : '';
     $discount_group_code = isset( $custom_hotel_meta['discount_group_code'] ) ? esc_attr( $custom_hotel_meta['discount_group_code'][0] ) : '';
     $hotel_URL = isset( $custom_hotel_meta['hotel_URL'] ) ? esc_attr( $custom_hotel_meta['hotel_URL'][0] ) : '';
@@ -416,6 +418,14 @@ function print_hotel_metaboxes( $post ) {
     echo '>
     <input type="text" name="discount_rate2_details" placeholder="2 Queen or 2 Double beds, etc." size="75"';
     if ( isset( $discount_rate2_details ) ) { echo ' value="' . $discount_rate2_details . '"'; }
+    echo '><br/>';
+
+    echo '<label for="discount_rate3">Third Discounted Rate and Details:</label><br/>
+    $<input type="number" name="discount_rate3" step="0.00" placeholder="0.00"';
+    if ( isset( $discount_rate3 ) ) { echo ' value="' . $discount_rate3 . '"'; }
+    echo '>
+    <input type="text" name="discount_rate3_details" placeholder="2 Queen or 2 Double beds, etc." size="75"';
+    if ( isset( $discount_rate3_details ) ) { echo ' value="' . $discount_rate3_details . '"'; }
     echo '><br/>';
 
     echo '<label for="discount_valid_date">Discount Until Date:</label><br/>
@@ -479,6 +489,8 @@ function save_hotel_metadata( $post_id ) {
     $discount_rate_details_sanitized = sanitize_text_field( $_POST['discount_rate_details'] );
     $discount_rate2_sanitized = sanitize_text_field( $_POST['discount_rate2'] );
     $discount_rate2_details_sanitized = sanitize_text_field( $_POST['discount_rate2_details'] );
+    $discount_rate3_sanitized = sanitize_text_field( $_POST['discount_rate3'] );
+    $discount_rate3_details_sanitized = sanitize_text_field( $_POST['discount_rate3_details'] );
     $discount_group_code_sanitized = sanitize_text_field( $_POST['discount_group_code'] );
     $discount_valid_date_sanitized = sanitize_text_field( $_POST['discount_valid_date'] );
     $hotel_URL_sanitized = sanitize_text_field( $_POST['hotel_URL'] );
@@ -496,6 +508,8 @@ function save_hotel_metadata( $post_id ) {
     if ( isset( $_POST['discount_rate_details'] ) ) update_post_meta( $post_id, 'discount_rate_details', $discount_rate_details_sanitized );
     if ( isset( $_POST['discount_rate2'] ) ) update_post_meta( $post_id, 'discount_rate2', $discount_rate2_sanitized );
     if ( isset( $_POST['discount_rate2_details'] ) ) update_post_meta( $post_id, 'discount_rate2_details', $discount_rate2_details_sanitized );
+    if ( isset( $_POST['discount_rate3'] ) ) update_post_meta( $post_id, 'discount_rate3', $discount_rate3_sanitized );
+    if ( isset( $_POST['discount_rate3_details'] ) ) update_post_meta( $post_id, 'discount_rate3_details', $discount_rate3_details_sanitized );
     if ( isset( $_POST['discount_group_code'] ) ) update_post_meta( $post_id, 'discount_group_code', $discount_group_code_sanitized );
     if ( isset( $_POST['discount_valid_date'] ) ) update_post_meta( $post_id, 'discount_valid_date', $discount_valid_date_sanitized );
     if ( isset( $_POST['hotel_URL'] ) ) update_post_meta( $post_id, 'hotel_URL', $hotel_URL_sanitized );

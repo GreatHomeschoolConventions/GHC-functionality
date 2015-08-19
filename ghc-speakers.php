@@ -386,11 +386,7 @@ function print_hotel_metaboxes( $post ) {
 
     // get meta from database, if set
     $custom_hotel_meta = get_post_custom( $post->ID );
-    if ( $custom_hotel_meta['sold_out'] == 'true' ) {
-        $sold_out = true;
-    } else {
-        $sold_out = false;
-    }
+    $sold_out = isset( $custom_hotel_meta['sold_out'] ) ? esc_attr( $custom_hotel_meta['sold_out'][0] ) : '';
     $discount_rate = isset( $custom_hotel_meta['discount_rate'] ) ? esc_attr( $custom_hotel_meta['discount_rate'][0] ) : '';
     $discount_rate_details = isset( $custom_hotel_meta['discount_rate_details'] ) ? esc_attr( $custom_hotel_meta['discount_rate_details'][0] ) : '';
     $discount_rate2 = isset( $custom_hotel_meta['discount_rate2'] ) ? esc_attr( $custom_hotel_meta['discount_rate2'][0] ) : '';
@@ -479,7 +475,6 @@ function save_hotel_metadata( $post_id ) {
     if ( ! current_user_can( 'edit_posts', $post_id ) ) return;
 
     // sanitize user input
-    $sold_out_sanitized = sanitize_text_field( $_POST['sold_out'] );
     $discount_rate_sanitized = sanitize_text_field( $_POST['discount_rate'] );
     $discount_rate_details_sanitized = sanitize_text_field( $_POST['discount_rate_details'] );
     $discount_rate2_sanitized = sanitize_text_field( $_POST['discount_rate2'] );
@@ -492,7 +487,7 @@ function save_hotel_metadata( $post_id ) {
     $hotel_gallery_sanitized = sanitize_text_field( $_POST['hotel_gallery'] );
 
     // update the meta fields in database
-    if ( $sold_out_sanitized == 'yes' ) {
+    if ( isset( $_POST['sold_out'] ) ) {
         update_post_meta( $post_id, 'sold_out', 'true' );
     } else {
         update_post_meta( $post_id, 'sold_out', 'false' );

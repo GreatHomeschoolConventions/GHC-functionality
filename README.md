@@ -5,9 +5,12 @@ A simple plugin to add “speakers” and “exhibitors” custom post types, as
 #Usage
 
 - Install the plugin
-- Customize the `page-speakers.php` template to show posts as necessary
+- Customize the `page-speakers.php` theme template to show posts as necessary
 
 #Changelog
+
+- 1.5
+    - Add “hotels” custom post type
 
 - 1.4
     - Add support for matching WP users with speakers for use in blog posts, etc.

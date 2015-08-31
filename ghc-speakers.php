@@ -291,7 +291,7 @@ add_action( 'init', 'ghc_speaker_taxonomies', 0 );
 
 // add metabox for featured/general speakers
 add_action( 'add_meta_boxes', 'add_featured_speaker_metabox' );
-function add_featured_speaker_metabox( $post_type, $post ) {
+function add_featured_speaker_metabox() {
     add_meta_box( 'featured-speaker', 'Featured Speaker', 'print_featured_speaker_metabox', 'speaker', 'side' );
 }
 
@@ -335,7 +335,7 @@ function save_featured_speaker_metadata( $post_id ) {
 
 // add metabox for exhibitor URL
 add_action( 'add_meta_boxes', 'add_url_metabox' );
-function add_url_metabox( $post_type, $post ) {
+function add_url_metabox() {
     add_meta_box( 'exhibitor-URL', 'Exhibitor website', 'print_url_metabox', 'exhibitor' );
 }
 
@@ -375,7 +375,7 @@ function save_url_metadata( $post_id ) {
 
 // add metabox for hotels
 add_action( 'add_meta_boxes', 'add_hotel_metabox' );
-function add_hotel_metabox( $post_type, $post ) {
+function add_hotel_metabox() {
     add_meta_box( 'hotel-info', 'Hotel Information', 'print_hotel_metaboxes', 'hotel', 'normal', 'high' );
 }
 

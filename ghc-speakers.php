@@ -493,7 +493,7 @@ function save_hotel_metadata( $post_id ) {
     $discount_rate3_details_sanitized = sanitize_text_field( $_POST['discount_rate3_details'] );
     $discount_group_code_sanitized = sanitize_text_field( $_POST['discount_group_code'] );
     $discount_valid_date_sanitized = sanitize_text_field( $_POST['discount_valid_date'] );
-    $hotel_URL_sanitized = sanitize_text_field( $_POST['hotel_URL'] );
+    $hotel_URL_sanitized = esc_url( $_POST['hotel_URL'] );
     $hotel_phone_sanitized = sanitize_text_field( $_POST['hotel_phone'] );
     $hotel_address_sanitized = sanitize_text_field( $_POST['hotel_address'] );
     $hotel_gallery_sanitized = sanitize_text_field( $_POST['hotel_gallery'] );

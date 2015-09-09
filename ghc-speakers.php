@@ -528,7 +528,7 @@ function show_speaker_matching_box( $user ) {
             <th><label for="speaker_match">Speaker</label></th>
             <td>
                 <select name="speaker_match" id="speaker_match">
-                    <option>- Select one -</option>';
+                    <option value="">- Select one -</option>';
                     $speakers_query_args = array(
                         'post_type'              => array( 'speaker' ),
                         'posts_per_page'         => '-1',

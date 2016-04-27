@@ -3,7 +3,7 @@
  * Plugin Name: GHC Functionality
  * Plugin URI: https://github.com/macbookandrew/ghc-speakers
  * Description: Add speakers, exhibitors, sponsors, and hotels
- * Version: 1.5.1
+ * Version: 1.5.2
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com
  * Copyright: 2015 AndrewRMinion Design (andrew@andrewrminion.com)
@@ -371,6 +371,15 @@ function save_url_metadata( $post_id ) {
 
     // update the meta fields in database
     if ( isset( $_POST['exhibitor_URL'] ) ) update_post_meta( $post_id, 'exhibitor_URL', $exhibitor_URL_sanitized );
+}
+
+// add exhibitor backend JS
+add_action( 'admin_enqueue_scripts', 'include_exhibitor_backend_js' );
+function include_exhibitor_backend_js() {
+    global $post_type;
+    if ( 'exhibitor' == $post_type ) {
+        wp_enqueue_script( 'exhibitor-backend', plugins_url( 'js/exhibitor-backend.min.js', __FILE__ ), array( 'jquery' ), NULL, true );
+    }
 }
 
 // add metabox for hotels

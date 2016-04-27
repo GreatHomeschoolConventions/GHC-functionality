@@ -9,6 +9,9 @@ A simple plugin to add “speakers” and “exhibitors” custom post types, as
 
 #Changelog
 
+- 1.5.2
+    - Add backend JS to help exhibitor URLs
+
 - 1.5.1
     - Fix some bugs
 

@@ -39,181 +39,181 @@ register_deactivation_hook( __FILE__, 'ghc_speakers_deactivate' );
 // Register Custom Post Types
 function custom_post_types() {
 
-	$speakers_labels = array(
-		'name'                => _x( 'Speakers', 'Post Type General Name', 'GHC' ),
-		'singular_name'       => _x( 'Speaker', 'Post Type Singular Name', 'GHC' ),
-		'menu_name'           => __( 'Speakers', 'GHC' ),
-		'name_admin_bar'      => __( 'Speaker', 'GHC' ),
-		'parent_item_colon'   => __( 'Parent Speaker:', 'GHC' ),
-		'all_items'           => __( 'All Speakers', 'GHC' ),
-		'add_new_item'        => __( 'Add New Speaker', 'GHC' ),
-		'add_new'             => __( 'Add New', 'GHC' ),
-		'new_item'            => __( 'New Speaker', 'GHC' ),
-		'edit_item'           => __( 'Edit Speaker', 'GHC' ),
-		'update_item'         => __( 'Update Speaker', 'GHC' ),
-		'view_item'           => __( 'View Speaker', 'GHC' ),
-		'search_items'        => __( 'Search Speaker', 'GHC' ),
-		'not_found'           => __( 'Not found', 'GHC' ),
-		'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
-	);
-	$speakers_rewrite = array(
-		'slug'                => 'speakers',
-		'with_front'          => true,
-		'pages'               => true,
-		'feeds'               => true,
-	);
-	$speakers_args = array(
-		'label'               => __( 'speaker', 'GHC' ),
-		'description'         => __( 'Speakers', 'GHC' ),
-		'labels'              => $speakers_labels,
-		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
-		'taxonomies'          => array( 'ghc_speakers_taxonomy', 'ghc_conventions_taxonomy' ),
-		'hierarchical'        => true,
-		'public'              => true,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'menu_position'       => 5,
-		'menu_icon'           => 'dashicons-admin-users',
-		'show_in_admin_bar'   => true,
-		'show_in_nav_menus'   => true,
-		'can_export'          => true,
-		'has_archive'         => 'speakers',
-		'exclude_from_search' => false,
-		'publicly_queryable'  => true,
-		'rewrite'             => $speakers_rewrite,
-		'capability_type'     => 'page',
-	);
-	register_post_type( 'speaker', $speakers_args );
+    $speakers_labels = array(
+        'name'                => _x( 'Speakers', 'Post Type General Name', 'GHC' ),
+        'singular_name'       => _x( 'Speaker', 'Post Type Singular Name', 'GHC' ),
+        'menu_name'           => __( 'Speakers', 'GHC' ),
+        'name_admin_bar'      => __( 'Speaker', 'GHC' ),
+        'parent_item_colon'   => __( 'Parent Speaker:', 'GHC' ),
+        'all_items'           => __( 'All Speakers', 'GHC' ),
+        'add_new_item'        => __( 'Add New Speaker', 'GHC' ),
+        'add_new'             => __( 'Add New', 'GHC' ),
+        'new_item'            => __( 'New Speaker', 'GHC' ),
+        'edit_item'           => __( 'Edit Speaker', 'GHC' ),
+        'update_item'         => __( 'Update Speaker', 'GHC' ),
+        'view_item'           => __( 'View Speaker', 'GHC' ),
+        'search_items'        => __( 'Search Speaker', 'GHC' ),
+        'not_found'           => __( 'Not found', 'GHC' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
+    );
+    $speakers_rewrite = array(
+        'slug'                => 'speakers',
+        'with_front'          => true,
+        'pages'               => true,
+        'feeds'               => true,
+    );
+    $speakers_args = array(
+        'label'               => __( 'speaker', 'GHC' ),
+        'description'         => __( 'Speakers', 'GHC' ),
+        'labels'              => $speakers_labels,
+        'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
+        'taxonomies'          => array( 'ghc_speakers_taxonomy', 'ghc_conventions_taxonomy' ),
+        'hierarchical'        => true,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'menu_position'       => 5,
+        'menu_icon'           => 'dashicons-admin-users',
+        'show_in_admin_bar'   => true,
+        'show_in_nav_menus'   => true,
+        'can_export'          => true,
+        'has_archive'         => 'speakers',
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'rewrite'             => $speakers_rewrite,
+        'capability_type'     => 'page',
+    );
+    register_post_type( 'speaker', $speakers_args );
 
-	$exhibitors_labels = array(
-		'name'                => _x( 'Exhibitors', 'Post Type General Name', 'GHC' ),
-		'singular_name'       => _x( 'Exhibitor', 'Post Type Singular Name', 'GHC' ),
-		'menu_name'           => __( 'Exhibitors', 'GHC' ),
-		'name_admin_bar'      => __( 'Exhibitor', 'GHC' ),
-		'parent_item_colon'   => __( 'Parent Exhibitor:', 'GHC' ),
-		'all_items'           => __( 'All Exhibitors', 'GHC' ),
-		'add_new_item'        => __( 'Add New Exhibitor', 'GHC' ),
-		'add_new'             => __( 'Add New', 'GHC' ),
-		'new_item'            => __( 'New Exhibitor', 'GHC' ),
-		'edit_item'           => __( 'Edit Exhibitor', 'GHC' ),
-		'update_item'         => __( 'Update Exhibitor', 'GHC' ),
-		'view_item'           => __( 'View Exhibitor', 'GHC' ),
-		'search_items'        => __( 'Search Exhibitor', 'GHC' ),
-		'not_found'           => __( 'Not found', 'GHC' ),
-		'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
-	);
-	$exhibitors_rewrite = array(
-		'slug'                => 'exhibitor',
-		'with_front'          => true,
-		'pages'               => true,
-		'feeds'               => true,
-	);
-	$exhibitors_args = array(
-		'label'               => __( 'exhibitor', 'GHC' ),
-		'description'         => __( 'Exhibitors', 'GHC' ),
-		'labels'              => $exhibitors_labels,
-		'supports'            => array( 'title', 'revisions', 'page-attributes', ),
-		'taxonomies'          => array( 'ghc_conventions_taxonomy' ),
-		'hierarchical'        => true,
-		'public'              => true,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'menu_position'       => 5,
-		'menu_icon'           => 'dashicons-store',
-		'show_in_admin_bar'   => true,
-		'show_in_nav_menus'   => true,
-		'can_export'          => true,
-		'has_archive'         => 'exhibitors',
-		'exclude_from_search' => false,
-		'publicly_queryable'  => true,
-		'rewrite'             => $exhibitors_rewrite,
-		'capability_type'     => 'page',
-	);
-	register_post_type( 'exhibitor', $exhibitors_args );
+    $exhibitors_labels = array(
+        'name'                => _x( 'Exhibitors', 'Post Type General Name', 'GHC' ),
+        'singular_name'       => _x( 'Exhibitor', 'Post Type Singular Name', 'GHC' ),
+        'menu_name'           => __( 'Exhibitors', 'GHC' ),
+        'name_admin_bar'      => __( 'Exhibitor', 'GHC' ),
+        'parent_item_colon'   => __( 'Parent Exhibitor:', 'GHC' ),
+        'all_items'           => __( 'All Exhibitors', 'GHC' ),
+        'add_new_item'        => __( 'Add New Exhibitor', 'GHC' ),
+        'add_new'             => __( 'Add New', 'GHC' ),
+        'new_item'            => __( 'New Exhibitor', 'GHC' ),
+        'edit_item'           => __( 'Edit Exhibitor', 'GHC' ),
+        'update_item'         => __( 'Update Exhibitor', 'GHC' ),
+        'view_item'           => __( 'View Exhibitor', 'GHC' ),
+        'search_items'        => __( 'Search Exhibitor', 'GHC' ),
+        'not_found'           => __( 'Not found', 'GHC' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
+    );
+    $exhibitors_rewrite = array(
+        'slug'                => 'exhibitor',
+        'with_front'          => true,
+        'pages'               => true,
+        'feeds'               => true,
+    );
+    $exhibitors_args = array(
+        'label'               => __( 'exhibitor', 'GHC' ),
+        'description'         => __( 'Exhibitors', 'GHC' ),
+        'labels'              => $exhibitors_labels,
+        'supports'            => array( 'title', 'revisions', 'page-attributes', ),
+        'taxonomies'          => array( 'ghc_conventions_taxonomy' ),
+        'hierarchical'        => true,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'menu_position'       => 5,
+        'menu_icon'           => 'dashicons-store',
+        'show_in_admin_bar'   => true,
+        'show_in_nav_menus'   => true,
+        'can_export'          => true,
+        'has_archive'         => 'exhibitors',
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'rewrite'             => $exhibitors_rewrite,
+        'capability_type'     => 'page',
+    );
+    register_post_type( 'exhibitor', $exhibitors_args );
 
-	$sponsors_labels = array(
-		'name'                => _x( 'Sponsors', 'Post Type General Name', 'GHC' ),
-		'singular_name'       => _x( 'Sponsor', 'Post Type Singular Name', 'GHC' ),
-		'menu_name'           => __( 'Sponsors', 'GHC' ),
-		'name_admin_bar'      => __( 'Sponsor', 'GHC' ),
-		'parent_item_colon'   => __( 'Parent Sponsor:', 'GHC' ),
-		'all_items'           => __( 'All Sponsors', 'GHC' ),
-		'add_new_item'        => __( 'Add New Sponsor', 'GHC' ),
-		'add_new'             => __( 'Add New', 'GHC' ),
-		'new_item'            => __( 'New Sponsor', 'GHC' ),
-		'edit_item'           => __( 'Edit Sponsor', 'GHC' ),
-		'update_item'         => __( 'Update Sponsor', 'GHC' ),
-		'view_item'           => __( 'View Sponsor', 'GHC' ),
-		'search_items'        => __( 'Search Sponsor', 'GHC' ),
-		'not_found'           => __( 'Not found', 'GHC' ),
-		'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
-	);
-	$sponsors_rewrite = array(
-		'slug'                => 'sponsors',
-		'with_front'          => true,
-		'pages'               => true,
-		'feeds'               => true,
-	);
-	$sponsors_args = array(
-		'label'               => __( 'sponsor', 'GHC' ),
-		'description'         => __( 'Sponsors', 'GHC' ),
-		'labels'              => $sponsors_labels,
-		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
-		'hierarchical'        => true,
-		'public'              => true,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'menu_position'       => 5,
-		'menu_icon'           => 'dashicons-awards',
-		'show_in_admin_bar'   => true,
-		'show_in_nav_menus'   => true,
-		'can_export'          => true,
-		'has_archive'         => 'sponsors',
-		'exclude_from_search' => false,
-		'publicly_queryable'  => true,
-		'rewrite'             => $sponsors_rewrite,
-		'capability_type'     => 'page',
-	);
-	register_post_type( 'sponsor', $sponsors_args );
+    $sponsors_labels = array(
+        'name'                => _x( 'Sponsors', 'Post Type General Name', 'GHC' ),
+        'singular_name'       => _x( 'Sponsor', 'Post Type Singular Name', 'GHC' ),
+        'menu_name'           => __( 'Sponsors', 'GHC' ),
+        'name_admin_bar'      => __( 'Sponsor', 'GHC' ),
+        'parent_item_colon'   => __( 'Parent Sponsor:', 'GHC' ),
+        'all_items'           => __( 'All Sponsors', 'GHC' ),
+        'add_new_item'        => __( 'Add New Sponsor', 'GHC' ),
+        'add_new'             => __( 'Add New', 'GHC' ),
+        'new_item'            => __( 'New Sponsor', 'GHC' ),
+        'edit_item'           => __( 'Edit Sponsor', 'GHC' ),
+        'update_item'         => __( 'Update Sponsor', 'GHC' ),
+        'view_item'           => __( 'View Sponsor', 'GHC' ),
+        'search_items'        => __( 'Search Sponsor', 'GHC' ),
+        'not_found'           => __( 'Not found', 'GHC' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
+    );
+    $sponsors_rewrite = array(
+        'slug'                => 'sponsors',
+        'with_front'          => true,
+        'pages'               => true,
+        'feeds'               => true,
+    );
+    $sponsors_args = array(
+        'label'               => __( 'sponsor', 'GHC' ),
+        'description'         => __( 'Sponsors', 'GHC' ),
+        'labels'              => $sponsors_labels,
+        'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
+        'hierarchical'        => true,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'menu_position'       => 5,
+        'menu_icon'           => 'dashicons-awards',
+        'show_in_admin_bar'   => true,
+        'show_in_nav_menus'   => true,
+        'can_export'          => true,
+        'has_archive'         => 'sponsors',
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'rewrite'             => $sponsors_rewrite,
+        'capability_type'     => 'page',
+    );
+    register_post_type( 'sponsor', $sponsors_args );
 
-	$hotels_labels = array(
-		'name'                => _x( 'Hotels', 'Post Type General Name', 'GHC' ),
-		'singular_name'       => _x( 'Hotel', 'Post Type Singular Name', 'GHC' ),
-		'menu_name'           => __( 'Hotels', 'GHC' ),
-		'name_admin_bar'      => __( 'Hotel', 'GHC' ),
-		'parent_item_colon'   => __( 'Parent Hotel:', 'GHC' ),
-		'all_items'           => __( 'All Hotels', 'GHC' ),
-		'add_new_item'        => __( 'Add New Hotel', 'GHC' ),
-		'add_new'             => __( 'Add New', 'GHC' ),
-		'new_item'            => __( 'New Hotel', 'GHC' ),
-		'edit_item'           => __( 'Edit Hotel', 'GHC' ),
-		'update_item'         => __( 'Update Hotel', 'GHC' ),
-		'view_item'           => __( 'View Hotel', 'GHC' ),
-		'search_items'        => __( 'Search Hotels', 'GHC' ),
-		'not_found'           => __( 'Not found', 'GHC' ),
-		'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
-	);
-	$hotels_args = array(
-		'label'               => __( 'Hotel', 'GHC' ),
-		'description'         => __( 'Hotels', 'GHC' ),
-		'labels'              => $hotels_labels,
-		'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'revisions', 'custom-fields', 'page-attributes', ),
-		'taxonomies'          => array( 'ghc_conventions_taxonomy' ),
-		'hierarchical'        => false,
-		'public'              => true,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'menu_position'       => 5,
-		'menu_icon'           => 'dashicons-admin-home',
-		'show_in_admin_bar'   => true,
-		'show_in_nav_menus'   => true,
-		'can_export'          => true,
-		'has_archive'         => true,
-		'exclude_from_search' => false,
-		'publicly_queryable'  => true,
-		'capability_type'     => 'page',
-	);
-	register_post_type( 'hotel', $hotels_args );
+    $hotels_labels = array(
+        'name'                => _x( 'Hotels', 'Post Type General Name', 'GHC' ),
+        'singular_name'       => _x( 'Hotel', 'Post Type Singular Name', 'GHC' ),
+        'menu_name'           => __( 'Hotels', 'GHC' ),
+        'name_admin_bar'      => __( 'Hotel', 'GHC' ),
+        'parent_item_colon'   => __( 'Parent Hotel:', 'GHC' ),
+        'all_items'           => __( 'All Hotels', 'GHC' ),
+        'add_new_item'        => __( 'Add New Hotel', 'GHC' ),
+        'add_new'             => __( 'Add New', 'GHC' ),
+        'new_item'            => __( 'New Hotel', 'GHC' ),
+        'edit_item'           => __( 'Edit Hotel', 'GHC' ),
+        'update_item'         => __( 'Update Hotel', 'GHC' ),
+        'view_item'           => __( 'View Hotel', 'GHC' ),
+        'search_items'        => __( 'Search Hotels', 'GHC' ),
+        'not_found'           => __( 'Not found', 'GHC' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
+    );
+    $hotels_args = array(
+        'label'               => __( 'Hotel', 'GHC' ),
+        'description'         => __( 'Hotels', 'GHC' ),
+        'labels'              => $hotels_labels,
+        'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'revisions', 'custom-fields', 'page-attributes', ),
+        'taxonomies'          => array( 'ghc_conventions_taxonomy' ),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'menu_position'       => 5,
+        'menu_icon'           => 'dashicons-admin-home',
+        'show_in_admin_bar'   => true,
+        'show_in_nav_menus'   => true,
+        'can_export'          => true,
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+    );
+    register_post_type( 'hotel', $hotels_args );
 
 
 }
@@ -223,67 +223,67 @@ add_action( 'init', 'custom_post_types', 0 );
 // Register Custom Taxonomies
 function ghc_speaker_taxonomies() {
 
-	$type_labels = array(
-		'name'                       => _x( 'Speaker Types', 'Taxonomy General Name', 'GHC' ),
-		'singular_name'              => _x( 'Speaker Type', 'Taxonomy Singular Name', 'GHC' ),
-		'menu_name'                  => __( 'Speaker Types', 'GHC' ),
-		'all_items'                  => __( 'All Speaker Types', 'GHC' ),
-		'parent_item'                => __( 'Parent Speaker Type', 'GHC' ),
-		'parent_item_colon'          => __( 'Parent Speaker Type:', 'GHC' ),
-		'new_item_name'              => __( 'New Speaker Type Name', 'GHC' ),
-		'add_new_item'               => __( 'Add New Speaker Type', 'GHC' ),
-		'edit_item'                  => __( 'Edit Speaker Type', 'GHC' ),
-		'update_item'                => __( 'Update Speaker Type', 'GHC' ),
-		'view_item'                  => __( 'View Speaker Type', 'GHC' ),
-		'separate_items_with_commas' => __( 'Separate speaker types with commas', 'GHC' ),
-		'add_or_remove_items'        => __( 'Add or remove speaker types', 'GHC' ),
-		'choose_from_most_used'      => __( 'Choose from the most used', 'GHC' ),
-		'popular_items'              => __( 'Popular Speaker Types', 'GHC' ),
-		'search_items'               => __( 'Search Speaker Types', 'GHC' ),
-		'not_found'                  => __( 'Not Found', 'GHC' ),
-	);
-	$type_args = array(
-		'labels'                     => $type_labels,
-		'hierarchical'               => true,
-		'public'                     => true,
-		'show_ui'                    => true,
-		'show_admin_column'          => true,
-		'show_in_nav_menus'          => true,
-		'show_tagcloud'              => true,
-		'rewrite'                    => false,
-	);
-	register_taxonomy( 'ghc_speakers_taxonomy', array( 'speaker' ), $type_args );
+    $type_labels = array(
+        'name'                       => _x( 'Speaker Types', 'Taxonomy General Name', 'GHC' ),
+        'singular_name'              => _x( 'Speaker Type', 'Taxonomy Singular Name', 'GHC' ),
+        'menu_name'                  => __( 'Speaker Types', 'GHC' ),
+        'all_items'                  => __( 'All Speaker Types', 'GHC' ),
+        'parent_item'                => __( 'Parent Speaker Type', 'GHC' ),
+        'parent_item_colon'          => __( 'Parent Speaker Type:', 'GHC' ),
+        'new_item_name'              => __( 'New Speaker Type Name', 'GHC' ),
+        'add_new_item'               => __( 'Add New Speaker Type', 'GHC' ),
+        'edit_item'                  => __( 'Edit Speaker Type', 'GHC' ),
+        'update_item'                => __( 'Update Speaker Type', 'GHC' ),
+        'view_item'                  => __( 'View Speaker Type', 'GHC' ),
+        'separate_items_with_commas' => __( 'Separate speaker types with commas', 'GHC' ),
+        'add_or_remove_items'        => __( 'Add or remove speaker types', 'GHC' ),
+        'choose_from_most_used'      => __( 'Choose from the most used', 'GHC' ),
+        'popular_items'              => __( 'Popular Speaker Types', 'GHC' ),
+        'search_items'               => __( 'Search Speaker Types', 'GHC' ),
+        'not_found'                  => __( 'Not Found', 'GHC' ),
+    );
+    $type_args = array(
+        'labels'                     => $type_labels,
+        'hierarchical'               => true,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => true,
+        'rewrite'                    => false,
+    );
+    register_taxonomy( 'ghc_speakers_taxonomy', array( 'speaker' ), $type_args );
 
-	$convention_labels = array(
-		'name'                       => _x( 'Conventions', 'Taxonomy General Name', 'GHC' ),
-		'singular_name'              => _x( 'Convention', 'Taxonomy Singular Name', 'GHC' ),
-		'menu_name'                  => __( 'Conventions', 'GHC' ),
-		'all_items'                  => __( 'All Conventions', 'GHC' ),
-		'parent_item'                => __( 'Parent Convention', 'GHC' ),
-		'parent_item_colon'          => __( 'Parent Convention:', 'GHC' ),
-		'new_item_name'              => __( 'New Convention Name', 'GHC' ),
-		'add_new_item'               => __( 'Add New Convention', 'GHC' ),
-		'edit_item'                  => __( 'Edit Convention', 'GHC' ),
-		'update_item'                => __( 'Update Convention', 'GHC' ),
-		'view_item'                  => __( 'View Convention', 'GHC' ),
-		'separate_items_with_commas' => __( 'Separate conventions with commas', 'GHC' ),
-		'add_or_remove_items'        => __( 'Add or remove conventions', 'GHC' ),
-		'choose_from_most_used'      => __( 'Choose from the most used', 'GHC' ),
-		'popular_items'              => __( 'Popular Conventions', 'GHC' ),
-		'search_items'               => __( 'Search Conventions', 'GHC' ),
-		'not_found'                  => __( 'Not Found', 'GHC' ),
-	);
-	$convention_args = array(
-		'labels'                     => $convention_labels,
-		'hierarchical'               => true,
-		'public'                     => true,
-		'show_ui'                    => true,
-		'show_admin_column'          => true,
-		'show_in_nav_menus'          => true,
-		'show_tagcloud'              => true,
-		'rewrite'                    => false,
-	);
-	register_taxonomy( 'ghc_conventions_taxonomy', array( 'speaker', 'exhibitor', 'hotel' ), $convention_args );
+    $convention_labels = array(
+        'name'                       => _x( 'Conventions', 'Taxonomy General Name', 'GHC' ),
+        'singular_name'              => _x( 'Convention', 'Taxonomy Singular Name', 'GHC' ),
+        'menu_name'                  => __( 'Conventions', 'GHC' ),
+        'all_items'                  => __( 'All Conventions', 'GHC' ),
+        'parent_item'                => __( 'Parent Convention', 'GHC' ),
+        'parent_item_colon'          => __( 'Parent Convention:', 'GHC' ),
+        'new_item_name'              => __( 'New Convention Name', 'GHC' ),
+        'add_new_item'               => __( 'Add New Convention', 'GHC' ),
+        'edit_item'                  => __( 'Edit Convention', 'GHC' ),
+        'update_item'                => __( 'Update Convention', 'GHC' ),
+        'view_item'                  => __( 'View Convention', 'GHC' ),
+        'separate_items_with_commas' => __( 'Separate conventions with commas', 'GHC' ),
+        'add_or_remove_items'        => __( 'Add or remove conventions', 'GHC' ),
+        'choose_from_most_used'      => __( 'Choose from the most used', 'GHC' ),
+        'popular_items'              => __( 'Popular Conventions', 'GHC' ),
+        'search_items'               => __( 'Search Conventions', 'GHC' ),
+        'not_found'                  => __( 'Not Found', 'GHC' ),
+    );
+    $convention_args = array(
+        'labels'                     => $convention_labels,
+        'hierarchical'               => true,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => true,
+        'rewrite'                    => false,
+    );
+    register_taxonomy( 'ghc_conventions_taxonomy', array( 'speaker', 'exhibitor', 'hotel' ), $convention_args );
 
 }
 // Hook into the 'init' action to register custom taxonomy
@@ -553,11 +553,11 @@ add_action( 'personal_options_update', 'ghc_save_extra_profile_fields' );
 add_action( 'edit_user_profile_update', 'ghc_save_extra_profile_fields' );
 function ghc_save_extra_profile_fields( $user_id ) {
 
-	if ( !current_user_can( 'edit_user', $user_id ) ) {
-		return false;
+    if ( !current_user_can( 'edit_user', $user_id ) ) {
+        return false;
     }
 
-	update_usermeta( $user_id, 'speaker_match', esc_attr( $_POST['speaker_match'] ) );
+    update_usermeta( $user_id, 'speaker_match', esc_attr( $_POST['speaker_match'] ) );
 }
 
 // GitHub updater

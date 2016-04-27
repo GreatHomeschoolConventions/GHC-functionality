@@ -10,7 +10,7 @@ A simple plugin to add “speakers” and “exhibitors” custom post types, as
 #Changelog
 
 - 1.5.1
-	- Fix some bugs
+    - Fix some bugs
 
 - 1.5
     - Add “hotels” custom post type

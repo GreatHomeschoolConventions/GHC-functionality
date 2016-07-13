@@ -1,6 +1,6 @@
 #Introduction
 
-A simple plugin to add “speakers” and “exhibitors” custom post types, as well as “conventions” categories for use on Great Homeschool Convention’s website.
+A simple plugin to add custom post types and categories for use on Great Homeschool Convention’s website.
 
 #Usage
 
@@ -8,6 +8,10 @@ A simple plugin to add “speakers” and “exhibitors” custom post types, as
 - Customize the `page-speakers.php` theme template to show posts as necessary
 
 #Changelog
+
+- 1.6
+    - Add locations, special events, and workshops custom post types
+    - Use Advanced Custom Fields instead of hand-coded metaboxes
 
 - 1.5.2
     - Add backend JS to help exhibitor URLs

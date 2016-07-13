@@ -425,90 +425,6 @@ function ghc_taxonomies() {
 
 }
 // Hook into the 'init' action to register custom taxonomy
-
-// add metabox for featured/general speakers
-add_action( 'add_meta_boxes', 'add_featured_speaker_metabox' );
-function add_featured_speaker_metabox() {
-    add_meta_box( 'featured-speaker', 'Featured Speaker', 'print_featured_speaker_metabox', 'speaker', 'side' );
-}
-
-// print metabox for featured/general speakers
-function print_featured_speaker_metabox( $post ) {
-    // add nonce field to check for later
-    wp_nonce_field( 'featured_speaker_meta', 'featured_speaker_meta_nonce' );
-
-    // get meta from database, if set
-    $custom_meta = get_post_custom( $post->ID );
-    $featured_speaker = isset( $custom_meta['featured_speaker'] ) ? esc_attr( $custom_meta['featured_speaker'][0] ) : '';
-
-    echo '<p>Is this a featured speaker? <strong>Yes</strong> means they will be shown in the archive; <strong>No</strong> means they will be hidden from the archive.</p>
-    <input type="radio" name="featured_speaker" id="featured_speaker_yes" value="yes" ';
-    if ( ( $featured_speaker == 'yes' ) || ( $featured_speaker == NULL ) ) { echo 'checked="checked" '; }
-    echo '/>
-    <label for="featured_speaker_yes">Yes</label>&nbsp;
-    <input type="radio" name="featured_speaker" id="featured_speaker_no" value="no" ';
-    if ( isset( $featured_speaker ) && ( $featured_speaker == 'no' ) ) { echo 'checked="checked" '; }
-    echo '/><label for="featured_speaker_no">No</label>';
-}
-
-// save metabox featured/general speaker data
-add_action( 'save_post', 'save_featured_speaker_metadata' );
-function save_featured_speaker_metadata( $post_id ) {
-    // bail if autosave
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-
-    // check for valid nonces
-    if ( ! isset( $_POST['featured_speaker_meta_nonce'] ) || ! wp_verify_nonce( $_POST['featured_speaker_meta_nonce'], 'featured_speaker_meta' ) ) return;
-
-    // check the user's permissions
-    if ( ! current_user_can( 'edit_posts', $post_id ) ) return;
-
-    // sanitize user input
-    $featured_speaker_sanitized = sanitize_text_field( $_POST['featured_speaker'] );
-
-    // update the meta fields in database
-    if ( isset( $_POST['featured_speaker'] ) ) update_post_meta( $post_id, 'featured_speaker', $featured_speaker_sanitized );
-}
-
-// add metabox for exhibitor URL
-add_action( 'add_meta_boxes', 'add_url_metabox' );
-function add_url_metabox() {
-    add_meta_box( 'exhibitor-URL', 'Exhibitor website', 'print_url_metabox', 'exhibitor' );
-}
-
-// print metabox for exhibitor URL
-function print_url_metabox( $post ) {
-    // add nonce field to check for later
-    wp_nonce_field( 'url_meta', 'url_meta_nonce' );
-
-    // get meta from database, if set
-    $custom_meta = get_post_custom( $post->ID );
-    $exhibitor_URL = isset( $custom_meta['exhibitor_URL'] ) ? esc_attr( $custom_meta['exhibitor_URL'][0] ) : '';
-
-    echo '<label for="exhibitor_URL">Enter the exhibitor&rsquo;s website:</label><br/>
-    <input type="url" name="exhibitor_URL" size="100" placeholder="http://"';
-    if ( isset( $exhibitor_URL ) ) { echo ' value="' . $exhibitor_URL . '"'; }
-    echo '>';
-}
-
-// save metabox exhibitor URL data
-add_action( 'save_post', 'save_url_metadata' );
-function save_url_metadata( $post_id ) {
-    // bail if autosave
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-
-    // check for valid nonces
-    if ( ! isset( $_POST['url_meta_nonce'] ) || ! wp_verify_nonce( $_POST['url_meta_nonce'], 'url_meta' ) ) return;
-
-    // check the user's permissions
-    if ( ! current_user_can( 'edit_posts', $post_id ) ) return;
-
-    // sanitize user input
-    $exhibitor_URL_sanitized = sanitize_text_field( $_POST['exhibitor_URL'] );
-
-    // update the meta fields in database
-    if ( isset( $_POST['exhibitor_URL'] ) ) update_post_meta( $post_id, 'exhibitor_URL', $exhibitor_URL_sanitized );
-}
 add_action( 'init', 'ghc_taxonomies', 0 );
 
 // add exhibitor backend JS
@@ -518,151 +434,6 @@ function include_exhibitor_backend_js() {
     if ( 'exhibitor' == $post_type ) {
         wp_enqueue_script( 'exhibitor-backend', plugins_url( 'js/exhibitor-backend.min.js', __FILE__ ), array( 'jquery' ), NULL, true );
     }
-}
-
-// add metabox for hotels
-add_action( 'add_meta_boxes', 'add_hotel_metabox' );
-function add_hotel_metabox() {
-    add_meta_box( 'hotel-info', 'Hotel Information', 'print_hotel_metaboxes', 'hotel', 'normal', 'high' );
-}
-
-// print metaboxes for hotels
-function print_hotel_metaboxes( $post ) {
-    // add nonce field to check for later
-    wp_nonce_field( 'hotel_meta', 'hotel_meta_nonce' );
-
-    // get meta from database, if set
-    $custom_hotel_meta = get_post_custom( $post->ID );
-    $sold_out = isset( $custom_hotel_meta['sold_out'] ) ? esc_attr( $custom_hotel_meta['sold_out'][0] ) : '';
-    $discount_rate = isset( $custom_hotel_meta['discount_rate'] ) ? esc_attr( $custom_hotel_meta['discount_rate'][0] ) : '';
-    $discount_rate_details = isset( $custom_hotel_meta['discount_rate_details'] ) ? esc_attr( $custom_hotel_meta['discount_rate_details'][0] ) : '';
-    $discount_rate2 = isset( $custom_hotel_meta['discount_rate2'] ) ? esc_attr( $custom_hotel_meta['discount_rate2'][0] ) : '';
-    $discount_rate2_details = isset( $custom_hotel_meta['discount_rate2_details'] ) ? esc_attr( $custom_hotel_meta['discount_rate2_details'][0] ) : '';
-    $discount_rate3 = isset( $custom_hotel_meta['discount_rate3'] ) ? esc_attr( $custom_hotel_meta['discount_rate3'][0] ) : '';
-    $discount_rate3_details = isset( $custom_hotel_meta['discount_rate3_details'] ) ? esc_attr( $custom_hotel_meta['discount_rate3_details'][0] ) : '';
-    $discount_valid_date = isset( $custom_hotel_meta['discount_valid_date'] ) ? esc_attr( $custom_hotel_meta['discount_valid_date'][0] ) : '';
-    $discount_group_code = isset( $custom_hotel_meta['discount_group_code'] ) ? esc_attr( $custom_hotel_meta['discount_group_code'][0] ) : '';
-    $hotel_URL = isset( $custom_hotel_meta['hotel_URL'] ) ? esc_attr( $custom_hotel_meta['hotel_URL'][0] ) : '';
-    $hotel_phone = isset( $custom_hotel_meta['hotel_phone'] ) ? esc_attr( $custom_hotel_meta['hotel_phone'][0] ) : '';
-    $hotel_address = isset( $custom_hotel_meta['hotel_address'] ) ? esc_attr( $custom_hotel_meta['hotel_address'][0] ) : '';
-    $hotel_gallery = isset( $custom_hotel_meta['hotel_gallery'] ) ? esc_attr( $custom_hotel_meta['hotel_gallery'][0] ) : '';
-
-    echo '<input type="checkbox" name="sold_out" id="sold_out"';
-    if ( $sold_out == 'true' ) { echo ' checked="checked"'; }
-    echo '/><label for="sold_out">Sold Out</label><br/>';
-
-    echo '<label for="discount_rate">Discounted Rate and Details:</label><br/>
-    $<input type="number" name="discount_rate" step="0.00" placeholder="0.00"';
-    if ( isset( $discount_rate ) ) { echo ' value="' . $discount_rate . '"'; }
-    echo '>
-    <input type="text" name="discount_rate_details" placeholder="2 Queen or 2 Double beds, etc." size="75"';
-    if ( isset( $discount_rate_details ) ) { echo ' value="' . $discount_rate_details . '"'; }
-    echo '><br/>';
-
-    echo '<label for="discount_rate2">Second Discounted Rate and Details:</label><br/>
-    $<input type="number" name="discount_rate2" step="0.00" placeholder="0.00"';
-    if ( isset( $discount_rate2 ) ) { echo ' value="' . $discount_rate2 . '"'; }
-    echo '>
-    <input type="text" name="discount_rate2_details" placeholder="2 Queen or 2 Double beds, etc." size="75"';
-    if ( isset( $discount_rate2_details ) ) { echo ' value="' . $discount_rate2_details . '"'; }
-    echo '><br/>';
-
-    echo '<label for="discount_rate3">Third Discounted Rate and Details:</label><br/>
-    $<input type="number" name="discount_rate3" step="0.00" placeholder="0.00"';
-    if ( isset( $discount_rate3 ) ) { echo ' value="' . $discount_rate3 . '"'; }
-    echo '>
-    <input type="text" name="discount_rate3_details" placeholder="2 Queen or 2 Double beds, etc." size="75"';
-    if ( isset( $discount_rate3_details ) ) { echo ' value="' . $discount_rate3_details . '"'; }
-    echo '><br/>';
-
-    echo '<label for="discount_valid_date">Discount Until Date:</label><br/>
-    <input type="date" name="discount_valid_date" placeholder="2016-02-01"';
-    if ( isset( $discount_valid_date ) ) { echo ' value="' . $discount_valid_date . '"'; }
-    echo '><br/>';
-
-    echo '<label for="discount_group_code">Group Code:</label><br/>
-    <input type="text" name="discount_group_code" placeholder="ABC123"';
-    if ( isset( $discount_group_code ) ) { echo ' value="' . $discount_group_code . '"'; }
-    echo '><br/>';
-
-    echo '<label for="hotel_URL">Website:</label><br/>
-    <input type="url" name="hotel_URL" size="100" placeholder="http://"';
-    if ( isset( $hotel_URL ) ) { echo ' value="' . $hotel_URL . '"'; }
-    echo '><br/>';
-
-    echo '<label for="hotel_phone">Phone:</label><br/>
-    <input type="tel" name="hotel_phone" size="100" placeholder="234-567-8901"';
-    if ( isset( $hotel_phone ) ) { echo ' value="' . $hotel_phone . '"'; }
-    echo '><br/>';
-
-    echo '<label for="hotel_address">Address, City, State, Zip:</label><br/>
-    <input type="text" name="hotel_address" size="100" placeholder="123 Anystreet, Schenectady, NY, 12345"';
-    if ( isset( $hotel_address ) ) { echo ' value="' . $hotel_address . '"'; }
-    echo '><br/>';
-
-    echo '<label for="hotel_gallery">Photo Gallery:</label><br/>
-    <select name="hotel_gallery" id="hotel_gallery">
-        <option>- None -</option>';
-        $hotel_gallery_query_args = array(
-            'post_type'              => array( 'gdl-gallery' ),
-            'posts_per_page'         => '-1',
-        );
-        $hotel_gallery_query = new WP_Query( $hotel_gallery_query_args );
-        if ( $hotel_gallery_query->have_posts() ) {
-            while ( $hotel_gallery_query->have_posts() ) {
-                $hotel_gallery_query->the_post();
-                echo '<option value="' . get_the_title() . '"';
-                if ( str_replace( '&amp;', '&', $hotel_gallery ) == str_replace( '&#038;', '&', get_the_title() ) ) { echo ' selected="selected"'; }
-                echo '>' . get_the_title() . '</option>'."\n";
-            }
-        }
-    echo '</select>';
-}
-
-// save metaboxes for hotels
-add_action( 'save_post', 'save_hotel_metadata' );
-function save_hotel_metadata( $post_id ) {
-    // bail if autosave
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-
-    // check for valid nonces
-    if ( ! isset( $_POST['hotel_meta_nonce'] ) || ! wp_verify_nonce( $_POST['hotel_meta_nonce'], 'hotel_meta' ) ) return;
-
-    // check the user's permissions
-    if ( ! current_user_can( 'edit_posts', $post_id ) ) return;
-
-    // sanitize user input
-    $discount_rate_sanitized = sanitize_text_field( $_POST['discount_rate'] );
-    $discount_rate_details_sanitized = sanitize_text_field( $_POST['discount_rate_details'] );
-    $discount_rate2_sanitized = sanitize_text_field( $_POST['discount_rate2'] );
-    $discount_rate2_details_sanitized = sanitize_text_field( $_POST['discount_rate2_details'] );
-    $discount_rate3_sanitized = sanitize_text_field( $_POST['discount_rate3'] );
-    $discount_rate3_details_sanitized = sanitize_text_field( $_POST['discount_rate3_details'] );
-    $discount_group_code_sanitized = sanitize_text_field( $_POST['discount_group_code'] );
-    $discount_valid_date_sanitized = sanitize_text_field( $_POST['discount_valid_date'] );
-    $hotel_URL_sanitized = esc_url( $_POST['hotel_URL'] );
-    $hotel_phone_sanitized = sanitize_text_field( $_POST['hotel_phone'] );
-    $hotel_address_sanitized = sanitize_text_field( $_POST['hotel_address'] );
-    $hotel_gallery_sanitized = sanitize_text_field( $_POST['hotel_gallery'] );
-
-    // update the meta fields in database
-    if ( isset( $_POST['sold_out'] ) ) {
-        update_post_meta( $post_id, 'sold_out', 'true' );
-    } else {
-        update_post_meta( $post_id, 'sold_out', 'false' );
-    }
-    if ( isset( $_POST['discount_rate'] ) ) update_post_meta( $post_id, 'discount_rate', $discount_rate_sanitized );
-    if ( isset( $_POST['discount_rate_details'] ) ) update_post_meta( $post_id, 'discount_rate_details', $discount_rate_details_sanitized );
-    if ( isset( $_POST['discount_rate2'] ) ) update_post_meta( $post_id, 'discount_rate2', $discount_rate2_sanitized );
-    if ( isset( $_POST['discount_rate2_details'] ) ) update_post_meta( $post_id, 'discount_rate2_details', $discount_rate2_details_sanitized );
-    if ( isset( $_POST['discount_rate3'] ) ) update_post_meta( $post_id, 'discount_rate3', $discount_rate3_sanitized );
-    if ( isset( $_POST['discount_rate3_details'] ) ) update_post_meta( $post_id, 'discount_rate3_details', $discount_rate3_details_sanitized );
-    if ( isset( $_POST['discount_group_code'] ) ) update_post_meta( $post_id, 'discount_group_code', $discount_group_code_sanitized );
-    if ( isset( $_POST['discount_valid_date'] ) ) update_post_meta( $post_id, 'discount_valid_date', $discount_valid_date_sanitized );
-    if ( isset( $_POST['hotel_URL'] ) ) update_post_meta( $post_id, 'hotel_URL', $hotel_URL_sanitized );
-    if ( isset( $_POST['hotel_phone'] ) ) update_post_meta( $post_id, 'hotel_phone', $hotel_phone_sanitized );
-    if ( isset( $_POST['hotel_address'] ) ) update_post_meta( $post_id, 'hotel_address', $hotel_address_sanitized );
-    if ( isset( $_POST['hotel_gallery'] ) ) update_post_meta( $post_id, 'hotel_gallery', $hotel_gallery_sanitized );
 }
 
 // add custom field to user profile screens to match with speakers CPT
@@ -705,6 +476,27 @@ function ghc_save_extra_profile_fields( $user_id ) {
     }
 
     update_usermeta( $user_id, 'speaker_match', esc_attr( $_POST['speaker_match'] ) );
+}
+
+// add options
+if( function_exists('acf_add_options_page') ) {
+
+	acf_add_options_page(array(
+		'page_title' 	=> 'Options',
+		'menu_title'	=> 'Options',
+		'menu_slug' 	=> 'theme-options',
+		'capability'	=> 'edit_posts',
+		'redirect'		=> false
+	));
+	
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Call to Action Widget Content',
+		'menu_title'	=> 'CTA Widget',
+		'menu_slug' 	=> 'cta-widget',
+		'capability'	=> 'edit_posts',
+        'parent_slug'   => 'theme-options',
+	));
+	
 }
 
 // GitHub updater

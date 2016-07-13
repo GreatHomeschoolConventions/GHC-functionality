@@ -359,7 +359,7 @@ function custom_post_types() {
 add_action( 'init', 'custom_post_types', 0 );
 
 // Register Custom Taxonomies
-function ghc_speaker_taxonomies() {
+function ghc_taxonomies() {
 
     $type_labels = array(
         'name'                       => _x( 'Speaker Types', 'Taxonomy General Name', 'GHC' ),
@@ -425,7 +425,6 @@ function ghc_speaker_taxonomies() {
 
 }
 // Hook into the 'init' action to register custom taxonomy
-add_action( 'init', 'ghc_speaker_taxonomies', 0 );
 
 // add metabox for featured/general speakers
 add_action( 'add_meta_boxes', 'add_featured_speaker_metabox' );
@@ -510,6 +509,7 @@ function save_url_metadata( $post_id ) {
     // update the meta fields in database
     if ( isset( $_POST['exhibitor_URL'] ) ) update_post_meta( $post_id, 'exhibitor_URL', $exhibitor_URL_sanitized );
 }
+add_action( 'init', 'ghc_taxonomies', 0 );
 
 // add exhibitor backend JS
 add_action( 'admin_enqueue_scripts', 'include_exhibitor_backend_js' );

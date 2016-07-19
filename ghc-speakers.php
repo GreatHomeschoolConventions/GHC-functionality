@@ -159,7 +159,7 @@ function custom_post_types() {
         'description'         => __( 'Speakers', 'GHC' ),
         'labels'              => $speakers_labels,
         'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
-        'taxonomies'          => array( 'ghc_speakers_taxonomy', 'ghc_conventions_taxonomy' ),
+        'taxonomies'          => array( 'ghc_speakers_taxonomy', 'ghc_conventions_taxonomy', 'ghc_special_tracks_taxonomy' ),
         'hierarchical'        => true,
         'public'              => true,
         'show_ui'             => true,
@@ -251,7 +251,7 @@ function custom_post_types() {
         'description'         => __( 'Workshops', 'GHC' ),
         'labels'              => $workshops_labels,
         'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
-        'taxonomies'          => array( 'ghc_conventions_taxonomy' ),
+        'taxonomies'          => array( 'ghc_conventions_taxonomy', 'ghc_special_tracks_taxonomy' ),
         'hierarchical'        => true,
         'public'              => true,
         'show_ui'             => true,
@@ -391,6 +391,37 @@ function ghc_taxonomies() {
         'rewrite'                    => false,
     );
     register_taxonomy( 'ghc_speakers_taxonomy', array( 'speaker' ), $type_args );
+
+    $track_labels = array(
+        'name'                       => _x( 'Special Tracks', 'Taxonomy General Name', 'GHC' ),
+        'singular_name'              => _x( 'Special Track', 'Taxonomy Singular Name', 'GHC' ),
+        'menu_name'                  => __( 'Special Tracks', 'GHC' ),
+        'all_items'                  => __( 'All Special Tracks', 'GHC' ),
+        'parent_item'                => __( 'Parent Special Track', 'GHC' ),
+        'parent_item_colon'          => __( 'Parent Special Track:', 'GHC' ),
+        'new_item_name'              => __( 'New Special Track Name', 'GHC' ),
+        'add_new_item'               => __( 'Add New Special Track', 'GHC' ),
+        'edit_item'                  => __( 'Edit Special Track', 'GHC' ),
+        'update_item'                => __( 'Update Special Track', 'GHC' ),
+        'view_item'                  => __( 'View Special Track', 'GHC' ),
+        'separate_items_with_commas' => __( 'Separate Special Tracks with commas', 'GHC' ),
+        'add_or_remove_items'        => __( 'Add or remove Special Tracks', 'GHC' ),
+        'choose_from_most_used'      => __( 'Choose from the most used', 'GHC' ),
+        'popular_items'              => __( 'Popular Special Tracks', 'GHC' ),
+        'search_items'               => __( 'Search Special Tracks', 'GHC' ),
+        'not_found'                  => __( 'Not Found', 'GHC' ),
+    );
+    $track_args = array(
+        'labels'                     => $track_labels,
+        'hierarchical'               => true,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => true,
+        'rewrite'                    => true,
+    );
+    register_taxonomy( 'ghc_special_tracks_taxonomy', array( 'speaker', 'workshop' ), $track_args );
 
     $convention_labels = array(
         'name'                       => _x( 'Conventions', 'Taxonomy General Name', 'GHC' ),

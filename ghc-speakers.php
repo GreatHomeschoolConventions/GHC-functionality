@@ -509,6 +509,50 @@ function ghc_save_extra_profile_fields( $user_id ) {
     update_usermeta( $user_id, 'speaker_match', esc_attr( $_POST['speaker_match'] ) );
 }
 
+// add meet_the_author function for blog posts
+function meet_the_author() {
+    if ( get_the_author_meta( 'speaker_match' ) ) {
+        $meet_the_author_output = '<p class="no-margin">Meet <a href="' . get_permalink( get_the_author_meta( 'speaker_match' ) ) . '">' . get_the_author() . '</a> at these conventions:</p>';
+
+        foreach ( get_the_terms_sorted( get_the_author_meta( 'speaker_match' ), 'ghc_conventions_taxonomy' ) as $author_convention ) {
+            $meet_the_author_output .= do_shortcode( '[convention_icon convention="' . $author_convention->name . '"]' );
+        }
+
+        return $meet_the_author_output;
+    }
+}
+
+// modify speaker archive query to hide general speakers
+add_action( 'pre_get_posts', 'ghc_modify_speaker_archive' );
+function ghc_modify_speaker_archive( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && is_post_type_archive( 'speaker' ) ) {
+        $query->set( 'meta_key', 'featured_speaker' );
+        $query->set( 'meta_compare', '!=' );
+        $query->set( 'meta_value', 'no' );
+    }
+}
+
+// modify exhibitor archive query to show all, sorted by name
+add_action( 'pre_get_posts', 'ghc_modify_exhibitor_archive' );
+function ghc_modify_exhibitor_archive( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && is_post_type_archive( 'exhibitor' ) ) {
+        $query->set( 'posts_per_page', '-1' );
+        $query->set( 'pagination', 'false' );
+        $query->set( 'order', 'ASC' );
+        $query->set( 'orderby', 'title' );
+    }
+}
+
+// modify sponsor archive query to sort by page order
+add_action( 'pre_get_posts', 'ghc_modify_sponsor_archive', 1 );
+function ghc_modify_sponsor_archive( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && is_post_type_archive( 'sponsor' ) ) {
+        $query->set( 'posts_per_page', -1 );
+        $query->set( 'order', 'ASC' );
+        $query->set( 'orderby', 'menu_order' );
+    }
+}
+
 // add options
 if( function_exists('acf_add_options_page') ) {
 
@@ -528,6 +572,117 @@ if( function_exists('acf_add_options_page') ) {
         'parent_slug'   => 'theme-options',
 	));
 	
+}
+
+// add extra function to get_the_terms by term_id order rather than alphabetical
+// adapted from https://wordpress.org/support/topic/use-with-get_the_terms#post-5093011
+function get_the_terms_sorted( $post_id, $taxonomy ) {
+    $terms = get_the_terms( $post_id, $taxonomy );
+    if ( $terms ) {
+        usort( $terms, 'cmp_by_custom_order' );
+    }
+    return $terms;
+}
+function cmp_by_custom_order( $a, $b ) {
+    return $a->term_id - $b->term_id;
+}
+
+// get options
+function publish_convention_details() {
+    echo '<h2>Upcoming Great Homeschool Conventions Events</h2>';
+
+    // WP_Query arguments
+    $args = array (
+        'post_type'              => array( 'location' ),
+        'posts_per_page'         => -1,
+        'post_status'            => 'publish',
+        'order'                  => 'DESC',
+        'orderby'                => 'meta_value',
+        'meta_query'             => array(
+            array(
+                'key'       => 'begin_date',
+                'type'      => 'NUMERIC',
+            ),
+        ),
+        'no_found_rows'          => true,
+    );
+
+    // The Query
+    $locations_query = new WP_Query( $args );
+
+    // The Loop
+    if ( $locations_query->have_posts() ) {
+        while ( $locations_query->have_posts() && $counter == 0) {
+            $locations_query->the_post(); ?>
+            <p><strong>&#9658;&nbsp;<a href="<?php the_permalink(); ?>"><?php the_title() ;?></a></strong>, <?php the_field( 'convention_center_name' ); ?><br/>
+                <?php echo get_field( 'city' ) . ', ' . get_field( 'state' ) . ': ' . date( 'F j', get_field( 'begin_date' ) ) . '&ndash;' . date( 'j, Y', get_fieeld( 'end_date' ) ); ?></p>
+        <?php }
+    }
+    wp_reset_postdata();
+}
+
+function convention_info() {
+    global $conventions;
+    $conventions = array();
+
+    // WP_Query arguments
+    $args = array (
+        'post_type'              => array( 'location' ),
+        'posts_per_page'         => -1,
+        'post_status'            => 'publish',
+        'order'                  => 'DESC',
+        'orderby'                => 'meta_value',
+        'meta_query'             => array(
+            array(
+                'key'       => 'begin_date',
+                'type'      => 'NUMERIC',
+            ),
+        ),
+        'no_found_rows'          => true,
+    );
+
+    // The Query
+    $locations_query = new WP_Query( $args );
+
+    // The Loop
+    if ( $locations_query->have_posts() ) {
+        while ( $locations_query->have_posts() && $counter == 0) {
+            $locations_query->the_post();
+
+            $convention_info = array(
+                'ID'    => get_the_ID(),
+                'title' => get_the_title(),
+            );
+            $convention_key = strtolower( get_field( 'convention_short_name' ) );
+            $conventions[$convention_key] = array_merge( $convention_info, get_post_meta( get_the_ID() ) );
+        }
+    }
+    wp_reset_postdata();
+
+    // convention abbreviations
+    global $convention_abbreviations;
+    foreach ( $conventions as $key => $values ) {
+        $convention_abbreviations[$key] = strtolower( get_field( 'convention_name', $values['ID'] ) );
+    }
+
+    // convention URLs
+    global $convention_urls;
+    foreach ( $conventions as $key => $values ) {
+        $convention_urls[$key] = get_permalink( $values['ID'] );
+    }
+
+    // convention dates (end dates)
+    global $convention_dates;
+    foreach ( $conventions as $key => $values ) {
+        $convention_dates[$key] = mktime( get_field( 'end_date', $values['ID'] ) );
+    }
+
+}
+add_action( 'wp_head', 'convention_info' );
+
+// include shortcodes
+if ( ! is_admin() ) {
+    require_once( 'inc/shortcodes.php' );
 }
 
 // GitHub updater

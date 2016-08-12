@@ -102,7 +102,7 @@ function custom_post_types() {
         'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
     );
     $special_events_rewrite = array(
-        'slug'                => 'special_events',
+        'slug'                => 'special-events',
         'with_front'          => true,
         'pages'               => true,
         'feeds'               => true,
@@ -122,7 +122,7 @@ function custom_post_types() {
         'show_in_admin_bar'   => true,
         'show_in_nav_menus'   => true,
         'can_export'          => true,
-        'has_archive'         => 'special_events',
+        'has_archive'         => 'special-events',
         'exclude_from_search' => false,
         'publicly_queryable'  => true,
         'rewrite'             => $special_events_rewrite,

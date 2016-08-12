@@ -359,38 +359,6 @@ add_action( 'init', 'custom_post_types', 0 );
 
 // Register Custom Taxonomies
 function ghc_taxonomies() {
-
-    $type_labels = array(
-        'name'                       => _x( 'Speaker Types', 'Taxonomy General Name', 'GHC' ),
-        'singular_name'              => _x( 'Speaker Type', 'Taxonomy Singular Name', 'GHC' ),
-        'menu_name'                  => __( 'Speaker Types', 'GHC' ),
-        'all_items'                  => __( 'All Speaker Types', 'GHC' ),
-        'parent_item'                => __( 'Parent Speaker Type', 'GHC' ),
-        'parent_item_colon'          => __( 'Parent Speaker Type:', 'GHC' ),
-        'new_item_name'              => __( 'New Speaker Type Name', 'GHC' ),
-        'add_new_item'               => __( 'Add New Speaker Type', 'GHC' ),
-        'edit_item'                  => __( 'Edit Speaker Type', 'GHC' ),
-        'update_item'                => __( 'Update Speaker Type', 'GHC' ),
-        'view_item'                  => __( 'View Speaker Type', 'GHC' ),
-        'separate_items_with_commas' => __( 'Separate speaker types with commas', 'GHC' ),
-        'add_or_remove_items'        => __( 'Add or remove speaker types', 'GHC' ),
-        'choose_from_most_used'      => __( 'Choose from the most used', 'GHC' ),
-        'popular_items'              => __( 'Popular Speaker Types', 'GHC' ),
-        'search_items'               => __( 'Search Speaker Types', 'GHC' ),
-        'not_found'                  => __( 'Not Found', 'GHC' ),
-    );
-    $type_args = array(
-        'labels'                     => $type_labels,
-        'hierarchical'               => true,
-        'public'                     => true,
-        'show_ui'                    => true,
-        'show_admin_column'          => true,
-        'show_in_nav_menus'          => true,
-        'show_tagcloud'              => true,
-        'rewrite'                    => false,
-    );
-    register_taxonomy( 'ghc_speakers_taxonomy', array( 'speaker' ), $type_args );
-
     $track_labels = array(
         'name'                       => _x( 'Special Tracks', 'Taxonomy General Name', 'GHC' ),
         'singular_name'              => _x( 'Special Track', 'Taxonomy Singular Name', 'GHC' ),

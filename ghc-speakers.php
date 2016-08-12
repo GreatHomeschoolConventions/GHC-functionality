@@ -35,7 +35,6 @@ function ghc_speakers_deactivate() {
 }
 register_deactivation_hook( __FILE__, 'ghc_speakers_deactivate' );
 
-
 // Register Custom Post Types
 function custom_post_types() {
 
@@ -457,6 +456,29 @@ function ghc_taxonomies() {
 }
 // Hook into the 'init' action to register custom taxonomy
 add_action( 'init', 'ghc_taxonomies', 0 );
+
+// add “order” to speaker column headers
+function ghc_speaker_columns( $columns ) {
+    $columns['menu_order'] = 'Order';
+    return $columns;
+}
+add_filter( 'manage_edit-speaker_columns', 'ghc_speaker_columns' );
+
+// add “order” to speaker column details
+function ghc_speaker_column_content( $column, $post_id ) {
+    global $post;
+    if ( 'menu_order' == $column ) {
+        echo $post->menu_order;
+    }
+}
+add_action( 'manage_speaker_posts_custom_column', 'ghc_speaker_column_content', 10, 2 );
+
+// make “order” column header sortable
+function ghc_speaker_sortable_columns( $columns ) {
+    $columns['menu_order'] = 'menu_order';
+    return $columns;
+}
+add_filter( 'manage_edit-speaker_sortable_columns', 'ghc_speaker_sortable_columns' );
 
 // add exhibitor backend JS
 add_action( 'admin_enqueue_scripts', 'include_exhibitor_backend_js' );

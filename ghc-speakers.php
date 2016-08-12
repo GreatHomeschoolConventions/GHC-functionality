@@ -546,22 +546,22 @@ function ghc_modify_sponsor_archive( $query ) {
 // add options
 if( function_exists('acf_add_options_page') ) {
 
-	acf_add_options_page(array(
-		'page_title' 	=> 'Options',
-		'menu_title'	=> 'Options',
-		'menu_slug' 	=> 'theme-options',
-		'capability'	=> 'edit_posts',
-		'redirect'		=> false
-	));
-	
-	acf_add_options_sub_page(array(
-		'page_title' 	=> 'Call to Action Widget Content',
-		'menu_title'	=> 'CTA Widget',
-		'menu_slug' 	=> 'cta-widget',
-		'capability'	=> 'edit_posts',
+    acf_add_options_page(array(
+        'page_title' 	=> 'Options',
+        'menu_title'	=> 'Options',
+        'menu_slug' 	=> 'theme-options',
+        'capability'	=> 'edit_posts',
+        'redirect'		=> false
+    ));
+
+    acf_add_options_sub_page(array(
+        'page_title' 	=> 'Call to Action Widget Content',
+        'menu_title'	=> 'CTA Widget',
+        'menu_slug' 	=> 'cta-widget',
+        'capability'	=> 'edit_posts',
         'parent_slug'   => 'theme-options',
-	));
-	
+    ));
+
 }
 
 // add extra function to get_the_terms by term_id order rather than alphabetical

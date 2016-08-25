@@ -605,7 +605,7 @@ function publish_convention_details() {
         while ( $locations_query->have_posts() && $counter == 0) {
             $locations_query->the_post(); ?>
             <p><strong>&#9658;&nbsp;<a href="<?php the_permalink(); ?>"><?php the_title() ;?></a></strong>, <?php the_field( 'convention_center_name' ); ?><br/>
-                <?php echo get_field( 'city' ) . ', ' . get_field( 'state' ) . ': ' . date( 'F j', get_field( 'begin_date' ) ) . '&ndash;' . date( 'j, Y', get_fieeld( 'end_date' ) ); ?></p>
+                <?php echo get_field( 'city' ) . ', ' . get_field( 'state' ) . ': ' . date( 'F j', get_field( 'begin_date' ) ) . '&ndash;' . date( 'j, Y', get_field( 'end_date' ) ); ?></p>
         <?php }
     }
     wp_reset_postdata();

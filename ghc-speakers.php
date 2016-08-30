@@ -378,6 +378,11 @@ function ghc_taxonomies() {
         'search_items'               => __( 'Search Special Tracks', 'GHC' ),
         'not_found'                  => __( 'Not Found', 'GHC' ),
     );
+	$track_rewrite = array(
+		'slug'                       => 'special-tracks',
+		'with_front'                 => true,
+		'hierarchical'               => true,
+	);
     $track_args = array(
         'labels'                     => $track_labels,
         'hierarchical'               => true,
@@ -386,7 +391,7 @@ function ghc_taxonomies() {
         'show_admin_column'          => true,
         'show_in_nav_menus'          => true,
         'show_tagcloud'              => true,
-        'rewrite'                    => true,
+        'rewrite'                    => $track_rewrite,
     );
     register_taxonomy( 'ghc_special_tracks_taxonomy', array( 'speaker', 'workshop' ), $track_args );
 

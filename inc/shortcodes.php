@@ -37,11 +37,7 @@ function speaker_info_shortcode( $attributes ) {
     if ( $speaker_query->have_posts() ) {
         while ( $speaker_query->have_posts() ) {
             $speaker_query->the_post();
-            if ( has_term( 'speaker', 'ghc_speakers_taxonomy' ) ) {
-                $thumb_array = array( 'class' => 'speaker-thumb' );
-            } elseif ( has_term( 'entertainer', 'ghc_speakers_taxonomy' ) ) {
-                $thumb_array = array( 'class' => 'entertainer-thumb' );
-            }
+            $thumb_array = array( 'class' => 'speaker-thumb' );
 
             $shortcode_output = NULL;
             $shortcode_content .= '<div class="speaker-container';

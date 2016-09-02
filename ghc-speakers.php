@@ -378,11 +378,11 @@ function ghc_taxonomies() {
         'search_items'               => __( 'Search Special Tracks', 'GHC' ),
         'not_found'                  => __( 'Not Found', 'GHC' ),
     );
-	$track_rewrite = array(
-		'slug'                       => 'special-tracks',
-		'with_front'                 => true,
-		'hierarchical'               => true,
-	);
+    $track_rewrite = array(
+        'slug'                       => 'special-tracks',
+        'with_front'                 => true,
+        'hierarchical'               => true,
+    );
     $track_args = array(
         'labels'                     => $track_labels,
         'hierarchical'               => true,

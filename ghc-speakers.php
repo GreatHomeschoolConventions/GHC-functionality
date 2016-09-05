@@ -616,6 +616,7 @@ function publish_convention_details() {
     wp_reset_postdata();
 }
 
+// get convention info
 function convention_info() {
     global $conventions;
     $conventions = array();

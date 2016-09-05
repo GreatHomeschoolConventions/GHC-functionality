@@ -702,3 +702,58 @@ if ( is_admin() ) {
     new WP_GitHub_Updater( $config );
 
 }
+
+/**
+ * Output convention icons
+ * @param array  $conventions       Array of WP_Term objects
+ * @param array  $args              Array of options arguments
+ * @return string $convention_icons HTML string with content
+ */
+function output_convention_icons( $input_conventions, $args = NULL ) {
+    global $conventions, $convention_abbreviations;
+    $convention_icons = NULL;
+
+    // check whether input is a ID number, array, or array of objects
+    if ( is_numeric( $input_conventions ) ) {
+        $conventions_to_output = wp_get_post_categories( get_the_ID(), array( 'fields' => 'ids' ) );
+    } elseif ( is_string( $input_conventions ) ) {
+        // handle two-letter abbreviations
+        if ( strlen( $input_conventions ) > 2 ) {
+            $input_conventions = str_replace( $convention_abbreviations, array_keys( $convention_abbreviations ), $input_conventions );
+        }
+        $conventions_to_output[] = $input_conventions;
+    } elseif ( is_array( $input_conventions ) ) {
+        if ( ! is_object( $input_conventions[0] ) ) {
+            // if not an object, then it's an array of abbreviations
+            $conventions_to_output = array();
+            foreach( $input_conventions as $convention ) {
+                if ( strlen( $convention ) > 2 ) {
+                    $convention = str_replace( $convention_abbreviations, array_keys( $convention_abbreviations ), $convention );
+                }
+                $conventions_to_output[] = $convention;
+            }
+        } else {
+            // if an object, then it's a WP_Term object
+            $conventions_to_output = $input_conventions;
+        }
+    }
+
+    // add icons to $convention_icons
+    foreach ( $conventions_to_output as $convention ) {
+        // get short convention name
+        if ( is_object( $convention ) ) {
+            $convention_key = array_search( $convention->slug, $convention_abbreviations );
+        } else {
+            $convention_key = $convention;
+        }
+
+        $convention_icons .= '<a class="speaker-convention-link" href="' . $conventions[$convention_key]['permalink'] . '">';
+            $convention_icons .= '<svg class="large" role="img" title="' . $conventions[$convention_key]['title'] . '"><use xlink:href="' . plugins_url( 'images/icons.svg#icon-' . ucfirst( $convention_abbreviations[$convention_key] ) . '_large', __FILE__ ) . '"></use></svg><svg class="small" role="img" title="' . $conventions[$convention_key]['title'] . '"><use xlink:href="' . plugins_url( 'images/icons.svg#icon-' . ucfirst ($convention_abbreviations[$convention_key] ) . '_small', __FILE__ ) . '"></use></svg><span class="fallback ' . $convention_key . '">' . $conventions[$convention_key]['title'] . '</span>';
+        $convention_icons .= '</a>';
+    }
+
+    // add filter hook
+    $convention_icons = apply_filters( 'ghc_convention_icons', $convention_icons );
+
+    return $convention_icons;
+}

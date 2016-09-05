@@ -52,13 +52,7 @@ function speaker_info_shortcode( $attributes ) {
                 $shortcode_content .= '<h2><a href="' . get_permalink() . '">' . get_the_title() . '</a></h2>';
                 if ( ! $no_conventions ) {
                     $shortcode_content .= '<div class="conventions-attending">';
-                        foreach ( get_the_terms_sorted( get_the_ID(), 'ghc_conventions_taxonomy' ) as $convention ) {
-                            global $convention_urls;
-                            $related_convention = get_field( 'related_convention', $convention );
-                            $shortcode_content .= '<a class="speaker-convention-link" href="' . $convention_urls[strtolower( get_field( 'convention_short_name', $related_convention ) ) ] . '">';
-                                $shortcode_content .= '<svg class="large" role="img" title="' . $convention->name . '"><use xlink:href="' . get_stylesheet_directory_uri() . '/images/icons.svg#icon-' . $convention->name . '_large"></use></svg><svg class="small" role="img" title="' . $convention->name . '"><use xlink:href="' . get_stylesheet_directory_uri() . '/images/icons.svg#icon-' . $convention->name . '_small"></use></svg><span class="fallback ' . strtolower( $convention->name ) . '">' . $convention->name . '</span>';
-                            $shortcode_content .= '</a>';
-                        }
+                    $shortcode_content .= output_convention_icons( get_the_ID() );
                     $shortcode_content .= '</div>';
                 }
                 $shortcode_content .= '</div>';
@@ -80,30 +74,10 @@ add_shortcode( 'convention_icon', 'convention_icon_shortcode' );
 function convention_icon_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'convention'    => NULL,
-        'small'         => NULL,
     ), $attributes );
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
-    $this_small = esc_attr( $shortcode_attributes['small'] );
-    global $convention_abbreviations, $convention_urls;
 
-    if ( strlen( $this_convention ) > 2 ) {
-        $this_convention = str_replace( $convention_abbreviations, array_keys( $convention_abbreviations ), $this_convention );
-    }
-
-    if ( array_key_exists( $this_convention, $convention_urls ) ) {
-        $this_URL = $convention_urls[$this_convention];
-        $this_name = ucfirst( $convention_abbreviations[$this_convention] );
-    }
-
-    $shortcode_content .= '<a class="speaker-convention-link convention-shortcode';
-    if ( $this_small ) {
-        $shortcode_content .= ' small';
-    }
-    $shortcode_content .= '" href="' . $this_URL . '">';
-        $shortcode_content .= '<svg class="small" role="img" title="' . $this_name . '"><use xlink:href="' . get_stylesheet_directory_uri() . '/images/icons.svg#icon-' . $this_name . '_small"></use></svg><span class="fallback ' . ucwords( $this_name ) . '">' . $this_name . '</span>';
-    $shortcode_content .= '</a>';
-
-    return $shortcode_content;
+    return output_convention_icons( $this_convention );
 }
 
 // add shortcode for discretionary registration buttons
@@ -143,11 +117,7 @@ function discretionary_registration_shortcode( $attributes ) {
         }
 
         // output each convention icon
-        foreach( explode( ',', $shortcode_attributes['convention'] ) as $convention ) {
-            if ( in_array( $convention, array_keys( $convention_urls ) ) && ( $convention_dates[$convention] >= time() ) ) {
-                $shortcode_content .= '<svg class="small" role="img" title="' . $this_name . '"><use xlink:href="' . get_stylesheet_directory_uri() . '/images/icons.svg#icon-' . ucwords( $convention_abbreviations[$convention] ) . '_small"></use></svg><span class="fallback ' . ucwords( $convention_abbreviations[$convention] ) . '">' . $convention . '</span>';
-            }
-        }
+        $shortcode_content .= output_convention_icons( explode( ',', $shortcode_attributes['convention'] ) );
 
         // output bottom of button
         $shortcode_content .= '</a></h3></div>' . "\n";

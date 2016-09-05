@@ -634,14 +634,9 @@ function convention_info() {
         'post_type'              => array( 'location' ),
         'posts_per_page'         => -1,
         'post_status'            => 'publish',
-        'order'                  => 'DESC',
+        'order'                  => 'ASC',
         'orderby'                => 'meta_value',
-        'meta_query'             => array(
-            array(
-                'key'       => 'begin_date',
-                'type'      => 'NUMERIC',
-            ),
-        ),
+        'meta_key'               => 'begin_date',
         'no_found_rows'          => true,
     );
 

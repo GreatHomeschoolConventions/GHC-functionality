@@ -748,7 +748,7 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
         }
 
         $convention_icons .= '<a class="speaker-convention-link" href="' . $conventions[$convention_key]['permalink'] . '">';
-            $convention_icons .= '<svg class="large" role="img" title="' . $conventions[$convention_key]['title'] . '"><use xlink:href="' . plugins_url( 'images/icons.svg#icon-' . ucfirst( $convention_abbreviations[$convention_key] ) . '_large', __FILE__ ) . '"></use></svg><svg class="small" role="img" title="' . $conventions[$convention_key]['title'] . '"><use xlink:href="' . plugins_url( 'images/icons.svg#icon-' . ucfirst ($convention_abbreviations[$convention_key] ) . '_small', __FILE__ ) . '"></use></svg><span class="fallback ' . $convention_key . '">' . $conventions[$convention_key]['title'] . '</span>';
+            $convention_icons .= '<svg role="img" title="' . $conventions[$convention_key]['title'] . '"><use xlink:href="' . plugins_url( 'SVG/icons.min.svg#icon-' . ucfirst ($convention_abbreviations[$convention_key] ) . '_small', __FILE__ ) . '"></use></svg><span class="fallback ' . $convention_key . '">' . $conventions[$convention_key]['title'] . '</span>';
         $convention_icons .= '</a>';
     }
 

@@ -5,14 +5,16 @@ $theme-yellow:          #FEC429;
 
 // conventions icons
 .speaker-convention-link {
-    &.convention-shortcode {
-        svg {
-            width: 1.5em;
-            height: 1.5em;
-            bottom: -0.4em;
-            position: relative;
-        }
+    svg {
+        width: 3em;
+        height: 3em;
     }
+
+    &.convention-shortcode svg {
+        position: relative;
+        top: 0.66em;
+    }
+
     .fallback {
         .svg & { display: none; }
         .no-svg & {
@@ -20,10 +22,9 @@ $theme-yellow:          #FEC429;
             color: white;
             padding: 5px;
         }
-        .no-svg &.california { background-color: $theme-orange; }
-        .no-svg &.midwest { background-color: $theme-green; color: $theme-blue; }
-        .no-svg &.southeast { background-color: $theme-blue; }
-        .no-svg &.texas { background-color: $theme-yellow; }
+        .no-svg &.ca { background-color: $theme-orange; }
+        .no-svg &.mw { background-color: $theme-green; color: $theme-blue; }
+        .no-svg &.se { background-color: $theme-blue; }
+        .no-svg &.tx { background-color: $theme-yellow; }
     }
 }
-

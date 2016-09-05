@@ -35,6 +35,14 @@ function ghc_speakers_deactivate() {
 }
 register_deactivation_hook( __FILE__, 'ghc_speakers_deactivate' );
 
+// register JS and styles
+function register_plugin_resources() {
+    wp_register_script( 'modernizr-svg', plugins_url( 'js/modernizr-svg.min.js', __FILE__ ), array(), '3.3.1' );
+
+    wp_enqueue_style( 'ghc-speakers', plugins_url( 'css/style.min.css', __FILE__ ), array(), '1.7' );
+}
+add_action( 'wp_enqueue_scripts', 'register_plugin_resources' );
+
 // Register Custom Post Types
 function custom_post_types() {
 
@@ -712,6 +720,7 @@ if ( is_admin() ) {
 function output_convention_icons( $input_conventions, $args = NULL ) {
     global $conventions, $convention_abbreviations;
     $convention_icons = NULL;
+    wp_enqueue_script( 'modernizr-svg' );
 
     // check whether input is a ID number, array, or array of objects
     if ( is_numeric( $input_conventions ) ) {

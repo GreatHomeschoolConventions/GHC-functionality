@@ -125,3 +125,11 @@ function discretionary_registration_shortcode( $attributes ) {
         return $shortcode_content;
     }
 }
+
+// add shortcode for speaker page
+add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
+function speaker_archive_shortcode() {
+    ob_start();
+    include( 'archive-speaker.php' );
+    return ob_get_clean();
+}

@@ -646,10 +646,11 @@ function convention_info() {
             $locations_query->the_post();
 
             $convention_info = array(
-                'ID'    => get_the_ID(),
-                'title' => get_the_title(),
+                'ID'        => get_the_ID(),
+                'title'     => get_the_title(),
+                'permalink' => get_the_permalink(),
             );
-            $convention_key = strtolower( get_field( 'convention_short_name' ) );
+            $convention_key = strtolower( get_field( 'convention_abbreviated_name' ) );
             $conventions[$convention_key] = array_merge( $convention_info, get_post_meta( get_the_ID() ) );
         }
     }
@@ -658,7 +659,7 @@ function convention_info() {
     // convention abbreviations
     global $convention_abbreviations;
     foreach ( $conventions as $key => $values ) {
-        $convention_abbreviations[$key] = strtolower( get_field( 'convention_name', $values['ID'] ) );
+        $convention_abbreviations[$key] = strtolower( implode( '', $values['convention_short_name'] ) );
     }
 
     // convention URLs

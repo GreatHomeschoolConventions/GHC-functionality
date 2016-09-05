@@ -1,1 +1,9 @@
+SVG/icons.min.svg:SVG/raw/California_small.svg
+SVG/icons.min.svg:SVG/raw/Midwest_small.svg
+SVG/icons.min.svg:SVG/raw/Southeast_small.svg
+SVG/icons.min.svg:SVG/raw/Texas_small.svg
+
 js/exhibitor-backend.min.js:js/exhibitor-backend.js
+
+css/style.min.css:css/style.scss
+css/style.min.css.map:css/style.scss

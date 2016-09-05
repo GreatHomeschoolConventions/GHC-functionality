@@ -1,0 +1,29 @@
+$theme-blue:            #00456A;
+$theme-green:           #AAC016;
+$theme-orange:          #F05033;
+$theme-yellow:          #FEC429;
+
+// conventions icons
+.speaker-convention-link {
+    &.convention-shortcode {
+        svg {
+            width: 1.5em;
+            height: 1.5em;
+            bottom: -0.4em;
+            position: relative;
+        }
+    }
+    .fallback {
+        .svg & { display: none; }
+        .no-svg & {
+            display: block;
+            color: white;
+            padding: 5px;
+        }
+        .no-svg &.california { background-color: $theme-orange; }
+        .no-svg &.midwest { background-color: $theme-green; color: $theme-blue; }
+        .no-svg &.southeast { background-color: $theme-blue; }
+        .no-svg &.texas { background-color: $theme-yellow; }
+    }
+}
+

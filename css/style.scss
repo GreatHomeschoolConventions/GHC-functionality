@@ -2,6 +2,7 @@ $theme-blue:            #00456A;
 $theme-green:           #AAC016;
 $theme-orange:          #F05033;
 $theme-yellow:          #FEC429;
+$theme-black:           #111111;
 
 // conventions icons
 .speaker-convention-link {
@@ -16,15 +17,16 @@ $theme-yellow:          #FEC429;
     }
 
     .fallback {
-        .svg & { display: none; }
+        display: none;
+
         .no-svg & {
             display: block;
             color: white;
             padding: 5px;
         }
         .no-svg &.ca { background-color: $theme-orange; }
-        .no-svg &.mw { background-color: $theme-green; color: $theme-blue; }
+        .no-svg &.mw { background-color: $theme-green; color: $theme-black; }
         .no-svg &.se { background-color: $theme-blue; }
-        .no-svg &.tx { background-color: $theme-yellow; }
+        .no-svg &.tx { background-color: $theme-yellow; color: $theme-black; }
     }
 }

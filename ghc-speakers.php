@@ -734,12 +734,14 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
                 if ( strlen( $convention ) > 2 ) {
                     $convention = str_replace( $convention_abbreviations, array_keys( $convention_abbreviations ), $convention );
                 }
-                $conventions_to_output[] = $convention;
+                $conventions_to_output[] = trim( $convention );
             }
         } else {
-            // if an object, then it's a WP_Term object
+            // if an object, then it's a WP_Term object and we can pass directly to the output section
             $conventions_to_output = $input_conventions;
         }
+        // sort by date (original WP_Query sorted by begin_date)
+        usort( $conventions_to_output, 'array_sort_conventions' );
     }
 
     // add icons to $convention_icons
@@ -760,4 +762,41 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
     $convention_icons = apply_filters( 'ghc_convention_icons', $convention_icons );
 
     return $convention_icons;
+}
+
+// helper function to sort convention order correctly
+function array_sort_conventions( $a, $b ) {
+    global $convention_abbreviations;
+
+    // convert objects
+    if ( is_object( $a ) && is_object( $b ) ) {
+        $a = $a->slug;
+        $b = $b->slug;
+    }
+
+    // strip spaces
+    $a = trim( $a );
+    $b = trim( $b );
+
+    // convert two-letter abbreviations to names
+    if ( strlen( $a ) == 2 && strlen( $b ) == 2 ) {
+        $a = str_replace( array_flip( $convention_abbreviations ), $convention_abbreviations, $a );
+        $b = str_replace( array_flip( $convention_abbreviations ), $convention_abbreviations, $b );
+    }
+
+    // strip key names from conventions
+    $convention_names = array_values( $convention_abbreviations );
+    
+    // get array key numbers
+    $a_position = array_search( $a, $convention_names );
+    $b_position = array_search( $b, $convention_names );
+
+    // compare and return sort order
+    if ( $a_position > $b_position ) {
+        $sort_order = 1;
+    } else {
+        $sort_order = -1;
+    }
+
+    return $sort_order;
 }

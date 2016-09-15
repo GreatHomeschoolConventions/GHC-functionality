@@ -786,7 +786,7 @@ function array_sort_conventions( $a, $b ) {
 
     // strip key names from conventions
     $convention_names = array_values( $convention_abbreviations );
-    
+
     // get array key numbers
     $a_position = array_search( $a, $convention_names );
     $b_position = array_search( $b, $convention_names );
@@ -799,4 +799,10 @@ function array_sort_conventions( $a, $b ) {
     }
 
     return $sort_order;
+}
+
+// add Google Maps API key
+add_action('acf/init', 'ghc_acf_init');
+function ghc_acf_init() {
+    acf_update_setting('google_api_key', get_option( 'options_api_key' ) );
 }

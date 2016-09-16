@@ -1,4 +1,3 @@
-<?php get_header(); ?>
     <div class="gdlr-isotope">
         <?php
         // how many speakers to show above entertainers
@@ -115,4 +114,3 @@
         wp_reset_postdata(); ?>
         <div class="clear"></div>
     </div> <!-- .gdlr-isotope -->
-<?php get_footer(); ?>

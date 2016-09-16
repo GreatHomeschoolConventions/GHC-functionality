@@ -2,6 +2,160 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
+// add shortcode for convention CTA
+add_shortcode( 'convention_cta', 'convention_cta_shortcode' );
+function convention_cta_shortcode( $attributes ) {
+    global $conventions, $convention_abbreviations;
+
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'    => NULL,
+    ), $attributes );
+    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+    $CTA_array = array_filter( $conventions[$this_convention], 'get_current_CTA', ARRAY_FILTER_USE_BOTH );
+    $current_CTA = str_replace( '_begin_date', '', key( $CTA_array ) );
+
+    return apply_filters( 'the_content', $conventions[$this_convention][$current_CTA . '_cta_content'][0] );
+}
+
+// filter to get only the currently active CTA based on dates
+function get_current_CTA( $value, $key ) {
+    // check if this is a CTA key
+    if ( 0 === strpos( $key, 'cta_' ) ) {
+        // check begin and end dates
+        if ( ( false !== strpos( $key, '_begin_date' ) && '' !== $value[0] && strtotime( $value[0] ) <= time() ) || ( ( false !== strpos( $key, '_end_date' ) && '' !== $value[0] && strtotime( $value[0] ) >= time() ) ) ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+// add shortcode for convention icon only
+// accepts `convention` attribute either as abbreviation or full name
+add_shortcode( 'convention_icon', 'convention_icon_shortcode' );
+function convention_icon_shortcode( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'    => NULL,
+    ), $attributes );
+    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+    return output_convention_icons( $this_convention );
+}
+
+// add shortcode for discretionary registration buttons
+// accepts `convention` attribute either as abbreviation or full name
+add_shortcode( 'discretionary_registration', 'discretionary_registration_shortcode' );
+function discretionary_registration_shortcode( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'    => NULL,
+        'year'          => NULL,
+        'intro_text'    => NULL,
+    ), $attributes );
+    // first check agaist dates
+    global $convention_dates;
+    foreach( $convention_dates as $convention_date ) {
+        if ( time() <= $convention_date ) {
+            $continue = true;
+        }
+    }
+
+    if ( $continue == true ) {
+        global $convention_abbreviations, $convention_urls;
+
+        // output wrapper
+        $shortcode_content .= '<div class="discretionary-registration">';
+
+        // output intro text
+        if ( $shortcode_attributes['intro_text'] ) {
+            $shortcode_content .= '<p>' . esc_attr( $shortcode_attributes['intro_text'] ) . '</p>';
+        }
+
+        // output top of button
+        $shortcode_content .= '<h3 class="large-button orange speaker-convention-link convention-shortcode"><a href="' . esc_url( home_url() ) . '/registration/">Register <strong>now</strong>!';
+
+        // output line break if conventions present
+        if ( $convention ) {
+            $shortcode_content .= '<br/>';
+        }
+
+        // output each convention icon
+        $shortcode_content .= output_convention_icons( explode( ',', $shortcode_attributes['convention'] ) );
+
+        // output bottom of button
+        $shortcode_content .= '</a></h3></div>' . "\n";
+
+        return $shortcode_content;
+    }
+}
+
+// add shortcode for hotels grid on location pages
+add_shortcode( 'hotel_grid', 'hotel_grid_shortcode' );
+function hotel_grid_shortcode( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'    => NULL,
+    ), $attributes );
+    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+    ob_start();
+    include( 'archive-hotel.php' );
+    return ob_get_clean();
+}
+
+// add shortcode for speaker page
+add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
+function speaker_archive_shortcode() {
+    ob_start();
+    include( 'archive-speaker.php' );
+    return ob_get_clean();
+}
+
+// add shortcode for speaker grid
+add_shortcode( 'speaker_grid', 'speaker_grid_shortcode' );
+function speaker_grid_shortcode( $attributes ) {
+    global $convention_abbreviations;
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'    => NULL,
+    ), $attributes );
+    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+    // arguments
+    $speaker_grid_args = array(
+        'post_type'         => 'speaker',
+        'meta_key'          => 'featured_speaker',
+        'meta_compare'      => '!=',
+        'meta_value'        => 'no',
+        'posts_per_page'    => -1,
+        'order_by'          => 'menu_order',
+        'order'             => 'ASC',
+        'tax_query' => array(
+            array(
+                'taxonomy'  => 'ghc_conventions_taxonomy',
+                'field'     => 'slug',
+                'terms'     => $convention_abbreviations[$this_convention],
+            )
+        ),
+    );
+
+    // query
+    $speaker_grid_query = new WP_Query( $speaker_grid_args );
+
+    // loop
+    if ( $speaker_grid_query->have_posts() ) {
+        echo '<div class="speaker-item-wrapper">
+            <div class="speaker-item-holder gdlr-speaker-type-round">';
+        while ( $speaker_grid_query->have_posts() ) {
+            $speaker_grid_query->the_post();
+            include( 'speaker-grid-template.php' );
+        }
+        echo '</div>
+        </div>';
+    }
+
+    // reset post data
+    wp_reset_postdata();
+}
+
 // add shortcode for speaker info
 // accepts `postid`, `pagename`, `align`, `no_conventions`, and `photo_only` attributes
 add_shortcode( 'speaker_info', 'speaker_info_shortcode' );
@@ -66,158 +220,4 @@ function speaker_info_shortcode( $attributes ) {
 
     // return shortcode content
     return $shortcode_content;
-}
-
-// add shortcode for convention icon only
-// accepts `convention` attribute either as abbreviation or full name
-add_shortcode( 'convention_icon', 'convention_icon_shortcode' );
-function convention_icon_shortcode( $attributes ) {
-    $shortcode_attributes = shortcode_atts( array (
-        'convention'    => NULL,
-    ), $attributes );
-    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
-
-    return output_convention_icons( $this_convention );
-}
-
-// add shortcode for discretionary registration buttons
-// accepts `convention` attribute either as abbreviation or full name
-add_shortcode( 'discretionary_registration', 'discretionary_registration_shortcode' );
-function discretionary_registration_shortcode( $attributes ) {
-    $shortcode_attributes = shortcode_atts( array (
-        'convention'    => NULL,
-        'year'          => NULL,
-        'intro_text'    => NULL,
-    ), $attributes );
-    // first check agaist dates
-    global $convention_dates;
-    foreach( $convention_dates as $convention_date ) {
-        if ( time() <= $convention_date ) {
-            $continue = true;
-        }
-    }
-
-    if ( $continue == true ) {
-        global $convention_abbreviations, $convention_urls;
-
-        // output wrapper
-        $shortcode_content .= '<div class="discretionary-registration">';
-
-        // output intro text
-        if ( $shortcode_attributes['intro_text'] ) {
-            $shortcode_content .= '<p>' . esc_attr( $shortcode_attributes['intro_text'] ) . '</p>';
-        }
-
-        // output top of button
-        $shortcode_content .= '<h3 class="large-button orange speaker-convention-link convention-shortcode"><a href="' . esc_url( home_url() ) . '/registration/">Register <strong>now</strong>!';
-
-        // output line break if conventions present
-        if ( $convention ) {
-            $shortcode_content .= '<br/>';
-        }
-
-        // output each convention icon
-        $shortcode_content .= output_convention_icons( explode( ',', $shortcode_attributes['convention'] ) );
-
-        // output bottom of button
-        $shortcode_content .= '</a></h3></div>' . "\n";
-
-        return $shortcode_content;
-    }
-}
-
-// add shortcode for speaker page
-add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
-function speaker_archive_shortcode() {
-    ob_start();
-    include( 'archive-speaker.php' );
-    return ob_get_clean();
-}
-
-// add shortcode for hotels grid on location pages
-add_shortcode( 'hotel_grid', 'hotel_grid_shortcode' );
-function hotel_grid_shortcode( $attributes ) {
-    $shortcode_attributes = shortcode_atts( array (
-        'convention'    => NULL,
-    ), $attributes );
-    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
-
-    ob_start();
-    include( 'archive-hotel.php' );
-    return ob_get_clean();
-}
-
-// add shortcode for convention CTA
-add_shortcode( 'convention_cta', 'convention_cta_shortcode' );
-function convention_cta_shortcode( $attributes ) {
-    global $conventions, $convention_abbreviations;
-
-    $shortcode_attributes = shortcode_atts( array (
-        'convention'    => NULL,
-    ), $attributes );
-    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
-
-    $CTA_array = array_filter( $conventions[$this_convention], 'get_current_CTA', ARRAY_FILTER_USE_BOTH );
-    $current_CTA = str_replace( '_begin_date', '', key( $CTA_array ) );
-
-    return apply_filters( 'the_content', $conventions[$this_convention][$current_CTA . '_cta_content'][0] );
-}
-
-// filter to get only the currently active CTA based on dates
-function get_current_CTA( $value, $key ) {
-    // check if this is a CTA key
-    if ( 0 === strpos( $key, 'cta_' ) ) {
-        // check begin and end dates
-        if ( ( false !== strpos( $key, '_begin_date' ) && '' !== $value[0] && strtotime( $value[0] ) <= time() ) || ( ( false !== strpos( $key, '_end_date' ) && '' !== $value[0] && strtotime( $value[0] ) >= time() ) ) ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
-
-// add shortcode for speaker grid
-add_shortcode( 'speaker_grid', 'speaker_grid_shortcode' );
-function speaker_grid_shortcode( $attributes ) {
-    global $convention_abbreviations;
-    $shortcode_attributes = shortcode_atts( array (
-        'convention'    => NULL,
-    ), $attributes );
-    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
-
-    // arguments
-    $speaker_grid_args = array(
-        'post_type'         => 'speaker',
-        'meta_key'          => 'featured_speaker',
-        'meta_compare'      => '!=',
-        'meta_value'        => 'no',
-        'posts_per_page'    => -1,
-        'order_by'          => 'menu_order',
-        'order'             => 'ASC',
-        'tax_query' => array(
-            array(
-                'taxonomy'  => 'ghc_conventions_taxonomy',
-                'field'     => 'slug',
-                'terms'     => $convention_abbreviations[$this_convention],
-            )
-        ),
-    );
-
-    // query
-    $speaker_grid_query = new WP_Query( $speaker_grid_args );
-
-    // loop
-    if ( $speaker_grid_query->have_posts() ) {
-        echo '<div class="speaker-item-wrapper">
-            <div class="speaker-item-holder gdlr-speaker-type-round">';
-        while ( $speaker_grid_query->have_posts() ) {
-            $speaker_grid_query->the_post();
-            include( 'speaker-grid-template.php' );
-        }
-        echo '</div>
-        </div>';
-    }
-
-    // reset post data
-    wp_reset_postdata();
 }

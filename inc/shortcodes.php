@@ -133,3 +133,16 @@ function speaker_archive_shortcode() {
     include( 'archive-speaker.php' );
     return ob_get_clean();
 }
+
+// add shortcode for hotels grid on location pages
+add_shortcode( 'hotel_grid', 'hotel_grid_shortcode' );
+function hotel_grid_shortcode( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'    => NULL,
+    ), $attributes );
+    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+    ob_start();
+    include( 'archive-hotel.php' );
+    return ob_get_clean();
+}

@@ -30,3 +30,20 @@ $theme-black:           #111111;
         .no-svg &.tx { background-color: $theme-yellow; color: $theme-black; }
     }
 }
+
+// hotels
+.hotels.flexbox-wrapper {
+    @media (min-width: 768px) {
+        display: flex;
+        margin-bottom: 50px;
+    }
+
+    .columns { float: none; }
+
+    .hotel {
+        height: 100%;
+        margin-bottom: 50px;
+    }
+
+    .sold-out .gdlr-info-font { text-decoration: line-through; }
+}

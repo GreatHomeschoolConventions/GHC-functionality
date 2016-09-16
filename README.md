@@ -36,6 +36,8 @@ Available shortcodes:
 - `photo_only` (true)
 - `extra_classes` (string of classes to add)
 
+##`[speaker_list]`: displays list of speaker names, optionally filtered by convention; accepts the argument `convention` (two-letter abbreviation)
+
 #Changelog
 
 - 1.8

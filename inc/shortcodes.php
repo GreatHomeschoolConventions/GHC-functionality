@@ -221,3 +221,54 @@ function speaker_info_shortcode( $attributes ) {
     // return shortcode content
     return $shortcode_content;
 }
+
+add_shortcode( 'speaker_list', 'speaker_list_shortcode' );
+function speaker_list_shortcode( $attributes ) {
+    global $convention_abbreviations;
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'    => NULL,
+    ), $attributes );
+    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+    // arguments
+    $speaker_list_args = array(
+        'post_type'         => 'speaker',
+        'meta_key'          => 'featured_speaker',
+        'meta_compare'      => '!=',
+        'meta_value'        => 'no',
+        'posts_per_page'    => -1,
+        'order_by'          => 'menu_order',
+        'order'             => 'ASC',
+    );
+
+    // conventions
+    if ( $this_convention ) {
+        $speaker_list_args = array_merge( $speaker_list_args, array(
+            'tax_query' => array(
+                array(
+                    'taxonomy'  => 'ghc_conventions_taxonomy',
+                    'field'     => 'slug',
+                    'terms'     => $convention_abbreviations[$this_convention],
+                )
+            ),
+        ));
+    }
+
+    // query
+    $speaker_list_query = new WP_Query( $speaker_list_args );
+
+    // loop
+    if ( $speaker_list_query->have_posts() ) {
+        $shortcode_content = '<ul class="speaker-list">';
+        while ( $speaker_list_query->have_posts() ) {
+            $speaker_list_query->the_post();
+            $shortcode_content .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
+        }
+        echo '</ul>';
+    }
+
+    // reset post data
+    wp_reset_postdata();
+
+    return $shortcode_content;
+}

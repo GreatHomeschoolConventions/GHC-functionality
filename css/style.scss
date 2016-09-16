@@ -55,3 +55,15 @@ $theme-black:           #111111;
         flex-wrap: wrap;
     }
 }
+
+// ubermenu
+.ubermenu {
+    .speaker-list {
+        list-style-type: none;
+
+        li {
+            display: inline-block;
+            margin-right: 0.75em;
+        }
+    }
+}

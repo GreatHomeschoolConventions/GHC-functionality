@@ -147,7 +147,7 @@ function hotel_grid_shortcode( $attributes ) {
     return ob_get_clean();
 }
 
-// add shortocde for convention CTA
+// add shortcode for convention CTA
 add_shortcode( 'convention_cta', 'convention_cta_shortcode' );
 function convention_cta_shortcode( $attributes ) {
     global $conventions, $convention_abbreviations;

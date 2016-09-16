@@ -35,6 +35,28 @@ function ghc_speakers_deactivate() {
 }
 register_deactivation_hook( __FILE__, 'ghc_speakers_deactivate' );
 
+// add custom image sizes
+add_action( 'after_setup_theme', 'ghc_custom_image_sizes' );
+function ghc_custom_image_sizes() {
+    add_image_size( 'square-small', 400, 400, true );
+    add_image_size( 'square-medium', 600, 600, true );
+    add_image_size( 'square-large', 900, 900, true );
+    add_image_size( 'small-grid-size-medium', 600, 450, true );
+    add_image_size( 'small-grid-size-large', 800, 600, true );
+}
+
+// add custom image sizes to WP admin
+add_filter( 'image_size_names_choose', 'ghc_custom_image_sizes_names' );
+function ghc_custom_image_sizes_names( $sizes ) {
+    return array_merge( $sizes, array(
+        'square-small'              => 'Square',
+        'square-medium'             => 'Square',
+        'square-large'              => 'Square',
+        'small-grid-size-medium'    => 'Grid',
+        'small-grid-size-large'     => 'Grid',
+    ));
+}
+
 // register JS and styles
 function register_plugin_resources() {
     wp_register_script( 'modernizr-svg', plugins_url( 'js/modernizr-svg.min.js', __FILE__ ), array(), '3.3.1' );

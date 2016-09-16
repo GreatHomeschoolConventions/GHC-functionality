@@ -13,7 +13,7 @@ Available shortcodes:
 
 ##`[convention_cta]`: displays the CTA text for the specified convention; accepts the argument `convention` (two-letter abbreviation)
 
-##`[convention_icon]`: displays the icon specified; accepts the argument `convention` (two-letter abbreviation)
+##`[convention_icon]`: displays the icon(s) specified; accepts the argument `convention` (two-letter abbreviation or comma-separated string)
 
 ##`[discretionary_registration]`: shows a box with link to registration, optionally for the specified convention; intended for use in blog posts; accepts these arguments:
 

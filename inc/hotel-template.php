@@ -1,7 +1,7 @@
 <div class="four columns">
     <div class="gdlr-item gdlr-accommodation-item hotel <?php echo get_field( 'sold_out' ) ? 'sold-out' : ''; ?>">
         <?php if ( has_post_thumbnail() ) { ?>
-        <div class="accommodation-thumbnail"><?php the_post_thumbnail( array( 400, 300 ) ); ?></div>
+        <div class="accommodation-thumbnail"><?php the_post_thumbnail( 'small-grid-size' ); ?></div>
         <?php } ?>
         <div class="accommodation-content-outer-wrapper">
             <div class="accommodation-content-wrapper">

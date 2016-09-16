@@ -25,6 +25,8 @@ Available shortcodes:
 
 ##`[speaker_archive]`: displays a grid of all speakers; intended for the archive page
 
+##`[speaker_grid]`: displays a grid of speakers for the specified convention; intended for the individual locations pages; accepts the argument `convention` (two-letter abbreviation)
+
 ##`[speaker_info]`: displays speaker photo, name, conventions; accepts these arguments:
 
 - `post_id`

@@ -175,3 +175,49 @@ function get_current_CTA( $value, $key ) {
         }
     }
 }
+
+// add shortcode for speaker grid
+add_shortcode( 'speaker_grid', 'speaker_grid_shortcode' );
+function speaker_grid_shortcode( $attributes ) {
+    global $convention_abbreviations;
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'    => NULL,
+    ), $attributes );
+    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+    // arguments
+    $speaker_grid_args = array(
+        'post_type'         => 'speaker',
+        'meta_key'          => 'featured_speaker',
+        'meta_compare'      => '!=',
+        'meta_value'        => 'no',
+        'posts_per_page'    => -1,
+        'order_by'          => 'menu_order',
+        'order'             => 'ASC',
+        'tax_query' => array(
+            array(
+                'taxonomy'  => 'ghc_conventions_taxonomy',
+                'field'     => 'slug',
+                'terms'     => $convention_abbreviations[$this_convention],
+            )
+        ),
+    );
+
+    // query
+    $speaker_grid_query = new WP_Query( $speaker_grid_args );
+
+    // loop
+    if ( $speaker_grid_query->have_posts() ) {
+        echo '<div class="speaker-item-wrapper">
+            <div class="speaker-item-holder gdlr-speaker-type-round">';
+        while ( $speaker_grid_query->have_posts() ) {
+            $speaker_grid_query->the_post();
+            include( 'speaker-grid-template.php' );
+        }
+        echo '</div>
+        </div>';
+    }
+
+    // reset post data
+    wp_reset_postdata();
+}

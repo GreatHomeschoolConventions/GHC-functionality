@@ -47,3 +47,11 @@ $theme-black:           #111111;
 
     .sold-out .gdlr-info-font { text-decoration: line-through; }
 }
+
+// speaker grid
+.speaker-item-holder {
+    @media screen and (min-width: 768px) {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

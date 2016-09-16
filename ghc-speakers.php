@@ -741,7 +741,11 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
 
     // check whether input is a ID number, array, or array of objects
     if ( is_numeric( $input_conventions ) ) {
-        $conventions_to_output = wp_get_post_categories( get_the_ID(), array( 'fields' => 'ids' ) );
+        $this_post_terms = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
+        $conventions_to_output = array();
+        foreach ( $this_post_terms as $term ) {
+            $conventions_to_output[] = $term->slug;
+        }
     } elseif ( is_string( $input_conventions ) ) {
         // handle two-letter abbreviations
         if ( strlen( $input_conventions ) > 2 ) {

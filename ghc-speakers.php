@@ -578,6 +578,17 @@ function ghc_modify_sponsor_archive( $query ) {
     }
 }
 
+// modify exhibitor archive to show convention icons
+add_filter( 'the_content', 'ghc_exhibitor_archive_icons' );
+function ghc_exhibitor_archive_icons( $content ) {
+    global $post;
+    if ( 'exhibitor' == get_post_type( $post->ID ) ) {
+        return $content . output_convention_icons( $post->ID );
+    } else {
+        return $content;
+    }
+}
+
 // add options
 if( function_exists('acf_add_options_page') ) {
 

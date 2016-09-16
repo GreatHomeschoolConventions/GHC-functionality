@@ -7,6 +7,33 @@ A simple plugin to add custom post types and categories for use on Great Homesch
 - Install the plugin
 - Customize the `page-speakers.php` theme template to show posts as necessary
 
+#Other Notes
+
+Available shortcodes:
+
+##`[convention_cta]`: displays the CTA text for the specified convention; accepts the argument `convention` (two-letter abbreviation)
+
+##`[convention_icon]`: displays the icon specified; accepts the argument `convention` (two-letter abbreviation)
+
+##`[discretionary_registration]`: shows a box with link to registration, optionally for the specified convention; intended for use in blog posts; accepts these arguments:
+
+- `convention` (two-letter abbreviation)
+- `year` (four-digit year)
+- `intro_text` (string of text to precede the button/link)
+
+##`[hotel_grid]`: displays a grid of hotels for the specified convention; accepts the argument `convention` (two-letter abbreviation)
+
+##`[speaker_archive]`: displays a grid of all speakers; intended for the archive page
+
+##`[speaker_info]`: displays speaker photo, name, conventions; accepts these arguments:
+
+- `post_id`
+- `pagename` (slug)
+- `align` (left, right, etc.)
+- `no_conventions` (true)
+- `photo_only` (true)
+- `extra_classes` (string of classes to add)
+
 #Changelog
 
 - 1.8

@@ -9,6 +9,9 @@ A simple plugin to add custom post types and categories for use on Great Homesch
 
 #Changelog
 
+- 1.8
+    - Use special events instead of speakers, fix convention sort order, and more
+
 - 1.7
     - Add functionality features that were in the theme `functions.php`
 

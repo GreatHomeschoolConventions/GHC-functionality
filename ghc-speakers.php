@@ -583,10 +583,9 @@ add_filter( 'the_content', 'ghc_exhibitor_archive_icons' );
 function ghc_exhibitor_archive_icons( $content ) {
     global $post;
     if ( 'exhibitor' == get_post_type( $post->ID ) ) {
-        return $content . output_convention_icons( $post->ID );
-    } else {
-        return $content;
+        echo output_convention_icons( $post->ID );
     }
+    return $content;
 }
 
 // add options

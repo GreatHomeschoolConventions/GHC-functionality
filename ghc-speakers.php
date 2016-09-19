@@ -198,7 +198,7 @@ function custom_post_types() {
         'show_in_admin_bar'   => true,
         'show_in_nav_menus'   => true,
         'can_export'          => true,
-        'has_archive'         => 'speakers',
+        'has_archive'         => 'speakers/all',
         'exclude_from_search' => false,
         'publicly_queryable'  => true,
         'rewrite'             => $speakers_rewrite,
@@ -794,7 +794,7 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
             $convention_key = array_flip( $convention_abbreviations )[$convention];
         }
 
-        $convention_icons .= '<a class="speaker-convention-link" href="' . $conventions[$convention_key]['permalink'] . '">';
+        $convention_icons .= '<a class="speaker-convention-link" href="' . $conventions[$convention_key]['landing_page'] . '">';
             $convention_icons .= '<svg role="img" title="' . $conventions[$convention_key]['title'] . '"><use xlink:href="' . plugins_url( 'SVG/icons.min.svg#icon-' . ucfirst ($convention_abbreviations[$convention_key] ) . '_small', __FILE__ ) . '"></use></svg><span class="fallback ' . $convention_key . '">' . $conventions[$convention_key]['title'] . '</span>';
         $convention_icons .= '</a>';
     }

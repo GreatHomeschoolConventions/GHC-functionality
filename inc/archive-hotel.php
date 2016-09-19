@@ -7,6 +7,13 @@ $hotel_args = array(
     'posts_per_page'         => -1,
     'orderby'                => 'menu_order',
     'order'                  => 'ASC',
+    'meta_query' => array(
+        array(
+            'meta_key'  => 'discount_valid_date',
+            'value'     => date( 'Ymd' ),
+            'compare'   => '<=',
+        ),
+    ),
     'tax_query' => array(
         array(
             'taxonomy'  => 'ghc_conventions_taxonomy',

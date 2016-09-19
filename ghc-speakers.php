@@ -754,8 +754,10 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
     if ( is_numeric( $input_conventions ) ) {
         $this_post_terms = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
         $conventions_to_output = array();
-        foreach ( $this_post_terms as $term ) {
-            $conventions_to_output[] = $term->slug;
+        if ( $this_post_terms ) {
+            foreach ( $this_post_terms as $term ) {
+                $conventions_to_output[] = $term->slug;
+            }
         }
     } elseif ( is_string( $input_conventions ) ) {
         // handle two-letter abbreviations

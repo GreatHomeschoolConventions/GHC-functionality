@@ -758,6 +758,7 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
             foreach ( $this_post_terms as $term ) {
                 $conventions_to_output[] = $term->slug;
             }
+            usort( $conventions_to_output, 'array_sort_conventions' );
         }
     } elseif ( is_string( $input_conventions ) ) {
         // handle two-letter abbreviations

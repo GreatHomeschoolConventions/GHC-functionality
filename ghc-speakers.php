@@ -788,8 +788,10 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
         // get short convention name
         if ( is_object( $convention ) ) {
             $convention_key = array_search( $convention->slug, $convention_abbreviations );
-        } else {
+        } elseif ( 2 == strlen( $convention ) ) {
             $convention_key = $convention;
+        } else {
+            $convention_key = array_flip( $convention_abbreviations )[$convention];
         }
 
         $convention_icons .= '<a class="speaker-convention-link" href="' . $conventions[$convention_key]['permalink'] . '">';

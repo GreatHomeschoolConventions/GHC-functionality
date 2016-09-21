@@ -578,14 +578,26 @@ function ghc_modify_sponsor_archive( $query ) {
     }
 }
 
-// modify exhibitor archive to show convention icons
+// modify exhibitor archive to show convention icons and site URLs
 add_filter( 'the_content', 'ghc_exhibitor_archive_icons' );
 function ghc_exhibitor_archive_icons( $content ) {
     global $post;
     if ( 'exhibitor' == get_post_type( $post->ID ) ) {
+        if ( get_field( 'exhibitor_URL', $post->ID ) ) {
+            echo '<p><a href="' . get_field( 'exhibitor_URL', $post->ID ) . '" target="_blank">Visit website&rarr;</a></p>';
+        }
         echo output_convention_icons( $post->ID );
     }
     return $content;
+}
+
+// modify exhibitor post types to link to their website
+add_filter( 'post_type_link', 'ghc_exhibitor_post_type_link', 10, 4 );
+function ghc_exhibitor_post_type_link( $post_link, $post, $leavename, $sample ) {
+    if ( 'exhibitor' == get_post_type( $post ) ) {
+        $post_link = get_field( 'exhibitor_URL', $post->ID );
+    }
+    return $post_link;
 }
 
 // add options

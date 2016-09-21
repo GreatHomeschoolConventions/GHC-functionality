@@ -806,7 +806,7 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
             $convention_key = array_flip( $convention_abbreviations )[$convention];
         }
 
-        $convention_icons .= '<a class="speaker-convention-link" href="' . $conventions[$convention_key]['landing_page'] . '">';
+        $convention_icons .= '<a class="speaker-convention-link" href="' . get_permalink( $conventions[$convention_key]['landing_page'][0] ) . '">';
             $convention_icons .= '<svg role="img" title="' . $conventions[$convention_key]['title'] . '"><use xlink:href="' . plugins_url( 'SVG/icons.min.svg#icon-' . ucfirst ($convention_abbreviations[$convention_key] ) . '_small', __FILE__ ) . '"></use></svg><span class="fallback ' . $convention_key . '">' . $conventions[$convention_key]['title'] . '</span>';
         $convention_icons .= '</a>';
     }

@@ -87,6 +87,7 @@ module.exports = function (grunt) {
         custom: {
             files: {
                 'js/exhibitor-backend.min.js': ['js/exhibitor-backend.js'],
+                'js/woocommerce.min.js': ['js/woocommerce.js'],
             },
         },
     },

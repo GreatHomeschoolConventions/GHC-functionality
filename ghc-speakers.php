@@ -60,8 +60,16 @@ function ghc_custom_image_sizes_names( $sizes ) {
 // register JS and styles
 function register_plugin_resources() {
     wp_register_script( 'modernizr-svg', plugins_url( 'js/modernizr-svg.min.js', __FILE__ ), array(), '3.3.1' );
+    wp_register_script( 'ghc-woocommerce', plugins_url( 'js/woocommerce.min.js', __FILE__ ), array( 'woocommerce' ) );
+
 
     wp_enqueue_style( 'ghc-speakers', plugins_url( 'css/style.min.css', __FILE__ ), array(), '1.8' );
+    // load WooCommerce script only on WC pages
+    if ( function_exists( 'is_product' ) && function_exists( 'is_cart' ) ) {
+        if ( is_product() || is_cart() ) {
+            wp_enqueue_script( 'ghc-woocommerce' );
+        }
+    }
 }
 add_action( 'wp_enqueue_scripts', 'register_plugin_resources' );
 

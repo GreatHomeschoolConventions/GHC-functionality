@@ -4,7 +4,7 @@
                                 <div class="gdlr-standard-style">
                                     <?php if ( has_post_thumbnail() ) { ?>
                                     <div class="gdlr-blog-thumbnail">
-                                        <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'small-grid-size' ); ?></a>
+                                        <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium' ); ?></a>
                                     </div>
                                     <?php } ?>
 

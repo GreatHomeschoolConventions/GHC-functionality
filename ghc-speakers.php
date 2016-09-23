@@ -252,52 +252,6 @@ function custom_post_types() {
     );
     register_post_type( 'exhibitor', $exhibitors_args );
 
-    $workshops_labels = array(
-        'name'                => _x( 'Workshops', 'Post Type General Name', 'GHC' ),
-        'singular_name'       => _x( 'Workshop', 'Post Type Singular Name', 'GHC' ),
-        'menu_name'           => __( 'Workshops', 'GHC' ),
-        'name_admin_bar'      => __( 'Workshop', 'GHC' ),
-        'parent_item_colon'   => __( 'Parent Workshop:', 'GHC' ),
-        'all_items'           => __( 'All Workshops', 'GHC' ),
-        'add_new_item'        => __( 'Add New Workshop', 'GHC' ),
-        'add_new'             => __( 'Add New', 'GHC' ),
-        'new_item'            => __( 'New Workshop', 'GHC' ),
-        'edit_item'           => __( 'Edit Workshop', 'GHC' ),
-        'update_item'         => __( 'Update Workshop', 'GHC' ),
-        'view_item'           => __( 'View Workshop', 'GHC' ),
-        'search_items'        => __( 'Search Workshop', 'GHC' ),
-        'not_found'           => __( 'Not found', 'GHC' ),
-        'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
-    );
-    $workshops_rewrite = array(
-        'slug'                => 'workshops',
-        'with_front'          => true,
-        'pages'               => true,
-        'feeds'               => true,
-    );
-    $workshops_args = array(
-        'label'               => __( 'workshop', 'GHC' ),
-        'description'         => __( 'Workshops', 'GHC' ),
-        'labels'              => $workshops_labels,
-        'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
-        'taxonomies'          => array( 'ghc_conventions_taxonomy', 'ghc_special_tracks_taxonomy' ),
-        'hierarchical'        => true,
-        'public'              => true,
-        'show_ui'             => true,
-        'show_in_menu'        => true,
-        'menu_position'       => 5,
-        'menu_icon'           => 'dashicons-welcome-learn-more',
-        'show_in_admin_bar'   => true,
-        'show_in_nav_menus'   => true,
-        'can_export'          => true,
-        'has_archive'         => 'workshops',
-        'exclude_from_search' => false,
-        'publicly_queryable'  => true,
-        'rewrite'             => $workshops_rewrite,
-        'capability_type'     => 'page',
-    );
-    register_post_type( 'workshop', $workshops_args );
-
     $sponsors_labels = array(
         'name'                => _x( 'Sponsors', 'Post Type General Name', 'GHC' ),
         'singular_name'       => _x( 'Sponsor', 'Post Type Singular Name', 'GHC' ),
@@ -454,7 +408,7 @@ function ghc_taxonomies() {
         'show_tagcloud'              => true,
         'rewrite'                    => false,
     );
-    register_taxonomy( 'ghc_conventions_taxonomy', array( 'location', 'speaker', 'exhibitor', 'hotel', 'workshop', 'special_event' ), $convention_args );
+    register_taxonomy( 'ghc_conventions_taxonomy', array( 'location', 'speaker', 'exhibitor', 'hotel', 'session', 'special_event' ), $convention_args );
 
 }
 // Hook into the 'init' action to register custom taxonomy

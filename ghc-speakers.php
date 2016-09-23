@@ -408,7 +408,7 @@ function ghc_taxonomies() {
         'show_tagcloud'              => true,
         'rewrite'                    => false,
     );
-    register_taxonomy( 'ghc_conventions_taxonomy', array( 'location', 'speaker', 'exhibitor', 'hotel', 'session', 'special_event' ), $convention_args );
+    register_taxonomy( 'ghc_conventions_taxonomy', array( 'page', 'post', 'location', 'speaker', 'exhibitor', 'hotel', 'session', 'special_event' ), $convention_args );
 
 }
 // Hook into the 'init' action to register custom taxonomy

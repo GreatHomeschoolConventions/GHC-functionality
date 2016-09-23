@@ -30,6 +30,24 @@
             }
         }
 
+        // show/hide gift recipient info
+        if ($('.woocommerce-content > .product_cat-registration').length > 0) {
+            handleGiftMemberships();
+            $('body').on('change', '.product-addon-gift-options input[type="checkbox"]', handleGiftMemberships);
+        }
+        function handleGiftMemberships() {
+            // handle gift vs. normal purchases
+            if ($('.product-addon-gift-options input[type="checkbox"]').is(':checked') == true) {
+                // show recipient info and make it required
+                $('.product-addon-recipient-information').slideDown();
+                $('.product-addon-recipient-information input').attr('required', true);
+            } else {
+                // hide and don’t require recipient info
+                $('.product-addon-recipient-information').slideUp();
+                $('.product-addon-recipient-information input').attr('required', false);
+            }
+        }
+
         // hide “family members” line from individual registrations in the cart and handle program guides
         if ($('.woocommerce-cart').length > 0) {
             $('dl.variation').each(function() {

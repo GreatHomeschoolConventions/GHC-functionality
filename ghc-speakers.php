@@ -24,6 +24,8 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
+CONST GHC_SPEAKERS_VERSION = 1.8;
+
 // flush rewrite rules on activation/deactivation
 function ghc_speakers_activate() {
     flush_rewrite_rules();
@@ -60,10 +62,10 @@ function ghc_custom_image_sizes_names( $sizes ) {
 // register JS and styles
 function register_plugin_resources() {
     wp_register_script( 'modernizr-svg', plugins_url( 'js/modernizr-svg.min.js', __FILE__ ), array(), '3.3.1' );
-    wp_register_script( 'ghc-woocommerce', plugins_url( 'js/woocommerce.min.js', __FILE__ ), array( 'woocommerce' ) );
+    wp_register_script( 'ghc-woocommerce', plugins_url( 'js/woocommerce.min.js', __FILE__ ), array( 'woocommerce' ), GHC_SPEAKERS_VERSION );
 
+    wp_enqueue_style( 'ghc-speakers', plugins_url( 'css/style.min.css', __FILE__ ), array(), GHC_SPEAKERS_VERSION );
 
-    wp_enqueue_style( 'ghc-speakers', plugins_url( 'css/style.min.css', __FILE__ ), array(), '1.8' );
     // load WooCommerce script only on WC pages
     if ( function_exists( 'is_product' ) && function_exists( 'is_cart' ) ) {
         if ( is_product() || is_cart() ) {

@@ -60,5 +60,18 @@
             });
             $('.cart_item:contains("Additional Program Guide")').find('.attendees-count').remove();
         }
+
+        // fix for browsers allowing out-of-range inputs (Safari)
+        if (($('input.qty[max], input.qty[min]').length > 0) || ($('input.qty[min] ').length > 0)) {
+            $('input.qty[max]').on('change', function() {
+                if (Number($(this).val()) > Number($(this).attr('max'))) {
+                    $(this).val($(this).attr('max'));
+                }
+                if (Number($(this).val()) < Number($(this).attr('min'))) {
+                    $(this).val($(this).attr('min'));
+                }
+            });
+        }
+
     });
 })(jQuery);

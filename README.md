@@ -52,6 +52,10 @@ Available shortcodes:
 
 - displays list of speaker names, optionally filtered by convention; accepts the argument `convention` (two-letter abbreviation)
 
+##`[special_track_speakers]`
+
+- displays speakers’ photos, names, and conventions for specified special track category; accepts the argument `track` with a special track slug
+
 #Changelog
 
 - 1.8

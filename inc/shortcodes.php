@@ -269,3 +269,47 @@ function speaker_list_shortcode( $attributes ) {
 
     return $shortcode_content;
 }
+
+add_shortcode( 'special_track_speakers', 'special_track_speakers_shortcode' );
+function special_track_speakers_shortcode( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'track'    => NULL,
+    ), $attributes );
+
+    // arguments
+    $special_track_speakers_args = array(
+        'post_type'         => 'speaker',
+        'posts_per_page'    => -1,
+        'orderby'           => 'menu_order',
+        'order'             => 'ASC',
+        'tax_query' => array(
+            array(
+                'taxonomy'  => 'ghc_special_tracks_taxonomy',
+                'field'     => 'slug',
+                'terms'     => $shortcode_attributes['track'],
+            )
+        ),
+    );
+
+    // query
+    $special_track_speakers_query = new WP_Query( $special_track_speakers_args );
+
+    // loop
+    if ( $special_track_speakers_query->have_posts() ) {
+        $shortcode_content = '<div class="speaker-item-wrapper">
+            <div class="speaker-item-holder gdlr-speaker-type-round">';
+        while ( $special_track_speakers_query->have_posts() ) {
+            $special_track_speakers_query->the_post();
+            ob_start();
+            include( 'speaker-grid-template.php' );
+            $shortcode_content .= ob_get_clean();
+        }
+        $shortcode_content .= '</div>
+        </div>';
+    }
+
+    // reset post data
+    wp_reset_postdata();
+
+    return $shortcode_content;
+}

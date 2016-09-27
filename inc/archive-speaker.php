@@ -1,7 +1,7 @@
     <div class="gdlr-isotope">
         <?php
         // how many speakers to show above entertainers
-        $top_speakers_quantity = 18;
+        $top_speakers_quantity = 20;
 
         // new queries
         $top_speakers_args = array (
@@ -67,10 +67,10 @@
             $counter = 1;
             while ( $top_speakers_query->have_posts() ) {
                 $top_speakers_query->the_post();
-                echo '<div class="four columns">';
+                echo '<div class="three columns">';
                     include('speaker-template.php');
                 echo '</div>';
-                if ( 0 == $counter % 3 ) {
+                if ( 0 == $counter % 4 ) {
                     echo '<div class="clear"></div>';
                 }
                 $counter++;
@@ -100,10 +100,10 @@
             $counter = 1;
             while ( $bottom_speakers_query->have_posts() ) {
                 $bottom_speakers_query->the_post();
-                echo '<div class="four columns">';
+                echo '<div class="three columns">';
                     include('speaker-template.php');
                 echo '</div>';
-                if ( 0 == $counter % 3 ) {
+                if ( 0 == $counter % 4 ) {
                     echo '<div class="clear"></div>';
                 }
                 $counter++;

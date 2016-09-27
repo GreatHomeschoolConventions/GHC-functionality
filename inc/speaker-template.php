@@ -4,7 +4,13 @@
                                 <div class="gdlr-standard-style">
                                     <?php if ( has_post_thumbnail() ) { ?>
                                     <div class="gdlr-blog-thumbnail">
-                                        <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium' ); ?></a>
+                                        <a href="<?php the_permalink(); ?>"><?php
+                                            if ( 'speaker' == get_post_type() ) {
+                                                the_post_thumbnail( 'medium' );
+                                            } elseif ( 'special_event' == get_post_type() ) {
+                                                the_post_thumbnail( 'blog-grid' );
+                                            }
+                                            ?></a>
                                     </div>
                                     <?php } ?>
 

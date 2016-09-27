@@ -3,7 +3,7 @@
                             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                                 <div class="gdlr-standard-style">
                                     <?php if ( has_post_thumbnail() ) { ?>
-                                    <div class="gdlr-blog-thumbnail">
+                                    <div class="gdlr-speaker-thumbnail">
                                         <a href="<?php the_permalink(); ?>"><?php
                                             if ( 'speaker' == get_post_type() ) {
                                                 the_post_thumbnail( 'medium' );

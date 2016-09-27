@@ -60,7 +60,7 @@
         echo '<div class="row">';
         echo '<div class="gdl-page-item mb0 pb20">';
 
-        echo '<div id="blog-item-holder" class="blog-item-holder">';
+        echo '<div id="blog-item-holder" class="speaker-item-holder gdlr-speaker-type-round">';
 
         // top 12 (set number on lines 15 and 48)
         if ( $top_speakers_query->have_posts() ) {

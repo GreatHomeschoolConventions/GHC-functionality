@@ -5,38 +5,52 @@ A simple plugin to add custom post types and categories for use on Great Homesch
 #Usage
 
 - Install the plugin
-- Customize the `page-speakers.php` theme template to show posts as necessary
+- Use shortcodes as necessary
 
 #Other Notes
 
 Available shortcodes:
 
-##`[convention_cta]`: displays the CTA text for the specified convention; accepts the argument `convention` (two-letter abbreviation)
+##`[convention_cta]`
 
-##`[convention_icon]`: displays the icon(s) specified; accepts the argument `convention` (two-letter abbreviation or comma-separated string)
+- displays the CTA text for the specified convention; accepts the argument `convention` (two-letter abbreviation)
 
-##`[discretionary_registration]`: shows a box with link to registration, optionally for the specified convention; intended for use in blog posts; accepts these arguments:
+##`[convention_icon]`
 
-- `convention` (two-letter abbreviation)
-- `year` (four-digit year)
-- `intro_text` (string of text to precede the button/link)
+- displays the icon(s) specified; accepts the argument `convention` (two-letter abbreviation or comma-separated string)
 
-##`[hotel_grid]`: displays a grid of hotels for the specified convention; accepts the argument `convention` (two-letter abbreviation)
+##`[discretionary_registration]`
 
-##`[speaker_archive]`: displays a grid of all speakers; intended for the archive page
+- shows a box with link to registration, optionally for the specified convention; intended for use in blog posts; accepts these arguments:
+    - `convention` (two-letter abbreviation)
+    - `year` (four-digit year)
+    - `intro_text` (string of text to precede the button/link)
 
-##`[speaker_grid]`: displays a grid of speakers for the specified convention; intended for the individual locations pages; accepts the argument `convention` (two-letter abbreviation)
+##`[hotel_grid]`
 
-##`[speaker_info]`: displays speaker photo, name, conventions; accepts these arguments:
+- displays a grid of hotels for the specified convention; accepts the argument `convention` (two-letter abbreviation)
 
-- `post_id`
-- `pagename` (slug)
-- `align` (left, right, etc.)
-- `no_conventions` (true)
-- `photo_only` (true)
-- `extra_classes` (string of classes to add)
+##`[speaker_archive]`
 
-##`[speaker_list]`: displays list of speaker names, optionally filtered by convention; accepts the argument `convention` (two-letter abbreviation)
+- displays a grid of all speakers; intended for the archive page
+
+##`[speaker_grid]`
+
+- displays a grid of speakers for the specified convention; intended for the individual locations pages; accepts the argument `convention` (two-letter abbreviation)
+
+##`[speaker_info]`
+
+- displays speaker photo, name, conventions; accepts these arguments:
+    - `post_id`
+    - `pagename` (slug)
+    - `align` (left, right, etc.)
+    - `no_conventions` (true)
+    - `photo_only` (true)
+    - `extra_classes` (string of classes to add)
+
+##`[speaker_list]`
+
+- displays list of speaker names, optionally filtered by convention; accepts the argument `convention` (two-letter abbreviation)
 
 #Changelog
 

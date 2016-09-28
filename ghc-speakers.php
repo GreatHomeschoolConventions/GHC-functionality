@@ -387,7 +387,7 @@ function ghc_taxonomies() {
         'show_tagcloud'              => true,
         'rewrite'                    => $track_rewrite,
     );
-    register_taxonomy( 'ghc_special_tracks_taxonomy', array( 'speaker', 'workshop' ), $track_args );
+    register_taxonomy( 'ghc_special_tracks_taxonomy', array( 'speaker', 'session' ), $track_args );
 
     $convention_labels = array(
         'name'                       => _x( 'Conventions', 'Taxonomy General Name', 'GHC' ),

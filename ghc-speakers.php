@@ -511,6 +511,19 @@ function meet_the_author() {
     }
 }
 
+// always sort speakers by menu_order
+add_filter( 'pre_get_posts', 'ghc_speakers_order' );
+function ghc_speakers_order( $query ) {
+    if ( 'speaker' == $query->query['post_type'] && ! is_admin() ) {
+        $query->query['orderby'] = 'menu_order';
+        $query->query_vars['orderby'] = 'menu_order';
+        $query->query['order'] = 'ASC';
+        $query->query_vars['order'] = 'ASC';
+    }
+
+    return $query;
+}
+
 // modify speaker archive query to hide general speakers
 add_action( 'pre_get_posts', 'ghc_modify_speaker_archive' );
 function ghc_modify_speaker_archive( $query ) {

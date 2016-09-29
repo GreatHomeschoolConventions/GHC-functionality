@@ -842,7 +842,60 @@ add_action( 'wp_head', 'ghc_opengraph_video', 8 );
 function ghc_opengraph_video() {
     $featured_video = get_field( 'featured_video' );
     if ( $featured_video ) {
+        $video_ID = get_video_ID( $featured_video );
+        $featured_video_meta = get_post_meta( get_the_ID(), 'featured_video_meta', true );
+
+        // video
         echo '<meta property="og:video" content="' . $featured_video . '" />';
         echo strpos( $featured_video, 'https' ) !== false ? '<meta property="og:video:secure_url" content="' . $featured_video . '" />' : '' ;
+        echo '<meta property="og:video:width" content="' . $featured_video_meta['width'] . '" />';
+        echo '<meta property="og:video:height" content="' . $featured_video_meta['height'] . '" />';
+
+        // placeholder image
+        echo '<meta property="og:image" content="' . $featured_video_meta['url'] . '" />';
     }
+}
+
+// retrieve featured video meta and save to postmeta
+add_action( 'acf/save_post', 'ghc_opengraph_video_get_meta', 20 );
+function ghc_opengraph_video_get_meta( $post_id ) {
+    if ( get_field( 'featured_video') ) {
+        $video_ID = get_video_ID( sanitize_text_field( get_field( 'featured_video' ) ) );
+
+        // get video meta
+        $youtube_api_url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' . $video_ID . '&key=' . get_option( 'options_api_key' );
+        $youtube_meta_ch = curl_init();
+        curl_setopt( $youtube_meta_ch, CURLOPT_URL, $youtube_api_url );
+        curl_setopt( $youtube_meta_ch, CURLOPT_REFERER, site_url() );
+        curl_setopt( $youtube_meta_ch, CURLOPT_RETURNTRANSFER, 1 );
+        $youtube_meta_json = curl_exec( $youtube_meta_ch );
+        curl_close( $youtube_meta_ch );
+        $youtube_meta = json_decode( $youtube_meta_json );
+        $youtube_thumbnail = $youtube_meta->items[0]->snippet->thumbnails->maxres;
+
+        // save post meta
+        $youtube_thumbnail_array = array(
+            'url'    => $youtube_thumbnail->url,
+            'width'  => $youtube_thumbnail->width,
+            'height' => $youtube_thumbnail->height,
+        );
+
+        update_post_meta( $post_id, 'featured_video_meta', $youtube_thumbnail_array );
+    }
+}
+
+/**
+ * Retrieve ID from video URL
+ * @param  string $video_url public URL of video
+ * @return string video ID parameter
+ */
+function get_video_ID( $video_url ) {
+    if ( strpos( $video_url, '//youtu.be' ) !== false ) {
+        $video_ID = basename( parse_url( $video_url, PHP_URL_PATH ) );
+    } elseif ( strpos( $video_url, 'youtube.com' ) !== false ) {
+        parse_str( parse_url( $video_url, PHP_URL_QUERY ), $video_array );
+        $video_ID = $video_array['v'];
+    }
+
+    return $video_ID;
 }

@@ -58,6 +58,9 @@ Available shortcodes:
 
 #Changelog
 
+- 2.1
+    - Add video OpenGraph data
+
 - 2.0
     - Major updates for website redesign
 

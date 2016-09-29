@@ -3,7 +3,7 @@
  * Plugin Name: GHC Functionality
  * Plugin URI: https://github.com/macbookandrew/ghc-speakers
  * Description: Add speakers, exhibitors, sponsors, and hotels
- * Version: 2.0
+ * Version: 2.1
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com
  * Copyright: 2015 AndrewRMinion Design (andrew@andrewrminion.com)
@@ -24,7 +24,7 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-CONST GHC_SPEAKERS_VERSION = 2.0;
+CONST GHC_SPEAKERS_VERSION = 2.1;
 
 // flush rewrite rules on activation/deactivation
 function ghc_speakers_activate() {
@@ -835,4 +835,14 @@ function array_sort_conventions( $a, $b ) {
 add_action('acf/init', 'ghc_acf_init');
 function ghc_acf_init() {
     acf_update_setting('google_api_key', get_option( 'options_api_key' ) );
+}
+
+// add video Open Graph data
+add_action( 'wp_head', 'ghc_opengraph_video', 8 );
+function ghc_opengraph_video() {
+    $featured_video = get_field( 'featured_video' );
+    if ( $featured_video ) {
+        echo '<meta property="og:video" content="' . $featured_video . '" />';
+        echo strpos( $featured_video, 'https' ) !== false ? '<meta property="og:video:secure_url" content="' . $featured_video . '" />' : '' ;
+    }
 }

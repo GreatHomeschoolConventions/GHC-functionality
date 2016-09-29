@@ -58,6 +58,9 @@ Available shortcodes:
 
 #Changelog
 
+- 2.0
+    - Major updates for website redesign
+
 - 1.8
     - Use special events instead of speakers, fix convention sort order, and more
 

@@ -58,6 +58,9 @@ Available shortcodes:
 
 #Changelog
 
+- 2.1.1
+    - Add video metadata
+
 - 2.1
     - Add video OpenGraph data
 

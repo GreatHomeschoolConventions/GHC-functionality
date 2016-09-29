@@ -3,7 +3,7 @@
  * Plugin Name: GHC Functionality
  * Plugin URI: https://github.com/macbookandrew/ghc-speakers
  * Description: Add speakers, exhibitors, sponsors, and hotels
- * Version: 2.1
+ * Version: 2.1.1
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com
  * Copyright: 2015 AndrewRMinion Design (andrew@andrewrminion.com)
@@ -24,7 +24,7 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-CONST GHC_SPEAKERS_VERSION = 2.1;
+CONST GHC_SPEAKERS_VERSION = '2.1.1';
 
 // flush rewrite rules on activation/deactivation
 function ghc_speakers_activate() {
@@ -848,11 +848,11 @@ function ghc_opengraph_video() {
         // video
         echo '<meta property="og:video" content="' . $featured_video . '" />';
         echo strpos( $featured_video, 'https' ) !== false ? '<meta property="og:video:secure_url" content="' . $featured_video . '" />' : '' ;
-        echo '<meta property="og:video:width" content="' . $featured_video_meta['width'] . '" />';
-        echo '<meta property="og:video:height" content="' . $featured_video_meta['height'] . '" />';
+        echo '<meta property="og:video:width" content="' . $featured_video_meta->snippet->thumbnails->maxres->width . '" />';
+        echo '<meta property="og:video:height" content="' . $featured_video_meta->snippet->thumbnails->maxres->height . '" />';
 
         // placeholder image
-        echo '<meta property="og:image" content="' . $featured_video_meta['url'] . '" />';
+        echo '<meta property="og:image" content="' . $featured_video_meta->snippet->thumbnails->maxres->url . '" />';
     }
 }
 
@@ -871,16 +871,10 @@ function ghc_opengraph_video_get_meta( $post_id ) {
         $youtube_meta_json = curl_exec( $youtube_meta_ch );
         curl_close( $youtube_meta_ch );
         $youtube_meta = json_decode( $youtube_meta_json );
-        $youtube_thumbnail = $youtube_meta->items[0]->snippet->thumbnails->maxres;
+        $youtube_thumbnail = $youtube_meta->items[0];
 
         // save post meta
-        $youtube_thumbnail_array = array(
-            'url'    => $youtube_thumbnail->url,
-            'width'  => $youtube_thumbnail->width,
-            'height' => $youtube_thumbnail->height,
-        );
-
-        update_post_meta( $post_id, 'featured_video_meta', $youtube_thumbnail_array );
+        update_post_meta( $post_id, 'featured_video_meta', $youtube_thumbnail );
     }
 }
 

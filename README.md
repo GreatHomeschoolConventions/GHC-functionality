@@ -58,6 +58,9 @@ Available shortcodes:
 
 #Changelog
 
+- 2.2
+    - Add WooCommerce restrictions
+
 - 2.1.1
     - Add video metadata
 

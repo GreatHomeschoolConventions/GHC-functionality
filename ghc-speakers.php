@@ -944,7 +944,7 @@ function ghc_show_special_event_tickets() {
     if ( $special_events->have_posts() ) {
         ?>
         <div class="cross-sells">
-            <h2>Special Events at this convention</h2>
+            <h2>Special Events at This Convention</h2>
             <?php woocommerce_product_loop_start(); ?>
 
                 <?php while ( $special_events->have_posts() ) : $special_events->the_post(); ?>

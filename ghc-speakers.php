@@ -1118,7 +1118,7 @@ add_action( 'woocommerce_before_shop_loop_item', 'ghc_show_product_category_conv
 function tweak_woocommerce_email_header( $email_heading ) {
     echo '<style type="text/css">
         div[style*="padding:70px 0 70px 0"] { padding-top: 0; }
-        #template_header_image img { width: 75px !important; }
+        #template_header_image img { height: 75px !important; }
         .highlighted {
             font-size: larger;
             font-weight: bold;

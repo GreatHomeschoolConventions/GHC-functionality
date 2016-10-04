@@ -58,6 +58,9 @@ Available shortcodes:
 
 #Changelog
 
+- 2.2.1
+    - Miscellaneous minor fixes
+
 - 2.2
     - Add WooCommerce restrictions
 

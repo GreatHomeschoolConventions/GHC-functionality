@@ -902,8 +902,7 @@ add_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_sing
 /**
  * Replace related products with cross-sells and set a high number of columns
  */
-remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
-add_action( 'woocommerce_after_single_product_summary', 'ghc_show_special_event_tickets', 25 );
+add_action( 'woocommerce_after_single_product_summary', 'ghc_show_special_event_tickets', 5 );
 function ghc_show_special_event_tickets() {
     global $post;
 

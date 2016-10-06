@@ -102,6 +102,33 @@ function hotel_grid_shortcode( $attributes ) {
     return ob_get_clean();
 }
 
+// add shortcode for related sponsors
+add_shortcode( 'related_sponsor', 'related_sponsor_shortcode' );
+function related_sponsor_shortcode( $attributes ) {
+    // get related sponsors
+    $related_sponsors = get_field( 'related_sponsors' );
+
+    if ( $related_sponsors ) {
+        $shortcode_content = '<div id="sponsor-stripe">
+        <h3 class="gdlr-item-title gdlr-skin-title gdlr-title-small">SPONSORS</h3>
+        <div class="sponsors">';
+        foreach ( $related_sponsors as $sponsor ) {
+            $shortcode_content .= '<div class="sponsor">';
+            $grayscale_logo = get_field( 'grayscale_logo', $sponsor->ID );
+            $permalink = get_permalink( $sponsor->ID );
+            if ( $grayscale_logo ) {
+                $shortcode_content .= '<a href="' . $permalink . '"><img class="wp-post-image sponsor wp-image-' . $grayscale_logo['id'] . '" src="' . $grayscale_logo['url'] . '" alt="' . $grayscale_logo['alt'] . '" title="' . $grayscale_logo['title'] . '" /></a>';
+            } else {
+                $shortcode_content .= '<a href="' . $permalink . '">' . get_the_post_thumbnail( $sponsor->ID ) . '</a>';
+            }
+            $shortcode_content .= '</div><!-- .sponsor -->';
+        }
+        $shortcode_content .= '</div><!-- .sponsors -->
+        </div><!-- #sponsor-stripe -->';
+    }
+    return $shortcode_content;
+}
+
 // add shortcode for speaker page
 add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
 function speaker_archive_shortcode() {
@@ -219,6 +246,8 @@ function speaker_info_shortcode( $attributes ) {
     return $shortcode_content;
 }
 
+// add shortcode for list of speakers
+// accepts `convention` attribute
 add_shortcode( 'speaker_list', 'speaker_list_shortcode' );
 function speaker_list_shortcode( $attributes ) {
     global $convention_abbreviations;
@@ -270,6 +299,8 @@ function speaker_list_shortcode( $attributes ) {
     return $shortcode_content;
 }
 
+// add shortcode for sponsors of a particular track
+// accepts `track` attribute
 add_shortcode( 'special_track_speakers', 'special_track_speakers_shortcode' );
 function special_track_speakers_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (

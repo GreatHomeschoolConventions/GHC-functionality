@@ -260,7 +260,7 @@ function speaker_list_shortcode( $attributes ) {
         'a_class'           => NULL,
     ), $attributes );
     // workaround for posts_per_page overriding offset
-    if ( $shortcode_attributes['offset'] != NULL ) {
+    if ( $shortcode_attributes['offset'] != NULL && $shortcode_attributes['posts_per_page'] == -1 ) {
         $shortcode_attributes['posts_per_page'] = 500;
     }
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );

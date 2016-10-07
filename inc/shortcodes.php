@@ -253,7 +253,13 @@ function speaker_list_shortcode( $attributes ) {
     global $convention_abbreviations;
     $shortcode_attributes = shortcode_atts( array (
         'convention'    => NULL,
+        'posts_per_page'    => -1,
+        'offset'            => NULL,
     ), $attributes );
+    // workaround for posts_per_page overriding offset
+    if ( $shortcode_attributes['offset'] != NULL ) {
+        $shortcode_attributes['posts_per_page'] = 500;
+    }
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
     // arguments
@@ -262,7 +268,8 @@ function speaker_list_shortcode( $attributes ) {
         'meta_key'          => 'featured_speaker',
         'meta_compare'      => '!=',
         'meta_value'        => 'no',
-        'posts_per_page'    => -1,
+        'posts_per_page'    => esc_attr( $shortcode_attributes['posts_per_page'] ),
+        'offset'            => esc_attr( $shortcode_attributes['offset'] ),
         'orderby'           => 'menu_order',
         'order'             => 'ASC',
     );

@@ -54,13 +54,19 @@ Available shortcodes:
 
 ##`[speaker_list]`
 
-- displays list of speaker names, optionally filtered by convention; accepts the argument `convention` (two-letter abbreviation)
+- displays list of speaker names, optionally filtered by convention; accepts these arguments:
+    - `convention` (two-letter abbreviation)
+    - `posts_per_page` (number of speakers to show; defaults to “-1”, showing all posts)
+    - `offset` (number of speakers to skip before showing the first; most useful in conjunction with a prior shortcode using “posts_per_page” to set a max number to show in that location)
 
 ##`[special_track_speakers]`
 
 - displays speakers’ photos, names, and conventions for specified special track category; accepts the argument `track` with a special track slug
 
 #Changelog
+
+- 2.2.3
+    - Add `posts_per_page` and `offset` attributes to `[speaker_list]` shortcode
 
 - 2.2.2
     - Add `related_sponsor` shortcode

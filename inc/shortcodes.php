@@ -255,6 +255,9 @@ function speaker_list_shortcode( $attributes ) {
         'convention'    => NULL,
         'posts_per_page'    => -1,
         'offset'            => NULL,
+        'ul_class'          => NULL,
+        'li_class'          => NULL,
+        'a_class'           => NULL,
     ), $attributes );
     // workaround for posts_per_page overriding offset
     if ( $shortcode_attributes['offset'] != NULL ) {
@@ -292,10 +295,10 @@ function speaker_list_shortcode( $attributes ) {
 
     // loop
     if ( $speaker_list_query->have_posts() ) {
-        $shortcode_content = '<ul class="speaker-list">';
+        $shortcode_content = '<ul class="speaker-list ' . esc_attr( $shortcode_attributes['ul_class'] ) . '">';
         while ( $speaker_list_query->have_posts() ) {
             $speaker_list_query->the_post();
-            $shortcode_content .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
+            $shortcode_content .= '<li class="' . esc_attr( $shortcode_attributes['li_class'] ) . '"><a class="' . esc_attr( $shortcode_attributes['a_class'] ) . '" href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
         }
         echo '</ul>';
     }

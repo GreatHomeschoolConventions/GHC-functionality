@@ -65,6 +65,9 @@ Available shortcodes:
 
 #Changelog
 
+- 2.2.4
+    - Add `ul_class`, `li_class`, and `a_class` attributes to `[speaker_list]` shortcode for styling
+
 - 2.2.3
     - Add `posts_per_page` and `offset` attributes to `[speaker_list]` shortcode
 

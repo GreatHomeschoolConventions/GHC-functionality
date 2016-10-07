@@ -58,6 +58,9 @@ Available shortcodes:
     - `convention` (two-letter abbreviation)
     - `posts_per_page` (number of speakers to show; defaults to “-1”, showing all posts)
     - `offset` (number of speakers to skip before showing the first; most useful in conjunction with a prior shortcode using “posts_per_page” to set a max number to show in that location)
+    - `ul_class` (string of text to use as classes on `ul.speaker-list`)
+    - `li_class` (string of text to use as classes on each `li`)
+    - `a_class` (string of text to use as classes on each `a`)
 
 ##`[special_track_speakers]`
 

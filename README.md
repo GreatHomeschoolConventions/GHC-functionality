@@ -32,7 +32,7 @@ Available shortcodes:
 
 ##`[related_sponsor]`
 
-- displays logos and names of all related sponsors (set in an ACF field on the current post/page)
+- displays logos and names of all related sponsors (set in an ACF field on the current post/page; defaults to all sponsors if none are specified)
 
 ##`[speaker_archive]`
 
@@ -67,6 +67,9 @@ Available shortcodes:
 - displays speakers’ photos, names, and conventions for specified special track category; accepts the argument `track` with a special track slug
 
 #Changelog
+
+- 2.2.5
+    - Update `[related_sponsor]` to output all sponsors if none are defined
 
 - 2.2.4
     - Add `ul_class`, `li_class`, and `a_class` attributes to `[speaker_list]` shortcode for styling

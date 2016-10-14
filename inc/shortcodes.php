@@ -102,6 +102,23 @@ function hotel_grid_shortcode( $attributes ) {
     return ob_get_clean();
 }
 
+// add shortcode for price sheet
+// accepts `convention` attribute as abbreviation
+add_shortcode( 'price_sheet', 'price_sheet_shortcode' );
+function price_sheet_shortcode( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'    => NULL,
+    ), $attributes );
+    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+    wp_enqueue_script( 'price-sheets' );
+    // get content
+    ob_start();
+    include( plugin_dir_path( __FILE__ ) . '/../price-sheets/price-sheet-' . $this_convention . '.html' );
+
+    return ob_get_clean();
+}
+
 // add shortcode for related sponsors
 add_shortcode( 'related_sponsor', 'related_sponsor_shortcode' );
 function related_sponsor_shortcode( $attributes ) {

@@ -4,6 +4,7 @@ SVG/icons.min.svg:SVG/raw/Southeast_small.svg
 SVG/icons.min.svg:SVG/raw/Texas_small.svg
 
 js/exhibitor-backend.min.js:js/exhibitor-backend.js
+js/price-sheets.min.js:js/price-sheets.js
 js/woocommerce.min.js:js/woocommerce.js
 
 css/style.min.css:css/style.scss

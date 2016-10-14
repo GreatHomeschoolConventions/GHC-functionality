@@ -30,6 +30,10 @@ Available shortcodes:
 
 - displays a grid of hotels for the specified convention; accepts the argument `convention` (two-letter abbreviation)
 
+##`[price_sheet]`
+
+- displays price sheet of specified convention, expecting `price-sheets/price-sheet-XX.html` in the plugin folder where `XX` is the lowercase abbreviation; accepts the argument `convention` (two-letter abbreviation)
+
 ##`[related_sponsor]`
 
 - displays logos and names of all related sponsors (set in an ACF field on the current post/page; defaults to all sponsors if none are specified)

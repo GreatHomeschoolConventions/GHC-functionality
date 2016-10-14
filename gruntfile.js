@@ -41,7 +41,7 @@ module.exports = function (grunt) {
     browserSync: {
         dev: {
             bsFiles: {
-                src : ['css/*.min.css', '**/*.php', '**/*.js', '**/*.svg', '!node_modules'],
+                src : ['css/*.min.css', '**/*.php', '**/*.js', '**/*.svg', '**/*.html', '!node_modules'],
             },
             options: {
                 watchTask: true,
@@ -87,6 +87,7 @@ module.exports = function (grunt) {
         custom: {
             files: {
                 'js/exhibitor-backend.min.js': ['js/exhibitor-backend.js'],
+                'js/price-sheets.min.js': ['js/price-sheets.js'],
                 'js/woocommerce.min.js': ['js/woocommerce.js'],
             },
         },

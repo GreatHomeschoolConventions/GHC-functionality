@@ -1106,16 +1106,17 @@ function ghc_testing( $product_quantity, $cart_item_key, $cart_item ) {
 /**
  * Show convention icons on product category archives
  */
+add_action( 'woocommerce_before_shop_loop_item', 'ghc_show_product_category_conventions', 15 );
 function ghc_show_product_category_conventions() {
     if ( is_tax( 'product_cat' ) ) {
         echo '<div class="tax-convention-icon"></div>';
     }
 }
-add_action( 'woocommerce_before_shop_loop_item', 'ghc_show_product_category_conventions', 15 );
 
 /**
  * Modify WooCommerce email styles
  */
+add_action( 'woocommerce_email_header', 'tweak_woocommerce_email_header' );
 function tweak_woocommerce_email_header( $email_heading ) {
     echo '<style type="text/css">
         div[style*="padding:70px 0 70px 0"] { padding-top: 0; }
@@ -1128,4 +1129,3 @@ function tweak_woocommerce_email_header( $email_heading ) {
         #template_header h1, #template_footer, table[style*="background-color:#00456a"], tfoot tr:nth-child(2) { display: none !important; }
     </style>';
 }
-add_action( 'woocommerce_email_header', 'tweak_woocommerce_email_header' );

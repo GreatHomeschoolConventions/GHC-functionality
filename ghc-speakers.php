@@ -1137,14 +1137,52 @@ add_action( 'gdlr_before_speaker_biography', 'ghc_speaker_list_special_tracks', 
 function ghc_speaker_list_special_tracks() {
     if ( is_single() && 'speaker' == get_post_type() ) {
         $special_tracks = wp_get_post_terms( get_the_ID(), 'ghc_special_tracks_taxonomy' );
+        $special_tracks_count = count( $special_tracks );
 
-        // add content
-        $content = sprintf( '<h4 class="gdlr-speaker-biography-title">Special Tracks</h2>
-        <p>We are honored to have %1$s participating in this year&rsquo;s %2$s track%3$s.</p>',
+        if ( $special_tracks_count > 0 ) {
+            // set up content
+            $track_output = '';
+            $track_index = 1;
+            foreach ( $special_tracks as $special_track ) {
+                $track_output .= '<a href="' . get_term_link( $special_track->term_id, 'ghc_special_tracks_taxonomy' ) . '">' . $special_track->name . '</a> track';
+
+                // check for sponsors
+                $sponsors = get_field( 'related_sponsors', 'ghc_special_tracks_taxonomy_' . $special_track->term_id );
+                if ( $sponsors ) {
+                    $sponsor_index = 1;
+                    $track_output .= ' (sponsored by ';
+                    foreach( $sponsors as $sponsor ) {
+                        $track_output .= '<a href="' . get_permalink( $sponsor ) . '">' . get_the_title( $sponsor ) . '</a>';
+                        if ( count( $sponsors ) > 2 ) {
+                            $track_output .= ', ';
+                            if ( count( $sponsors ) == $index ) {
+                                $track_output .= 'and ';
+                            }
+                        } elseif ( count( $sponsors ) == 2 && $sponsor_index != 2 ) {
+                            $track_output .= 'and ';
+                        }
+                        $sponsor_index++;
+                    }
+                    $track_output .= ')';
+                }
+
+                if ( $special_tracks_count > 2 ) {
+                    $track_output .= ', ';
+                    if ( $track_index == $special_tracks_count ) {
+                        $track_output .= ' and ';
+                    }
+                } elseif ( $special_tracks_count == 2 && $track_index != 2 ) {
+                    $track_output .= ' and ';
+                }
+                $track_index++;
+            }
+
+            // output content
+            echo sprintf( '<h4 class="gdlr-speaker-biography-title">Special Tracks</h2>
+            <p>We are honored to have %1$s participating in this year&rsquo;s %2$s.</p>',
                            get_the_title(),
-                           get_the_term_list( get_the_ID(), 'ghc_special_tracks_taxonomy', '', ' and '),
-                           count( $special_tracks ) > 1 ? 's' : ''
+                           $track_output
                            );
+        }
     }
-    echo $content;
 }

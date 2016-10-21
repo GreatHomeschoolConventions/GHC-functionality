@@ -1129,3 +1129,22 @@ function tweak_woocommerce_email_header( $email_heading ) {
         #template_header h1, #template_footer, table[style*="background-color:#00456a"], tfoot tr:nth-child(2) { display: none !important; }
     </style>';
 }
+
+/**
+ * Add special track info to each applicable speaker
+ */
+add_action( 'gdlr_before_speaker_biography', 'ghc_speaker_list_special_tracks', 8 );
+function ghc_speaker_list_special_tracks() {
+    if ( is_single() && 'speaker' == get_post_type() ) {
+        $special_tracks = wp_get_post_terms( get_the_ID(), 'ghc_special_tracks_taxonomy' );
+
+        // add content
+        $content = sprintf( '<h4 class="gdlr-speaker-biography-title">Special Tracks</h2>
+        <p>We are honored to have %1$s participating in this year&rsquo;s %2$s track%3$s.</p>',
+                           get_the_title(),
+                           get_the_term_list( get_the_ID(), 'ghc_special_tracks_taxonomy', '', ' and '),
+                           count( $special_tracks ) > 1 ? 's' : ''
+                           );
+    }
+    echo $content;
+}

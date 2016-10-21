@@ -1156,10 +1156,10 @@ function ghc_speaker_list_special_tracks() {
                         if ( count( $sponsors ) > 2 ) {
                             $track_output .= ', ';
                             if ( count( $sponsors ) == $index ) {
-                                $track_output .= 'and ';
+                                $track_output .= ' and ';
                             }
                         } elseif ( count( $sponsors ) == 2 && $sponsor_index != 2 ) {
-                            $track_output .= 'and ';
+                            $track_output .= ' and ';
                         }
                         $sponsor_index++;
                     }

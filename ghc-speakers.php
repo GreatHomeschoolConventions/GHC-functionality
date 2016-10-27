@@ -502,16 +502,19 @@ function ghc_save_extra_profile_fields( $user_id ) {
 }
 
 // add meet_the_author function for blog posts
-function meet_the_author() {
-    if ( get_the_author_meta( 'speaker_match' ) ) {
+add_filter( 'the_content', 'ghc_meet_the_author', 50 );
+function ghc_meet_the_author( $content ) {
+    if ( is_singular() && get_the_author_meta( 'speaker_match' ) ) {
         $meet_the_author_output = '<p class="no-margin">Meet <a href="' . get_permalink( get_the_author_meta( 'speaker_match' ) ) . '">' . get_the_author() . '</a> at these conventions:</p>';
 
         foreach ( get_the_terms_sorted( get_the_author_meta( 'speaker_match' ), 'ghc_conventions_taxonomy' ) as $author_convention ) {
             $meet_the_author_output .= do_shortcode( '[convention_icon convention="' . $author_convention->name . '"]' );
         }
 
-        return $meet_the_author_output;
+        $content .= $meet_the_author_output;
     }
+    return $content;
+}
 }
 
 // always sort speakers by menu_order

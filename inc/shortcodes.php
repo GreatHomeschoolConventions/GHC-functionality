@@ -389,3 +389,52 @@ function special_track_speakers_shortcode( $attributes ) {
 
     return $shortcode_content;
 }
+
+// add shortcode for all sponsors
+// accepts `gray` and `width` attributes
+add_shortcode( 'sponsors', 'sponsors_shortcode' );
+function sponsors_shortcode( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'gray'    => NULL,
+        'width'   => NULL,
+    ), $attributes );
+
+    // arguments
+    $sponsors_args = array(
+        'post_type'         => 'sponsor',
+        'posts_per_page'    => -1,
+        'orderby'           => 'menu_order',
+        'order'             => 'ASC',
+    );
+
+    // query
+    $sponsors_query = new WP_Query( $sponsors_args );
+
+    // loop
+    if ( $sponsors_query->have_posts() ) {
+        $shortcode_content = NULL;
+        while ( $sponsors_query->have_posts() ) {
+            $sponsors_query->the_post();
+            $shortcode_content .= '<a href="' . get_permalink() . '">';
+            if ( $shortcode_attributes['gray'] ) {
+                if ( $shortcode_attributes['width'] ) {
+                    $shortcode_content .= wp_get_attachment_image( get_field( 'grayscale_logo' ), array( $shortcode_attributes['width'], -1 ) );
+                } else {
+                    $shortcode_content .= wp_get_attachment_image( get_field( 'grayscale_logo' ) );
+                }
+            } else {
+                if ( $shortcode_attributes['width'] ) {
+                    $shortcode_content .= get_the_post_thumbnail( get_the_ID(), array( $shortcode_attributes['width'], -1 ) );
+                } else {
+                    $shortcode_content .= get_the_post_thumbnail();
+                }
+            }
+            $shortcode_content .= '</a>';
+        }
+    }
+
+    // reset post data
+    wp_reset_postdata();
+
+    return $shortcode_content;
+}

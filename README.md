@@ -70,7 +70,19 @@ Available shortcodes:
 
 - displays speakers’ photos, names, and conventions for specified special track category; accepts the argument `track` with a special track slug
 
+##`[sponsors]`
+
+- displays all sponsors; accepts these arguments:
+    - `gray` (specifies the grayscale logo should be used)
+    - `width` (max width of image)
+
 #Changelog
+
+- 2.3.1
+    - Add `[sponsors]` shortcode
+
+- 2.3
+    - Add price sheets
 
 - 2.2.5
     - Update `[related_sponsor]` to output all sponsors if none are defined

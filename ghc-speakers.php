@@ -523,40 +523,39 @@ function ghc_related_sponsors( $content ) {
         // get related sponsors
         $related_sponsors = get_field( 'related_sponsors' );
 
-        // set up query args
-        $related_sponsors_query_args = array(
-            'post_type'         => 'sponsor',
-            'orderby'           => 'menu_order',
-            'order'             => 'ASC',
-            'posts_per_page'    => -1,
-        );
-
         if ( $related_sponsors ) {
-            $related_sponsors_query_args['post__in'] = $related_sponsors;
-        }
+            // set up query args
+            $related_sponsors_query_args = array(
+                'post_type'         => 'sponsor',
+                'orderby'           => 'menu_order',
+                'order'             => 'ASC',
+                'posts_per_page'    => -1,
+                'post__in'          => $related_sponsors,
+            );
 
-        $related_sponsors_query = new WP_Query( $related_sponsors_query_args );
+            $related_sponsors_query = new WP_Query( $related_sponsors_query_args );
 
-        if ( $related_sponsors_query->have_posts() ) {
-            $content .= '<div id="sponsor-stripe">
-            <h3 class="gdlr-item-title gdlr-skin-title gdlr-title-small">SPONSORS</h3>
-            <div class="sponsors">';
+            if ( $related_sponsors_query->have_posts() ) {
+                $content .= '<div id="sponsor-stripe">
+                <h3 class="gdlr-item-title gdlr-skin-title gdlr-title-small">SPONSORS</h3>
+                <div class="sponsors">';
 
-            while ( $related_sponsors_query->have_posts() ) {
-                $related_sponsors_query->the_post();
-                $content .= '<div class="sponsor">';
-                $grayscale_logo = get_field( 'grayscale_logo' );
-                $permalink = get_permalink();
+                while ( $related_sponsors_query->have_posts() ) {
+                    $related_sponsors_query->the_post();
+                    $content .= '<div class="sponsor">';
+                    $grayscale_logo = get_field( 'grayscale_logo' );
+                    $permalink = get_permalink();
 
-                if ( $grayscale_logo ) {
-                    $content .= '<a href="' . $permalink . '"><img class="wp-post-image sponsor wp-image-' . $grayscale_logo['id'] . '" src="' . $grayscale_logo['url'] . '" alt="' . $grayscale_logo['alt'] . '" title="' . $grayscale_logo['title'] . '" /></a>';
-                } else {
-                    $content .= '<a href="' . $permalink . '">' . get_the_post_thumbnail() . '</a>';
+                    if ( $grayscale_logo ) {
+                        $content .= '<a href="' . $permalink . '"><img class="wp-post-image sponsor wp-image-' . $grayscale_logo['id'] . '" src="' . $grayscale_logo['url'] . '" alt="' . $grayscale_logo['alt'] . '" title="' . $grayscale_logo['title'] . '" /></a>';
+                    } else {
+                        $content .= '<a href="' . $permalink . '">' . get_the_post_thumbnail() . '</a>';
+                    }
+                    $content .= '</div><!-- .sponsor -->';
                 }
-                $content .= '</div><!-- .sponsor -->';
+                $content .= '</div><!-- .sponsors -->
+                </div><!-- #sponsor-stripe -->';
             }
-            $content .= '</div><!-- .sponsors -->
-            </div><!-- #sponsor-stripe -->';
         }
     }
     return $content;

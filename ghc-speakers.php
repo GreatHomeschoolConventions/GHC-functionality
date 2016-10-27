@@ -3,7 +3,7 @@
  * Plugin Name: GHC Functionality
  * Plugin URI: https://github.com/macbookandrew/ghc-speakers
  * Description: Add speakers, exhibitors, sponsors, and hotels
- * Version: 2.3.1
+ * Version: 2.3.2
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com
  * Copyright: 2015 AndrewRMinion Design (andrew@andrewrminion.com)
@@ -24,7 +24,7 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-CONST GHC_SPEAKERS_VERSION = '2.3.1';
+CONST GHC_SPEAKERS_VERSION = '2.3.2';
 
 // flush rewrite rules on activation/deactivation
 function ghc_speakers_activate() {
@@ -515,6 +515,51 @@ function ghc_meet_the_author( $content ) {
     }
     return $content;
 }
+
+// add related sponsors to all posts/pages/CPTs
+add_filter( 'the_content', 'ghc_related_sponsors', 15 );
+function ghc_related_sponsors( $content ) {
+    if ( is_singular() ) {
+        // get related sponsors
+        $related_sponsors = get_field( 'related_sponsors' );
+
+        // set up query args
+        $related_sponsors_query_args = array(
+            'post_type'         => 'sponsor',
+            'orderby'           => 'menu_order',
+            'order'             => 'ASC',
+            'posts_per_page'    => -1,
+        );
+
+        if ( $related_sponsors ) {
+            $related_sponsors_query_args['post__in'] = $related_sponsors;
+        }
+
+        $related_sponsors_query = new WP_Query( $related_sponsors_query_args );
+
+        if ( $related_sponsors_query->have_posts() ) {
+            $content .= '<div id="sponsor-stripe">
+            <h3 class="gdlr-item-title gdlr-skin-title gdlr-title-small">SPONSORS</h3>
+            <div class="sponsors">';
+
+            while ( $related_sponsors_query->have_posts() ) {
+                $related_sponsors_query->the_post();
+                $content .= '<div class="sponsor">';
+                $grayscale_logo = get_field( 'grayscale_logo' );
+                $permalink = get_permalink();
+
+                if ( $grayscale_logo ) {
+                    $content .= '<a href="' . $permalink . '"><img class="wp-post-image sponsor wp-image-' . $grayscale_logo['id'] . '" src="' . $grayscale_logo['url'] . '" alt="' . $grayscale_logo['alt'] . '" title="' . $grayscale_logo['title'] . '" /></a>';
+                } else {
+                    $content .= '<a href="' . $permalink . '">' . get_the_post_thumbnail() . '</a>';
+                }
+                $content .= '</div><!-- .sponsor -->';
+            }
+            $content .= '</div><!-- .sponsors -->
+            </div><!-- #sponsor-stripe -->';
+        }
+    }
+    return $content;
 }
 
 // always sort speakers by menu_order

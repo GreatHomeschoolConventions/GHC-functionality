@@ -119,51 +119,6 @@ function price_sheet_shortcode( $attributes ) {
     return ob_get_clean();
 }
 
-// add shortcode for related sponsors
-add_shortcode( 'related_sponsor', 'related_sponsor_shortcode' );
-function related_sponsor_shortcode( $attributes ) {
-    // get related sponsors
-    $related_sponsors = get_field( 'related_sponsors' );
-
-    // set up query args
-    $related_sponsors_query_args = array(
-        'post_type'         => 'sponsor',
-        'orderby'           => 'menu_order',
-        'order'             => 'ASC',
-        'posts_per_page'    => -1,
-    );
-
-    if ( $related_sponsors ) {
-        $related_sponsors_query_args['post__in'] = $related_sponsors;
-    }
-
-    $related_sponsors_query = new WP_Query( $related_sponsors_query_args );
-
-    if ( $related_sponsors_query->have_posts() ) {
-        $shortcode_content = '<div id="sponsor-stripe">
-        <h3 class="gdlr-item-title gdlr-skin-title gdlr-title-small">SPONSORS</h3>
-        <div class="sponsors">';
-
-        while ( $related_sponsors_query->have_posts() ) {
-            $related_sponsors_query->the_post();
-            $shortcode_content .= '<div class="sponsor">';
-            $grayscale_logo = get_field( 'grayscale_logo' );
-            $permalink = get_permalink();
-
-            if ( $grayscale_logo ) {
-                $shortcode_content .= '<a href="' . $permalink . '"><img class="wp-post-image sponsor wp-image-' . $grayscale_logo['id'] . '" src="' . $grayscale_logo['url'] . '" alt="' . $grayscale_logo['alt'] . '" title="' . $grayscale_logo['title'] . '" /></a>';
-            } else {
-                $shortcode_content .= '<a href="' . $permalink . '">' . get_the_post_thumbnail() . '</a>';
-            }
-            $shortcode_content .= '</div><!-- .sponsor -->';
-        }
-        $shortcode_content .= '</div><!-- .sponsors -->
-        </div><!-- #sponsor-stripe -->';
-    }
-
-    return $shortcode_content;
-}
-
 // add shortcode for speaker page
 add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
 function speaker_archive_shortcode() {

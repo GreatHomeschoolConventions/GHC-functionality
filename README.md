@@ -34,10 +34,6 @@ Available shortcodes:
 
 - displays price sheet of specified convention, expecting `price-sheets/price-sheet-XX.html` in the plugin folder where `XX` is the lowercase abbreviation; accepts the argument `convention` (two-letter abbreviation)
 
-##`[related_sponsor]`
-
-- displays logos and names of all related sponsors (set in an ACF field on the current post/page; defaults to all sponsors if none are specified)
-
 ##`[speaker_archive]`
 
 - displays a grid of all speakers; intended for the archive page
@@ -77,6 +73,9 @@ Available shortcodes:
     - `width` (max width of image)
 
 #Changelog
+
+- 2.3.2
+    - Remove `[related_sponsor]` shortcode and append content to any singular post that has related sponsors specified
 
 - 2.3.1
     - Add `[sponsors]` shortcode

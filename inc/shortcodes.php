@@ -418,9 +418,9 @@ function sponsors_shortcode( $attributes ) {
             $shortcode_content .= '<a href="' . get_permalink() . '">';
             if ( $shortcode_attributes['gray'] ) {
                 if ( $shortcode_attributes['width'] ) {
-                    $shortcode_content .= wp_get_attachment_image( get_field( 'grayscale_logo' ), array( $shortcode_attributes['width'], -1 ) );
+                    $shortcode_content .= wp_get_attachment_image( get_field( 'grayscale_logo' )['id'], array( $shortcode_attributes['width'], -1 ) );
                 } else {
-                    $shortcode_content .= wp_get_attachment_image( get_field( 'grayscale_logo' ) );
+                    $shortcode_content .= wp_get_attachment_image( get_field( 'grayscale_logo' )['id'] );
                 }
             } else {
                 if ( $shortcode_attributes['width'] ) {

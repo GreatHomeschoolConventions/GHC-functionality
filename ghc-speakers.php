@@ -327,6 +327,12 @@ function custom_post_types() {
         'not_found'           => __( 'Not found', 'GHC' ),
         'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
     );
+    $hotels_rewrite = array(
+        'slug'                => 'hotels',
+        'with_front'          => true,
+        'pages'               => true,
+        'feeds'               => true,
+    );
     $hotels_args = array(
         'label'               => __( 'Hotel', 'GHC' ),
         'description'         => __( 'Hotels', 'GHC' ),
@@ -345,6 +351,7 @@ function custom_post_types() {
         'has_archive'         => true,
         'exclude_from_search' => false,
         'publicly_queryable'  => true,
+        'rewrite'             => $hotels_rewrite,
         'capability_type'     => 'page',
     );
     register_post_type( 'hotel', $hotels_args );

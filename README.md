@@ -74,6 +74,11 @@ Available shortcodes:
 
 #Changelog
 
+- 2.3.3
+    - Add content to hotels archive
+    - Change hotels archive from `/hotel/` to `/hotels/`
+    - Prepare for future hotel directions maps and filtering
+
 - 2.3.2
     - Remove `[related_sponsor]` shortcode and append content to any singular post that has related sponsors specified
 

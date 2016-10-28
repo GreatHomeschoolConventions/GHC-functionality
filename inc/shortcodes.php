@@ -98,7 +98,7 @@ function hotel_grid_shortcode( $attributes ) {
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
     ob_start();
-    include( 'archive-hotel.php' );
+    include( 'loop-hotel.php' );
     return ob_get_clean();
 }
 
@@ -123,7 +123,7 @@ function price_sheet_shortcode( $attributes ) {
 add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
 function speaker_archive_shortcode() {
     ob_start();
-    include( 'archive-speaker.php' );
+    include( 'loop-speaker.php' );
     return ob_get_clean();
 }
 

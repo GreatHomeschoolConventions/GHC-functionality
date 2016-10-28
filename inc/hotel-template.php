@@ -5,6 +5,12 @@
         <?php } ?>
         <div class="accommodation-content-outer-wrapper">
             <div class="accommodation-content-wrapper">
+                <?php
+                if ( is_post_type_archive( 'hotel' ) ) {
+                    $conventions = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
+                    echo do_shortcode( '[convention_icon convention="' . $conventions[0]->slug . '"]' );
+                }
+                ?>
                 <h3 class="accommodation-title"><?php the_title(); ?></h3>
                 <div class="accommodation-caption gdlr-info-font"><?php
                     echo get_field( 'sold_out' ) ? '<h4 class="sold-out">Sold Out</h4>' : '';

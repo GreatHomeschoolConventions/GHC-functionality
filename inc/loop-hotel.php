@@ -14,14 +14,17 @@ $hotel_args = array(
             'compare'   => '<=',
         ),
     ),
-    'tax_query' => array(
+);
+if ( $this_convention ) {
+    $hotel_args['tax_query'] = array(
         array(
             'taxonomy'  => 'ghc_conventions_taxonomy',
             'field'     => 'slug',
             'terms'     => $convention_abbreviations[$this_convention],
         )
-    ),
-);
+    );
+}
+
 // the query
 $hotel_query = new WP_Query( $hotel_args );
 

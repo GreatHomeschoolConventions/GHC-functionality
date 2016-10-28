@@ -634,6 +634,17 @@ function ghc_exhibitor_post_type_link( $post_link, $post, $leavename, $sample ) 
     return $post_link;
 }
 
+// use custom hotel archive template
+add_filter( 'archive_template', 'ghc_hotel_archive' );
+function ghc_hotel_archive( $archive_template ) {
+    global $post;
+
+    if ( is_post_type_archive( 'hotel' ) ) {
+        $archive_template = plugin_dir_path( __FILE__ ) . '/inc/archive-hotel.php';
+    }
+    return $archive_template;
+}
+
 // add options
 if( function_exists('acf_add_options_page') ) {
 

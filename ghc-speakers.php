@@ -747,24 +747,28 @@ function convention_info() {
         }
     }
     wp_reset_postdata();
+    /* $conventions: each key is the two-letter abbreviation */
 
     // convention abbreviations
     global $convention_abbreviations;
     foreach ( $conventions as $key => $values ) {
         $convention_abbreviations[$key] = strtolower( implode( '', $values['convention_short_name'] ) );
     }
+    /* $convention_abbreviations: each key is the two-letter abbreviation */
 
     // convention URLs
     global $convention_urls;
     foreach ( $conventions as $key => $values ) {
         $convention_urls[$key] = get_permalink( $values['ID'] );
     }
+    /* $convention_urls: each key is the two-letter abbreviation */
 
     // convention dates (end dates)
     global $convention_dates;
     foreach ( $conventions as $key => $values ) {
         $convention_dates[$key] = mktime( get_field( 'end_date', $values['ID'] ) );
     }
+    /* $convention_dates: each key is the two-letter abbreviation, and the value is the Unix time */
 
 }
 add_action( 'wp_head', 'convention_info' );

@@ -27,6 +27,8 @@
                     echo get_field( 'discount_rate3' ) ? '<p>From $' . get_field( 'discount_rate3' ) . ' per night' : '';
                     echo get_field( 'discount_rate3_details' ) ? '<br/>' . get_field( 'discount_rate3_details' ) . '</p>' : '</p>';
 
+                    echo '<div class="content">' . get_the_content() . '</div>';;
+
                     echo get_field( 'discount_valid_date' ) ? '<p>Discount valid through: ' . get_field( 'discount_valid_date' ) . '</p>' : '';
 
                     echo get_field( 'discount_group_code' ) ? '<p>Group code: ' . get_field( 'discount_group_code' ) . '</p>' : '';

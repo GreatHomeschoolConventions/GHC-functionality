@@ -33,7 +33,7 @@
                         $location = get_field( 'location' );
 
                         $convention_address = $conventions[$this_convention]['address'][0] . '+' . $conventions[$this_convention]['city'][0] . ',+' . $conventions[$this_convention]['state'][0] . '+' . $conventions[$this_convention]['zip'][0];
-                        echo '<p><a target="_blank" href="https://www.google.com/maps/dir/' . str_replace( ' ', '+', $location['address'] ) . '/' . $convention_address . '/">Directions to ' . $conventions[$this_convention]['convention_center_name'][0] . '</a></p>';
+                        echo '<p><a target="_blank" href="https://www.google.com/maps/dir/' . str_replace( ' ', '+', $location['address'] ) . '/' . $convention_address . '/">Directions to ' . $conventions[$this_convention]['convention_center_name'][0] . ' <span class="fa fa-map"></span></a></p>';
                     }
                 ?></div>
             </div>

@@ -45,7 +45,7 @@
                     }
                 ?></div>
             </div>
-            <?php if ( get_field( 'hotel_URL' ) && ! get_field( 'sold_out' ) ) { ?><a class="accommodation-button-text gdlr-button" target="_blank" href="<?php the_field( 'hotel_URL' ); ?>">BOOK NOW</a><?php } ?>
+            <?php if ( get_field( 'hotel_URL' ) && ! get_field( 'sold_out' ) ) { ?><a class="accommodation-button-text gdlr-button" target="_blank" href="<?php the_field( 'hotel_URL' ); ?>">BOOK ONLINE NOW</a><?php } ?>
         </div>
     </div>
 </div>

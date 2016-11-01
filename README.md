@@ -74,6 +74,9 @@ Available shortcodes:
 
 #Changelog
 
+- 2.3.4
+    - Add hotel info to single views
+
 - 2.3.3
     - Add content to hotels archive
     - Change hotels archive from `/hotel/` to `/hotels/`

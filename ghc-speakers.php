@@ -3,7 +3,7 @@
  * Plugin Name: GHC Functionality
  * Plugin URI: https://github.com/macbookandrew/ghc-speakers
  * Description: Add speakers, exhibitors, sponsors, and hotels
- * Version: 2.3.3
+ * Version: 2.3.4
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com
  * Copyright: 2015 AndrewRMinion Design (andrew@andrewrminion.com)
@@ -24,7 +24,7 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-CONST GHC_SPEAKERS_VERSION = '2.3.3';
+CONST GHC_SPEAKERS_VERSION = '2.3.4';
 
 // flush rewrite rules on activation/deactivation
 function ghc_speakers_activate() {
@@ -643,6 +643,28 @@ function ghc_hotel_archive( $archive_template ) {
         $archive_template = plugin_dir_path( __FILE__ ) . '/inc/archive-hotel.php';
     }
     return $archive_template;
+}
+
+// add hotel info to single views
+add_filter( 'the_content', 'ghc_hotel_single_view' );
+function ghc_hotel_single_view( $content ) {
+    if ( is_single() && 'hotel' == get_post_type() ) {
+        // get convention info
+        global $conventions, $convention_abbreviations;
+        $conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
+        $this_convention = array_flip( $convention_abbreviations )[$conventions_taxonomy[0]->slug];
+
+        // get hotel details
+        ob_start();
+        include( 'inc/hotel-details.php' );
+        $content .= ob_get_clean();
+
+        if ( get_field( 'hotel_URL' ) && ! get_field( 'sold_out' ) ) {
+            $content .= '<a class="accommodation-button-text gdlr-button" target="_blank" href="' . get_field( 'hotel_URL' ) . '">BOOK ONLINE NOW</a>';
+        }
+    }
+
+    return $content;
 }
 
 // add options

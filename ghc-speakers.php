@@ -563,6 +563,9 @@ function ghc_related_sponsors( $content ) {
                 $content .= '</div><!-- .sponsors -->
                 </div><!-- #sponsor-stripe -->';
             }
+
+            // reset post data
+            wp_reset_postdata();
         }
     }
     return $content;

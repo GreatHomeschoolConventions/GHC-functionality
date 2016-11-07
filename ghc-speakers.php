@@ -514,9 +514,7 @@ function ghc_meet_the_author( $content ) {
     if ( is_singular() && get_the_author_meta( 'speaker_match' ) ) {
         $meet_the_author_output = '<p class="no-margin">Meet <a href="' . get_permalink( get_the_author_meta( 'speaker_match' ) ) . '">' . get_the_author() . '</a> at these conventions:</p>';
 
-        foreach ( get_the_terms_sorted( get_the_author_meta( 'speaker_match' ), 'ghc_conventions_taxonomy' ) as $author_convention ) {
-            $meet_the_author_output .= do_shortcode( '[convention_icon convention="' . $author_convention->name . '"]' );
-        }
+        $meet_the_author_output .= output_convention_icons( get_the_terms( get_the_author_meta( 'speaker_match' ), 'ghc_conventions_taxonomy' ) );
     }
     echo $meet_the_author_output;
 }
@@ -687,19 +685,6 @@ if( function_exists('acf_add_options_page') ) {
         'parent_slug'   => 'theme-options',
     ));
 
-}
-
-// add extra function to get_the_terms by term_id order rather than alphabetical
-// adapted from https://wordpress.org/support/topic/use-with-get_the_terms#post-5093011
-function get_the_terms_sorted( $post_id, $taxonomy ) {
-    $terms = get_the_terms( $post_id, $taxonomy );
-    if ( $terms ) {
-        usort( $terms, 'cmp_by_custom_order' );
-    }
-    return $terms;
-}
-function cmp_by_custom_order( $a, $b ) {
-    return $a->term_id - $b->term_id;
 }
 
 // get options

@@ -1210,6 +1210,16 @@ function tweak_woocommerce_email_header( $email_heading ) {
 }
 
 /**
+ * Modify WooCommerce admin emails
+ */
+add_filter( 'woocommerce_email_subject_new_order', 'tweak_admin_email_subject', 1, 2 );
+function change_admin_email_subject( $subject, $order ) {
+    global $woocommerce;
+
+    return sprintf( 'GHC New Customer Order #%s from %s %s', $order->id, $order->billing_first_name, $order->billing_last_name );
+}
+
+/**
  * Add special track info to each applicable speaker
  */
 add_action( 'gdlr_before_speaker_biography', 'ghc_speaker_list_special_tracks', 8 );

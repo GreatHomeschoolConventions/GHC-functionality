@@ -1275,3 +1275,15 @@ function ghc_speaker_list_special_tracks() {
         }
     }
 }
+
+/**
+ * Add sample workshops link to each speaker bio
+ */
+add_action( 'gdlr_before_speaker_biography', 'ghc_speaker_show_sample_workshops', 5 );
+function ghc_speaker_show_sample_workshops() {
+    if ( is_single() && 'speaker' == get_post_type() ) {
+        echo '<h4 class="gdlr-speaker-biography-title">Workshops</h4>
+        <p>View sample workshop topics and descriptions:</p>
+        <p><a class="button" href="' . home_url( '/workshops/' ) . '">View Sample Worskhops</a></p>';
+    }
+}

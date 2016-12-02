@@ -1103,7 +1103,7 @@ add_action( 'woocommerce_single_product_summary', 'ghc_check_for_individual_regi
 function ghc_check_for_individual_registration_in_cart() {
     // loop over products in cart searching for an individual product
     foreach( WC()->cart->get_cart() as $cart_item_key => $values ) {
-        if ( strpos( $values['variation']['attribute_registration-type'], 'Shopping Only' ) !== false ) {
+        if ( ( strpos( $values['variation']['attribute_registration-type'], 'Shopping Only' ) !== false ) && ( '37988' != get_the_ID() /* exception for Jeff Foxworthy Shopping Pass tickets */ ) ) {
             // add filter for simple products
             add_filter( 'woocommerce_quantity_input_max', function() { return 0; } );
             // add filter for variable products

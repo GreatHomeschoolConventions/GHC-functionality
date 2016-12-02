@@ -786,27 +786,6 @@ if ( ! is_admin() ) {
     require_once( 'inc/shortcodes.php' );
 }
 
-// GitHub updater
-if ( is_admin() ) {
-    include_once( 'updater.php' );
-
-    $config = array(
-        'slug'                  => plugin_basename( __FILE__ ),
-        'proper_folder_name'    => 'ghc-speakers',
-        'api_url'               => 'https://api.github.com/repos/macbookandrew/ghc-speakers',
-        'raw_url'               => 'https://raw.github.com/macbookandrew/ghc-speakers/master',
-        'github_url'            => 'https://github.com/macbookandrew/ghc-speakers',
-        'zip_url'               => 'https://github.com/macbookandrew/ghc-speakers/zipball/master',
-        'sslverify'             => true,
-        'requires'              => '3.0',
-        'tested'                => '3.3',
-        'readme'                => 'README.md',
-        'access_token'          => ''
-    );
-    new WP_GitHub_Updater( $config );
-
-}
-
 /**
  * Output convention icons
  * @param array  $conventions       Array of WP_Term objects

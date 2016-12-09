@@ -1,0 +1,43 @@
+{
+    "key": "group_57a8b3b993880",
+    "title": "Google API Key",
+    "fields": [
+        {
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "AIza\u2026",
+            "prepend": "",
+            "append": "",
+            "key": "field_57db0a47da3e5",
+            "label": "API Key",
+            "name": "api_key",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1481309672
+}

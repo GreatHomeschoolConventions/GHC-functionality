@@ -1,0 +1,300 @@
+{
+    "key": "group_5786883026c41",
+    "title": "Hotel Information",
+    "fields": [
+        {
+            "default_value": 0,
+            "message": "",
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "key": "field_57866441d06b0",
+            "label": "Sold Out",
+            "name": "sold_out",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "0.00",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "key": "field_57866455d06b1",
+            "label": "Discounted Rate",
+            "name": "discount_rate",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "2 Queen or 2 Double beds, etc.",
+            "prepend": "",
+            "append": "",
+            "key": "field_57866487d06b4",
+            "label": "Discount Rate Details",
+            "name": "discount_rate_details",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "formatting": "html",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "0.00",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "key": "field_57866476d06b3",
+            "label": "Second Discounted Rate",
+            "name": "discount_rate2",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "2 Queen or 2 Double beds, etc.",
+            "prepend": "",
+            "append": "",
+            "key": "field_578664aed06b5",
+            "label": "Second Discount Rate Details",
+            "name": "discount_rate2_details",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "formatting": "html",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "0.00",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "key": "field_578664cdd06b7",
+            "label": "Third Discounted Rate",
+            "name": "discount_rate3",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "2 Queen or 2 Double beds, etc.",
+            "prepend": "",
+            "append": "",
+            "key": "field_578664b6d06b6",
+            "label": "Third Discount Rate Details",
+            "name": "discount_rate3_details",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "formatting": "html",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "display_format": "m\/d\/Y",
+            "return_format": "F j, Y",
+            "first_day": 0,
+            "key": "field_578664dbd06b8",
+            "label": "Discount Until Date",
+            "name": "discount_valid_date",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "ABC123",
+            "prepend": "",
+            "append": "",
+            "key": "field_578664f9d06b9",
+            "label": "Group Code",
+            "name": "discount_group_code",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "formatting": "html",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "http:\/\/",
+            "prepend": "",
+            "append": "",
+            "key": "field_57866556d06ba",
+            "label": "Website",
+            "name": "hotel_URL",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "formatting": "html",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "234-567-8901",
+            "prepend": "",
+            "append": "",
+            "key": "field_57866564d06bb",
+            "label": "Phone",
+            "name": "hotel_phone",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "formatting": "html",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "key": "field_5786656fd06bc",
+            "label": "Location",
+            "name": "hotel_address",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "height": "",
+            "center_lat": "",
+            "center_lng": "",
+            "zoom": "",
+            "key": "field_57db052db2069",
+            "label": "Location",
+            "name": "location",
+            "type": "google_map",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "hotel"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1481309674
+}

@@ -1,0 +1,136 @@
+{
+    "key": "group_578688306c39f",
+    "title": "Special Event Information",
+    "fields": [
+        {
+            "post_type": [
+                "speaker",
+                "exhibitor",
+                "sponsor"
+            ],
+            "taxonomy": [],
+            "min": 0,
+            "max": "",
+            "filters": [
+                "search",
+                "post_type"
+            ],
+            "elements": [
+                "post_type"
+            ],
+            "return_format": "object",
+            "key": "field_578670b7f1df6",
+            "label": "Related Speaker(s)",
+            "name": "related_speaker",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "sub_fields": [
+                {
+                    "display_format": "F j, Y g:i a",
+                    "return_format": "Y-m-d H:i:s",
+                    "first_day": 0,
+                    "key": "field_57adeba08187d",
+                    "label": "Date and Time",
+                    "name": "date_and_time",
+                    "type": "date_time_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Grand Ballroom",
+                    "prepend": "",
+                    "append": "",
+                    "key": "field_578670a6f1df5",
+                    "label": "Location",
+                    "name": "location",
+                    "type": "text",
+                    "instructions": "Room number, etc.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "formatting": "html",
+                    "readonly": 0,
+                    "disabled": 0
+                },
+                {
+                    "taxonomy": "ghc_conventions_taxonomy",
+                    "field_type": "radio",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "return_format": "id",
+                    "add_term": 1,
+                    "load_terms": 0,
+                    "save_terms": 0,
+                    "key": "field_57adebcd8187e",
+                    "label": "Convention",
+                    "name": "convention",
+                    "type": "taxonomy",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                }
+            ],
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Row",
+            "collapsed": "field_57adebcd8187e",
+            "key": "field_57adeb1c8187c",
+            "label": "Date\/Time\/Location Info",
+            "name": "datetimelocation_info",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "special_event"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1481309683
+}

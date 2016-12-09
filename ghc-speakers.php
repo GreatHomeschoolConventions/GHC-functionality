@@ -3,7 +3,7 @@
  * Plugin Name: GHC Functionality
  * Plugin URI: https://github.com/macbookandrew/ghc-speakers
  * Description: Add speakers, exhibitors, sponsors, and hotels
- * Version: 2.3.4
+ * Version: 2.3.5
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com
  * Copyright: 2015 AndrewRMinion Design (andrew@andrewrminion.com)
@@ -24,7 +24,7 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-CONST GHC_SPEAKERS_VERSION = '2.3.4';
+CONST GHC_SPEAKERS_VERSION = '2.3.5';
 
 // flush rewrite rules on activation/deactivation
 function ghc_speakers_activate() {
@@ -36,6 +36,27 @@ function ghc_speakers_deactivate() {
     flush_rewrite_rules();
 }
 register_deactivation_hook( __FILE__, 'ghc_speakers_deactivate' );
+
+/**
+ * Set ACF local JSON save directory
+ * @param  string $path ACF local JSON save directory
+ * @return string ACF local JSON save directory
+ */
+add_filter( 'acf/settings/save_json', 'ghc_acf_json_save_point' );
+function ghc_acf_json_save_point( $path ) {
+    return plugin_dir_path( __FILE__ ) . '/acf-json';
+}
+
+/**
+ * Set ACF local JSON open directory
+ * @param  array $path ACF local JSON open directory
+ * @return array ACF local JSON open directory
+ */
+add_filter( 'acf/settings/load_json', 'ghc_acf_json_load_point' );
+function ghc_acf_json_load_point( $path ) {
+    $paths[] = plugin_dir_path( __FILE__ ) . '/acf-json';
+    return $paths;
+}
 
 // add custom image sizes
 add_action( 'after_setup_theme', 'ghc_custom_image_sizes' );

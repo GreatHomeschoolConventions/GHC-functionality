@@ -1,0 +1,60 @@
+{
+    "key": "group_5786883065699",
+    "title": "Speaker Information",
+    "fields": [
+        {
+            "message": "Is this a featured speaker? <strong>Yes<\/strong> means they will be shown in the archive; <strong>No<\/strong> means they will be hidden from the archive.",
+            "esc_html": 0,
+            "new_lines": "wpautop",
+            "key": "field_57866273c7c49",
+            "label": "Note",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "default_value": 1,
+            "message": "",
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "key": "field_5786628ac7c4a",
+            "label": "Featured?",
+            "name": "featured_speaker",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "speaker"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1481309681
+}

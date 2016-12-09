@@ -1,0 +1,115 @@
+{
+    "key": "group_57868577b8740",
+    "title": "Exhibitor Information",
+    "fields": [
+        {
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "http:\/\/\u2026",
+            "prepend": "",
+            "append": "",
+            "key": "field_5786631e4fa91",
+            "label": "Exhibitor\u2019s website",
+            "name": "exhibitor_URL",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "formatting": "html",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "sub_fields": [
+                {
+                    "post_type": [
+                        "location"
+                    ],
+                    "taxonomy": [],
+                    "min": "",
+                    "max": "",
+                    "filters": [
+                        "search",
+                        "post_type",
+                        "taxonomy"
+                    ],
+                    "elements": "",
+                    "return_format": "id",
+                    "key": "field_5786896cba64e",
+                    "label": "Convention",
+                    "name": "convention",
+                    "type": "relationship",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "key": "field_578689b6ba64f",
+                    "label": "Booth Number",
+                    "name": "booth_number",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "readonly": 0,
+                    "disabled": 0
+                }
+            ],
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Convention",
+            "collapsed": "field_5786896cba64e",
+            "key": "field_5786895bba64d",
+            "label": "Booth Location",
+            "name": "booth_location",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "exhibitor"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1481309621
+}

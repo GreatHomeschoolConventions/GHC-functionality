@@ -1,0 +1,68 @@
+{
+    "key": "group_57ed24d4c020d",
+    "title": "Open Graph",
+    "fields": [
+        {
+            "default_value": "",
+            "placeholder": "https:\/\/youtu.be\/\u2026 or https:\/\/www.youtube.com\/watch?v=\u2026",
+            "key": "field_57ed29272269a",
+            "label": "Featured Video",
+            "name": "featured_video",
+            "type": "url",
+            "instructions": "Video to feature on this page and when this page is shared on social media",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "special_event"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "speaker"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "location"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1481309680
+}

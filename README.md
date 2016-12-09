@@ -74,6 +74,10 @@ Available shortcodes:
 
 #Changelog
 
+- 2.4
+    - Add Workshop CPT for handling individual dates/times/locations, with ACF relating to speaker and GoodLayer’s sessions CPT for the full description
+    - Add ACF JSON save point to sync ACF fields
+
 - 2.3.4
     - Add hotel info to single views
 

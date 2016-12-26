@@ -1246,8 +1246,8 @@ function ghc_restrict_max_quantity_variable( $variations ) {
     return $variations;
 }
 // check in cart
-add_filter( 'woocommerce_cart_item_quantity', 'ghc_testing', 10, 3 );
-function ghc_testing( $product_quantity, $cart_item_key, $cart_item ) {
+add_filter( 'woocommerce_cart_item_quantity', 'ghc_cart_item_quantity', 10, 3 );
+function ghc_cart_item_quantity( $product_quantity, $cart_item_key, $cart_item ) {
     foreach( WC()->cart->get_cart() as $cart_item_key => $values ) {
         if ( strpos( $values['variation']['attribute_attendee-type'], 'Individual' ) !== false ) {
             // set max quantity to 1 if Individual is present for simple products

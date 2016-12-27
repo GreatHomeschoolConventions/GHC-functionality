@@ -1265,6 +1265,19 @@ function ghc_cart_item_quantity( $product_quantity, $cart_item_key, $cart_item )
 }
 
 /**
+ * Restrict 2017 TX Saturday Afternoon Shopping Pass to 1
+ */
+add_filter( 'woocommerce_quantity_input_args', 'ghc_2017_tx_foxworthy_shopping_pass', 50, 2 );
+function ghc_2017_tx_foxworthy_shopping_pass( $args, $product ) {
+    if ( in_array( $product->id, array( '43258', '43255' ) ) ) {
+        $args['max_value'] = 1;
+        $args['min_value'] = 1;
+    }
+
+    return $args;
+}
+
+/**
  * Show convention icons on product category archives
  */
 add_action( 'woocommerce_before_shop_loop_item', 'ghc_show_product_category_conventions', 15 );

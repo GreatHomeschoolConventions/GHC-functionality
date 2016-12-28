@@ -1265,6 +1265,51 @@ function ghc_cart_item_quantity( $product_quantity, $cart_item_key, $cart_item )
 }
 
 /**
+ * Restrict 2017 TX Saturday Afternoon Shopping Pass to 1 on frontend (product)
+ */
+add_filter( 'woocommerce_quantity_input_args', 'ghc_2017_tx_foxworthy_shopping_pass_frontend', 50, 2 );
+function ghc_2017_tx_foxworthy_shopping_pass_frontend( $args, $product ) {
+    if ( in_array( $product->id, array( '43397', '43398' ) ) ) {
+        $args['max_value'] = 1;
+        $args['min_value'] = 1;
+    }
+    return $args;
+}
+
+/**
+ * Restrict 2017 TX Saturday Afternoon Shopping Pass to 1 on frontend (in cart)
+ */
+add_filter( 'woocommerce_cart_item_quantity', 'ghc_2017_tx_foxworthy_shopping_pass_frontend_cart', 50, 3 );
+function ghc_2017_tx_foxworthy_shopping_pass_frontend_cart( $product_quantity, $cart_item_key, $cart_item ) {
+    if ( '43398' == $cart_item['product_id'] ) {
+        $product_quantity = '1 (required)';
+    }
+    return $product_quantity;
+}
+
+/**
+ * Limit 2017 TX Saturday Afternoon Shopping Pass to 1 if more are in cart
+ */
+add_action( 'woocommerce_check_cart_items', 'ghc_2017_tx_foxworthy_limit_shopping_pass', 1 );
+function ghc_2017_tx_foxworthy_limit_shopping_pass() {
+    $limited_ticket = '43398';
+
+    // check cart
+    if ( sizeof( WC()->cart->get_cart > 0 ) ) {
+        $found = false;
+        foreach( WC()->cart->get_cart() as $key => $values ) {
+            $this_id = $values['data']->id;
+            if ( $found && $limited_ticket == $this_id ) {
+                WC()->cart->remove_cart_item( $key );
+            } elseif ( $limited_ticket == $this_id ) {
+                $found = true;
+                WC()->cart->set_quantity($key, '1');
+            }
+        }
+    }
+}
+
+/**
  * Show convention icons on product category archives
  */
 add_action( 'woocommerce_before_shop_loop_item', 'ghc_show_product_category_conventions', 15 );

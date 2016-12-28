@@ -74,6 +74,10 @@ Available shortcodes:
 
 #Changelog
 
+- 2.4.1
+    - Fix a bug in woocommerce.js if max was not specified
+    - Handle cart quantities for 2017 Jeff Foxworthy promo
+
 - 2.4
     - Add Workshop CPT for handling individual dates/times/locations, with ACF relating to speaker and GoodLayer’s sessions CPT for the full description
     - Add ACF JSON save point to sync ACF fields

@@ -1424,3 +1424,11 @@ function ghc_speaker_show_sample_workshops() {
         <p><a class="button" href="' . home_url( '/workshops/' ) . '">View Sample Worskhops</a></p>';
     }
 }
+
+/**
+ * Add speaker location info to each speaker bio
+ */
+add_action( 'gdlr_after_speaker_info', 'ghc_speaker_show_locations' );
+function ghc_speaker_show_locations() {
+    echo '<div class="conventions">' . output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ) . '</div>';
+}

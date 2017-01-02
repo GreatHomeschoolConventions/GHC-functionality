@@ -1337,13 +1337,23 @@ function tweak_woocommerce_email_header( $email_heading ) {
 }
 
 /**
- * Modify WooCommerce admin emails
+ * Modify WooCommerce admin email subject line
  */
 add_filter( 'woocommerce_email_subject_new_order', 'tweak_admin_email_subject', 1, 2 );
 function tweak_admin_email_subject( $subject, $order ) {
     global $woocommerce;
 
     return sprintf( 'GHC New Customer Order #%d from %s %s', $order->id, $order->billing_first_name, $order->billing_last_name );
+}
+
+/**
+ * Modify WooCommerce admin email with coupon code
+ */
+add_action( 'woocommerce_email_order_details', 'ghc_add_coupon_code_admin_email', 8, 4 );
+function ghc_add_coupon_code_admin_email( $order, $sent_to_admin, $plain_text, $email ) {
+    if ( $order->get_used_coupons() ) {
+        echo '<p>Coupon(s) used: <span class="highlighted">' . implode( ', ', $order->get_used_coupons() ) . '</span></p>';
+    }
 }
 
 /**

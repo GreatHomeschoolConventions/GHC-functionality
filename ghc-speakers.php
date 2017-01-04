@@ -560,6 +560,39 @@ function ghc_speaker_sortable_columns( $columns ) {
 }
 add_filter( 'manage_edit-speaker_sortable_columns', 'ghc_speaker_sortable_columns' );
 
+// add session speaker to session column headers
+function ghc_session_columns( $columns ) {
+    $columns['speaker'] = 'Speaker';
+    return $columns;
+}
+add_filter( 'manage_edit-session_columns', 'ghc_session_columns' );
+
+// add session speaker to session column details
+function ghc_session_column_content( $column, $post_id ) {
+    global $post;
+    if ( 'speaker' == $column ) {
+        $speaker_slug = get_post_meta( $post->ID, 'session-speaker', true );
+        $speaker = get_page_by_path( $speaker_slug, OBJECT, 'speaker' );
+        echo $speaker->post_title;
+    }
+}
+add_action( 'manage_session_posts_custom_column', 'ghc_session_column_content', 10, 2 );
+
+// make session speaker column header sortable
+function ghc_session_sortable_columns( $columns ) {
+    $columns['speaker'] = 'session-speaker';
+    return $columns;
+}
+add_filter( 'manage_edit-session_sortable_columns', 'ghc_session_sortable_columns' );
+
+// sort sessions by speakers if requested
+add_action( 'pre_get_posts', 'ghc_sort_sessions_admin' );
+function ghc_sort_sessions_admin( $query ) {
+    if ( is_admin() && $query->is_main_query() && ( 'session-speaker' == $query->get( 'orderby' ) ) ) {
+        $query->set( 'meta_key', 'session-speaker' );
+    }
+}
+
 // add exhibitor backend JS
 add_action( 'admin_enqueue_scripts', 'include_exhibitor_backend_js' );
 function include_exhibitor_backend_js() {

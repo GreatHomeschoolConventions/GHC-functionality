@@ -1384,7 +1384,7 @@ function tweak_admin_email_subject( $subject, $order ) {
  */
 add_action( 'woocommerce_email_order_details', 'ghc_add_coupon_code_admin_email', 8, 4 );
 function ghc_add_coupon_code_admin_email( $order, $sent_to_admin, $plain_text, $email ) {
-    if ( $order->get_used_coupons() ) {
+    if ( $sent_to_admin && $order->get_used_coupons() ) {
         echo '<p>Coupon(s) used: <span class="highlighted">' . implode( ', ', $order->get_used_coupons() ) . '</span></p>';
     }
 }

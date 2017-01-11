@@ -1103,56 +1103,58 @@ function ghc_show_special_event_tickets() {
 
     // get terms and filter out the “Registration” item
     $terms = get_the_terms( $post->ID, 'product_cat' );
-    foreach ( $terms as $term ) {
-        $convention_term_array = array( 'Texas', 'Southeast', 'Midwest', 'California' );
-        if ( in_array( $term->name, $convention_term_array ) ) {
-            $convention_category = $term->term_id;
+    if ( $terms ) {
+        foreach ( $terms as $term ) {
+            $convention_term_array = array( 'Texas', 'Southeast', 'Midwest', 'California' );
+            if ( in_array( $term->name, $convention_term_array ) ) {
+                $convention_category = $term->term_id;
+            }
         }
-    }
 
-    // set up query args
-    $special_events_query_args = array (
-        'post__not_in'      => array( $post->ID ),
-        'posts_per_page'    => -1,
-        'post_status'       => 'publish',
-        'post_type'         => 'product',
-        'orderby'           => 'menu_order',
-        'order'             => 'ASC',
-        'tax_query'         => array(
-            array(
-                'taxonomy'  => 'product_cat',
-                'field'     => 'id',
-                'terms'     => $convention_category
-            ),
-            array(
-                'taxonomy'  => 'product_cat',
-                'field'     => 'slug',
-                'terms'     => 'special-events'
+        // set up query args
+        $special_events_query_args = array (
+            'post__not_in'      => array( $post->ID ),
+            'posts_per_page'    => -1,
+            'post_status'       => 'publish',
+            'post_type'         => 'product',
+            'orderby'           => 'menu_order',
+            'order'             => 'ASC',
+            'tax_query'         => array(
+                array(
+                    'taxonomy'  => 'product_cat',
+                    'field'     => 'id',
+                    'terms'     => $convention_category
+                ),
+                array(
+                    'taxonomy'  => 'product_cat',
+                    'field'     => 'slug',
+                    'terms'     => 'special-events'
+                )
             )
-        )
-    );
+        );
 
-    $special_events = new WP_Query( $special_events_query_args );
+        $special_events = new WP_Query( $special_events_query_args );
 
-    // loop through results
-    if ( $special_events->have_posts() ) {
-        ?>
-        <div class="cross-sells">
-            <h2>Special Events</h2>
-            <?php woocommerce_product_loop_start(); ?>
+        // loop through results
+        if ( $special_events->have_posts() ) {
+            ?>
+            <div class="cross-sells">
+                <h2>Special Events</h2>
+                <?php woocommerce_product_loop_start(); ?>
 
-                <?php while ( $special_events->have_posts() ) : $special_events->the_post(); ?>
+                    <?php while ( $special_events->have_posts() ) : $special_events->the_post(); ?>
 
-                    <?php wc_get_template_part( 'content', 'product' ); ?>
+                        <?php wc_get_template_part( 'content', 'product' ); ?>
 
-                <?php endwhile; // end of the loop. ?>
+                    <?php endwhile; // end of the loop. ?>
 
-            <?php woocommerce_product_loop_end(); ?>
-        </div>
-    <?php }
+                <?php woocommerce_product_loop_end(); ?>
+            </div>
+        <?php }
 
-    // reset global query
-    wp_reset_query();
+        // reset global query
+        wp_reset_query();
+    }
 }
 add_filter( 'woocommerce_cross_sells_columns', 'woocommerce_remove_cross_sells_columns', 10, 1 );
 function woocommerce_remove_cross_sells_columns( $columns ) {

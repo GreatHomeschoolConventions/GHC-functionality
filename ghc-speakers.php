@@ -1323,25 +1323,30 @@ function ghc_2017_tx_foxworthy_shopping_pass_frontend_cart( $product_quantity, $
 }
 
 /**
- * Limit 2017 TX Saturday Afternoon Shopping Pass to 1 if more are in cart
+ * Only add one Force Sell product to the cart (2017 Jeff Foxworthy promo)
+ * @param  array $product array with product id, quuantity, variation_id, and variation
+ * @return array array with product id, quuantity, variation_id, and variation
  */
-add_action( 'woocommerce_check_cart_items', 'ghc_2017_tx_foxworthy_limit_shopping_pass', 1 );
-function ghc_2017_tx_foxworthy_limit_shopping_pass() {
-    $limited_ticket = '43398';
-
-    // check cart
-    if ( sizeof( WC()->cart->get_cart > 0 ) ) {
-        $found = false;
-        foreach( WC()->cart->get_cart() as $key => $values ) {
-            $this_id = $values['data']->id;
-            if ( $found && $limited_ticket == $this_id ) {
-                WC()->cart->remove_cart_item( $key );
-            } elseif ( $limited_ticket == $this_id ) {
-                $found = true;
-                WC()->cart->set_quantity($key, '1');
-            }
-        }
+add_filter( 'wc_force_sell_add_to_cart_product', 'ghc_wc_force_sell_add_to_cart_product' );
+function ghc_wc_force_sell_add_to_cart_product( $product ) {
+    if ( '43398' == $product['id'] ) {
+        $product['quantity'] = 1;
     }
+    return $product;
+}
+
+/**
+ * Limit Force Sell product quantity to 1 (2017 Jeff Foxworthy promo)
+ * @param  int   $quantity product quantity
+ * @param  array $product  array of cart items
+ * @return int   quantity
+ */
+add_filter( 'wc_force_sell_update_quantity', 'ghc_wc_force_sell_update_quantity', 10, 2 );
+function ghc_wc_force_sell_update_quantity( $quantity, $product ) {
+    if ( '43398' == $product['product_id'] ) {
+        $quantity = 1;
+    }
+    return $quantity;
 }
 
 /**

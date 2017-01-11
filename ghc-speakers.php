@@ -1494,3 +1494,18 @@ add_action( 'gdlr_after_speaker_info', 'ghc_speaker_show_locations' );
 function ghc_speaker_show_locations() {
     echo '<div class="conventions">' . output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ) . '</div>';
 }
+
+/**
+ * Add conventions and special tracks to session info if applicable
+ */
+add_action( 'gldr_conference_after_session_info', 'ghc_after_session_info' );
+function ghc_after_session_info() {
+    // conventions
+    $conventions = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
+    if ( count( $conventions ) > 0 ) {
+        echo '<div class="conventions">' . output_convention_icons( $conventions ) . '</div>';
+    }
+
+    // special tracks
+    echo get_the_term_list( get_the_ID(), 'ghc_special_tracks_taxonomy', NULL, ' | ', NULL );
+}

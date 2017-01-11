@@ -1246,7 +1246,7 @@ function ghc_check_for_individual_registration_in_cart() {
             add_filter( 'woocommerce_quantity_input_max', function() { return 0; } );
             // add filter for variable products
             add_filter( 'woocommerce_available_variation', function() { return 0; } );
-        } elseif ( strpos( $values['variation']['attribute_attendee-type'], 'Individual' ) !== false ) {
+        } elseif ( isset( $values['variation']['attribute_attendee-type'] ) &&  strpos( $values['variation']['attribute_attendee-type'], 'Individual' ) !== false ) {
             // add filter for simple products
             add_filter( 'woocommerce_quantity_input_max', function() { return 1; } );
             // add filter for variable products

@@ -1241,7 +1241,7 @@ add_action( 'woocommerce_single_product_summary', 'ghc_check_for_individual_regi
 function ghc_check_for_individual_registration_in_cart() {
     // loop over products in cart searching for an individual product
     foreach( WC()->cart->get_cart() as $cart_item_key => $values ) {
-        if ( ( strpos( $values['variation']['attribute_registration-type'], 'Shopping Only' ) !== false ) && ( '37988' != get_the_ID() /* exception for Jeff Foxworthy Shopping Pass tickets */ ) ) {
+        if ( isset( $values['variation']['attribute_attendee-type'] ) && ( strpos( $values['variation']['attribute_registration-type'], 'Shopping Only' ) !== false ) && ( '37988' != get_the_ID() /* exception for Jeff Foxworthy Shopping Pass tickets */ ) ) {
             // add filter for simple products
             add_filter( 'woocommerce_quantity_input_max', function() { return 0; } );
             // add filter for variable products
@@ -1284,7 +1284,7 @@ function ghc_restrict_max_quantity_variable( $variations ) {
 add_filter( 'woocommerce_cart_item_quantity', 'ghc_cart_item_quantity', 10, 3 );
 function ghc_cart_item_quantity( $product_quantity, $cart_item_key, $cart_item ) {
     foreach( WC()->cart->get_cart() as $cart_item_key => $values ) {
-        if ( strpos( $values['variation']['attribute_attendee-type'], 'Individual' ) !== false ) {
+        if ( isset( $values['variation']['attribute_attendee-type'] ) && strpos( $values['variation']['attribute_attendee-type'], 'Individual' ) !== false ) {
             // set max quantity to 1 if Individual is present for simple products
             $product_quantity = str_replace( 'min="0"', 'min="0" max="1"', $product_quantity );
         } else {

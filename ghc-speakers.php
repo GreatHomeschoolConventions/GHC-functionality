@@ -1501,12 +1501,20 @@ function ghc_speaker_show_locations() {
 add_action( 'gldr_conference_after_session_info', 'ghc_after_session_info' );
 add_action( 'ghc_workshops_shortcode_after_title', 'ghc_after_session_info' );
 function ghc_after_session_info() {
+    // speaker
+    $speaker_slug = get_post_meta( get_the_ID(), 'session-speaker', true );
+    $speaker = get_page_by_path( $speaker_slug, OBJECT, 'speaker' );
+
     // conventions
     $conventions = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
-    if ( count( $conventions ) > 0 ) {
+    $speaker_conventions = get_the_terms( $speaker->ID, 'ghc_conventions_taxonomy' );
+
+    if ( $conventions && count( $conventions ) > 0 ) {
         echo '<div class="conventions">' . output_convention_icons( $conventions ) . '</div>';
+    } elseif ( count( $speaker_conventions ) > 0 ) {
+        echo '<div class="conventions">' . output_convention_icons( $speaker_conventions ) . '</div>';
     }
 
     // special tracks
-    echo get_the_term_list( get_the_ID(), 'ghc_special_tracks_taxonomy', NULL, ' | ', NULL );
+    echo get_the_term_list( get_the_ID(), 'ghc_special_tracks_taxonomy', '<p class="special-tracks">', ' | ', '</p>' );
 }

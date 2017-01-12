@@ -393,3 +393,59 @@ function sponsors_shortcode( $attributes ) {
 
     return $shortcode_content;
 }
+
+// add shortcode for workshops
+// accepts `track` attribute
+add_shortcode( 'workshops_list', 'workshops_shortcode' );
+function workshops_shortcode( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'track'    => NULL,
+    ), $attributes );
+
+    // arguments
+    $workshop_speakers_args = array(
+        'post_type'         => 'session',
+        'posts_per_page'    => -1,
+        'orderby'           => 'meta_value',
+        'meta_key'          => 'session-speaker',
+        'order'             => 'ASC',
+        'tax_query'         => array(
+            array(
+                'taxonomy'  => 'session_category',
+                'field'     => 'slug',
+                'terms'     => 'sample-sessions',
+            ),
+        ),
+    );
+
+    // add track if specified
+    if ( isset( $shortcode_attributes['track'] ) ) {
+        $workshop_speakers_args['tax_query'] = array_merge( $workshop_speakers_args['tax_query'], array(
+                'taxonomy'  => 'ghc_workshops_taxonomy',
+                'field'     => 'slug',
+                'terms'     => $shortcode_attributes['track'],
+            ));
+    }
+
+    // query
+    $workshop_speakers_query = new WP_Query( $workshop_speakers_args );
+
+    // loop
+    if ( $workshop_speakers_query->have_posts() ) {
+        $shortcode_content = '<div class="session-item-wrapper">
+            <div class="session-item-holder">';
+        while ( $workshop_speakers_query->have_posts() ) {
+            $workshop_speakers_query->the_post();
+            ob_start();
+            include( 'session-grid-template.php' );
+            $shortcode_content .= ob_get_clean();
+        }
+        $shortcode_content .= '</div>
+        </div>';
+    }
+
+    // reset post data
+    wp_reset_postdata();
+
+    return $shortcode_content;
+}

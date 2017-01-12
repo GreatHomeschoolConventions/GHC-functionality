@@ -74,6 +74,11 @@ Available shortcodes:
 
 #Changelog
 
+- 2.5
+    - Add `workshops_list` shortcode
+    - Fix coupon display for admin and customer emails
+    - Fix force sells for 2017 Jeff Foxworthy promo
+
 - 2.4.1
     - Fix a bug in woocommerce.js if max was not specified
     - Handle cart quantities for 2017 Jeff Foxworthy promo

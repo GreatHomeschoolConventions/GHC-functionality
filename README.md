@@ -74,6 +74,10 @@ Available shortcodes:
 
 #Changelog
 
+- 2.6
+    - Add `workshops_schedule` shortcode to display detailed schedule
+    - Rename `workshops_list` to `sessions_list` to maintain continuity with CPTs
+
 - 2.5
     - Add `workshops_list` shortcode
     - Fix coupon display for admin and customer emails

@@ -3,7 +3,7 @@
  * Plugin Name: GHC Functionality
  * Plugin URI: https://github.com/macbookandrew/ghc-speakers
  * Description: Add speakers, exhibitors, sponsors, and hotels
- * Version: 2.5
+ * Version: 2.6
  * Author: AndrewRMinion Design
  * Author URI: http://andrewrminion.com
  * Copyright: 2015 AndrewRMinion Design (andrew@andrewrminion.com)
@@ -24,7 +24,7 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-CONST GHC_SPEAKERS_VERSION = '2.5';
+CONST GHC_SPEAKERS_VERSION = '2.6';
 
 // flush rewrite rules on activation/deactivation
 function ghc_speakers_activate() {

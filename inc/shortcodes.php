@@ -454,3 +454,114 @@ function sessions_shortcode( $attributes ) {
 
     return $shortcode_content;
 }
+
+// add shortcode for workshops schedule
+// accept `convention` attribute
+add_shortcode( 'workshops_schedule', 'workshops_schedule_shortcode' );
+function workshops_schedule_shortcode( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'    => NULL,
+    ), $attributes );
+    global $convention_abbreviations, $wpdb;
+
+    // get total number of days
+    $distinct_dates = $wpdb->get_results( $wpdb->prepare( 'SELECT DISTINCT DATE(meta_value) AS workshop_date FROM %1$spostmeta meta JOIN %1$sposts posts ON posts.ID = meta.post_id WHERE posts.post_type = "workshop" AND meta.meta_key = "date_and_time" ORDER BY meta.meta_value;', $wpdb->prefix ) );
+
+    if ( $distinct_dates ) {
+        $shortcode_content = '<div class="session-item-wrapper workshop-schedule">
+            <div class="gdlr-session-item gdlr-tab-session-item gdlr-item">';
+
+        // table header
+        $shortcode_content .= '<div class="gdlr-session-item-head">';
+        $i = 1;
+        foreach ( $distinct_dates as $date ) {
+            $shortcode_content .= '<div class="gdlr-session-item-head-info ' . ( $i == 1 ? 'gdlr-active' : '' ) . '" data-tab="gdlr-tab-' . $i . '">
+                <div class="gdlr-session-head-day">Day ' . $i  . '</div>
+                <div class="gdlr-session-head-date">' . date( 'M. d, Y', strtotime( $date->workshop_date ) ) . '</div>
+            </div>';
+            $i++;
+        }
+        $shortcode_content .= '<div class="clear"></div></div><!-- .gdlr-session-item-head -->';
+
+        // table body
+        $i = 1;
+        foreach ( $distinct_dates as $date ) {
+            $shortcode_content .= '<div class="gdlr-session-item-tab-content gdlr-tab-' . $i . ' ' . ( $i == 1 ? 'gdlr-active': '' ) . '">';
+
+            // get distinct times
+            $distinct_times = $wpdb->get_results( $wpdb->prepare( 'SELECT DISTINCT meta_value AS workshop_time FROM %1$spostmeta meta JOIN %1$sposts posts ON posts.ID = meta.post_id WHERE posts.post_type = "workshop" AND meta.meta_key = "date_and_time" AND DATE(meta.meta_value) = "%2$s" ORDER BY meta.meta_value;', $wpdb->prefix, $date->workshop_date ) );
+
+            if ( $distinct_times ) {
+                foreach ( $distinct_times as $time ) {
+
+                    // arguments
+                    $workshops_args = array(
+                        'post_type'         => 'workshop',
+                        'posts_per_page'    => -1,
+                        'meta_key'          => 'date_and_time',
+                        'meta_value'        => $time->workshop_time,
+                        'orderby'           => 'meta_value',
+                        'order'             => 'ASC',
+                        'tax_query'         => array(
+                            array(
+                                'taxonomy'  => 'ghc_conventions_taxonomy',
+                                'field'     => 'slug',
+                                'terms'     => $convention_abbreviations[$shortcode_attributes['convention']],
+                            ),
+                        ),
+                    );
+
+                    // query
+                    $workshops_query = new WP_Query( $workshops_args );
+
+                    // loop
+                    if ( $workshops_query->have_posts() ) {
+                        $shortcode_content .= '<div class="gdlr-session-item-content-wrapper">
+                            <div class="gdlr-session-item-divider"></div>
+                            <div class="gdlr-session-item-content-info">
+                                <div class="gdlr-session-info">
+                                    <div class="session-info session-time"><i class="fa fa-clock-o"></i>' . date( 'g:i A', strtotime( $time->workshop_time ) ) . '</div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <div class="gdlr-session-item-content">
+                            <table class="session-list">
+                                <thead>
+                                    <tr>
+                                        <td class="time">Time</td>
+                                        <td class="location">Location</td>
+                                        <td class="speaker">Speaker</td>
+                                        <td class="title">Session Title</td>
+                                    </tr>
+                                </thead>';
+                        while ( $workshops_query->have_posts() ) {
+                            $workshops_query->the_post();
+                            ob_start();
+                            include( 'workshop-list-template.php' );
+                            $shortcode_content .= ob_get_clean();
+                        }
+                        $shortcode_content .= '</table>
+                        </div><!-- .gdlr-session-item-content -->
+                        <div class="clear"></div>
+                        </div><!-- .gldr-session-item-content-wrapper -->';
+                    }
+
+                    // reset post data
+                    wp_reset_postdata();
+
+                }
+            }
+
+            // close this day’s content
+            $shortcode_content .= '</div><!-- .gdlr-session-item-tab-content.gdlr-tab-' . $i . ' -->';
+            $i++;
+        }
+
+        // close wrapper
+        $shortcode_content .= '</div><!-- .gdlr-session-item -->
+        </div><!-- .session-item-wrapper -->';
+
+    }
+
+    return $shortcode_content;
+}

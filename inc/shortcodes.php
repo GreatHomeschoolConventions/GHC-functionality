@@ -394,16 +394,16 @@ function sponsors_shortcode( $attributes ) {
     return $shortcode_content;
 }
 
-// add shortcode for workshops
+// add shortcode for sessions
 // accepts `track` attribute
-add_shortcode( 'workshops_list', 'workshops_shortcode' );
-function workshops_shortcode( $attributes ) {
+add_shortcode( 'sessions_list', 'sessions_shortcode' );
+function sessions_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'track'    => NULL,
     ), $attributes );
 
     // arguments
-    $workshop_speakers_args = array(
+    $session_speakers_args = array(
         'post_type'         => 'session',
         'posts_per_page'    => -1,
         'orderby'           => 'meta_value',
@@ -420,23 +420,23 @@ function workshops_shortcode( $attributes ) {
 
     // add track if specified
     if ( isset( $shortcode_attributes['track'] ) ) {
-        $workshop_speakers_args['tax_query'] = array_merge( $workshop_speakers_args['tax_query'], array(
-                'taxonomy'  => 'ghc_workshops_taxonomy',
+        $session_speakers_args['tax_query'] = array_merge( $session_speakers_args['tax_query'], array(
+                'taxonomy'  => 'ghc_sessions_taxonomy',
                 'field'     => 'slug',
                 'terms'     => $shortcode_attributes['track'],
             ));
     }
 
     // query
-    $workshop_speakers_query = new WP_Query( $workshop_speakers_args );
+    $session_speakers_query = new WP_Query( $session_speakers_args );
 
     // loop
-    if ( $workshop_speakers_query->have_posts() ) {
+    if ( $session_speakers_query->have_posts() ) {
         $shortcode_content = '<div class="session-item-wrapper">
             <div class="session-item-holder">';
         $i = 1;
-        while ( $workshop_speakers_query->have_posts() ) {
-            $workshop_speakers_query->the_post();
+        while ( $session_speakers_query->have_posts() ) {
+            $session_speakers_query->the_post();
             ob_start();
             include( 'session-grid-template.php' );
             $shortcode_content .= ob_get_clean();

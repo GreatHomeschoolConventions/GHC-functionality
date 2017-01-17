@@ -434,11 +434,16 @@ function workshops_shortcode( $attributes ) {
     if ( $workshop_speakers_query->have_posts() ) {
         $shortcode_content = '<div class="session-item-wrapper">
             <div class="session-item-holder">';
+        $i = 1;
         while ( $workshop_speakers_query->have_posts() ) {
             $workshop_speakers_query->the_post();
             ob_start();
             include( 'session-grid-template.php' );
             $shortcode_content .= ob_get_clean();
+            if ( $i % 3 == 0 ) {
+                $shortcode_content .= '<div class="clear"></div>';
+            }
+            $i++;
         }
         $shortcode_content .= '</div>
         </div>';

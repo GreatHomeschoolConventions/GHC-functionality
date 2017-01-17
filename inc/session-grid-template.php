@@ -24,7 +24,13 @@
                     ?>
                 </header>
                 <div class="gdlr-blog-content">
-                    <?php the_excerpt(); ?>
+                    <?php
+                    if ( get_the_excerpt() ) {
+                        the_excerpt();
+                    } else {
+                        echo '<p>More information coming soon&hellip;</p>';
+                    }
+                    ?>
                 </div>
             </article>
         </div>

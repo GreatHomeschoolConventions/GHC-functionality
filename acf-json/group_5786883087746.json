@@ -113,6 +113,28 @@
                 "class": "",
                 "id": ""
             }
+        },
+        {
+            "post_type": [
+                "exhibitor"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "multiple": 1,
+            "return_format": "object",
+            "ui": 1,
+            "key": "field_5878ebcc3dac3",
+            "label": "Related Exhibitor(s)",
+            "name": "related_exhibitors",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
         }
     ],
     "location": [
@@ -135,5 +157,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1481309685
+    "modified": 1484319722
 }

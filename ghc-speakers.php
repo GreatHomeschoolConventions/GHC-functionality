@@ -593,35 +593,52 @@ function ghc_sort_sessions_admin( $query ) {
     }
 }
 
-// add “date/time” to workshop column headers
+// add date/time and speaker to workshop column headers
 function ghc_workshop_columns( $columns ) {
     $columns['date_time'] = 'Workshop Date/Time';
+    $columns['speaker'] = 'Workshop Speaker';
     unset( $columns['date'] );
     return $columns;
 }
 add_filter( 'manage_edit-workshop_columns', 'ghc_workshop_columns' );
 
-// add “date/time” to workshop column details
+// add date/time and speaker to workshop column details
 function ghc_workshop_column_content( $column, $post_id ) {
     global $post;
     if ( 'date_time' == $column ) {
         echo date( 'n/d/y g:i A', strtotime( get_field( 'date_and_time' ) ) );
+    } elseif ( 'speaker' == $column ) {
+        $workshop_speaker = get_field( 'speaker' );
+        if ( 1 == count( $workshop_speaker ) ) {
+            echo $workshop_speaker[0]->post_title;
+        } else {
+            $speaker_string = NULL;
+            foreach ( $workshop_speaker as $speaker ) {
+                $speaker_string .= $speaker->post_title . ', ';
+            }
+            echo rtrim( $speaker_string, ', ' );
+        }
     }
 }
 add_action( 'manage_workshop_posts_custom_column', 'ghc_workshop_column_content', 10, 2 );
 
-// make “date/time” column header sortable
+// make date/time and speaker column headers sortable
 function ghc_workshop_sortable_columns( $columns ) {
     $columns['date_time'] = 'date_time';
+    $columns['speaker'] = 'speaker';
     return $columns;
 }
 add_filter( 'manage_edit-workshop_sortable_columns', 'ghc_workshop_sortable_columns' );
 
-// sort sessions by date/time if requested
+// sort sessions by date/time or speaker if requested
 add_action( 'pre_get_posts', 'ghc_sort_workshops_admin' );
 function ghc_sort_workshops_admin( $query ) {
-    if ( is_admin() && $query->is_main_query() && ( 'date_time' == $query->get( 'orderby' ) ) ) {
-        $query->set( 'meta_key', 'date_and_time' );
+    if ( is_admin() && $query->is_main_query() ) {
+        if ( 'date_time' == $query->get( 'orderby' ) ) {
+            $query->set( 'meta_key', 'date_and_time' );
+        } elseif ( 'speaker' == $query->get( 'orderby' ) ) {
+            $query->set( 'meta_key', 'session-speaker' );
+        }
     }
 }
 

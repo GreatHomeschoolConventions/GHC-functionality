@@ -123,7 +123,7 @@
             "multiple": 1,
             "return_format": "object",
             "ui": 1,
-            "key": "field_5878ebcc3dac3",
+            "key": "field_5878eb28513ce",
             "label": "Related Exhibitor(s)",
             "name": "related_exhibitors",
             "type": "post_object",
@@ -153,9 +153,13 @@
     "instruction_placement": "label",
     "hide_on_screen": [
         "the_content",
-        "excerpt"
+        "excerpt",
+        "page_attributes",
+        "featured_image",
+        "categories",
+        "tags"
     ],
     "active": 1,
     "description": "",
-    "modified": 1484319722
+    "modified": 1484748357
 }

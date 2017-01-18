@@ -630,11 +630,11 @@ function ghc_workshop_sortable_columns( $columns ) {
 }
 add_filter( 'manage_edit-workshop_sortable_columns', 'ghc_workshop_sortable_columns' );
 
-// sort sessions by date/time or speaker if requested
+// sort sessions by date/time or speaker if requested; default to date/time
 add_action( 'pre_get_posts', 'ghc_sort_workshops_admin' );
 function ghc_sort_workshops_admin( $query ) {
-    if ( is_admin() && $query->is_main_query() ) {
-        if ( 'date_time' == $query->get( 'orderby' ) ) {
+    if ( 'workshop' == $query->query['post_type'] && is_admin() && $query->is_main_query() ) {
+        if ( 'date_time' == $query->get( 'orderby' ) && 'menu_order title' == $query->get( 'orderby' ) ) {
             $query->set( 'meta_key', 'date_and_time' );
         } elseif ( 'speaker' == $query->get( 'orderby' ) ) {
             $query->set( 'meta_key', 'session-speaker' );

@@ -17,7 +17,7 @@ if ( $exhibitors ) {
     $exhibitors_string = rtrim( $exhibitors_string, ', ' );
 }
 ?>
-<tr>
+<tr id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <td data-cell-title="Time" class="time"><i class="fa fa-clock-o"></i><?php echo date( 'g:i A', strtotime( get_field( 'date_and_time' ) ) ); ?></td>
     <td data-cell-title="Location" class="location"><i class="fa fa-map-marker"></i><?php echo get_the_term_list( get_the_ID(), 'ghc_session_locations_taxonomy' ); ?></td>
     <td data-cell-title="Speaker" class="speaker"><i class="fa fa-user"></i><?php echo $speakers_string . ( $exhibitors ? ' <span class="exhibitor">(' . $exhibitors_string . ')</span>' : '' ); ?></td>

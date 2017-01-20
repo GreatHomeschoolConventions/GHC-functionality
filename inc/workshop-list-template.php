@@ -22,4 +22,9 @@ if ( $exhibitors ) {
     <td data-cell-title="Location" class="location"><i class="fa fa-map-marker"></i><?php echo get_the_term_list( get_the_ID(), 'ghc_session_locations_taxonomy' ); ?></td>
     <td data-cell-title="Speaker" class="speaker"><i class="fa fa-user"></i><?php echo $speakers_string . ( $exhibitors ? ' <span class="exhibitor">(' . $exhibitors_string . ')</span>' : '' ); ?></td>
     <td data-cell-title="Session Title" class="title"><i class="fa fa-book"></i><a href="<?php the_permalink( get_field( 'session_description' ) ) ?>"><?php the_title(); ?></a></td>
+    <?php
+    if ( is_user_logged_in() && current_user_can( 'edit_others_posts' ) ) {
+        echo '<td><a href="' . get_edit_post_link() . '">Edit</a></td>';
+    }
+    ?>
 </tr>

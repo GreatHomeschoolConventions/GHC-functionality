@@ -532,6 +532,7 @@ function workshops_schedule_shortcode( $attributes ) {
                                         <td class="location">Location</td>
                                         <td class="speaker">Speaker</td>
                                         <td class="title">Session Title</td>
+                                        ' . ( ( is_user_logged_in() && current_user_can( 'edit_others_posts' ) ) ? '<td>Edit</td>' : '' ) . '
                                     </tr>
                                 </thead>';
                         while ( $workshops_query->have_posts() ) {

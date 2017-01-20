@@ -609,14 +609,16 @@ function ghc_workshop_column_content( $column, $post_id ) {
         echo date( 'n/d/y g:i A', strtotime( get_field( 'date_and_time' ) ) );
     } elseif ( 'speaker' == $column ) {
         $workshop_speaker = get_field( 'speaker' );
-        if ( 1 == count( $workshop_speaker ) ) {
+        if ( $workshop_speaker && 1 == count( $workshop_speaker ) ) {
             echo $workshop_speaker[0]->post_title;
-        } else {
+        } elseif ( count( $workshop_speaker ) > 1 ) {
             $speaker_string = NULL;
             foreach ( $workshop_speaker as $speaker ) {
                 $speaker_string .= $speaker->post_title . ', ';
             }
             echo rtrim( $speaker_string, ', ' );
+        } else {
+            return;
         }
     }
 }

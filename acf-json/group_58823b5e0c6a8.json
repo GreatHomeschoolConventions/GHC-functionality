@@ -1,0 +1,151 @@
+{
+    "key": "group_58823b5e0c6a8",
+    "title": "Workshop Scheduling",
+    "fields": [
+        {
+            "sub_fields": [
+                {
+                    "taxonomy": "ghc_conventions_taxonomy",
+                    "field_type": "radio",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "return_format": "id",
+                    "add_term": 0,
+                    "load_terms": 1,
+                    "save_terms": 1,
+                    "key": "field_58823bc843583",
+                    "label": "Convention",
+                    "name": "convention",
+                    "type": "taxonomy",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "display_format": "m\/d\/Y g:i a",
+                    "return_format": "Y-m-d H:i:s",
+                    "first_day": 0,
+                    "key": "field_58823be743584",
+                    "label": "Date and Time",
+                    "name": "date_and_time",
+                    "type": "date_time_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "taxonomy": "ghc_session_locations_taxonomy",
+                    "field_type": "checkbox",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "return_format": "id",
+                    "add_term": 1,
+                    "load_terms": 1,
+                    "save_terms": 1,
+                    "key": "field_58823c6843585",
+                    "label": "Location",
+                    "name": "location",
+                    "type": "taxonomy",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "post_type": [
+                        "speaker",
+                        "exhibitor"
+                    ],
+                    "taxonomy": [],
+                    "allow_null": 0,
+                    "multiple": 1,
+                    "return_format": "object",
+                    "ui": 1,
+                    "key": "field_58823c8843586",
+                    "label": "Speaker(s)",
+                    "name": "speakers",
+                    "type": "post_object",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "post_type": [
+                        "exhibitor"
+                    ],
+                    "taxonomy": [],
+                    "allow_null": 0,
+                    "multiple": 1,
+                    "return_format": "object",
+                    "ui": 1,
+                    "key": "field_58823ca843587",
+                    "label": "Related Exhibitor(s)",
+                    "name": "related_exhibitors",
+                    "type": "post_object",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                }
+            ],
+            "min": 0,
+            "max": 0,
+            "layout": "row",
+            "button_label": "",
+            "collapsed": "field_58823be743584",
+            "key": "field_58823bb943582",
+            "label": "Schedule",
+            "name": "schedule",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "session"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "left",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1484930675
+}

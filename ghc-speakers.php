@@ -754,10 +754,10 @@ function ghc_related_sponsors( $content ) {
     return $content;
 }
 
-// always sort speakers by menu_order
+// always sort speakers by menu_order, even in admin
 add_filter( 'pre_get_posts', 'ghc_speakers_order' );
 function ghc_speakers_order( $query ) {
-    if ( 'speaker' == $query->query['post_type'] && ! is_admin() ) {
+    if ( 'speaker' == $query->query['post_type'] ) {
         $query->query['orderby'] = 'menu_order';
         $query->query_vars['orderby'] = 'menu_order';
         $query->query['order'] = 'ASC';

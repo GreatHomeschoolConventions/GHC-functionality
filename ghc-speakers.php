@@ -1156,7 +1156,7 @@ function ghc_show_special_event_tickets() {
     $terms = get_the_terms( $post->ID, 'product_cat' );
     if ( $terms ) {
         foreach ( $terms as $term ) {
-            $convention_term_array = array( 'Texas', 'Southeast', 'Midwest', 'California' );
+            $convention_term_array = array( 'Texas', 'Southeast', 'Midwest', 'California', 'Missouri' );
             if ( in_array( $term->name, $convention_term_array ) ) {
                 $convention_category = $term->term_id;
             }

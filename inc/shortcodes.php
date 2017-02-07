@@ -432,7 +432,7 @@ function sessions_shortcode( $attributes ) {
 
     // loop
     if ( $session_speakers_query->have_posts() ) {
-        $shortcode_content = '<div class="session-item-wrapper">
+        $shortcode_content = '<div class="session-item-wrapper clearfix">
             <div class="session-item-holder">';
         $i = 1;
         while ( $session_speakers_query->have_posts() ) {
@@ -468,7 +468,7 @@ function workshops_schedule_shortcode( $attributes ) {
     $distinct_dates = $wpdb->get_results( $wpdb->prepare( 'SELECT DISTINCT DATE(meta_value) AS workshop_date FROM %1$spostmeta meta JOIN %1$sposts posts ON posts.ID = meta.post_id WHERE posts.post_type = "workshop" AND meta.meta_key = "date_and_time" ORDER BY meta.meta_value;', $wpdb->prefix ) );
 
     if ( $distinct_dates ) {
-        $shortcode_content = '<div class="session-item-wrapper workshop-schedule">
+        $shortcode_content = '<div class="session-item-wrapper clearfix workshop-schedule">
             <div class="gdlr-session-item gdlr-tab-session-item gdlr-item">';
 
         // table header

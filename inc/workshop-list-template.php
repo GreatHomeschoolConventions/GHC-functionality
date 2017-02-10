@@ -1,7 +1,7 @@
 <?php
 $speakers = get_field( 'speaker' );
+$speakers_string = NULL;
 if ( $speakers ) {
-    $speakers_string = NULL;
     foreach ( $speakers as $speaker ) {
         $speakers_string .= '<a href="' . get_permalink( $speaker ) . '">' . get_the_title( $speaker ) . '</a>, ';
     }

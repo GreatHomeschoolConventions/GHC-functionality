@@ -420,11 +420,11 @@ function sessions_shortcode( $attributes ) {
 
     // add track if specified
     if ( isset( $shortcode_attributes['track'] ) ) {
-        $session_speakers_args['tax_query'] = array_merge( $session_speakers_args['tax_query'], array(
-                'taxonomy'  => 'ghc_sessions_taxonomy',
+        $session_speakers_args['tax_query'] = array_merge( $session_speakers_args['tax_query'], array( array(
+                'taxonomy'  => 'ghc_special_tracks_taxonomy',
                 'field'     => 'slug',
                 'terms'     => $shortcode_attributes['track'],
-            ));
+            )));
     }
 
     // query

@@ -465,7 +465,19 @@ function workshops_schedule_shortcode( $attributes ) {
     global $convention_abbreviations, $wpdb;
 
     // get total number of days
-    $distinct_dates = $wpdb->get_results( $wpdb->prepare( 'SELECT DISTINCT DATE(meta_value) AS workshop_date FROM %1$spostmeta meta JOIN %1$sposts posts ON posts.ID = meta.post_id WHERE posts.post_type = "workshop" AND meta.meta_key = "date_and_time" ORDER BY meta.meta_value;', $wpdb->prefix ) );
+    $distinct_dates = $wpdb->get_results( $wpdb->prepare( '
+    SELECT DISTINCT DATE(meta.meta_value) AS workshop_date
+    FROM %1$spostmeta meta
+    JOIN %1$spostmeta meta2 ON meta2.post_ID = meta.post_ID
+    JOIN %1$sposts posts ON posts.ID = meta.post_id
+    JOIN %1$sterms terms ON meta2.meta_value = terms.term_id
+    JOIN %1$sterm_taxonomy term_taxonomy ON term_taxonomy.term_id = terms.term_id
+    WHERE term_taxonomy.taxonomy = "ghc_conventions_taxonomy"
+    AND terms.slug LIKE "%2$s"
+    AND posts.post_type = "workshop"
+    AND meta.meta_key = "date_and_time"
+    AND meta2.meta_key = "convention"
+    ORDER BY meta.meta_value', $wpdb->prefix, $convention_abbreviations[$shortcode_attributes['convention']] ) );
 
     if ( $distinct_dates ) {
         $shortcode_content = '<div class="session-item-wrapper clearfix workshop-schedule">

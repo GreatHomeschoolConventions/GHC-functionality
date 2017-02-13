@@ -89,6 +89,54 @@ function discretionary_registration_shortcode( $attributes ) {
     }
 }
 
+// add shortcode for convention-specific exhibitors
+// accepts `convention` attribute as abbreviation
+add_shortcode( 'exhibitor_list', 'exhibitor_list_shortcode' );
+function exhibitor_list_shortcode( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'    => NULL,
+    ), $attributes );
+    global $convention_abbreviations;
+    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+    $shortcode_content = NULL;
+
+    $exhibitor_args = array(
+        'posts_per_page'    => -1,
+        'post_type'         => 'exhibitor',
+        'order'             => 'ASC',
+        'orderby'           => 'post_name',
+        'tax_query' => array(
+            array(
+                'taxonomy'  => 'ghc_conventions_taxonomy',
+                'field'     => 'slug',
+                'terms'     => $convention_abbreviations[$this_convention],
+            )
+        ),
+    );
+
+    $exhibitor_query = new WP_Query( $exhibitor_args );
+
+    if ( $exhibitor_query->have_posts() ) {
+        $i = 1;
+        ob_start();
+        while ( $exhibitor_query->have_posts() ) {
+            $exhibitor_query->the_post();
+
+            include( 'exhibitor-template.php' );
+            if ( ( $i % 3 ) == 0 ) {
+                echo '<div class="clear"></div>';
+            }
+            $i++;
+        }
+        $shortcode_content = ob_get_clean();
+    }
+
+    wp_reset_postdata();
+
+    return $shortcode_content;
+}
+
 // add shortcode for hotels grid on location pages
 add_shortcode( 'hotel_grid', 'hotel_grid_shortcode' );
 function hotel_grid_shortcode( $attributes ) {

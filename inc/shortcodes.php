@@ -119,7 +119,9 @@ function exhibitor_list_shortcode( $attributes ) {
 
     if ( $exhibitor_query->have_posts() ) {
         $i = 1;
-        ob_start();
+        ob_start(); ?>
+        <div class="blog-item-holder"><div class="gdlr-isotope" data-type="blog" data-layout="fitRows"><div class="clear"></div>
+        <?php
         while ( $exhibitor_query->have_posts() ) {
             $exhibitor_query->the_post();
 
@@ -128,7 +130,9 @@ function exhibitor_list_shortcode( $attributes ) {
                 echo '<div class="clear"></div>';
             }
             $i++;
-        }
+        } ?>
+        </div></div>
+        <?php
         $shortcode_content = ob_get_clean();
     }
 

@@ -74,6 +74,9 @@ Available shortcodes:
 
 #Changelog
 
+- 2.6.2
+    - Add wrapper to `exhibitor_list`
+
 - 2.6.1
     - Add `exhibitor_list` shortcode to display per-convention exhibitors
 

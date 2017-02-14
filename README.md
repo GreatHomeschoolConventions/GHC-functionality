@@ -74,6 +74,9 @@ Available shortcodes:
 
 #Changelog
 
+- 2.6.3
+    - Add special tracks filter to `workshops_schedule` shortcode
+
 - 2.6.2
     - Add wrapper to `exhibitor_list`
 

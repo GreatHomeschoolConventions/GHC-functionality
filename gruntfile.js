@@ -89,6 +89,7 @@ module.exports = function (grunt) {
                 'js/exhibitor-backend.min.js': ['js/exhibitor-backend.js'],
                 'js/price-sheets.min.js': ['js/price-sheets.js'],
                 'js/woocommerce.min.js': ['js/woocommerce.js'],
+                'js/workshop-filter.min.js': ['js/workshop-filter.js'],
             },
         },
     },

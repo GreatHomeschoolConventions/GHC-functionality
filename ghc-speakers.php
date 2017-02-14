@@ -405,7 +405,7 @@ function custom_post_types() {
         'description'         => __( 'Workshops', 'GHC' ),
         'labels'              => $workshops_labels,
         'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
-        'taxonomies'          => array( 'ghc_conventions_taxonomy', 'ghc_session_locations_taxonomy' ),
+        'taxonomies'          => array( 'ghc_conventions_taxonomy', 'ghc_session_locations_taxonomy', 'ghc_special_tracks_taxonomy' ),
         'hierarchical'        => true,
         'public'              => true,
         'show_ui'             => true,
@@ -463,7 +463,7 @@ function ghc_taxonomies() {
         'show_tagcloud'              => true,
         'rewrite'                    => $track_rewrite,
     );
-    register_taxonomy( 'ghc_special_tracks_taxonomy', array( 'speaker', 'session' ), $track_args );
+    register_taxonomy( 'ghc_special_tracks_taxonomy', array( 'session', 'speaker', 'workshop' ), $track_args );
 
     $convention_labels = array(
         'name'                       => _x( 'Conventions', 'Taxonomy General Name', 'GHC' ),
@@ -530,7 +530,7 @@ function ghc_taxonomies() {
         'show_tagcloud'              => true,
         'rewrite'                    => $workshop_location_rewrite,
     );
-    register_taxonomy( 'ghc_session_locations_taxonomy', array( 'workshop', 'special_event' ), $workshop_location_args );
+    register_taxonomy( 'ghc_session_locations_taxonomy', array( 'session', 'special_event', 'workshop' ), $workshop_location_args );
 
 }
 // Hook into the 'init' action to register custom taxonomy

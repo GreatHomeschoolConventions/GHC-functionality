@@ -516,6 +516,26 @@ function workshops_schedule_shortcode( $attributes ) {
     ), $attributes );
     global $convention_abbreviations, $wpdb;
 
+    // enqueue filter script
+    wp_enqueue_script( 'workshop-filter' );
+
+    // get all special tracks
+    $categories_args = array(
+        'taxonomy'  => 'ghc_special_tracks_taxonomy',
+        'echo'      => false,
+        'title_li'  => NULL,
+    );
+    $special_tracks = get_terms( $categories_args );
+
+    $shortcode_content = '<section class="workshop-schedule legend">
+    <h3>Special Tracks</h3>
+    <p>';
+    foreach ( $special_tracks as $special_track ) {
+        $shortcode_content .= '<a href="' . home_url() . '/special-tracks/' . $special_track->slug . '" class="legend-key ' . $special_track->taxonomy . '-' . $special_track->slug . '" data-special-track="' . $special_track->taxonomy . '-' . $special_track->slug . '">' . $special_track->name . '</a>';
+    }
+    $shortcode_content .= '<a class="legend-key" href="" data-special-track="clear" title="Clear filters">&times;</a></p>
+    </section>';
+
     // get total number of days
     $distinct_dates = $wpdb->get_results( $wpdb->prepare( '
     SELECT DISTINCT DATE(meta.meta_value) AS workshop_date
@@ -532,7 +552,7 @@ function workshops_schedule_shortcode( $attributes ) {
     ORDER BY meta.meta_value', $wpdb->prefix, $convention_abbreviations[$shortcode_attributes['convention']] ) );
 
     if ( $distinct_dates ) {
-        $shortcode_content = '<div class="session-item-wrapper clearfix workshop-schedule">
+        $shortcode_content .= '<div class="session-item-wrapper clearfix workshop-schedule">
             <div class="gdlr-session-item gdlr-tab-session-item gdlr-item">';
 
         // table header

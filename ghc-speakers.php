@@ -24,7 +24,7 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-CONST GHC_SPEAKERS_VERSION = '2.6';
+CONST GHC_SPEAKERS_VERSION = '2.6.3';
 
 // flush rewrite rules on activation/deactivation
 function ghc_speakers_activate() {

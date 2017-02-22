@@ -12,22 +12,18 @@ function convention_cta_shortcode( $attributes ) {
     ), $attributes );
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
-    $CTA_array = array_filter( $conventions[$this_convention], 'get_current_CTA', ARRAY_FILTER_USE_BOTH );
-    $current_CTA = str_replace( '_begin_date', '', key( $CTA_array ) );
+    $CTA_array = array_filter( $conventions[$this_convention]['cta_list'], 'get_current_CTA' );
+    $current_CTA = array_pop($CTA_array)['cta_content'];
 
-    return apply_filters( 'the_content', $conventions[$this_convention][$current_CTA . '_cta_content'][0] );
+    return apply_filters( 'the_content', $current_CTA );
 }
 
-// filter to get only the currently active CTA based on dates
-function get_current_CTA( $value, $key ) {
-    // check if this is a CTA key
-    if ( 0 === strpos( $key, 'cta_' ) ) {
-        // check begin and end dates
-        if ( ( false !== strpos( $key, '_begin_date' ) && '' !== $value[0] && strtotime( $value[0] ) <= time() ) || ( ( false !== strpos( $key, '_end_date' ) && '' !== $value[0] && strtotime( $value[0] ) >= time() ) ) ) {
-            return true;
-        } else {
-            return false;
-        }
+// filter to get CTAs
+function get_current_CTA( $value ) {
+    if ( ( ! isset( $value['begin_date'] ) || strtotime( $value['begin_date'] ) <= time() ) && ( ! isset( $value['end_date'] ) || strtotime( $value['end_date'] ) >= time() ) ) {
+        return true;
+    } else {
+        return false;
     }
 }
 

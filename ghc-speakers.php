@@ -929,13 +929,14 @@ function convention_info() {
 
     // The Loop
     if ( $locations_query->have_posts() ) {
-        while ( $locations_query->have_posts() && $counter == 0) {
+        while ( $locations_query->have_posts()) {
             $locations_query->the_post();
 
             $convention_info = array(
                 'ID'        => get_the_ID(),
                 'title'     => get_the_title(),
                 'permalink' => get_the_permalink(),
+                'cta_list'  => get_field( 'cta' ),
             );
             $convention_key = strtolower( get_field( 'convention_abbreviated_name' ) );
             $conventions[$convention_key] = array_merge( $convention_info, get_post_meta( get_the_ID() ) );

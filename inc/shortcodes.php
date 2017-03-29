@@ -137,6 +137,12 @@ function exhibitor_list_shortcode( $attributes ) {
     return $shortcode_content;
 }
 
+// add shortcode for exhibit hall hours
+add_shortcode( 'exhibit_hall_hours', 'exhibit_hall_hours_shortcode' );
+function exhibit_hall_hours_shortcode() {
+    return get_field( 'exhibit_hall_hours', 'option' );
+}
+
 // add shortcode for hotels grid on location pages
 add_shortcode( 'hotel_grid', 'hotel_grid_shortcode' );
 function hotel_grid_shortcode( $attributes ) {

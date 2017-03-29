@@ -857,19 +857,11 @@ function ghc_hotel_single_view( $content ) {
 if( function_exists('acf_add_options_page') ) {
 
     acf_add_options_page(array(
-        'page_title' 	=> 'Options',
-        'menu_title'	=> 'Options',
+        'page_title' 	=> 'GHC Options',
+        'menu_title'	=> 'GHC Options',
         'menu_slug' 	=> 'theme-options',
         'capability'	=> 'edit_posts',
         'redirect'		=> false
-    ));
-
-    acf_add_options_sub_page(array(
-        'page_title' 	=> 'Call to Action Widget Content',
-        'menu_title'	=> 'CTA Widget',
-        'menu_slug' 	=> 'cta-widget',
-        'capability'	=> 'edit_posts',
-        'parent_slug'   => 'theme-options',
     ));
 
 }

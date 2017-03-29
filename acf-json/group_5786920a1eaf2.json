@@ -1,13 +1,27 @@
 {
     "key": "group_5786920a1eaf2",
-    "title": "Call to Action Widget",
+    "title": "Options",
     "fields": [
         {
+            "key": "field_57869239f3b4f",
+            "label": "CTA Widget Content",
+            "name": "widget_content",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Row",
             "sub_fields": [
                 {
-                    "display_format": "m\/d\/Y g:i a",
-                    "return_format": "Y-m-d H:i:s",
-                    "first_day": 0,
                     "key": "field_57869254f3b50",
                     "label": "Begin Date",
                     "name": "begin_date",
@@ -19,12 +33,12 @@
                         "width": "",
                         "class": "",
                         "id": ""
-                    }
-                },
-                {
+                    },
                     "display_format": "m\/d\/Y g:i a",
                     "return_format": "Y-m-d H:i:s",
-                    "first_day": 0,
+                    "first_day": 0
+                },
+                {
                     "key": "field_5786926af3b51",
                     "label": "End Date",
                     "name": "end_date",
@@ -36,14 +50,12 @@
                         "width": "",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "display_format": "m\/d\/Y g:i a",
+                    "return_format": "Y-m-d H:i:s",
+                    "first_day": 0
                 },
                 {
-                    "tabs": "all",
-                    "toolbar": "full",
-                    "media_upload": 1,
-                    "default_value": "",
-                    "delay": 0,
                     "key": "field_5786927bf3b52",
                     "label": "Widget Content",
                     "name": "widget_content",
@@ -55,18 +67,39 @@
                         "width": "",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "tabs": "all",
+                    "toolbar": "full",
+                    "media_upload": 1,
+                    "default_value": "",
+                    "delay": 0
                 }
-            ],
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "Add Row",
-            "collapsed": "",
-            "key": "field_57869239f3b4f",
-            "label": "Widget Content",
-            "name": "widget_content",
-            "type": "repeater",
+            ]
+        },
+        {
+            "key": "field_58dc01b0e0872",
+            "label": "Exhibit Hall Hours",
+            "name": "exhibit_hall_hours",
+            "type": "wysiwyg",
+            "instructions": "Shown at the top of the Exhibitors CPT as well as when called with the <code>[exhibit_hall_hours]<\/code> shortcode",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_58dc0195e0871",
+            "label": "Google API Key",
+            "name": "api_key",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -74,7 +107,12 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "default_value": "",
+            "placeholder": "AIza…",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -82,7 +120,7 @@
             {
                 "param": "options_page",
                 "operator": "==",
-                "value": "cta-widget"
+                "value": "theme-options"
             }
         ]
     ],
@@ -94,5 +132,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1481309637
+    "modified": 1490813397
 }

@@ -53,7 +53,11 @@ $theme-black:           #111111;
         margin-bottom: 50px;
     }
 
-    .sold-out .gdlr-info-font { text-decoration: line-through; }
+    h4.sold-out ~ * {
+        text-decoration: line-through;
+
+        .sold-out { text-decoration: none; }
+    }
 }
 
 // speaker grid

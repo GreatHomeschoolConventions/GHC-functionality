@@ -820,6 +820,16 @@ function ghc_exhibitor_post_type_link( $post_link, $post, $leavename, $sample ) 
     return $post_link;
 }
 
+// modify special events archive to show convention icons
+add_filter( 'get_the_excerpt', 'ghc_special_events_archive_icons' );
+function ghc_special_events_archive_icons( $content ) {
+    global $post;
+    if ( 'special_event' == get_post_type( $post->ID ) ) {
+        echo output_convention_icons( $post->ID );
+    }
+    return $content;
+}
+
 // use custom hotel archive template
 add_filter( 'archive_template', 'ghc_hotel_archive' );
 function ghc_hotel_archive( $archive_template ) {

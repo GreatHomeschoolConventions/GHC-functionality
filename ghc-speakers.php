@@ -213,7 +213,7 @@ function custom_post_types() {
         'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
     );
     $locations_rewrite = array(
-        'slug'                => 'locations',
+        'slug'                => 'locations-cpt',
         'with_front'          => true,
         'pages'               => true,
         'feeds'               => true,

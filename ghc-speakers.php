@@ -450,7 +450,7 @@ function ghc_taxonomies() {
         'not_found'                  => __( 'Not Found', 'GHC' ),
     );
     $track_rewrite = array(
-        'slug'                       => 'special-tracks',
+        'slug'                       => 'special-tracks-cpt',
         'with_front'                 => true,
         'hierarchical'               => true,
     );

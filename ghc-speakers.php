@@ -62,6 +62,8 @@ function ghc_acf_json_load_point( $path ) {
 add_action( 'after_setup_theme', 'ghc_custom_image_sizes' );
 function ghc_custom_image_sizes() {
     add_image_size( 'thumbnail-no-crop', 140, 140, false );
+    add_image_size( 'pinterest-thumb', 173, 345, true );
+    add_image_size( 'pinterest-medium', 346, 690, true );
     add_image_size( 'square-small', 400, 400, true );
     add_image_size( 'square-medium', 600, 600, true );
     add_image_size( 'square-large', 900, 900, true );
@@ -753,6 +755,26 @@ function ghc_related_sponsors( $content ) {
     }
     return $content;
 }
+
+/**
+ * Add Pinterest image
+ * @param  string $content HTML content string
+ * @return string modified HTML content string
+ */
+function ghc_pinterest_image( $content ) {
+    $pinterest_image = get_field( 'pinterest_image' );
+    if ( is_singular() && $pinterest_image ) {
+        // get description
+        $description = get_post_meta( get_the_ID(), '_yoast_wpseo_metadesc', true );
+        if ( ! $description ) {
+            $description = get_the_title();
+        }
+
+        $content = '<figure class="pinterest-image"><a target="_blank" href="http://www.pinterest.com/pin/create/button/?url=' . get_permalink() . '&media=' . $pinterest_image['url'] . '&description=' . $description . '">' . wp_get_attachment_image( $pinterest_image['ID'], 'pinterest-thumb' ) . '</a></figure>' . $content;
+    }
+    return $content;
+}
+add_filter( 'the_content', 'ghc_pinterest_image' );
 
 // always sort speakers by menu_order, even in admin
 add_filter( 'pre_get_posts', 'ghc_speakers_order' );

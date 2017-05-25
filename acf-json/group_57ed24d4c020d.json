@@ -3,8 +3,30 @@
     "title": "Open Graph",
     "fields": [
         {
-            "default_value": "",
-            "placeholder": "https:\/\/youtu.be\/\u2026 or https:\/\/www.youtube.com\/watch?v=\u2026",
+            "key": "field_59270dae5b551",
+            "label": "Pinterest Image",
+            "name": "pinterest_image",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
             "key": "field_57ed29272269a",
             "label": "Featured Video",
             "name": "featured_video",
@@ -16,7 +38,9 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "default_value": "",
+            "placeholder": "https:\/\/youtu.be\/… or https:\/\/www.youtube.com\/watch?v=…"
         }
     ],
     "location": [
@@ -64,5 +88,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1481309680
+    "modified": 1495731702
 }

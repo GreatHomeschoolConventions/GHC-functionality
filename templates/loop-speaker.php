@@ -1,3 +1,6 @@
+<?php
+#TODO: remove GDLR
+?>
     <div class="gdlr-isotope">
         <?php
         // how many speakers to show above entertainers

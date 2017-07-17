@@ -1,3 +1,6 @@
+<?php
+#TODO: remove GDLR
+?>
 <div class="three columns">
     <div class="gdlr-item gdlr-speaker-item">
         <div class="gdlr-ux gdlr-speaker-item-ux">

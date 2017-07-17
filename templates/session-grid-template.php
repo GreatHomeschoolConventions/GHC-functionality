@@ -1,4 +1,7 @@
 <?php
+#TODO: remove GDLR
+?>
+<?php
     $speaker_slug = get_post_meta( get_the_ID(), 'session-speaker', true );
     $speaker = get_page_by_path( $speaker_slug, OBJECT, 'speaker' );
 ?>

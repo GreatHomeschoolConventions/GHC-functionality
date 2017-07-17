@@ -1,4 +1,7 @@
 <?php
+#TODO: remove GDLR
+?>
+<?php
 $speakers = get_field( 'speaker' );
 $speakers_string = NULL;
 if ( $speakers ) {

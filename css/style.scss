@@ -34,11 +34,6 @@ $theme-black:           #111111;
     }
 }
 
-// exhibitors
-.post-type-archive-exhibitor {
-    .gdlr-blog-info.gdlr-info { display: none; }
-}
-
 // hotels
 .hotels.flexbox-wrapper {
     @media (min-width: 768px) {
@@ -65,24 +60,5 @@ $theme-black:           #111111;
     @media screen and (min-width: 768px) {
         display: flex;
         flex-wrap: wrap;
-    }
-}
-
-// ubermenu
-.ubermenu {
-    .speaker-list {
-        list-style-type: none;
-
-        li {
-            display: inline-block;
-            padding: 15px 20px;
-        }
-
-        a {
-            color: #444;
-            font-size: 13px;
-            font-family: 'Roboto', sans-serif;
-            font-weight: bold;
-        }
     }
 }

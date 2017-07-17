@@ -213,3 +213,31 @@ function get_video_ID( $video_url ) {
 
     return $video_ID;
 }
+
+/**
+ * Get speaker’s position and company name/link
+ * @param  integer $id WP post ID
+ * @return string  HTML content
+ */
+function ghc_get_speaker_short_bio( $id ) {
+    $speaker_position = get_field( 'position', $id );
+    $speaker_company = get_field( 'company', $id );
+    $speaker_company_URL = get_field( 'company_url', $id );
+
+    ob_start();
+
+    if ( $speaker_position || $speaker_company ) {
+        echo '<h4 class="speaker-info">';
+        if ( $speaker_position ) {
+            echo $speaker_position;
+        }
+        if ( $speaker_position && $speaker_company ) {
+            echo ' <span class="separator">|</span> ';
+        }
+        if ( $speaker_company ) {
+            echo ( $speaker_company_URL ? '<a target="_blank" href="' . $speaker_company_URL . '">' : '' ) . $speaker_company . ( $speaker_company_URL ? '</a>' : '' );
+        }
+    }
+
+    return ob_get_clean();
+}

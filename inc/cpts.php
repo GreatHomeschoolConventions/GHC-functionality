@@ -346,6 +346,37 @@ add_action( 'init', 'ghc_register_cpts' );
  * Register custom taxonomies
  */
 function ghc_register_taxonomies() {
+    $convention_labels = array(
+        'name'                       => _x( 'Conventions', 'Taxonomy General Name', 'GHC' ),
+        'singular_name'              => _x( 'Convention', 'Taxonomy Singular Name', 'GHC' ),
+        'menu_name'                  => __( 'Conventions', 'GHC' ),
+        'all_items'                  => __( 'All Conventions', 'GHC' ),
+        'parent_item'                => __( 'Parent Convention', 'GHC' ),
+        'parent_item_colon'          => __( 'Parent Convention:', 'GHC' ),
+        'new_item_name'              => __( 'New Convention Name', 'GHC' ),
+        'add_new_item'               => __( 'Add New Convention', 'GHC' ),
+        'edit_item'                  => __( 'Edit Convention', 'GHC' ),
+        'update_item'                => __( 'Update Convention', 'GHC' ),
+        'view_item'                  => __( 'View Convention', 'GHC' ),
+        'separate_items_with_commas' => __( 'Separate conventions with commas', 'GHC' ),
+        'add_or_remove_items'        => __( 'Add or remove conventions', 'GHC' ),
+        'choose_from_most_used'      => __( 'Choose from the most used', 'GHC' ),
+        'popular_items'              => __( 'Popular Conventions', 'GHC' ),
+        'search_items'               => __( 'Search Conventions', 'GHC' ),
+        'not_found'                  => __( 'Not Found', 'GHC' ),
+    );
+    $convention_args = array(
+        'labels'                     => $convention_labels,
+        'hierarchical'               => true,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => true,
+        'rewrite'                    => false,
+    );
+    register_taxonomy( 'ghc_conventions_taxonomy', array( 'page', 'post', 'exhibitor', 'hotel', 'location', 'speaker', 'special_event', 'workshop' ), $convention_args );
+
     $speaker_category_labels = array(
         'name'                       => _x( 'Speaker Categories', 'Taxonomy General Name', 'GHC' ),
         'singular_name'              => _x( 'Speaker Category', 'Taxonomy Singular Name', 'GHC' ),
@@ -417,37 +448,6 @@ function ghc_register_taxonomies() {
         'rewrite'                    => $track_rewrite,
     );
     register_taxonomy( 'ghc_special_tracks_taxonomy', array( 'speaker', 'workshop' ), $track_args );
-
-    $convention_labels = array(
-        'name'                       => _x( 'Conventions', 'Taxonomy General Name', 'GHC' ),
-        'singular_name'              => _x( 'Convention', 'Taxonomy Singular Name', 'GHC' ),
-        'menu_name'                  => __( 'Conventions', 'GHC' ),
-        'all_items'                  => __( 'All Conventions', 'GHC' ),
-        'parent_item'                => __( 'Parent Convention', 'GHC' ),
-        'parent_item_colon'          => __( 'Parent Convention:', 'GHC' ),
-        'new_item_name'              => __( 'New Convention Name', 'GHC' ),
-        'add_new_item'               => __( 'Add New Convention', 'GHC' ),
-        'edit_item'                  => __( 'Edit Convention', 'GHC' ),
-        'update_item'                => __( 'Update Convention', 'GHC' ),
-        'view_item'                  => __( 'View Convention', 'GHC' ),
-        'separate_items_with_commas' => __( 'Separate conventions with commas', 'GHC' ),
-        'add_or_remove_items'        => __( 'Add or remove conventions', 'GHC' ),
-        'choose_from_most_used'      => __( 'Choose from the most used', 'GHC' ),
-        'popular_items'              => __( 'Popular Conventions', 'GHC' ),
-        'search_items'               => __( 'Search Conventions', 'GHC' ),
-        'not_found'                  => __( 'Not Found', 'GHC' ),
-    );
-    $convention_args = array(
-        'labels'                     => $convention_labels,
-        'hierarchical'               => true,
-        'public'                     => true,
-        'show_ui'                    => true,
-        'show_admin_column'          => true,
-        'show_in_nav_menus'          => true,
-        'show_tagcloud'              => true,
-        'rewrite'                    => false,
-    );
-    register_taxonomy( 'ghc_conventions_taxonomy', array( 'page', 'post', 'location', 'speaker', 'exhibitor', 'hotel', 'special_event', 'workshop' ), $convention_args );
 
     $workshop_location_labels = array(
         'name'                       => _x( 'Workshop Locations', 'Taxonomy General Name', 'GHC' ),

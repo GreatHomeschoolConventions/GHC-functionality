@@ -2,8 +2,11 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-// add shortcode for convention CTA
-add_shortcode( 'convention_cta', 'convention_cta_shortcode' );
+/**
+ * Shortcode to display a convention’s CTA
+ * @param  array  $attributes shortcode parameters including convention
+ * @return string HTML content
+ */
 function convention_cta_shortcode( $attributes ) {
     global $conventions, $convention_abbreviations;
 
@@ -17,8 +20,13 @@ function convention_cta_shortcode( $attributes ) {
 
     return apply_filters( 'the_content', $current_CTA );
 }
+add_shortcode( 'convention_cta', 'convention_cta_shortcode' );
 
-// filter to get CTAs
+/**
+ * Filter to get the current convention for a CTA
+ * @param  array   $value input array
+ * @return boolean whether or not this is the correct convention
+ */
 function get_current_CTA( $value ) {
     if ( ( ! isset( $value['begin_date'] ) || strtotime( $value['begin_date'] ) <= time() ) && ( ! isset( $value['end_date'] ) || strtotime( $value['end_date'] ) >= time() ) ) {
         return true;
@@ -27,9 +35,11 @@ function get_current_CTA( $value ) {
     }
 }
 
-// add shortcode for convention icon only
-// accepts `convention` attribute either as abbreviation or full name
-add_shortcode( 'convention_icon', 'convention_icon_shortcode' );
+/**
+ * Shortcode to display a single convention icon
+ * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
+ * @return string HTML output
+ */
 function convention_icon_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'convention'    => NULL,
@@ -38,16 +48,26 @@ function convention_icon_shortcode( $attributes ) {
 
     return output_convention_icons( $this_convention );
 }
+add_shortcode( 'convention_icon', 'convention_icon_shortcode' );
 
-// add shortcode for discretionary registration buttons
-// accepts `convention` attribute either as abbreviation or full name
-add_shortcode( 'discretionary_registration', 'discretionary_registration_shortcode' );
+/**
+ * Shortcode to display a discretionary registration button based on current date
+ *
+ * array[]
+ *      ['convention']  string  two-letter abbreviation or full name
+ *      ['year']        integer four-digit year
+ *      ['intro_text']  string  string to display before CTA button
+ *
+ * @param  array  $attributes shortcode parameters (see above)
+ * @return string HTML output
+ */
 function discretionary_registration_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'convention'    => NULL,
         'year'          => NULL,
         'intro_text'    => NULL,
     ), $attributes );
+
     // first check agaist dates
     global $convention_dates;
     foreach( $convention_dates as $convention_date ) {
@@ -84,10 +104,13 @@ function discretionary_registration_shortcode( $attributes ) {
         return $shortcode_content;
     }
 }
+add_shortcode( 'discretionary_registration', 'discretionary_registration_shortcode' );
 
-// add shortcode for convention-specific exhibitors
-// accepts `convention` attribute as abbreviation
-add_shortcode( 'exhibitor_list', 'exhibitor_list_shortcode' );
+/**
+ * Shortcode to display all exhibitors for a given convention
+ * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
+ * @return string HTML output
+ */
 function exhibitor_list_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'convention'    => NULL,
@@ -116,6 +139,9 @@ function exhibitor_list_shortcode( $attributes ) {
     if ( $exhibitor_query->have_posts() ) {
         $i = 1;
         ob_start(); ?>
+<?php
+#TODO: remove GDLR
+?>
         <div class="blog-item-holder"><div class="gdlr-isotope" data-type="blog" data-layout="fitRows"><div class="clear"></div>
         <?php
         while ( $exhibitor_query->have_posts() ) {
@@ -136,15 +162,22 @@ function exhibitor_list_shortcode( $attributes ) {
 
     return $shortcode_content;
 }
+add_shortcode( 'exhibitor_list', 'exhibitor_list_shortcode' );
 
-// add shortcode for exhibit hall hours
-add_shortcode( 'exhibit_hall_hours', 'exhibit_hall_hours_shortcode' );
+/**
+ * Shortcode to display exhibit hall hours
+ * @return string HTML output
+ */
 function exhibit_hall_hours_shortcode() {
     return get_field( 'exhibit_hall_hours', 'option' );
 }
+add_shortcode( 'exhibit_hall_hours', 'exhibit_hall_hours_shortcode' );
 
-// add shortcode for hotels grid on location pages
-add_shortcode( 'hotel_grid', 'hotel_grid_shortcode' );
+/**
+ * Shortcode to display hotels
+ * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
+ * @return string HTML output
+ */
 function hotel_grid_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'convention'    => NULL,
@@ -155,10 +188,13 @@ function hotel_grid_shortcode( $attributes ) {
     include( 'loop-hotel.php' );
     return ob_get_clean();
 }
+add_shortcode( 'hotel_grid', 'hotel_grid_shortcode' );
 
-// add shortcode for price sheet
-// accepts `convention` attribute as abbreviation
-add_shortcode( 'price_sheet', 'price_sheet_shortcode' );
+/**
+ * Shortcode to display price sheet
+ * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
+ * @return string HTML output
+ */
 function price_sheet_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'convention'    => NULL,
@@ -172,17 +208,24 @@ function price_sheet_shortcode( $attributes ) {
 
     return ob_get_clean();
 }
+add_shortcode( 'price_sheet', 'price_sheet_shortcode' );
 
-// add shortcode for speaker page
-add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
+/**
+ * Shortcode to display custom speaker/special event archive
+ * @return [[Type]] [[Description]]
+ */
 function speaker_archive_shortcode() {
     ob_start();
     include( 'loop-speaker.php' );
     return ob_get_clean();
 }
+add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
 
-// add shortcode for speaker grid
-add_shortcode( 'speaker_grid', 'speaker_grid_shortcode' );
+/**
+ * Shortcode to display speaker grid
+ * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
+ * @return string HTML output
+ */
 function speaker_grid_shortcode( $attributes ) {
     global $convention_abbreviations;
     $shortcode_attributes = shortcode_atts( array (
@@ -209,6 +252,7 @@ function speaker_grid_shortcode( $attributes ) {
     $speaker_grid_query = new WP_Query( $speaker_grid_args );
 
     // loop
+    ob_start();
     if ( $speaker_grid_query->have_posts() ) {
         echo '<div class="speaker-item-wrapper">
             <div class="speaker-item-holder gdlr-speaker-type-round">';
@@ -222,11 +266,24 @@ function speaker_grid_shortcode( $attributes ) {
 
     // reset post data
     wp_reset_postdata();
-}
 
-// add shortcode for speaker info
-// accepts `postid`, `pagename`, `align`, `no_conventions`, and `photo_only` attributes
-add_shortcode( 'speaker_info', 'speaker_info_shortcode' );
+    return ob_get_clean();
+}
+add_shortcode( 'speaker_grid', 'speaker_grid_shortcode' );
+
+/**
+ * Shortcode to display speaker(s) info
+ *
+ * array[]
+ *      ['postid']          integer post ID for a specific speaker
+ *      ['pagename']        string  post slug for a specific speaker
+ *      ['align']           string  align right, left, or center
+ *      ['no_conventions']  boolean whether or not to show convention icons beneath speaker’s name
+ *      ['extra_classes']   string  extra classes to add to the output
+ *
+ * @param  array  $attributes shortcode parameters (see array above)
+ * @return string HTML output
+ */
 function speaker_info_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array(
         'postid'            => NULL,
@@ -289,14 +346,26 @@ function speaker_info_shortcode( $attributes ) {
     // return shortcode content
     return $shortcode_content;
 }
+add_shortcode( 'speaker_info', 'speaker_info_shortcode' );
 
-// add shortcode for list of speakers
-// accepts `convention` attribute
-add_shortcode( 'speaker_list', 'speaker_list_shortcode' );
+/**
+ * Shortcode to display a list of speakers
+ *
+ * array[]
+ *      ['convention']      string  two-letter abbreviation or full name
+ *      ['posts_per_page']  integer number of posts to display
+ *      ['offset']          integer how many posts to skip
+ *      ['ul_class']        string  class(es) to add to the wrapping <ul>
+ *      ['li_class']        string  class(es) to add to each speaker <li>
+ *      ['a_class']         string  class(es) to add to each speaker <a>
+ *
+ * @param  array  $attributes shortcode parameters (see array above)
+ * @return string HTML output
+ */
 function speaker_list_shortcode( $attributes ) {
     global $convention_abbreviations;
     $shortcode_attributes = shortcode_atts( array (
-        'convention'    => NULL,
+        'convention'        => NULL,
         'posts_per_page'    => -1,
         'offset'            => NULL,
         'ul_class'          => NULL,
@@ -352,10 +421,13 @@ function speaker_list_shortcode( $attributes ) {
 
     return $shortcode_content;
 }
+add_shortcode( 'speaker_list', 'speaker_list_shortcode' );
 
-// add shortcode for sponsors of a particular track
-// accepts `track` attribute
-add_shortcode( 'special_track_speakers', 'special_track_speakers_shortcode' );
+/**
+ * Shortcode to display sponsors for a particular track
+ * @param  array  $attributes shortcode parameters, including the `track` slug
+ * @return string HTML output
+ */
 function special_track_speakers_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'track'    => NULL,
@@ -398,10 +470,18 @@ function special_track_speakers_shortcode( $attributes ) {
 
     return $shortcode_content;
 }
+add_shortcode( 'special_track_speakers', 'special_track_speakers_shortcode' );
 
-// add shortcode for all sponsors
-// accepts `gray` and `width` attributes
-add_shortcode( 'sponsors', 'sponsors_shortcode' );
+/**
+ * Shortcode to display all sponsors
+ *
+ * array[]
+ *      ['gray']    boolean whether to show the featured image or the gray version
+ *      ['width']   integer width in pixels for the output image
+ *
+ * @param  array  $attributes shortcode parameters (see above array)
+ * @return string HTML output
+ */
 function sponsors_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'gray'    => NULL,
@@ -447,71 +527,13 @@ function sponsors_shortcode( $attributes ) {
 
     return $shortcode_content;
 }
+add_shortcode( 'sponsors', 'sponsors_shortcode' );
 
-// add shortcode for sessions
-// accepts `track` attribute
-add_shortcode( 'sessions_list', 'sessions_shortcode' );
-function sessions_shortcode( $attributes ) {
-    $shortcode_attributes = shortcode_atts( array (
-        'track'    => NULL,
-    ), $attributes );
-
-    // arguments
-    $session_speakers_args = array(
-        'post_type'         => 'session',
-        'posts_per_page'    => -1,
-        'orderby'           => 'meta_value',
-        'meta_key'          => 'session-speaker',
-        'order'             => 'ASC',
-        'tax_query'         => array(
-            array(
-                'taxonomy'  => 'session_category',
-                'field'     => 'slug',
-                'terms'     => 'sample-sessions',
-            ),
-        ),
-    );
-
-    // add track if specified
-    if ( isset( $shortcode_attributes['track'] ) ) {
-        $session_speakers_args['tax_query'] = array_merge( $session_speakers_args['tax_query'], array( array(
-                'taxonomy'  => 'ghc_special_tracks_taxonomy',
-                'field'     => 'slug',
-                'terms'     => $shortcode_attributes['track'],
-            )));
-    }
-
-    // query
-    $session_speakers_query = new WP_Query( $session_speakers_args );
-
-    // loop
-    if ( $session_speakers_query->have_posts() ) {
-        $shortcode_content = '<div class="session-item-wrapper clearfix">
-            <div class="session-item-holder">';
-        $i = 1;
-        while ( $session_speakers_query->have_posts() ) {
-            $session_speakers_query->the_post();
-            ob_start();
-            include( 'session-grid-template.php' );
-            $shortcode_content .= ob_get_clean();
-            if ( $i % 3 == 0 ) {
-                $shortcode_content .= '<div class="clear"></div>';
-            }
-            $i++;
-        }
-        $shortcode_content .= '</div>
-        </div>';
-    }
-
-    // reset post data
-    wp_reset_postdata();
-
-    return $shortcode_content;
-}
-
-// add shortcode for workshops schedule
-// accept `convention` attribute
-add_shortcode( 'workshops_schedule', 'workshops_schedule_shortcode' );
+/**
+ * Shortcode to display workshop schedule
+ * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
+ * @return string HTML output
+ */
 function workshops_schedule_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'convention'    => NULL,
@@ -652,3 +674,4 @@ function workshops_schedule_shortcode( $attributes ) {
 
     return $shortcode_content;
 }
+add_shortcode( 'workshops_schedule', 'workshops_schedule_shortcode' );

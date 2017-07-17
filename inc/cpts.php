@@ -183,7 +183,7 @@ function ghc_register_cpts() {
         'description'         => __( 'Speakers', 'GHC' ),
         'labels'              => $speakers_labels,
         'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
-        'taxonomies'          => array( 'ghc_speakers_taxonomy', 'ghc_conventions_taxonomy', 'ghc_special_tracks_taxonomy' ),
+        'taxonomies'          => array( 'ghc_speaker_category_taxonomy', 'ghc_conventions_taxonomy', 'ghc_special_tracks_taxonomy' ),
         'hierarchical'        => true,
         'public'              => true,
         'show_ui'             => true,
@@ -346,6 +346,42 @@ add_action( 'init', 'ghc_register_cpts' );
  * Register custom taxonomies
  */
 function ghc_register_taxonomies() {
+    $speaker_category_labels = array(
+        'name'                       => _x( 'Speaker Categories', 'Taxonomy General Name', 'GHC' ),
+        'singular_name'              => _x( 'Speaker Category', 'Taxonomy Singular Name', 'GHC' ),
+        'menu_name'                  => __( 'Speaker Categories', 'GHC' ),
+        'all_items'                  => __( 'All Speaker Categories', 'GHC' ),
+        'parent_item'                => __( 'Parent Speaker Category', 'GHC' ),
+        'parent_item_colon'          => __( 'Parent Speaker Category:', 'GHC' ),
+        'new_item_name'              => __( 'New Speaker Category Name', 'GHC' ),
+        'add_new_item'               => __( 'Add New Speaker Category', 'GHC' ),
+        'edit_item'                  => __( 'Edit Speaker Category', 'GHC' ),
+        'update_item'                => __( 'Update Speaker Category', 'GHC' ),
+        'view_item'                  => __( 'View Speaker Category', 'GHC' ),
+        'separate_items_with_commas' => __( 'Separate Speaker Categories with commas', 'GHC' ),
+        'add_or_remove_items'        => __( 'Add or remove Speaker Categories', 'GHC' ),
+        'choose_from_most_used'      => __( 'Choose from the most used', 'GHC' ),
+        'popular_items'              => __( 'Popular Speaker Categories', 'GHC' ),
+        'search_items'               => __( 'Search Speaker Categories', 'GHC' ),
+        'not_found'                  => __( 'Not Found', 'GHC' ),
+    );
+    $speaker_category_rewrite = array(
+        'slug'                       => 'speakers/type',
+        'with_front'                 => true,
+        'hierarchical'               => true,
+    );
+    $speaker_category_args = array(
+        'labels'                     => $speaker_category_labels,
+        'hierarchical'               => true,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => false,
+        'rewrite'                    => $speaker_category_rewrite,
+    );
+    register_taxonomy( 'ghc_speaker_category_taxonomy', array( 'speaker' ), $speaker_category_args );
+
     $track_labels = array(
         'name'                       => _x( 'Special Tracks', 'Taxonomy General Name', 'GHC' ),
         'singular_name'              => _x( 'Special Track', 'Taxonomy Singular Name', 'GHC' ),
@@ -579,9 +615,11 @@ function ghc_speakers_order( $query ) {
         $query->set( 'order', 'ASC' );
 
         if ( ! is_admin() && $query->is_main_query() && is_post_type_archive( 'speaker' ) ) {
-            $query->set( 'meta_key', 'featured_speaker' );
-            $query->set( 'meta_compare', '!=' );
-            $query->set( 'meta_value', 'no' );
+            $query->set( 'tax_query', array(
+                'taxonomy'  => 'ghc_speaker_category_taxonomy',
+                'field'     => 'slug',
+                'terms'     => 'featured',
+            ));
         }
     }
 }

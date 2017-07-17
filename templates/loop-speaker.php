@@ -6,9 +6,6 @@
         // new queries
         $top_speakers_args = array (
             'post_type'              => 'speaker',
-            'meta_key'               => 'featured_speaker',
-            'meta_compare'           => '!=',
-            'meta_value'             => 'no',
             'pagination'             => false,
             'posts_per_archive_page' => $top_speakers_quantity,
             'order'                  => 'ASC',
@@ -36,9 +33,6 @@
 
         $bottom_speakers_args = array (
             'post_type'              => 'speaker',
-            'meta_key'               => 'featured_speaker',
-            'meta_compare'           => '!=',
-            'meta_value'             => 'no',
             'pagination'             => false,
             'posts_per_archive_page' => -1,
             'offset'                 => $top_speakers_quantity,

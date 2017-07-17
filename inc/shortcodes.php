@@ -165,7 +165,7 @@ function price_sheet_shortcode( $attributes ) {
     ), $attributes );
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
-    wp_enqueue_script( 'price-sheets' );
+    wp_enqueue_script( 'ghc-price-sheets' );
     // get content
     ob_start();
     include( plugin_dir_path( __FILE__ ) . '/../price-sheets/price-sheet-' . $this_convention . '.html' );
@@ -519,7 +519,7 @@ function workshops_schedule_shortcode( $attributes ) {
     global $convention_abbreviations, $wpdb;
 
     // enqueue filter script
-    wp_enqueue_script( 'workshop-filter' );
+    wp_enqueue_script( 'ghc-workshop-filter' );
 
     // get all special tracks
     $categories_args = array(

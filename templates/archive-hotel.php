@@ -1,3 +1,6 @@
+<?php
+#TODO: remove GDLR
+?>
 <?php get_header(); ?>
 <div class="gdlr-content">
 

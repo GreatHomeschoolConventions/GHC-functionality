@@ -1,3 +1,6 @@
+<?php
+#TODO: remove gdlr
+?>
 <div class="accommodation-caption gdlr-info-font"><?php
     echo get_field( 'sold_out' ) ? '<h4 class="sold-out">Sold Out</h4>' : '';
 

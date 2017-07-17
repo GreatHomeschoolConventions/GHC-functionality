@@ -1,3 +1,6 @@
+<?php
+#TODO: remove GDLR
+?>
 <div class="four columns"><div class="gdlr-item gdlr-blog-grid"><div class="gdlr-ux gdlr-blog-grid-ux">
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="gdlr-standard-style">

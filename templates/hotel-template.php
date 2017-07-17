@@ -1,4 +1,7 @@
 <?php
+#TODO: remove GDLR
+?>
+<?php
     if ( is_post_type_archive( 'hotel' ) ) {
         $conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
         $this_convention = array_flip( $convention_abbreviations )[$conventions_taxonomy[0]->slug];

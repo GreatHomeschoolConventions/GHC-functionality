@@ -1,48 +1,48 @@
-#Introduction
+# Introduction
 
 A simple plugin to add custom post types and categories for use on Great Homeschool Convention’s website.
 
-#Usage
+# Usage
 
 - Install the plugin
 - Use shortcodes as necessary
 
-#Other Notes
+# Other Notes
 
 Available shortcodes:
 
-##`[convention_cta]`
+## `[convention_cta]`
 
 - displays the CTA text for the specified convention; accepts the argument `convention` (two-letter abbreviation)
 
-##`[convention_icon]`
+## `[convention_icon]`
 
 - displays the icon(s) specified; accepts the argument `convention` (two-letter abbreviation or comma-separated string)
 
-##`[discretionary_registration]`
+## `[discretionary_registration]`
 
 - shows a box with link to registration, optionally for the specified convention; intended for use in blog posts; accepts these arguments:
     - `convention` (two-letter abbreviation)
     - `year` (four-digit year)
     - `intro_text` (string of text to precede the button/link)
 
-##`[hotel_grid]`
+## `[hotel_grid]`
 
 - displays a grid of hotels for the specified convention; accepts the argument `convention` (two-letter abbreviation)
 
-##`[price_sheet]`
+## `[price_sheet]`
 
 - displays price sheet of specified convention, expecting `price-sheets/price-sheet-XX.html` in the plugin folder where `XX` is the lowercase abbreviation; accepts the argument `convention` (two-letter abbreviation)
 
-##`[speaker_archive]`
+## `[speaker_archive]`
 
 - displays a grid of all speakers; intended for the archive page
 
-##`[speaker_grid]`
+## `[speaker_grid]`
 
 - displays a grid of speakers for the specified convention; intended for the individual locations pages; accepts the argument `convention` (two-letter abbreviation)
 
-##`[speaker_info]`
+## `[speaker_info]`
 
 - displays speaker photo, name, conventions; accepts these arguments:
     - `post_id`
@@ -52,7 +52,7 @@ Available shortcodes:
     - `photo_only` (true)
     - `extra_classes` (string of classes to add)
 
-##`[speaker_list]`
+## `[speaker_list]`
 
 - displays list of speaker names, optionally filtered by convention; accepts these arguments:
     - `convention` (two-letter abbreviation)
@@ -62,17 +62,20 @@ Available shortcodes:
     - `li_class` (string of text to use as classes on each `li`)
     - `a_class` (string of text to use as classes on each `a`)
 
-##`[special_track_speakers]`
+## `[special_track_speakers]`
 
 - displays speakers’ photos, names, and conventions for specified special track category; accepts the argument `track` with a special track slug
 
-##`[sponsors]`
+## `[sponsors]`
 
 - displays all sponsors; accepts these arguments:
     - `gray` (specifies the grayscale logo should be used)
     - `width` (max width of image)
 
-#Changelog
+# Changelog
+
+- 3.0.0
+    - Rebuild for 2018 convention season
 
 - 2.6.3
     - Add special tracks filter to `workshops_schedule` shortcode

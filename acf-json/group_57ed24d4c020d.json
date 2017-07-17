@@ -78,6 +78,13 @@
                 "operator": "==",
                 "value": "location"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "workshop"
+            }
         ]
     ],
     "menu_order": 0,
@@ -88,5 +95,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1495731702
+    "modified": 1500249250
 }

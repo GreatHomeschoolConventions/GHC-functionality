@@ -147,7 +147,7 @@ function exhibitor_list_shortcode( $attributes ) {
         while ( $exhibitor_query->have_posts() ) {
             $exhibitor_query->the_post();
 
-            include( 'exhibitor-template.php' );
+            require( plugin_dir_path( __FILE__ ) . '../templates/exhibitor-template.php' );
             if ( ( $i % 3 ) == 0 ) {
                 echo '<div class="clear"></div>';
             }
@@ -185,7 +185,7 @@ function hotel_grid_shortcode( $attributes ) {
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
     ob_start();
-    include( 'loop-hotel.php' );
+    require( plugin_dir_path( __FILE__ ) . '../templates/loop-hotel.php' );
     return ob_get_clean();
 }
 add_shortcode( 'hotel_grid', 'hotel_grid_shortcode' );
@@ -216,7 +216,7 @@ add_shortcode( 'price_sheet', 'price_sheet_shortcode' );
  */
 function speaker_archive_shortcode() {
     ob_start();
-    include( 'loop-speaker.php' );
+    require( plugin_dir_path( __FILE__ ) . '../templates/loop-speaker.php' );
     return ob_get_clean();
 }
 add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
@@ -258,7 +258,7 @@ function speaker_grid_shortcode( $attributes ) {
             <div class="speaker-item-holder gdlr-speaker-type-round">';
         while ( $speaker_grid_query->have_posts() ) {
             $speaker_grid_query->the_post();
-            include( 'speaker-grid-template.php' );
+            require( plugin_dir_path( __FILE__ ) . '../templates/speaker-grid-template.php' );
         }
         echo '</div>
         </div>';
@@ -458,7 +458,7 @@ function special_track_speakers_shortcode( $attributes ) {
         while ( $special_track_speakers_query->have_posts() ) {
             $special_track_speakers_query->the_post();
             ob_start();
-            include( 'speaker-grid-template.php' );
+            require( plugin_dir_path( __FILE__ ) . '../templates/speaker-grid-template.php' );
             $shortcode_content .= ob_get_clean();
         }
         $shortcode_content .= '</div>
@@ -646,7 +646,7 @@ function workshops_schedule_shortcode( $attributes ) {
                         while ( $workshops_query->have_posts() ) {
                             $workshops_query->the_post();
                             ob_start();
-                            include( 'workshop-list-template.php' );
+                            require( plugin_dir_path( __FILE__ ) . '../templates/workshop-list-template.php' );
                             $shortcode_content .= ob_get_clean();
                         }
                         $shortcode_content .= '</table>

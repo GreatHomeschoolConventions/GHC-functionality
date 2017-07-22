@@ -127,7 +127,7 @@ function ghc_register_cpts() {
         'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
     );
     $locations_rewrite = array(
-        'slug'                => 'locations-cpt',
+        'slug'                => 'locations',
         'with_front'          => true,
         'pages'               => true,
         'feeds'               => true,

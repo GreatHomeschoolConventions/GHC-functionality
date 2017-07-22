@@ -37,25 +37,8 @@ function ghc_speakers_deactivate() {
 }
 register_deactivation_hook( __FILE__, 'ghc_speakers_deactivate' );
 
-/**
- * Set ACF local JSON save directory
- * @param  string $path ACF local JSON save directory
- * @return string ACF local JSON save directory
- */
-add_filter( 'acf/settings/save_json', 'ghc_acf_json_save_point' );
-function ghc_acf_json_save_point( $path ) {
-    return plugin_dir_path( __FILE__ ) . '/acf-json';
-}
-
-/**
- * Set ACF local JSON open directory
- * @param  array $path ACF local JSON open directory
- * @return array ACF local JSON open directory
- */
-add_filter( 'acf/settings/load_json', 'ghc_acf_json_load_point' );
-function ghc_acf_json_load_point( $path ) {
-    $paths[] = plugin_dir_path( __FILE__ ) . '/acf-json';
-    return $paths;
+if ( ! function_exists( 'ghc_admin_options' ) ) {
+    include( 'inc/acf.php' );
 }
 
 // add custom image sizes
@@ -1100,12 +1083,6 @@ function array_sort_conventions( $a, $b ) {
     }
 
     return $sort_order;
-}
-
-// add Google Maps API key
-add_action('acf/init', 'ghc_acf_init');
-function ghc_acf_init() {
-    acf_update_setting('google_api_key', get_option( 'options_api_key' ) );
 }
 
 // add video Open Graph data

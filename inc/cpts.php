@@ -660,8 +660,8 @@ add_action( 'pre_get_posts', 'ghc_modify_sponsor_archive' );
  */
 function ghc_exhibitor_archive_icons( $content ) {
     global $post;
+    $new_content = '';
     if ( 'exhibitor' == get_post_type( $post->ID ) ) {
-        $new_content = '';
         if ( get_field( 'exhibitor_URL', $post->ID ) ) {
             $new_content .= '<p><a href="' . get_field( 'exhibitor_URL', $post->ID ) . '" target="_blank">Visit website&rarr;</a></p>';
         }

@@ -31,7 +31,6 @@ include( 'inc/admin.php' );
 include( 'inc/content.php' );
 include( 'inc/cpts.php' );
 include( 'inc/functions.php' );
-include( 'inc/images.php' );
 include( 'inc/shortcodes.php' );
 include( 'inc/woocommerce.php' );
 

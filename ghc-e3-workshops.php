@@ -80,7 +80,7 @@ function ghc_e3_cpts() {
         'show_in_admin_bar'   => true,
         'show_in_nav_menus'   => true,
         'can_export'          => true,
-        'has_archive'         => 'e3-workshops/all',
+        'has_archive'         => 'my-account/e3-workshops',
         'exclude_from_search' => false,
         'publicly_queryable'  => true,
         'rewrite'             => $workshops_rewrite,
@@ -183,3 +183,25 @@ function ghc_e3_get_signed_URL( $resource ) {
 
     return $url;
 }
+
+/**
+ * Tweak archive title
+ * @param  string $title HTML archive title
+ * @return string modified HTML archive title
+ */
+function ghc_e3_archive_title( $title ) {
+    if ( is_category() ) {
+        $title = single_cat_title( '', false );
+    } elseif ( is_tag() ) {
+        $title = single_tag_title( '', false );
+    } elseif ( is_author() ) {
+        $title = '<span class="vcard">' . get_the_author() . '</span>';
+    } elseif ( is_post_type_archive() ) {
+        $title = post_type_archive_title( '', false );
+    } elseif ( is_tax() ) {
+        $title = single_term_title( '', false );
+    }
+
+    return $title;
+}
+add_filter( 'get_the_archive_title', 'ghc_e3_archive_title' );

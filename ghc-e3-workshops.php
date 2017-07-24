@@ -97,11 +97,11 @@ add_action( 'init', 'ghc_e3_cpts' );
  */
 function ghc_e3_content( $content ) {
     $new_content = '';
-    if ( is_singular( 'e3_workshop' ) ) {
+    if ( 'e3_workshop' == get_post_type() ) {
         $speaker_company = get_field( 'e3_speaker_company' );
         $speaker_company_url = get_field( 'e3_speaker_company_url' );
 
-        $new_content .= '<h3 class="speaker-info">' . get_field( 'e3_speaker_name' );
+        $new_content .= '<div class="entry-meta"><p class="speaker-info">' . get_field( 'e3_speaker_name' );
         if ( $speaker_company ) {
             $new_content .= ' | ';
             if ( $speaker_company_url ) {
@@ -110,7 +110,7 @@ function ghc_e3_content( $content ) {
                 $new_content .= $speaker_company;
             }
         }
-        $new_content .= '</h3>';
+        $new_content .= '</p></div>';
 
         $new_content .= '<p>
         <audio class="wp-audio-shortcode" controls="controls">
@@ -124,6 +124,7 @@ function ghc_e3_content( $content ) {
     return $new_content . $content;
 }
 add_filter( 'the_content', 'ghc_e3_content' );
+add_filter( 'the_excerpt', 'ghc_e3_content' );
 
 /**
  * Generate signed URL

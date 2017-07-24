@@ -205,3 +205,23 @@ function ghc_e3_archive_title( $title ) {
     return $title;
 }
 add_filter( 'get_the_archive_title', 'ghc_e3_archive_title' );
+
+/**
+ * Redirect to Checkout page when product is added to cart
+ * @return string checkout URL
+ */
+function ghc_e3_add_to_cart_redirect() {
+    global $woocommerce;
+    $checkout_url = $woocommerce->cart->get_checkout_url();
+    return $checkout_url;
+}
+add_filter( 'add_to_cart_redirect', 'ghc_e3_add_to_cart_redirect' );
+
+/**
+ * Change text on add-to-cart buttons
+ * @return string button label
+ */
+function ghc_e3_cart_button_text() {
+    return __( 'Buy Now', 'woocommerce' );
+}
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'ghc_e3_cart_button_text' );

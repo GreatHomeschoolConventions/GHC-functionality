@@ -91,6 +91,22 @@ function ghc_e3_cpts() {
 add_action( 'init', 'ghc_e3_cpts' );
 
 /**
+ * Modify workshops query
+ * @param  object $query WP_Query object
+ * @return object modified WP_Query object
+ */
+function ghc_e3_post_order( $query ) {
+    if ( ! is_admin() && ! is_singular() && 'e3_workshop' == $query->get( 'post_type' ) ) {
+        $query->set( 'orderby', 'post_title' );
+        $query->set( 'order', 'ASC' );
+        $query->set( 'posts_per_page', '-1' );
+    }
+
+    return $query;
+}
+add_action( 'pre_get_posts', 'ghc_e3_post_order' );
+
+/**
  * Add speaker info and media player to E3 workshop content
  * @param  string $content HTML content
  * @return string modified HTML content

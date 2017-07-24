@@ -112,10 +112,10 @@ function ghc_e3_content( $content ) {
         }
         $new_content .= '</p></div>';
 
-        $new_content .= '<p>
-        <audio class="wp-audio-shortcode" controls="controls">
+        $new_content .= '
+        <audio class="wp-audio-shortcode" controls="controls" preload="metadata" style="width: 100%">
             <source type="audio/mpeg" src="' . ghc_e3_get_signed_URL( get_field( 'e3_workshop_media_url' ) ) . '" />
-        </audio></p>';
+        </audio>';
     }
 
     wp_enqueue_style( 'wp-mediaelement' );

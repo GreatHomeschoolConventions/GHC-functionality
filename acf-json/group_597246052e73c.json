@@ -3,6 +3,22 @@
     "title": "E3 Workshops",
     "fields": [
         {
+            "key": "field_5972468c437f4",
+            "label": "Workshop Media URL",
+            "name": "e3_workshop_media_url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
             "key": "field_59724641437f1",
             "label": "Speaker Name",
             "name": "e3_speaker_name",
@@ -57,10 +73,10 @@
             "placeholder": ""
         },
         {
-            "key": "field_5972468c437f4",
-            "label": "Workshop Media URL",
-            "name": "e3_workshop_media_url",
-            "type": "url",
+            "key": "field_597b414e81303",
+            "label": "Speaker Biography",
+            "name": "e3_speaker_biography",
+            "type": "wysiwyg",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -70,7 +86,10 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": ""
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
         }
     ],
     "location": [
@@ -90,5 +109,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1500661447
+    "modified": 1501254267
 }

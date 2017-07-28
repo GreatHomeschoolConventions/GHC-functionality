@@ -114,28 +114,39 @@ add_action( 'pre_get_posts', 'ghc_e3_post_order' );
 function ghc_e3_content( $content ) {
     $new_content = '';
     if ( 'e3_workshop' == get_post_type() ) {
+        $speaker_name = get_field( 'e3_speaker_name' );
         $speaker_company = get_field( 'e3_speaker_company' );
         $speaker_company_url = get_field( 'e3_speaker_company_url' );
+        $speaker_bio = get_field( 'e3_speaker_biography' );
+        $speaker_bio_content = '<a class="button author-bio">About ' . $speaker_name . ' <span class="dashicons dashicons-arrow-down-alt2"></span></a><div class="author-bio">' . $speaker_bio . '</div>';
 
-        $new_content .= '<div class="entry-meta"><p class="speaker-info">' . get_field( 'e3_speaker_name' );
+        $new_content .= '<p class="entry-meta"><span class="dashicons-before dashicons-businessman">' . $speaker_name . '</span>';
         if ( $speaker_company ) {
             $new_content .= ' | ';
             if ( $speaker_company_url ) {
-                $new_content .= '<a target="_blank" href="' . $speaker_company_url . '">' . $speaker_company . '</a>';
+                $new_content .= '<a class="dashicons-before dashicons-store" target="_blank" href="' . $speaker_company_url . '">' . $speaker_company . '</a>';
             } else {
-                $new_content .= $speaker_company;
+                $new_content .= '<span class="dashicons-before dashicons-store">' . $speaker_company . '</span>';
             }
         }
-        $new_content .= '</p></div>';
+        $new_content .= '</p>';
 
-        $new_content .= '
-        <audio class="wp-audio-shortcode" controls="controls" preload="none" style="width: 100%">
-            <source type="audio/mpeg" src="' . ghc_e3_get_signed_URL( get_field( 'e3_workshop_media_url' ) ) . '" />
-        </audio>';
+        if ( is_singular() ) {
+            $new_content .= '
+            <audio class="wp-audio-shortcode" controls="controls" preload="none" style="width: 100%">
+                <source type="audio/mpeg" src="' . ghc_e3_get_signed_URL( get_field( 'e3_workshop_media_url' ) ) . '" />
+            </audio>';
+
+            if ( $speaker_bio ) {
+                $content .= '<p>' . $speaker_bio_content . '</p>';
+            }
+
+            wp_enqueue_style( 'wp-mediaelement' );
+            wp_enqueue_script( 'wp-mediaelement' );
+        } else {
+            $content .= '<p><a class="button" href="' . get_permalink() . '">Listen Now <span class="dashicons dashicons-arrow-right-alt2"></span></a>' . ( $speaker_bio ? $speaker_bio_content : '' ) . '</p>';
+        }
     }
-
-    wp_enqueue_style( 'wp-mediaelement' );
-    wp_enqueue_script( 'wp-mediaelement' );
 
     return $new_content . $content;
 }

@@ -215,7 +215,7 @@ function ghc_e3_add_to_cart_redirect() {
     $checkout_url = $woocommerce->cart->get_checkout_url();
     return $checkout_url;
 }
-add_filter( 'add_to_cart_redirect', 'ghc_e3_add_to_cart_redirect' );
+add_filter( 'woocommerce_add_to_cart_redirect', 'ghc_e3_add_to_cart_redirect' );
 
 /**
  * Change text on add-to-cart buttons

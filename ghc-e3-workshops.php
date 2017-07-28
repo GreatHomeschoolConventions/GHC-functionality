@@ -96,7 +96,7 @@ add_action( 'init', 'ghc_e3_cpts' );
  * @return object modified WP_Query object
  */
 function ghc_e3_post_order( $query ) {
-    if ( ! is_admin() && ! is_singular() && 'e3_workshop' == $query->get( 'post_type' ) ) {
+    if ( ! is_admin() && $query->is_archive && 'e3_workshop' == $query->get( 'post_type' ) ) {
         $query->set( 'orderby', 'post_title' );
         $query->set( 'order', 'ASC' );
         $query->set( 'posts_per_page', '-1' );

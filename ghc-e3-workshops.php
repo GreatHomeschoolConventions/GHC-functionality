@@ -236,3 +236,47 @@ function ghc_e3_cart_button_text() {
     return __( 'Buy Now', 'woocommerce' );
 }
 add_filter( 'woocommerce_product_single_add_to_cart_text', 'ghc_e3_cart_button_text' );
+
+/**
+ * Add shortcode for purchase page
+ * @param  array  $attributes shortcode attributes
+ * @return string HTML content
+ */
+function ghc_e3_workshop_promo_list( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'posts_per_page'    => -1,
+        'offset'            => NULL,
+    ), $attributes );
+
+    ob_start();
+
+    $shortcode_query_args = array(
+        'post_type'         => 'e3_workshop',
+        'posts_per_page'    => $shortcode_attributes['posts_per_page'],
+        'offset'            => $shortcode_attributes['offset'],
+    );
+
+    $shortcode_query = new WP_Query( $shortcode_query_args );
+
+    if ( $shortcode_query->have_posts() ) {
+        echo '<section class="e3-shortcode-container">';
+        while ( $shortcode_query->have_posts() ) {
+            $shortcode_query->the_post();
+
+            echo '<article class="' . implode( ' ', get_post_class() ) . '">';
+
+            if ( has_post_thumbnail() ) {
+                the_post_thumbnail( 'speaker_xs', array( 'class' => '' ) );
+            }
+
+            echo '<h3>' . get_the_title() . '</h3>
+            <p><a class="workshop-description expand-trigger dashicons-after">Workshop Description <span class="dashicons dashicons-arrow-down-alt2"></span></a></p>
+            <p class="excerpt click-to-expand">' . get_the_content() . '</p>
+            </article>';
+        }
+        echo '</section>';
+    }
+
+    return ob_get_clean();
+}
+add_shortcode( 'e3_workshop_promo_list', 'ghc_e3_workshop_promo_list' );

@@ -113,7 +113,7 @@ add_action( 'pre_get_posts', 'ghc_e3_post_order' );
  */
 function ghc_e3_content( $content ) {
     $new_content = '';
-    if ( 'e3_workshop' == get_post_type() ) {
+    if ( 'e3_workshop' == get_post_type() && is_user_logged_in() ) {
         $speaker_name = get_field( 'e3_speaker_name' );
         $speaker_company = get_field( 'e3_speaker_company' );
         $speaker_company_url = get_field( 'e3_speaker_company_url' );

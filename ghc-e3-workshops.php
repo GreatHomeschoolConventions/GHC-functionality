@@ -118,7 +118,7 @@ function ghc_e3_content( $content ) {
         $speaker_company = get_field( 'e3_speaker_company' );
         $speaker_company_url = get_field( 'e3_speaker_company_url' );
         $speaker_bio = get_field( 'e3_speaker_biography' );
-        $speaker_bio_content = '<a class="button author-bio">About ' . $speaker_name . ' <span class="dashicons dashicons-arrow-down-alt2"></span></a><div class="author-bio">' . $speaker_bio . '</div>';
+        $speaker_bio_content = '<a class="button expand-trigger">About ' . $speaker_name . ' <span class="dashicons dashicons-arrow-down-alt2"></span></a><div class="click-to-expand">' . $speaker_bio . '</div>';
 
         $new_content .= '<p class="entry-meta"><span class="dashicons-before dashicons-businessman">' . $speaker_name . '</span>';
         if ( $speaker_company ) {

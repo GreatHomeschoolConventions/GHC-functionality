@@ -107,29 +107,15 @@ function ghc_e3_post_order( $query ) {
 add_action( 'pre_get_posts', 'ghc_e3_post_order' );
 
 /**
- * Add speaker info and media player to E3 workshop content
+ * Add media player and speaker bio to E3 workshop content
  * @param  string $content HTML content
  * @return string modified HTML content
  */
 function ghc_e3_content( $content ) {
     $new_content = '';
-    if ( 'e3_workshop' == get_post_type() && is_user_logged_in() ) {
-        $speaker_name = get_field( 'e3_speaker_name' );
-        $speaker_company = get_field( 'e3_speaker_company' );
-        $speaker_company_url = get_field( 'e3_speaker_company_url' );
+    if ( 'e3_workshop' == get_post_type() ) {
         $speaker_bio = get_field( 'e3_speaker_biography' );
         $speaker_bio_content = '<a class="button expand-trigger">About ' . $speaker_name . ' <span class="dashicons dashicons-arrow-down-alt2"></span></a><div class="click-to-expand">' . $speaker_bio . '</div>';
-
-        $new_content .= '<p class="entry-meta"><span class="dashicons-before dashicons-businessman">' . $speaker_name . '</span>';
-        if ( $speaker_company ) {
-            $new_content .= ' | ';
-            if ( $speaker_company_url ) {
-                $new_content .= '<a class="dashicons-before dashicons-store" target="_blank" href="' . $speaker_company_url . '">' . $speaker_company . '</a>';
-            } else {
-                $new_content .= '<span class="dashicons-before dashicons-store">' . $speaker_company . '</span>';
-            }
-        }
-        $new_content .= '</p>';
 
         if ( is_singular() ) {
             $new_content .= '
@@ -152,6 +138,37 @@ function ghc_e3_content( $content ) {
 }
 add_filter( 'the_content', 'ghc_e3_content' );
 add_filter( 'the_excerpt', 'ghc_e3_content' );
+
+/**
+ * Add speaker info to post thumbnail
+ * @param  string       $html              featured image HTML
+ * @param  integer      $post_id           WP post ID
+ * @param  integer      $post_thumbnail_id WP media post ID
+ * @param  string/array $size              image size
+ * @param  array        $attr              query string of attributes
+ * @return string       featured image HTML
+ */
+function ghc_e3_thumbnail_content( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
+    if ( 'e3_workshop' == get_post_type( $post_id ) ) {
+        $speaker_name = get_field( 'e3_speaker_name' );
+        $speaker_company = get_field( 'e3_speaker_company' );
+        $speaker_company_url = get_field( 'e3_speaker_company_url' );
+
+
+        $html .= '<p class="entry-meta"><span class="speaker-name">' . $speaker_name . '</span>';
+        if ( $speaker_company ) {
+            $html .= '<br/>';
+            if ( $speaker_company_url && is_user_logged_in() ) {
+                $html .= '<a class="speaker-company" target="_blank" href="' . $speaker_company_url . '">' . $speaker_company . '</a>';
+            } else {
+                $html .= '<span class="speaker-company">' . $speaker_company . '</span>';
+            }
+        }
+        $html .= '</p>';
+    }
+    return $html;
+}
+add_filter( 'post_thumbnail_html', 'ghc_e3_thumbnail_content', 10, 5 );
 
 /**
  * Generate signed URL

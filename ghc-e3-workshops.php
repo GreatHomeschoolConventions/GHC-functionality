@@ -297,3 +297,26 @@ function ghc_e3_workshop_promo_list( $attributes ) {
     return ob_get_clean();
 }
 add_shortcode( 'e3_workshop_promo_list', 'ghc_e3_workshop_promo_list' );
+
+
+/**
+ * Add shortcode for buy now button
+ * @param  array  $attributes shortcode attributes
+ * @return string HTML content
+ */
+function ghc_e3_buy_now_button( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+        'product_id'    => NULL,
+        'button_text'   => 'Buy Now',
+    ), $attributes );
+
+    ob_start();
+    if ( $shortcode_attributes['product_id'] ) {
+        echo '<section class="buy-now">
+        <p><a class="button" rel="nofollow" href="' . home_url() . '/checkout/?add-to-cart=' . $shortcode_attributes['product_id'] . '">' . $shortcode_attributes['button_text'] . '</a><br/>
+        <img src="' . plugin_dir_url( __FILE__ ) . 'images/credit-cards.svg" alt="credit card icons" /></p>
+        </section>';
+    }
+    return ob_get_clean();
+}
+add_shortcode( 'e3_buy_now', 'ghc_e3_buy_now_button' );

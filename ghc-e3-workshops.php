@@ -288,7 +288,7 @@ function ghc_e3_workshop_promo_list( $attributes ) {
 
             echo '<h3>' . get_the_title() . '</h3>
             <p><a class="workshop-description expand-trigger dashicons-after">Workshop Description <span class="dashicons dashicons-arrow-down-alt2"></span></a></p>
-            <p class="excerpt click-to-expand">' . get_the_content() . '</p>
+            <div class="excerpt click-to-expand">' . get_the_content() . '</div>
             </article>';
         }
         echo '</section>';

@@ -400,5 +400,9 @@ function wc_memberships_get_members_area_url( $membership_plan, $members_area_se
         }
     }
 
+    if ( $membership_plan_id == '14' ) {
+        $url = get_home_url() . '/my-account/e3-workshops/';
+    }
+
     return $url;
 }

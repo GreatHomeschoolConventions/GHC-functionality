@@ -16,7 +16,7 @@
                 "id": ""
             },
             "display_format": "m\/d\/Y",
-            "return_format": "YYYY-m-d",
+            "return_format": "Ymd",
             "first_day": 0
         },
         {
@@ -33,7 +33,7 @@
                 "id": ""
             },
             "display_format": "m\/d\/Y",
-            "return_format": "YYYY-m-d",
+            "return_format": "Ymd",
             "first_day": 0
         },
         {
@@ -284,5 +284,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1500328148
+    "modified": 1504061134
 }

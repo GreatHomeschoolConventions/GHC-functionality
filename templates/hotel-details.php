@@ -1,7 +1,4 @@
-<?php
-#TODO: remove gdlr
-?>
-<div class="accommodation-caption gdlr-info-font"><?php
+<div class="accommodation-caption"><?php
     echo get_field( 'sold_out' ) ? '<h4 class="sold-out">Sold Out</h4>' : '';
 
     echo get_field( 'discount_rate' ) ? '<p>From $' . get_field( 'discount_rate' ) . ' per night' : '';

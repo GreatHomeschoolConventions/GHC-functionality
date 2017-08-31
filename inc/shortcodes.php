@@ -138,23 +138,15 @@ function exhibitor_list_shortcode( $attributes ) {
 
     if ( $exhibitor_query->have_posts() ) {
         $i = 1;
-        ob_start(); ?>
-<?php
-#TODO: remove GDLR
-?>
-        <div class="blog-item-holder"><div class="gdlr-isotope" data-type="blog" data-layout="fitRows"><div class="clear"></div>
-        <?php
+        ob_start();
+
         while ( $exhibitor_query->have_posts() ) {
             $exhibitor_query->the_post();
 
             require( plugin_dir_path( __FILE__ ) . '../templates/exhibitor-template.php' );
-            if ( ( $i % 3 ) == 0 ) {
-                echo '<div class="clear"></div>';
-            }
             $i++;
-        } ?>
-        </div></div>
-        <?php
+        }
+
         $shortcode_content = ob_get_clean();
     }
 
@@ -254,14 +246,12 @@ function speaker_grid_shortcode( $attributes ) {
     // loop
     ob_start();
     if ( $speaker_grid_query->have_posts() ) {
-        echo '<div class="speaker-item-wrapper">
-            <div class="speaker-item-holder gdlr-speaker-type-round">';
+        echo '<div class="speakers-container">';
         while ( $speaker_grid_query->have_posts() ) {
             $speaker_grid_query->the_post();
             require( plugin_dir_path( __FILE__ ) . '../templates/speaker-template.php' );
         }
-        echo '</div>
-        </div>';
+        echo '</div>';
     }
 
     // reset post data
@@ -453,16 +443,14 @@ function special_track_speakers_shortcode( $attributes ) {
 
     // loop
     if ( $special_track_speakers_query->have_posts() ) {
-        $shortcode_content = '<div class="speaker-item-wrapper">
-            <div class="speaker-item-holder gdlr-speaker-type-round">';
+        $shortcode_content = '<div class="speakers-container">';
         while ( $special_track_speakers_query->have_posts() ) {
             $special_track_speakers_query->the_post();
             ob_start();
             require( plugin_dir_path( __FILE__ ) . '../templates/speaker-template.php' );
             $shortcode_content .= ob_get_clean();
         }
-        $shortcode_content .= '</div>
-        </div>';
+        $shortcode_content .= '</div>';
     }
 
     // reset post data

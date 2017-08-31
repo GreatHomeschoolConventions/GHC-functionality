@@ -221,24 +221,32 @@ add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
 function speaker_grid_shortcode( $attributes ) {
     global $convention_abbreviations;
     $shortcode_attributes = shortcode_atts( array (
-        'convention'    => NULL,
+        'convention'        => NULL,
+        'posts_per_page'    => -1,
+        'offset'            => NULL,
+        'image_only'        => false,
     ), $attributes );
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
     // arguments
     $speaker_grid_args = array(
         'post_type'         => 'speaker',
-        'posts_per_page'    => -1,
+        'posts_per_page'    => $shortcode_attributes['posts_per_page'],
+        'offset'            => $shortcode_attributes['offset'],
         'orderby'           => 'menu_order',
         'order'             => 'ASC',
-        'tax_query' => array(
+    );
+
+    // include convention if specified
+    if ( $shortcode_attributes['convention'] ) {
+        $speaker_grid_args['tax_query'] = array(
             array(
                 'taxonomy'  => 'ghc_conventions_taxonomy',
                 'field'     => 'slug',
                 'terms'     => $convention_abbreviations[$this_convention],
             )
-        ),
-    );
+        );
+    }
 
     // query
     $speaker_grid_query = new WP_Query( $speaker_grid_args );
@@ -340,16 +348,13 @@ add_shortcode( 'speaker_info', 'speaker_info_shortcode' );
 
 /**
  * Shortcode to display a list of speakers
- *
- * array[]
- *      ['convention']      string  two-letter abbreviation or full name
- *      ['posts_per_page']  integer number of posts to display
- *      ['offset']          integer how many posts to skip
- *      ['ul_class']        string  class(es) to add to the wrapping <ul>
- *      ['li_class']        string  class(es) to add to each speaker <li>
- *      ['a_class']         string  class(es) to add to each speaker <a>
- *
  * @param  array  $attributes shortcode parameters (see array above)
+ *                           ['convention']      string  two-letter abbreviation or full name
+ *                           ['posts_per_page']  integer number of posts to display
+ *                           ['offset']          integer how many posts to skip
+ *                           ['ul_class']        string  class(es) to add to the wrapping <ul>
+ *                           ['li_class']        string  class(es) to add to each speaker <li>
+ *                           ['a_class']         string  class(es) to add to each speaker <a>
  * @return string HTML output
  */
 function speaker_list_shortcode( $attributes ) {

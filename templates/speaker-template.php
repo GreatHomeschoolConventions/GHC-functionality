@@ -11,6 +11,7 @@
     </div>
     <?php } ?>
 
+    <?php if ( ! $shortcode_attributes['image_only'] ) { ?>
     <header class="post-header">
         <div class="conventions-attending">
             <?php echo output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ); ?>
@@ -21,4 +22,5 @@
     <!-- entry-header -->
 
     <div class="excerpt"><?php the_excerpt(); ?></div>
+    <?php } ?>
 </article><!-- .speaker -->

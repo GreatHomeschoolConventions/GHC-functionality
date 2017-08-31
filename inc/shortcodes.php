@@ -212,7 +212,7 @@ add_shortcode( 'price_sheet', 'price_sheet_shortcode' );
 
 /**
  * Shortcode to display custom speaker/special event archive
- * @return [[Type]] [[Description]]
+ * @return string HTML of entire archive
  */
 function speaker_archive_shortcode() {
     ob_start();

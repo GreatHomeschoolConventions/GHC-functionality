@@ -258,7 +258,7 @@ function speaker_grid_shortcode( $attributes ) {
             <div class="speaker-item-holder gdlr-speaker-type-round">';
         while ( $speaker_grid_query->have_posts() ) {
             $speaker_grid_query->the_post();
-            require( plugin_dir_path( __FILE__ ) . '../templates/speaker-grid-template.php' );
+            require( plugin_dir_path( __FILE__ ) . '../templates/speaker-template.php' );
         }
         echo '</div>
         </div>';
@@ -458,7 +458,7 @@ function special_track_speakers_shortcode( $attributes ) {
         while ( $special_track_speakers_query->have_posts() ) {
             $special_track_speakers_query->the_post();
             ob_start();
-            require( plugin_dir_path( __FILE__ ) . '../templates/speaker-grid-template.php' );
+            require( plugin_dir_path( __FILE__ ) . '../templates/speaker-template.php' );
             $shortcode_content .= ob_get_clean();
         }
         $shortcode_content .= '</div>

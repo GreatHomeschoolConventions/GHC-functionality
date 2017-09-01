@@ -509,25 +509,28 @@ function sponsors_shortcode( $attributes ) {
 
     // loop
     if ( $sponsors_query->have_posts() ) {
-        $shortcode_content = NULL;
+        $shortcode_content = '<div class="sponsors-container">';
         while ( $sponsors_query->have_posts() ) {
             $sponsors_query->the_post();
-            $shortcode_content .= '<a href="' . get_permalink() . '">';
-            if ( $shortcode_attributes['gray'] ) {
-                if ( $shortcode_attributes['width'] ) {
-                    $shortcode_content .= wp_get_attachment_image( get_field( 'grayscale_logo' )['id'], array( $shortcode_attributes['width'], -1 ) );
+            $shortcode_content .= '<article id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '">';
+                $shortcode_content .= '<a href="' . get_permalink() . '">';
+                if ( $shortcode_attributes['gray'] ) {
+                    if ( $shortcode_attributes['width'] ) {
+                        $shortcode_content .= wp_get_attachment_image( get_field( 'grayscale_logo' )['id'], array( $shortcode_attributes['width'], -1 ) );
+                    } else {
+                        $shortcode_content .= wp_get_attachment_image( get_field( 'grayscale_logo' )['id'] );
+                    }
                 } else {
-                    $shortcode_content .= wp_get_attachment_image( get_field( 'grayscale_logo' )['id'] );
+                    if ( $shortcode_attributes['width'] ) {
+                        $shortcode_content .= get_the_post_thumbnail( get_the_ID(), array( $shortcode_attributes['width'], -1 ) );
+                    } else {
+                        $shortcode_content .= get_the_post_thumbnail();
+                    }
                 }
-            } else {
-                if ( $shortcode_attributes['width'] ) {
-                    $shortcode_content .= get_the_post_thumbnail( get_the_ID(), array( $shortcode_attributes['width'], -1 ) );
-                } else {
-                    $shortcode_content .= get_the_post_thumbnail();
-                }
-            }
-            $shortcode_content .= '</a>';
+                $shortcode_content .= '</a>
+            </article>';
         }
+        $shortcode_content .= '</div>';
     }
 
     // reset post data

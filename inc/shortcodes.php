@@ -219,7 +219,7 @@ add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
  *                           ['convention']     string      two-letter abbreviation or short convention name
  *                           ['posts_per_page'] integer     number of posts to display
  *                           ['offset']         integer     number of posts to skip
- *                           ['image_only']     boolean     whether to show just the image or image, name, convention icons
+ *                           ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt
  *                           ['image_size']     string      named image size or two comma-separated integers creating an image size array
  * @return string HTML output
  */
@@ -229,7 +229,7 @@ function speaker_grid_shortcode( $attributes ) {
         'convention'        => NULL,
         'posts_per_page'    => -1,
         'offset'            => NULL,
-        'image_only'        => false,
+        'show'              => NULL,
         'image_size'        => 'medium',
     ), $attributes );
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
@@ -243,7 +243,7 @@ function speaker_grid_shortcode( $attributes ) {
         'order'             => 'ASC',
     );
 
-    // include convention if specified
+    // include only the specified convention
     if ( $shortcode_attributes['convention'] ) {
         $speaker_grid_args['tax_query'] = array(
             array(

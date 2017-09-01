@@ -2,11 +2,12 @@
     <?php if ( has_post_thumbnail() ) { ?>
     <div class="speaker-thumbnail">
         <a href="<?php the_permalink(); ?>"><?php
-            if ( 'speaker' == get_post_type() ) {
-                the_post_thumbnail( 'medium' );
-            } elseif ( 'special_event' == get_post_type() ) {
-                the_post_thumbnail( 'blog-grid' );
+            if ( 'speaker' == get_post_type() && ! isset( $thumbnail_size ) ) {
+                $thumbnail_size = 'medium';
+            } elseif ( 'special_event' == get_post_type() && ! isset( $thumbnail_size ) ) {
+                $thumbnail_size = 'large';
             }
+            the_post_thumbnail( $thumbnail_size );
             ?></a>
     </div>
     <?php } ?>

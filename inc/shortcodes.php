@@ -216,6 +216,11 @@ add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
 /**
  * Shortcode to display speaker grid
  * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
+ *                           ['convention']     string      two-letter abbreviation or short convention name
+ *                           ['posts_per_page'] integer     number of posts to display
+ *                           ['offset']         integer     number of posts to skip
+ *                           ['image_only']     boolean     whether to show just the image or image, name, convention icons
+ *                           ['image_size']     string      named image size or two comma-separated integers creating an image size array
  * @return string HTML output
  */
 function speaker_grid_shortcode( $attributes ) {
@@ -225,6 +230,7 @@ function speaker_grid_shortcode( $attributes ) {
         'posts_per_page'    => -1,
         'offset'            => NULL,
         'image_only'        => false,
+        'image_size'        => 'medium',
     ), $attributes );
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
@@ -246,6 +252,15 @@ function speaker_grid_shortcode( $attributes ) {
                 'terms'     => $convention_abbreviations[$this_convention],
             )
         );
+    }
+
+    // image size
+    if ( strpos( $shortcode_attributes['image_size'], ',' ) !== false ) {
+        $shortcode_attributes['image_size'] = str_replace( ' ', '', $shortcode_attributes['image_size'] );
+        $thumbnail_size = explode( ',', $shortcode_attributes['image_size'] );
+        array_walk( $thumbnail_size, 'intval' );
+    } else {
+        $thumbnail_size = $shortcode_attributes['image_size'];
     }
 
     // query

@@ -9,11 +9,16 @@ defined( 'ABSPATH' ) or die( 'No access allowed' );
  */
 function ghc_meet_the_author( $content ) {
     if ( is_singular() && get_the_author_meta( 'speaker_match' ) ) {
-        $content .= '<p class="no-margin">Meet <a href="' . get_permalink( get_the_author_meta( 'speaker_match' ) ) . '">' . get_the_author() . '</a> at these conventions:</p>';
-
-        $content .= output_convention_icons( get_the_terms( get_the_author_meta( 'speaker_match' ), 'ghc_conventions_taxonomy' ) );
+        ob_start(); ?>
+        <div class="author-info">
+            <p><?php echo get_avatar( get_the_author_meta( 'ID' ), 120 ) . get_the_author_meta( 'description' ); ?></p>
+            <p>Meet <a href="<?php the_permalink( get_the_author_meta( 'speaker_match' ) ); ?>"><?php the_author(); ?></a> at these conventions:</p>
+            <p><?php echo output_convention_icons( get_the_terms( get_the_author_meta( 'speaker_match' ), 'ghc_conventions_taxonomy' ) ); ?></p>
+        </div>
+        <?php
+        $author_info = ob_get_clean();
     }
-    return $content;
+    return $content . $author_info;
 }
 add_filter( 'the_content', 'ghc_meet_the_author', 50 );
 

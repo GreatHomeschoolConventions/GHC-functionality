@@ -7,7 +7,10 @@ $theme-teal:            #0c7f84;
 $theme-black:           #111111;
 
 // conventions icons
+.convention-link,
 .speaker-convention-link {
+    .entry-content & { box-shadow: none; }
+
     svg {
         width: 3em;
         height: 3em;

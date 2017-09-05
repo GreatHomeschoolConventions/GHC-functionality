@@ -1,4 +1,8 @@
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<?php
+if ( ! is_array( $shortcode_attributes ) ) {
+    $shortcode_attributes['show'] = 'image,conventions,name,bio,excerpt';
+}
+?><article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <?php if ( has_post_thumbnail() && strpos( $shortcode_attributes['show'], 'image' ) !== false ) { ?>
     <div class="speaker-thumbnail">
         <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php

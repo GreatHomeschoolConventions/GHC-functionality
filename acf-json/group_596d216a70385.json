@@ -3,13 +3,40 @@
     "title": "Speaker Information",
     "fields": [
         {
+            "key": "field_59aec05cdb355",
+            "label": "Featured Speaker",
+            "name": "featured_speaker",
+            "type": "true_false",
+            "instructions": "Is this a featured speaker? <strong>Yes<\/strong> means they will be shown in the archive; <strong>No<\/strong> means they will be hidden from the archive.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
             "key": "field_596d217d7ad4a",
             "label": "Position",
             "name": "position",
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_59aec05cdb355",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "33",
                 "class": "",
@@ -28,7 +55,15 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_59aec05cdb355",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "34",
                 "class": "",
@@ -47,7 +82,15 @@
             "type": "url",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_59aec05cdb355",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "33",
                 "class": "",
@@ -74,5 +117,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1500324329
+    "modified": 1504624897
 }

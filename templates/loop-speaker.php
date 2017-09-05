@@ -9,18 +9,12 @@
         'posts_per_archive_page' => $top_speakers_quantity,
         'order'                  => 'ASC',
         'orderby'                => 'menu_order',
-        'cache_results'          => true,
-        'update_post_meta_cache' => true,
-        'update_post_term_cache' => true,
     );
     $entertainers_args = array (
         'post_type'              => 'special_event',
         'pagination'             => false,
         'order'                  => 'ASC',
         'orderby'                => 'menu_order',
-        'cache_results'          => true,
-        'update_post_meta_cache' => true,
-        'update_post_term_cache' => true,
     );
 
     // the queries
@@ -37,10 +31,13 @@
         'offset'                 => $top_speakers_quantity,
         'order'                  => 'ASC',
         'orderby'                => 'rand',
-        'cache_results'          => true,
-        'update_post_meta_cache' => true,
-        'update_post_term_cache' => true,
         'post__not_in'           => $top_speakers_IDs,
+        'meta_query'             => array(
+            array(
+                'key'       => 'featured_speaker',
+                'value'     => 1,
+            ),
+        ),
     );
 
     $bottom_speakers_query = new WP_Query( $bottom_speakers_args );

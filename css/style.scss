@@ -44,8 +44,6 @@ $theme-black:           #111111;
         margin-bottom: 50px;
     }
 
-    .columns { float: none; }
-
     .hotel {
         height: 100%;
         margin-bottom: 50px;
@@ -55,13 +53,5 @@ $theme-black:           #111111;
         text-decoration: line-through;
 
         .sold-out { text-decoration: none; }
-    }
-}
-
-// speaker grid
-.speaker-item-holder {
-    @media screen and (min-width: 768px) {
-        display: flex;
-        flex-wrap: wrap;
     }
 }

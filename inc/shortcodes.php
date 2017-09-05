@@ -218,85 +218,29 @@ add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
 /**
  * Shortcode to display speaker grid
  * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
+ *                           ['post_type']      string      post type; defaults to 'speaker'
  *                           ['convention']     string      two-letter abbreviation or short convention name
- *                           ['posts_per_page'] integer     number of posts to display
+ *                           ['posts_per_page'] integer     number of posts to display; defaults to -1 (all)
  *                           ['offset']         integer     number of posts to skip
  *                           ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt
  *                           ['image_size']     string      named image size or two comma-separated integers creating an image size array
  * @return string HTML output
  */
 function speaker_grid_shortcode( $attributes ) {
-    global $convention_abbreviations;
-    $shortcode_attributes = shortcode_atts( array (
-        'convention'        => NULL,
-        'posts_per_page'    => -1,
-        'offset'            => NULL,
-        'show'              => NULL,
-        'image_size'        => 'medium',
-    ), $attributes );
-    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
-
-    // arguments
-    $speaker_grid_args = array(
-        'post_type'         => 'speaker',
-        'posts_per_page'    => $shortcode_attributes['posts_per_page'],
-        'offset'            => $shortcode_attributes['offset'],
-        'orderby'           => 'menu_order',
-        'order'             => 'ASC',
-    );
-
-    // include only the specified convention
-    if ( $shortcode_attributes['convention'] ) {
-        $speaker_grid_args['tax_query'] = array(
-            array(
-                'taxonomy'  => 'ghc_conventions_taxonomy',
-                'field'     => 'slug',
-                'terms'     => $convention_abbreviations[$this_convention],
-            )
-        );
-    }
-
-    // image size
-    if ( strpos( $shortcode_attributes['image_size'], ',' ) !== false ) {
-        $shortcode_attributes['image_size'] = str_replace( ' ', '', $shortcode_attributes['image_size'] );
-        $thumbnail_size = explode( ',', $shortcode_attributes['image_size'] );
-        array_walk( $thumbnail_size, 'intval' );
-    } else {
-        $thumbnail_size = $shortcode_attributes['image_size'];
-    }
-
-    // query
-    $speaker_grid_query = new WP_Query( $speaker_grid_args );
-
-    // loop
-    ob_start();
-    if ( $speaker_grid_query->have_posts() ) {
-        echo '<div class="speakers-container">';
-        while ( $speaker_grid_query->have_posts() ) {
-            $speaker_grid_query->the_post();
-            require( plugin_dir_path( __FILE__ ) . '../templates/speaker-template.php' );
-        }
-        echo '</div>';
-    }
-
-    // reset post data
-    wp_reset_postdata();
-
-    return ob_get_clean();
+    $attributes['post_type'] = 'speaker';
+    return ghc_cpt_grid( $attributes );
 }
 add_shortcode( 'speaker_grid', 'speaker_grid_shortcode' );
 
 /**
  * Shortcode to display speaker(s) info
  *
- * array[]
- *      ['postid']          integer post ID for a specific speaker
- *      ['pagename']        string  post slug for a specific speaker
- *      ['align']           string  align right, left, or center
- *      ['no_conventions']  boolean whether or not to show convention icons beneath speaker’s name
- *      ['extra_classes']   string  extra classes to add to the output
- *
  * @param  array  $attributes shortcode parameters (see array above)
+ *                           ['postid']          integer post ID for a specific speaker
+ *                           ['pagename']        string  post slug for a specific speaker
+ *                           ['align']           string  align right, left, or center
+ *                           ['no_conventions']  boolean whether or not to show convention icons beneath speaker’s name
+ *                           ['extra_classes']   string  extra classes to add to the output
  * @return string HTML output
  */
 function speaker_info_shortcode( $attributes ) {
@@ -436,6 +380,23 @@ function speaker_list_shortcode( $attributes ) {
 add_shortcode( 'speaker_list', 'speaker_list_shortcode' );
 
 /**
+ * Shortcode to display special event grid
+ * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
+ *                           ['post_type']      string      post type; defaults to 'special_event'
+ *                           ['convention']     string      two-letter abbreviation or short convention name
+ *                           ['posts_per_page'] integer     number of posts to display; defaults to -1 (all)
+ *                           ['offset']         integer     number of posts to skip
+ *                           ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt
+ *                           ['image_size']     string      named image size or two comma-separated integers creating an image size array
+ * @return string HTML output
+ */
+function special_event_grid_shortcode( $attributes ) {
+    $attributes['post_type'] = 'special_event';
+    return ghc_cpt_grid( $attributes );
+}
+add_shortcode( 'special_event_grid', 'special_event_grid_shortcode' );
+
+/**
  * Shortcode to display sponsors for a particular track
  * @param  array  $attributes shortcode parameters, including the `track` slug
  * @return string HTML output
@@ -465,7 +426,7 @@ function special_track_speakers_shortcode( $attributes ) {
 
     // loop
     if ( $special_track_speakers_query->have_posts() ) {
-        $shortcode_content = '<div class="speakers-container">';
+        $shortcode_content = '<div class="speaker-container">';
         while ( $special_track_speakers_query->have_posts() ) {
             $special_track_speakers_query->the_post();
             ob_start();
@@ -511,7 +472,7 @@ function sponsors_shortcode( $attributes ) {
 
     // loop
     if ( $sponsors_query->have_posts() ) {
-        $shortcode_content = '<div class="sponsors-container">';
+        $shortcode_content = '<div class="sponsor-container">';
         while ( $sponsors_query->have_posts() ) {
             $sponsors_query->the_post();
             $shortcode_content .= '<article id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '">';

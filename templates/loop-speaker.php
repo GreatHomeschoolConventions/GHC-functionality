@@ -44,12 +44,12 @@
 
     // top speakers (set with $top_speakers_quantity)
     if ( $top_speakers_query->have_posts() ) {
-        echo '<div class="speakers-container">';
+        echo '<div class="speaker-container">';
         while ( $top_speakers_query->have_posts() ) {
             $top_speakers_query->the_post();
             include('speaker-template.php');
         }
-        echo '</div><!-- .speakers-container -->';
+        echo '</div><!-- .speaker-container -->';
     } else {
         echo '<h2>More information coming soon.</h2>';
         echo do_shortcode( '[contact-form-7 id="28288" title="Signup - Convention Info"]' );
@@ -67,12 +67,12 @@
 
     // bottom speakers
     if ( $bottom_speakers_query->have_posts() ) {
-        echo '<div class="speakers-container">';
+        echo '<div class="speaker-container">';
         while ( $bottom_speakers_query->have_posts() ) {
             $bottom_speakers_query->the_post();
             include('speaker-template.php');
         }
-        echo '</div><!-- .speakers-container -->';
+        echo '</div><!-- .speaker-container -->';
     }
 
     // Restore original post data

@@ -256,3 +256,75 @@ function ghc_add_slug_body_class( $classes ) {
     return $classes;
 }
 add_filter( 'body_class', 'ghc_add_slug_body_class' );
+
+/**
+ * Custom post type grid
+ * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
+ *                           ['post_type']      string      post type
+ *                           ['convention']     string      two-letter abbreviation or short convention name
+ *                           ['posts_per_page'] integer     number of posts to display; defaults to -1 (all)
+ *                           ['offset']         integer     number of posts to skip
+ *                           ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt
+ *                           ['image_size']     string      named image size or two comma-separated integers creating an image size array
+ * @return string HTML output
+ */
+function ghc_cpt_grid( $attributes ) {
+    global $convention_abbreviations;
+    $shortcode_attributes = shortcode_atts( array (
+        'post_type'         => 'speaker',
+        'convention'        => NULL,
+        'posts_per_page'    => -1,
+        'offset'            => NULL,
+        'show'              => NULL,
+        'image_size'        => 'medium',
+    ), $attributes );
+    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+    // arguments
+    $cpt_grid_args = array(
+        'post_type'         => $shortcode_attributes['post_type'],
+        'posts_per_page'    => $shortcode_attributes['posts_per_page'],
+        'offset'            => $shortcode_attributes['offset'],
+        'orderby'           => 'menu_order',
+        'order'             => 'ASC',
+    );
+
+    // include only the specified convention
+    if ( $shortcode_attributes['convention'] ) {
+        $cpt_grid_args['tax_query'] = array(
+            array(
+                'taxonomy'  => 'ghc_conventions_taxonomy',
+                'field'     => 'slug',
+                'terms'     => $convention_abbreviations[$this_convention],
+            )
+        );
+    }
+
+    // image size
+    if ( strpos( $shortcode_attributes['image_size'], ',' ) !== false ) {
+        $shortcode_attributes['image_size'] = str_replace( ' ', '', $shortcode_attributes['image_size'] );
+        $thumbnail_size = explode( ',', $shortcode_attributes['image_size'] );
+        array_walk( $thumbnail_size, 'intval' );
+    } else {
+        $thumbnail_size = $shortcode_attributes['image_size'];
+    }
+
+    // query
+    $cpt_grid_query = new WP_Query( $cpt_grid_args );
+
+    // loop
+    ob_start();
+    if ( $cpt_grid_query->have_posts() ) {
+        echo '<div class="' . $shortcode_attributes['post_type'] . '-container">';
+        while ( $cpt_grid_query->have_posts() ) {
+            $cpt_grid_query->the_post();
+            require( plugin_dir_path( __FILE__ ) . '../templates/speaker-template.php' );
+        }
+        echo '</div>';
+    }
+
+    // reset post data
+    wp_reset_postdata();
+
+    return ob_get_clean();
+}

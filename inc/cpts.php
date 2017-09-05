@@ -686,18 +686,3 @@ function ghc_exhibitor_post_type_link( $post_link, $post, $leavename, $sample ) 
     return $post_link;
 }
 add_filter( 'post_type_link', 'ghc_exhibitor_post_type_link', 10, 4 );
-
-/**
- * Show convention icons on special events archive
- * @param  [[Type]] $content [[Description]]
- * @return [[Type]] [[Description]]
- */
-function ghc_special_events_archive_icons( $content ) {
-    global $post;
-    $new_content = '';
-    if ( 'special_event' == get_post_type( $post->ID ) ) {
-        $new_content .= output_convention_icons( $post->ID );
-    }
-    return $new_content . $content;
-}
-add_filter( 'get_the_excerpt', 'ghc_special_events_archive_icons' );

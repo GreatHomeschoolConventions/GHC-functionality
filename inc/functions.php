@@ -241,3 +241,17 @@ function ghc_get_speaker_short_bio( $id ) {
 
     return ob_get_clean();
 }
+
+/**
+ * Add slug to body class
+ * @param  array $classes body classes
+ * @return array modified body classes
+ */
+function ghc_add_slug_body_class( $classes ) {
+    global $post;
+    if ( isset( $post ) ) {
+        $classes[] = $post->post_type . '-' . $post->post_name;
+    }
+    return $classes;
+}
+add_filter( 'body_class', 'ghc_add_slug_body_class' );

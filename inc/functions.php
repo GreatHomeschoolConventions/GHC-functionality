@@ -227,7 +227,7 @@ function ghc_get_speaker_short_bio( $id ) {
     ob_start();
 
     if ( $speaker_position || $speaker_company ) {
-        echo '<h4 class="speaker-info">';
+        echo '<p class="entry-meta speaker-info">';
         if ( $speaker_position ) {
             echo $speaker_position;
         }
@@ -235,8 +235,9 @@ function ghc_get_speaker_short_bio( $id ) {
             echo ' <span class="separator">|</span> ';
         }
         if ( $speaker_company ) {
-            echo ( $speaker_company_URL ? '<a target="_blank" href="' . $speaker_company_URL . '">' : '' ) . $speaker_company . ( $speaker_company_URL ? '</a>' : '' );
+            echo ( $speaker_company_URL ? '<a target="_blank" href="' . $speaker_company_URL . '" rel="noopener">' : '' ) . $speaker_company . ( $speaker_company_URL ? '</a>' : '' );
         }
+        echo '</p>';
     }
 
     return ob_get_clean();

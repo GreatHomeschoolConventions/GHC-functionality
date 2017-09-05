@@ -47,12 +47,10 @@
 
     // top speakers (set with $top_speakers_quantity)
     if ( $top_speakers_query->have_posts() ) {
-        $counter = 1;
         echo '<div class="speakers-container">';
         while ( $top_speakers_query->have_posts() ) {
             $top_speakers_query->the_post();
             include('speaker-template.php');
-            $counter++;
         }
         echo '</div><!-- .speakers-container -->';
     } else {
@@ -62,32 +60,20 @@
 
     // entertainers
     if ( $entertainers_query->have_posts() ) {
-        $counter = 1;
         echo '<div class="special-events-container">';
         while ( $entertainers_query->have_posts() ) {
             $entertainers_query->the_post();
             include('speaker-template.php');
-            if ( 0 == $counter % 2 ) {
-                echo '<div class="clear"></div>';
-            }
-            $counter++;
         }
         echo '</div><!-- .special-events-container -->';
     }
 
     // bottom speakers
     if ( $bottom_speakers_query->have_posts() ) {
-        $counter = 1;
         echo '<div class="speakers-container">';
         while ( $bottom_speakers_query->have_posts() ) {
             $bottom_speakers_query->the_post();
-            echo '<div class="three columns">';
-                include('speaker-template.php');
-            echo '</div>';
-            if ( 0 == $counter % 4 ) {
-                echo '<div class="clear"></div>';
-            }
-            $counter++;
+            include('speaker-template.php');
         }
         echo '</div><!-- .speakers-container -->';
     }

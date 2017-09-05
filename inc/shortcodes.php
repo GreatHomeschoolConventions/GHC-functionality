@@ -208,7 +208,9 @@ add_shortcode( 'price_sheet', 'price_sheet_shortcode' );
  */
 function speaker_archive_shortcode() {
     ob_start();
-    require( plugin_dir_path( __FILE__ ) . '../templates/loop-speaker.php' );
+    echo '<div class="speaker-archive">';
+        require( plugin_dir_path( __FILE__ ) . '../templates/loop-speaker.php' );
+    echo '</div>';
     return ob_get_clean();
 }
 add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );

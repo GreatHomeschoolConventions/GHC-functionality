@@ -6,8 +6,8 @@
             "key": "field_59aec05cdb355",
             "label": "Featured Speaker",
             "name": "featured_speaker",
-            "type": "true_false",
-            "instructions": "Is this a featured speaker? <strong>Yes<\/strong> means they will be shown in the archive; <strong>No<\/strong> means they will be hidden from the archive.",
+            "type": "taxonomy",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -15,11 +15,14 @@
                 "class": "",
                 "id": ""
             },
-            "message": "",
-            "default_value": 1,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
+            "taxonomy": "ghc_speaker_category_taxonomy",
+            "field_type": "radio",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0
         },
         {
             "key": "field_596d217d7ad4a",
@@ -28,15 +31,7 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_59aec05cdb355",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "33",
                 "class": "",
@@ -55,15 +50,7 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_59aec05cdb355",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "34",
                 "class": "",
@@ -82,15 +69,7 @@
             "type": "url",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_59aec05cdb355",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "33",
                 "class": "",
@@ -117,5 +96,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1504624897
+    "modified": 1504733672
 }

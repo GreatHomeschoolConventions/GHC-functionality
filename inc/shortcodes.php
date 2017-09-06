@@ -337,24 +337,27 @@ function speaker_list_shortcode( $attributes ) {
     // arguments
     $speaker_list_args = array(
         'post_type'         => 'speaker',
-        'meta_key'          => 'featured_speaker',
-        'meta_compare'      => '!=',
-        'meta_value'        => 'no',
         'posts_per_page'    => esc_attr( $shortcode_attributes['posts_per_page'] ),
         'offset'            => esc_attr( $shortcode_attributes['offset'] ),
         'orderby'           => 'menu_order',
         'order'             => 'ASC',
+        'tax_query'         => array(
+            array(
+                'taxonomy'  => 'ghc_speaker_category_taxonomy',
+                'field'     => 'slug',
+                'terms'     => 'featured',
+            ),
+        ),
     );
 
     // conventions
     if ( $this_convention ) {
-        $speaker_list_args = array_merge( $speaker_list_args, array(
-            'tax_query' => array(
-                array(
-                    'taxonomy'  => 'ghc_conventions_taxonomy',
-                    'field'     => 'slug',
-                    'terms'     => $convention_abbreviations[$this_convention],
-                )
+        $speaker_list_args['tax_query'] = array_merge( $speaker_list_args['tax_query'], array(
+            'relation' => 'AND',
+            array(
+                'taxonomy'  => 'ghc_conventions_taxonomy',
+                'field'     => 'slug',
+                'terms'     => $convention_abbreviations[$this_convention],
             ),
         ));
     }

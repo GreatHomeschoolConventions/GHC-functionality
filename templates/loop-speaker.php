@@ -32,10 +32,11 @@
         'order'                  => 'ASC',
         'orderby'                => 'rand',
         'post__not_in'           => $top_speakers_IDs,
-        'meta_query'             => array(
+        'tax_query'         => array(
             array(
-                'key'       => 'featured_speaker',
-                'value'     => 1,
+                'taxonomy'  => 'ghc_speaker_category_taxonomy',
+                'field'     => 'slug',
+                'terms'     => 'featured',
             ),
         ),
     );

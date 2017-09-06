@@ -287,17 +287,25 @@ function ghc_cpt_grid( $attributes ) {
         'offset'            => $shortcode_attributes['offset'],
         'orderby'           => 'menu_order',
         'order'             => 'ASC',
+        'tax_query'         => array(
+            array(
+                'taxonomy'  => 'ghc_speaker_category_taxonomy',
+                'field'     => 'slug',
+                'terms'     => 'featured',
+            ),
+        ),
     );
 
     // include only the specified convention
     if ( $shortcode_attributes['convention'] ) {
-        $cpt_grid_args['tax_query'] = array(
+        $cpt_grid_args['tax_query'] = array_merge( $cpt_grid_args['tax_query'], array(
+            'relation'  => 'AND',
             array(
                 'taxonomy'  => 'ghc_conventions_taxonomy',
                 'field'     => 'slug',
                 'terms'     => $convention_abbreviations[$this_convention],
             )
-        );
+        ));
     }
 
     // image size

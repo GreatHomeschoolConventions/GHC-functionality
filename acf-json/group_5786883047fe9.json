@@ -11,7 +11,7 @@
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
@@ -28,13 +28,32 @@
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
             "display_format": "m\/d\/Y",
             "return_format": "Ymd",
             "first_day": 0
+        },
+        {
+            "key": "field_59aedd6f632e3",
+            "label": "ICS File",
+            "name": "ics_file",
+            "type": "file",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "ics"
         },
         {
             "key": "field_57866afe00ef9",
@@ -284,5 +303,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1504631614
+    "modified": 1504716165
 }

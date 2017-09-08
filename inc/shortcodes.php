@@ -23,19 +23,6 @@ function convention_cta_shortcode( $attributes ) {
 add_shortcode( 'convention_cta', 'convention_cta_shortcode' );
 
 /**
- * Filter to get the current convention for a CTA
- * @param  array   $value input array
- * @return boolean whether or not this is the correct convention
- */
-function get_current_CTA( $value ) {
-    if ( ( ! isset( $value['begin_date'] ) || strtotime( $value['begin_date'] ) <= time() ) && ( ! isset( $value['end_date'] ) || strtotime( $value['end_date'] ) >= time() ) ) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/**
  * Shortcode to display a single convention icon
  * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
  * @return string HTML output

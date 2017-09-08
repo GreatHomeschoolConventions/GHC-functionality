@@ -336,3 +336,16 @@ function ghc_cpt_grid( $attributes ) {
 
     return ob_get_clean();
 }
+
+/**
+ * Filter to get the current convention for a CTA
+ * @param  array   $value input array
+ * @return boolean whether or not this is the correct convention
+ */
+function get_current_CTA( $value ) {
+    if ( ( ! isset( $value['begin_date'] ) || strtotime( $value['begin_date'] ) <= time() ) && ( ! isset( $value['end_date'] ) || strtotime( $value['end_date'] ) >= time() ) ) {
+        return true;
+    } else {
+        return false;
+    }
+}

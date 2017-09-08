@@ -653,7 +653,6 @@ function ghc_modify_sponsor_archive( $query ) {
 }
 add_action( 'pre_get_posts', 'ghc_modify_sponsor_archive' );
 
-// modify exhibitor archive to show convention icons and site URLs
 /**
  * Show convention icons for each exhibitor
  * @param  string $content HTML content
@@ -666,7 +665,9 @@ function ghc_exhibitor_archive_icons( $content ) {
         if ( get_field( 'exhibitor_URL', $post->ID ) ) {
             $new_content .= '<p><a href="' . get_field( 'exhibitor_URL', $post->ID ) . '" target="_blank">Visit website&rarr;</a></p>';
         }
-        $new_content .= output_convention_icons( $post->ID );
+        if ( ! is_tax() ) {
+            $new_content .= output_convention_icons( $post->ID );
+        }
     }
     return $new_content . $content;
 }

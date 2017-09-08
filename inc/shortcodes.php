@@ -129,9 +129,9 @@ function exhibitor_list_shortcode( $attributes ) {
     if ( $exhibitor_query->have_posts() ) {
         ob_start();
         if ( $shortcode_attributes['style'] == 'list' ) {
-            echo '<ul class="exhibitor-container">';
+            echo '<ul class="exhibitor-container ' . esc_attr( $shortcode_attributes['style'] ) . '">';
         } else {
-            echo '<div class="exhibitor-container">';
+            echo '<div class="exhibitor-container ' . esc_attr( $shortcode_attributes['style'] ) . '">';
         }
 
         while ( $exhibitor_query->have_posts() ) {
@@ -140,9 +140,9 @@ function exhibitor_list_shortcode( $attributes ) {
                 require( plugin_dir_path( __FILE__ ) . '../templates/exhibitor-template.php' );
             } else {
                 if ( $shortcode_attributes['style'] == 'list' ) {
-                    echo '<li>';
+                    echo '<li id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '">';
                 }
-                echo '<a id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '" href="' . get_field( 'exhibitor_URL' ) . '" target="_blank" rel="noopener">' . get_the_title() . '</a>';
+                echo '<a href="' . get_field( 'exhibitor_URL' ) . '" target="_blank" rel="noopener">' . get_the_title() . '</a>';
                 if ( $shortcode_attributes['style'] == 'list' ) {
                     echo '</li>';
                 }

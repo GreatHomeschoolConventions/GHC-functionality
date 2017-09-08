@@ -320,7 +320,7 @@ function ghc_register_cpts() {
         'description'         => __( 'Workshops', 'GHC' ),
         'labels'              => $workshops_labels,
         'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', ),
-        'taxonomies'          => array( 'ghc_conventions_taxonomy', 'ghc_special_tracks_taxonomy', 'ghc_workshop_locations_taxonomy', ),
+        'taxonomies'          => array( 'ghc_conventions_taxonomy', 'ghc_special_tracks_taxonomy', 'ghc_workshop_locations_taxonomy', 'post_tag', ),
         'hierarchical'        => true,
         'public'              => true,
         'show_ui'             => true,
@@ -338,6 +338,7 @@ function ghc_register_cpts() {
     );
     register_post_type( 'workshop', $workshops_args );
 
+    register_taxonomy_for_object_type( 'post_tag', 'workshop' );
 }
 // Hook into the 'init' action to register custom post types
 add_action( 'init', 'ghc_register_cpts' );

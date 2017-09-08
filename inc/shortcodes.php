@@ -205,7 +205,6 @@ add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
 /**
  * Shortcode to display speaker grid
  * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
- *                           ['post_type']      string      post type; defaults to 'speaker'
  *                           ['convention']     string      two-letter abbreviation or short convention name
  *                           ['posts_per_page'] integer     number of posts to display; defaults to -1 (all)
  *                           ['offset']         integer     number of posts to skip

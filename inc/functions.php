@@ -67,8 +67,8 @@ add_action( 'wp_head', 'convention_info' );
 
 /**
  * Output convention icons
- * @param array  $conventions       array of WP_Term objects
- * @param array  $args              array of options arguments
+ * @param  array  $input_conventions         conventions to display
+ * @param  array  [$args             = NULL] options to use
  * @return string $convention_icons HTML string with content
  */
 function output_convention_icons( $input_conventions, $args = NULL ) {

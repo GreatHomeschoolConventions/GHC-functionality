@@ -26,6 +26,16 @@ Available shortcodes:
     - `year` (four-digit year)
     - `intro_text` (string of text to precede the button/link)
 
+## `[exhibitor_list]`
+
+- displays all exhibitors, optionall for the specified convention; accepts these arguments
+    - `convention` (two-letter abbreviation)
+    - `style` (allowed values “large” and “small”)
+
+## `[exhibit_hall_hours]`
+
+- displays exhibit hall hours defined in ACF options
+
 ## `[hotel_grid]`
 
 - displays a grid of hotels for the specified convention; accepts the argument `convention` (two-letter abbreviation)
@@ -40,7 +50,12 @@ Available shortcodes:
 
 ## `[speaker_grid]`
 
-- displays a grid of speakers for the specified convention; intended for the individual locations pages; accepts the argument `convention` (two-letter abbreviation)
+- displays a grid of speakers for the specified convention; intended for the individual locations pages; accepts these arguments:
+    - `convention` (two-letter abbreviation)
+    - `posts_per_page` (number of speakers to show; defaults to “-1”, showing all posts)
+    - `offset` (number of speakers to skip before showing the first; most useful in conjunction with a prior shortcode using “posts_per_page” to set a max number to show in that location)
+    - `show` (comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt)
+    - `image_size` (named image size or string of comma-separated integers creating an image size array)
 
 ## `[speaker_info]`
 
@@ -62,6 +77,15 @@ Available shortcodes:
     - `li_class` (string of text to use as classes on each `li`)
     - `a_class` (string of text to use as classes on each `a`)
 
+## `[special_event_grid]`
+
+- displays a grid of special events for the specified convention; intended for the individual locations pages; accepts these arguments:
+    - `convention` (two-letter abbreviation)
+    - `posts_per_page` (number of special events to show; defaults to “-1”, showing all posts)
+    - `offset` (number of special events to skip before showing the first; most useful in conjunction with a prior shortcode using “posts_per_page” to set a max number to show in that location)
+    - `show` (comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt)
+    - `image_size` (named image size or string of comma-separated integers creating an image size array; defaults to )
+
 ## `[special_track_speakers]`
 
 - displays speakers’ photos, names, and conventions for specified special track category; accepts the argument `track` with a special track slug
@@ -71,6 +95,10 @@ Available shortcodes:
 - displays all sponsors; accepts these arguments:
     - `gray` (specifies the grayscale logo should be used)
     - `width` (max width of image)
+
+## `[workshops_schedule]`
+
+- displays a workshop schedule; accepts the argument `convention` (two-letter abbreviation)
 
 # Changelog
 

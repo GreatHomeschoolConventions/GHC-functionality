@@ -287,14 +287,17 @@ function ghc_cpt_grid( $attributes ) {
         'offset'            => $shortcode_attributes['offset'],
         'orderby'           => 'menu_order',
         'order'             => 'ASC',
-        'tax_query'         => array(
+    );
+
+    if ( 'speaker' == $shortcode_attributes['post_type'] ) {
+        $cpt_grid_args['tax_query'] = array(
             array(
                 'taxonomy'  => 'ghc_speaker_category_taxonomy',
                 'field'     => 'slug',
                 'terms'     => 'featured',
             ),
-        ),
-    );
+        );
+    }
 
     // include only the specified convention
     if ( $shortcode_attributes['convention'] ) {

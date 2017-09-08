@@ -30,25 +30,22 @@ $hotel_query = new WP_Query( $hotel_args );
 
 // the loop
 if ( $hotel_query->have_posts() ) { ?>
-    <h2>Hotel Scam Alert</h2>
-    <p>We have received word that a company by the name of Expo Housing Services is making calls in regard to Great Homeschool Conventions&rsquo; hotel accommodations. They do this each year; it is a scam from a company trying to book hotel rooms on behalf of Great Homeschool Conventions.</p>
-    <p>We have nothing to do with this company and they do not represent Great Homeschool Conventions in any way.</p>
-    <p>Please book your accommodations through one of the options below.</p>
+    <h3>Hotel Scam Alert</h3>
+
+    <p>We have received word that a third-party company is contacting Great Homeschool Conventions attendees. They do this each year, and it is a scam. Their rates are $45&ndash;70 higher than what GHC has negotiated with area hotels.</p>
+
+    <p>We have nothing to do with this company and they do not represent us in any way.</p>
+
+    <p>Please book your accommodations through one of the options below to take advantage of our negotiated rates.</p>
+
+    <div class="hotel-container">
     <?php
-    $counter = 1;
     while ( $hotel_query->have_posts() ) {
         $hotel_query->the_post();
         global $conventions;
-        if ( 1 == $counter % 3 ) {
-            echo '<div class="hotels flexbox-wrapper">';
-        }
         include( 'hotel-template.php' );
-        if ( 0 == $counter % 3 ) {
-            echo '<div class="clear"></div>
-            </div><!-- .hotels.flexbox-wrapper -->';
-        }
-        $counter++;
     }
+    echo '</div>';
 }
 
 // Restore original Post Data

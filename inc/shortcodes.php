@@ -95,12 +95,15 @@ add_shortcode( 'discretionary_registration', 'discretionary_registration_shortco
 
 /**
  * Shortcode to display all exhibitors for a given convention
- * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
- * @return string HTML output
+ * @param  array[] $attributes shortcode parameters
+ *                            ['convention']    two-letter convention abbreviation
+ *                            ['style']         type of list to display; allowed values include “large,” “small,” and “list”
+ * @return string  HTML output
  */
 function exhibitor_list_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'convention'    => NULL,
+        'style'          => 'large',
     ), $attributes );
     global $convention_abbreviations;
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
@@ -124,14 +127,32 @@ function exhibitor_list_shortcode( $attributes ) {
     $exhibitor_query = new WP_Query( $exhibitor_args );
 
     if ( $exhibitor_query->have_posts() ) {
-        $i = 1;
         ob_start();
+        if ( $shortcode_attributes['style'] == 'list' ) {
+            echo '<ul class="exhibitor-container">';
+        } else {
+            echo '<div class="exhibitor-container">';
+        }
 
         while ( $exhibitor_query->have_posts() ) {
             $exhibitor_query->the_post();
+            if ( $shortcode_attributes['style'] == 'large' ) {
+                require( plugin_dir_path( __FILE__ ) . '../templates/exhibitor-template.php' );
+            } else {
+                if ( $shortcode_attributes['style'] == 'list' ) {
+                    echo '<li>';
+                }
+                echo '<a id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '" href="' . get_field( 'exhibitor_URL' ) . '" target="_blank" rel="noopener">' . get_the_title() . '</a>';
+                if ( $shortcode_attributes['style'] == 'list' ) {
+                    echo '</li>';
+                }
+            }
+        }
 
-            require( plugin_dir_path( __FILE__ ) . '../templates/exhibitor-template.php' );
-            $i++;
+        if ( $shortcode_attributes['style'] == 'list' ) {
+            echo '</ul>';
+        } else {
+            echo '</div>';
         }
 
         $shortcode_content = ob_get_clean();

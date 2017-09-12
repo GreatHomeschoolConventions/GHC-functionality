@@ -486,7 +486,8 @@ function sponsors_shortcode( $attributes ) {
         while ( $sponsors_query->have_posts() ) {
             $sponsors_query->the_post();
             $shortcode_content .= '<article id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '">';
-                $shortcode_content .= '<a href="' . get_permalink() . '">';
+                $shortcode_content .= '<a href="' . get_permalink() . '">
+                <div class="sponsor-thumbnail">';
                 if ( $shortcode_attributes['gray'] ) {
                     if ( $shortcode_attributes['width'] ) {
                         $shortcode_content .= wp_get_attachment_image( get_field( 'grayscale_logo' )['id'], array( $shortcode_attributes['width'], -1 ) );
@@ -500,7 +501,7 @@ function sponsors_shortcode( $attributes ) {
                         $shortcode_content .= get_the_post_thumbnail();
                     }
                 }
-                $shortcode_content .= '</a>
+                $shortcode_content .= '</div></a>
             </article>';
         }
         $shortcode_content .= '</div>';

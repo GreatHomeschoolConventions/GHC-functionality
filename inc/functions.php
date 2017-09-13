@@ -372,3 +372,34 @@ function ghc_product_post_class( $variation_id = '' ) {
 
     post_class( $variation_classes );
 }
+
+/**
+ * Format date range
+ *
+ * @link https://codereview.stackexchange.com/a/78303 Adapted from this answer
+ *
+ * @param  object|string $d1            start DateTime object or string
+ * @param  object|string $d2            end DateTime object or string
+ * @param  string        [$format       = ''] input date format if passed as strings
+ * @return string        formatted date string
+ */
+function ghc_format_date_range( $d1, $d2, $format = '' ) {
+    if ( is_string( $d1 ) && is_string( $d2 ) && $format ) {
+        $d1 = date_create_from_format( $format, $d1 );
+        $d2 = date_create_from_format( $format, $d2 );
+    }
+
+    if ( $d1->format( 'Y-m-d' ) === $d2->format( 'Y-m-d' ) ) {
+        // Same day
+        return $d1->format( 'F j, Y' );
+    } elseif ( $d1->format( 'Y-m' ) === $d2->format( 'Y-m' ) ) {
+        // Same calendar month
+        return $d1->format( 'F j' ) . '&ndash;' . $d2->format( 'd, Y' );
+    } elseif ( $d1->format( 'Y' ) === $d2->format( 'Y' ) ) {
+        // Same calendar year
+        return $d1->format( 'F j' ) . '&ndash;' . $d2->format( 'F j, Y' );
+    } else {
+        // General case (spans calendar years)
+        return $d1->format( 'F j, Y' ) . '&ndash;' . $d2->format( 'F j, Y' );
+    }
+}

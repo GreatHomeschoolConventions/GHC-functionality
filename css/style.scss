@@ -85,10 +85,14 @@ input#convention-mw:checked ~ .products .product:not(.product_cat-midwest)      
 input#convention-ca:checked ~ .products .product:not(.product_cat-california)    { display: none; }
 input#convention-mo:checked ~ .products .product:not(.product_cat-missouri)      { display: none; }
 
-input#attendee-individual:checked ~ .products .attribute_attendee-type-family { display: none; }
+input#attendee-individual:checked {
+    ~ input#family-members,
+    ~ label[for="family-members"],
+    ~ .products .attribute_attendee-type-family { display: none; }
+}
 input#attendee-family:checked ~ .products .attribute_attendee-type-individual { display: none; }
 
-input#registration-shopping:checked ~ .products {
+input#registration-shopping-only:checked ~ .products {
     .product_cat-special-events, .attribute_registration-type-full-registration { display: none; }
 }
 input#registration-full:checked ~ .products .attribute_registration-type-shopping-only { display: none; }

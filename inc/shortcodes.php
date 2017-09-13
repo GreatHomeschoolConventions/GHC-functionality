@@ -242,7 +242,7 @@ function registration_page_shortcode( $attributes ) {
         <?php global $conventions; ?>
         <?php foreach ( $conventions as $convention ) { ?>
             <?php $convention_abbreviation = strtolower( $convention['convention_abbreviated_name'][0] ); ?>
-            <input class="registration-choice convention" type="radio" name="convention" value="<?php echo $convention_abbreviation; ?>" id="convention-<?php echo $convention_abbreviation; ?>" />
+            <input class="registration-choice convention" type="radio" name="convention" value="<?php echo $convention_abbreviation; ?>" id="convention-<?php echo $convention_abbreviation; ?>" <?php if ( ! $convention_checked && date( 'Ymd' ) < $convention['begin_date'][0] ) { echo ' checked="checked"'; $convention_checked = true; } ?> />
                 <label class="registration-choice convention theme bg <?php echo $convention_abbreviation; ?>" for="convention-<?php echo $convention_abbreviation; ?>">
                     <h2><?php echo $convention['convention_short_name'][0]; ?></h2>
                     <p class="info"><?php echo ghc_format_date_range( $convention['begin_date'][0], $convention['end_date'][0], 'Ymd' ); ?></p>

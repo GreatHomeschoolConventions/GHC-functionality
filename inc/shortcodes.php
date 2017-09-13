@@ -252,18 +252,18 @@ function registration_page_shortcode( $attributes ) {
         <h3>Attendee Type</h3>
         <p>Choose one:</p>
         <input class="registration-choice" type="radio" name="attendee-type" value="individual" id="attendee-individual" />
-            <label class="registration-choice" for="attendee-individual">Individual</label>
+            <label class="registration-choice dashicons-before dashicons-admin-users" for="attendee-individual">Individual</label>
         <input class="registration-choice" type="radio" name="attendee-type" value="family" id="attendee-family" checked="checked" />
-            <label class="registration-choice" for="attendee-family">Family</label>
+            <label class="registration-choice dashicons-before dashicons-groups" for="attendee-family">Family</label>
         <input class="registration-choice" type="number" name="family-members" min="2" max="20" placeholder="2" id="family-members"/>
             <label class="registration-choice" for="family-members">Number of Family Members Attending</label>
 
         <h3>Registration Type</h3>
         <p>Choose one:</p>
         <input class="registration-choice" type="radio" name="registration-type" value="shopping-only" id="registration-shopping-only" />
-            <label class="registration-choice" for="registration-shopping-only">Shopping Only</label>
+            <label class="registration-choice dashicons-before dashicons-cart" for="registration-shopping-only">Shopping Only</label>
         <input class="registration-choice" type="radio" name="registration-type" value="full" id="registration-full" checked="checked" />
-            <label class="registration-choice" for="registration-full">Full Convention</label>
+            <label class="registration-choice dashicons-before dashicons-tickets-alt" for="registration-full">Full Convention</label>
 
         <table class="products">
         <?php

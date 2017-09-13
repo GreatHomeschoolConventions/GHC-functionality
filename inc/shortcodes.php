@@ -211,6 +211,110 @@ function price_sheet_shortcode( $attributes ) {
 add_shortcode( 'price_sheet', 'price_sheet_shortcode' );
 
 /**
+ * Shortcode to display custom registration
+ * @param  array  $attributes shortcode parameters
+ * @return string HTML output
+ */
+function registration_page_shortcode( $attributes ) {
+    $shortcode_attributes = shortcode_atts( array (
+    ), $attributes );
+
+    $registration_args = array(
+        'category'      => 'registration',
+        'orderby'       => 'menu_order',
+        'order'         => 'ASC',
+    );
+
+    $registration_query = wc_get_products( $registration_args );
+
+    $special_events_args = array(
+        'category'      => 'special-events',
+        'orderby'       => 'menu_order',
+        'order'         => 'ASC',
+    );
+
+    $special_events_query = wc_get_products( $special_events_args );
+
+    if ( count( $registration_query ) > 0 ) { ?>
+
+        <h3>Convention</h3>
+        <p>Choose one:</p>
+        <?php global $conventions; ?>
+        <?php foreach ( $conventions as $convention ) { ?>
+            <?php $convention_abbreviation = strtolower( $convention['convention_abbreviated_name'][0] ); ?>
+            <input class="registration-choice convention" type="radio" name="convention" value="<?php echo $convention_abbreviation; ?>" id="convention-<?php echo $convention_abbreviation; ?>" />
+                <label class="registration-choice convention theme bg <?php echo $convention_abbreviation; ?>" for="convention-<?php echo $convention_abbreviation; ?>">
+                    <h2><?php echo $convention['convention_short_name'][0]; ?></h2>
+                    <p class="info"><?php echo ghc_format_date_range( $convention['begin_date'][0], $convention['end_date'][0], 'Ymd' ); ?></p>
+                </label>
+        <?php } ?>
+
+        <h3>Attendee Type</h3>
+        <p>Choose one:</p>
+        <input class="registration-choice" type="radio" name="attendee-type" value="individual" id="attendee-individual" />
+            <label class="registration-choice" for="attendee-individual">Individual</label>
+        <input class="registration-choice" type="radio" name="attendee-type" value="family" id="attendee-family" checked="checked" />
+            <label class="registration-choice" for="attendee-family">Family</label>
+        <input class="registration-choice" type="number" name="family-members" min="2" max="20" placeholder="2" id="family-members"/>
+            <label class="registration-choice" for="family-members">Number of Family Members Attending</label>
+
+        <h3>Registration Type</h3>
+        <p>Choose one:</p>
+        <input class="registration-choice" type="radio" name="registration-type" value="shopping-only" id="registration-shopping-only" />
+            <label class="registration-choice" for="registration-shopping-only">Shopping Only</label>
+        <input class="registration-choice" type="radio" name="registration-type" value="full" id="registration-full" checked="checked" />
+            <label class="registration-choice" for="registration-full">Full Convention</label>
+
+        <table class="products">
+        <?php
+        foreach ( $registration_query as $this_product ) {
+            $product_object = get_post( $this_product->get_id() );
+            setup_postdata( $GLOBALS['post'] =& $product_object );
+            global $product;
+
+            if ( $product->is_type( 'variable' ) ) {
+                $variations = $product->get_available_variations();
+
+                foreach ( $variations as $variation_array ) {
+                    $variation = new WC_Product_Variation( $variation_array['variation_id'] );
+                    require( plugin_dir_path( __FILE__ ) . '../templates/registration-table-row-variation.php' );
+                }
+
+            } else {
+                require( plugin_dir_path( __FILE__ ) . '../templates/registration-table-row.php' );
+            }
+        }
+
+        if ( count( $special_events_query ) > 0 ) {
+            foreach ( $special_events_query as $this_product ) {
+                $product_object = get_post( $this_product->get_id() );
+                setup_postdata( $GLOBALS['post'] =& $product_object );
+                global $product;
+
+                if ( $product->is_type( 'variable' ) ) {
+                    $variations = $product->get_available_variations();
+
+                    foreach ( $variations as $variation_array ) {
+                        $variation = new WC_Product_Variation( $variation_array['variation_id'] );
+                        require( plugin_dir_path( __FILE__ ) . '../templates/registration-table-row-variation.php' );
+                    }
+
+                } else {
+                    require( plugin_dir_path( __FILE__ ) . '../templates/registration-table-row.php' );
+                }
+            }
+        }
+
+        echo '</table>';
+    }
+
+    wp_reset_postdata();
+
+    return ob_get_clean();
+}
+add_shortcode( 'registration_page', 'registration_page_shortcode' );
+
+/**
  * Shortcode to display custom speaker/special event archive
  * @return string HTML of entire archive
  */

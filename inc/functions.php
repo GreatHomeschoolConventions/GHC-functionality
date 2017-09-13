@@ -352,3 +352,23 @@ function get_current_CTA( $value ) {
         return false;
     }
 }
+
+/**
+ * Add product attribute classes
+ * @param  integer $variation_id product variation ID
+ * @return string  post_class output
+ */
+function ghc_product_post_class( $variation_id = '' ) {
+    $variation_classes = '';
+
+    if ( $variation_id ) {
+        if ( 'product_variation' == get_post_type( $variation_id ) ) {
+            $variation = new WC_Product_Variation( $variation_id );
+            foreach ( $variation->get_attributes() as $key => $value ) {
+                $variation_classes[] = 'attribute_' . $key . '-' . strtolower( str_replace( ' ', '-', $value ) );
+            }
+        }
+    }
+
+    post_class( $variation_classes );
+}

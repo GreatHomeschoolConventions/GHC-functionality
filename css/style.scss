@@ -57,3 +57,38 @@ $theme-black:           #333333;
         .sold-out { text-decoration: none; }
     }
 }
+
+// custom registration
+.registration-choice {
+    display: inline-block;
+    margin: 0 1em 1em 0;
+
+    &.convention {
+        padding: 2rem;
+        margin-right: 0;
+    }
+}
+
+input.registration-choice.convention {
+    display: none;
+
+    &:not(:checked) + label {
+        background-color: $theme-gray;
+
+        &, * { color: $theme-black; }
+    }
+}
+
+input#convention-se:checked ~ .products .product:not(.product_cat-southeast)     { display: none; }
+input#convention-tx:checked ~ .products .product:not(.product_cat-texas)         { display: none; }
+input#convention-mw:checked ~ .products .product:not(.product_cat-midwest)       { display: none; }
+input#convention-ca:checked ~ .products .product:not(.product_cat-california)    { display: none; }
+input#convention-mo:checked ~ .products .product:not(.product_cat-missouri)      { display: none; }
+
+input#attendee-individual:checked ~ .products .attribute_attendee-type-family { display: none; }
+input#attendee-family:checked ~ .products .attribute_attendee-type-individual { display: none; }
+
+input#registration-shopping:checked ~ .products {
+    .product_cat-special-events, .attribute_registration-type-full-registration { display: none; }
+}
+input#registration-full:checked ~ .products .attribute_registration-type-shopping-only { display: none; }

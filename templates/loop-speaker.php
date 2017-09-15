@@ -48,6 +48,7 @@
         echo '<div class="speaker-container">';
         while ( $top_speakers_query->have_posts() ) {
             $top_speakers_query->the_post();
+            $thumbnail_size = 'medium';
             include('speaker-template.php');
         }
         echo '</div><!-- .speaker-container -->';
@@ -61,6 +62,7 @@
         echo '<div class="special_event-container">';
         while ( $entertainers_query->have_posts() ) {
             $entertainers_query->the_post();
+            $thumbnail_size = 'special-event-large';
             include('speaker-template.php');
         }
         echo '</div><!-- .special_event-container -->';
@@ -71,6 +73,7 @@
         echo '<div class="speaker-container">';
         while ( $bottom_speakers_query->have_posts() ) {
             $bottom_speakers_query->the_post();
+            $thumbnail_size = 'medium';
             include('speaker-template.php');
         }
         echo '</div><!-- .speaker-container -->';

@@ -4,7 +4,7 @@ if ( ! is_array( $shortcode_attributes ) ) {
     if ( 'speaker' == get_post_type() && ! isset( $thumbnail_size ) ) {
         $thumbnail_size = 'medium';
     } elseif ( 'special_event' == get_post_type() && ! isset( $thumbnail_size ) ) {
-        $thumbnail_size = 'large';
+        $thumbnail_size = 'special-event-large';
     }
 }
 ?><article id="post-<?php the_ID(); ?>" <?php post_class( 'contains-' . str_replace( ',', ' contains-', esc_attr( $shortcode_attributes['show'] ) ) ); ?>>

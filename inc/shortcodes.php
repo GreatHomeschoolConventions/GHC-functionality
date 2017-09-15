@@ -219,6 +219,8 @@ function registration_page_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
     ), $attributes );
 
+    ob_start();
+
     $registration_args = array(
         'category'      => 'registration',
         'orderby'       => 'menu_order',

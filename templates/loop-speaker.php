@@ -58,12 +58,12 @@
 
     // entertainers
     if ( $entertainers_query->have_posts() ) {
-        echo '<div class="special-events-container">';
+        echo '<div class="special_event-container">';
         while ( $entertainers_query->have_posts() ) {
             $entertainers_query->the_post();
             include('speaker-template.php');
         }
-        echo '</div><!-- .special-events-container -->';
+        echo '</div><!-- .special_event-container -->';
     }
 
     // bottom speakers

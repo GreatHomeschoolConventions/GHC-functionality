@@ -2,7 +2,23 @@
     <td class="title"><?php echo $product->get_title(); ?></td>
     <td class="price"><?php echo $product->get_price_html(); ?></td>
     <td class="actions">
-        <input name="qty-<?php echo $variation_array['variation_id'] ?>" type="number" value="1" min="1" max="20" />
+        <?php
+        $product_terms = get_the_terms( get_the_ID(), 'product_cat' );
+        $registration_product = false;
+
+        foreach ( $product_terms as $term ) {
+            if ( 'registration' == $term->slug ) {
+                $registration_product = true;
+            }
+        }
+
+        if ( $registration_product ) {
+            echo '<input name="qty-' . $variation_array['variation_id']  . '" type="hidden" value="1" min="1" max="1" disabled title="Only one of these products is allowed per order." />
+            <label for="family-members"><input name="family-members-display" type="number" value="1" disabled /> family members</label>';
+        } else {
+            echo '<input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="number" value="1" min="1" max="20" />';
+        }
+        ?>
         <?php echo WC_Shortcodes::product_add_to_cart( array( 'id' => $variation_array['variation_id'], 'style' => '', 'show_price' => false, ) ); ?>
     </td>
 </tr>

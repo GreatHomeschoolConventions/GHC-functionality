@@ -93,12 +93,24 @@
             });
         }
 
+        // update family members display fields when changed
+        $('input#family-members').on('change', function() {
+            var familyCount = $(this).val();
+
+            $('input[name="family-members-display"]').val(familyCount);
+            $('input[name^="qty-"]').each(function() {
+                $(this).attr('max', familyCount);
+                fixMaxTickets($(this));
+            });
+        });
+
         // update add-to-cart button quantity when input is changed
         $('.products input[name^="qty"]').on('change', function () {
             var thisProductQuantity = $(this).val(),
                 thisAddToCartButton = $(this).next('.product').find('.add_to_cart_button');
 
             thisAddToCartButton.attr('data-quantity', thisProductQuantity);
+            $('input#family-members').trigger('change');
         });
 
     });

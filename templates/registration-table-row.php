@@ -16,7 +16,7 @@
             echo '<input name="qty-' . $variation_array['variation_id']  . '" type="hidden" value="1" min="1" max="1" disabled title="Only one of these products is allowed per order." />
             <label for="family-members"><input name="family-members-display" type="number" value="1" disabled /> family members</label>';
         } else {
-            echo '<input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="number" value="1" min="1" max="20" />';
+            echo '<label for="qty-' . $variation_array['variation_id'] . '"><input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="number" value="1" min="1" max="20" /> <span class="tickets-qty">tickets</span></label>';
         }
         ?>
         <?php echo WC_Shortcodes::product_add_to_cart( array( 'id' => $variation_array['variation_id'], 'style' => '', 'show_price' => false, ) ); ?>

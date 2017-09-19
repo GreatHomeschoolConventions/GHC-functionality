@@ -12,7 +12,6 @@
     <td class="price"><?php echo $variation->get_price_html(); ?></td>
     <td class="actions">
         <input name="qty-<?php echo $variation_array['variation_id'] ?>" type="number" value="1" min="1" max="20" />
-        <a class="button cart-add" href="<?php echo $variation->add_to_cart_url() ?>">Add</a>
-        <a class="button cart-remove" href="<?php echo $variation->add_to_cart_url() ?>">Remove</a>
+        <?php echo WC_Shortcodes::product_add_to_cart( array( 'id' => $variation_array['variation_id'], 'style' => '', 'show_price' => false, ) ); ?>
     </td>
 </tr>

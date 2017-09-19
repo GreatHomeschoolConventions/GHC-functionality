@@ -269,6 +269,8 @@ function registration_page_shortcode( $attributes ) {
 
         <table class="products">
         <?php
+        wp_enqueue_script( 'ghc-woocommerce' );
+
         foreach ( $registration_query as $this_product ) {
             $product_object = get_post( $this_product->get_id() );
             setup_postdata( $GLOBALS['post'] =& $product_object );

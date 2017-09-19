@@ -4,6 +4,10 @@
         // fix pluralization on product pages and in cart
         changePeopleAgreement();
         $('.quantity input[type=number]').on('change', changePeopleAgreement);
+
+        /**
+         * Fix quantity pluralization
+         */
         function changePeopleAgreement() {
             if ($('.quantity input[type=number]').val() == 1) {
                 $('.quantity .people').html('person');
@@ -17,6 +21,10 @@
             checkFamilySelection();
             $('body').on('change', '.product_cat-registration select[name="attribute_attendee-type"]', checkFamilySelection);
         }
+
+        /**
+         * Show/hide family vs. individual products
+         */
         function checkFamilySelection() {
             var selectedTicketType = $('.woocommerce-content > .product_cat-registration select[name="attribute_attendee-type"]').val();
             if (selectedTicketType.indexOf('Family') > -1) {
@@ -35,6 +43,10 @@
             handleGiftMemberships();
             $('body').on('change', '.product-addon-gift-options input[type="checkbox"]', handleGiftMemberships);
         }
+
+        /**
+         * Show/hide gift recipient info
+         */
         function handleGiftMemberships() {
             // handle gift vs. normal purchases
             if ($('.product-addon-gift-options input[type="checkbox"]').is(':checked') == true) {
@@ -72,6 +84,14 @@
                 }
             });
         }
+
+        // update add-to-cart button quantity when input is changed
+        $('.products input[name^="qty"]').on('change', function () {
+            var thisProductQuantity = $(this).val(),
+                thisAddToCartButton = $(this).next('.product').find('.add_to_cart_button');
+
+            thisAddToCartButton.attr('data-quantity', thisProductQuantity);
+        });
 
     });
 })(jQuery);

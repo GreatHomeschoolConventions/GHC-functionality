@@ -114,6 +114,7 @@
                 fixMaxTickets($(this));
             });
         });
+        $('input#family-members').trigger('change');
 
         // update add-to-cart button quantity when input is changed
         $('.products input[name^="qty"]').on('change', function () {

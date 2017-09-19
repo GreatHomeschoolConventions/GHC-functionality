@@ -1,12 +1,16 @@
 (function($){
     /**
      * Fix quantity pluralization
+     * @param {object} thisField      jQuery element representing the DOM element to check
+     * @param {object} targetField    jQuery element representing the DOM element to change
+     * @param {string} singularString string to display if singular
+     * @param {string} pluralString   string to display if 0 or plural
      */
-    function changePeopleAgreement() {
-        if ($('.quantity input[type=number]').val() == 1) {
-            $('.quantity .people').html('person');
+    function changePeopleAgreement(thisField, targetField, singularString, pluralString) {
+        if (thisField.val() == 1) {
+            targetField.html(singularString);
         } else {
-            $('.quantity .people').html('people');
+            targetField.html(pluralString);
         }
     }
 
@@ -56,9 +60,12 @@
 
     $(document).ready(function(){
 
-        // fix pluralization on product pages and in cart
-        changePeopleAgreement();
-        $('.quantity input[type=number]').on('change', changePeopleAgreement);
+        // fix pluralization on registration page, product pages, and in cart
+        $('.quantity input[type=number]').on('change', changePeopleAgreement($(this), $('.quantity .people'), 'person', 'people'));
+        $('input.qty').on('change', function() {
+            changePeopleAgreement($(this), $(this).next('.tickets-qty'), 'ticket', 'tickets');
+        });
+        $('.quantity input[type=number], input.qty').trigger('change');
 
         // show/hide family member quantity depending on registration type
         if ($('.woocommerce-content > .product_cat-registration').length > 0) {

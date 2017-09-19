@@ -16,6 +16,8 @@
 
     /**
      * Show/hide family vs. individual products
+     *
+     * Used on product pages with (global) Product Add-ons
      */
     function checkFamilySelection() {
         var selectedTicketType = $('.woocommerce-content > .product_cat-registration select[name="attribute_attendee-type"]').val();
@@ -44,6 +46,8 @@
 
     /**
      * Show/hide gift recipient info
+     *
+     * Used on product pages with (global) Product Add-ons
      */
     function handleGiftMemberships() {
         // handle gift vs. normal purchases

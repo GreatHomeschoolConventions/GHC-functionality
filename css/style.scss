@@ -86,8 +86,9 @@ input#convention-ca:checked ~ .products tr.product:not(.product_cat-california) 
 input#convention-mo:checked ~ .products tr.product:not(.product_cat-missouri)      { display: none; }
 
 input#attendee-individual:checked {
-    ~ input#family-members,
-    ~ label[for="family-members"],
+    ~ label[for="family-members"], // immediately following radio buttons
+    ~ * label[for="family-members"], // in each product row
+    ~ * label.qty,
     ~ .products .attribute_attendee-type-family { display: none; }
 }
 input#attendee-family:checked ~ .products .attribute_attendee-type-individual { display: none; }

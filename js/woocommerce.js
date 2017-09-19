@@ -116,6 +116,11 @@
         });
         $('input#family-members').trigger('change');
 
+        // set family members to 1 if individual ticket type is selected
+        $('input#attendee-individual').on('change', function() {
+            $('input#family-members').val('1').trigger('change');
+        });
+
         // update add-to-cart button quantity when input is changed
         $('.products input[name^="qty"]').on('change', function () {
             var thisProductQuantity = $(this).val(),

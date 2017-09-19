@@ -62,6 +62,7 @@ $theme-black:           #333333;
 .registration-choice {
     display: inline-block;
     margin: 0 1em 1em 0;
+    cursor: pointer;
 
     &.convention {
         padding: 2rem;
@@ -97,3 +98,10 @@ input#registration-shopping-only:checked ~ .products {
     .product_cat-special-events, .attribute_registration-type-full-registration { display: none; }
 }
 input#registration-full:checked ~ .products .attribute_registration-type-shopping-only { display: none; }
+
+.register {
+    input[type="number"] {
+        display: inline-block;
+        width: 3em;
+    }
+}

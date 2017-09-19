@@ -221,6 +221,8 @@ function registration_page_shortcode( $attributes ) {
 
     ob_start();
 
+    echo '<div class="register">';
+
     $registration_args = array(
         'category'      => 'registration',
         'orderby'       => 'menu_order',
@@ -258,8 +260,9 @@ function registration_page_shortcode( $attributes ) {
         <input class="registration-choice" type="radio" name="attendee-type" value="family" id="attendee-family" checked="checked" />
             <label class="registration-choice dashicons-before dashicons-groups" for="attendee-family">Family</label>
 
-        <label class="registration-choice" for="family-members">Number of Family Members Attending</label>
-        <input class="registration-choice" type="number" name="family-members" min="2" max="20" value="2" placeholder="2" id="family-members"/>
+        <label class="registration-choice" for="family-members">Number of Family Members Attending:
+            <input class="registration-choice" type="number" name="family-members" min="2" max="20" value="2" placeholder="2" id="family-members"/>
+        </label>
 
         <h3>Registration Type</h3>
         <p>Choose one:</p>
@@ -312,6 +315,8 @@ function registration_page_shortcode( $attributes ) {
 
         echo '</table>';
     }
+
+    echo '</div><!-- .register -->';
 
     wp_reset_postdata();
 

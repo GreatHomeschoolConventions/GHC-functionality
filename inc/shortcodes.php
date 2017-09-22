@@ -272,6 +272,7 @@ function registration_page_shortcode( $attributes ) {
             <label class="registration-choice dashicons-before dashicons-tickets-alt" for="registration-full">Full Convention</label>
 
         <table class="products">
+        <tbody>
         <?php
         wp_enqueue_script( 'ghc-woocommerce' );
 
@@ -311,9 +312,21 @@ function registration_page_shortcode( $attributes ) {
                     require( plugin_dir_path( __FILE__ ) . '../templates/registration-table-row.php' );
                 }
             }
-        }
+        } ?>
+        </tbody>
+        <tfoot>
+            <tr class="cart-totals">
+                <td>Total</td>
+                <td>
+                    <span class="custom-cart-total"><?php echo WC()->cart->get_cart_total(); ?></span>
+                </td>
+                <td>
+                    <a class="button" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">Check Out&rarr;</a>
+                </td>
+            </tr>
+        </tfoot>
 
-        echo '</table>';
+        <?php echo '</table>';
     }
 
     echo '</div><!-- .register -->';

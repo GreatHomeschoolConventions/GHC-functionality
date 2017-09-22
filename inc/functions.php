@@ -403,3 +403,24 @@ function ghc_format_date_range( $d1, $d2, $format = '' ) {
         return $d1->format( 'F j, Y' ) . '&ndash;' . $d2->format( 'F j, Y' );
     }
 }
+
+/**
+ * Add custom cart total location
+ * @param  array $fragments array of cart total areas
+ * @return array modified array of cart total areas
+ */
+function woocommerce_header_add_to_cart_fragment( $fragments ) {
+    global $woocommerce;
+
+    ob_start();
+
+    ?>
+    <span class="custom-cart-total"><?php echo $woocommerce->cart->get_cart_total(); ?></span>
+    <?php
+
+    $fragments['.custom-cart-total'] = ob_get_clean();
+
+    return $fragments;
+
+}
+add_filter('woocommerce_add_to_cart_fragments', 'woocommerce_header_add_to_cart_fragment');

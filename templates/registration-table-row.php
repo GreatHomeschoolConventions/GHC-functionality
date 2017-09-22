@@ -13,7 +13,7 @@
         }
 
         if ( $registration_product ) {
-            echo '<input name="qty-' . $variation_array['variation_id']  . '" type="hidden" value="1" min="1" max="1" />
+            echo '<input name="qty-' . get_the_ID()  . '" type="hidden" value="1" min="1" max="1" />
             <label for="family-members"><input name="family-members-display" type="number" value="1" disabled /> family members</label>';
         } else {
             echo '<label class="qty" for="qty-' . $variation_array['variation_id'] . '"><input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="number" value="1" min="1" max="20" /> <span class="tickets-qty">tickets</span></label>';

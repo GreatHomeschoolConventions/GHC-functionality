@@ -405,3 +405,4 @@ function ghc_format_date_range( $d1, $d2, $format = '' ) {
 }
 
 include( 'functions-woocommerce.php' );
+include( 'functions-schema.org.php' );

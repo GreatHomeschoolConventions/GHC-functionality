@@ -105,16 +105,16 @@
         }
 
         // update family members display fields when changed
-        $('input#family-members').on('change', function() {
+        $('input[name="family-members"]').on('change', function() {
             var familyCount = $(this).val();
 
-            $('input[name="family-members-display"]').val(familyCount);
+            $('input[name="family-members"]').val(familyCount);
             $('input[name^="qty-"]').each(function() {
                 $(this).attr('max', familyCount);
                 fixMaxTickets($(this));
             });
         });
-        $('input#family-members').trigger('change');
+        $('input[name="family-members"]').trigger('change');
 
         // set family members to 1 if individual ticket type is selected
         $('input#attendee-individual').on('change', function() {

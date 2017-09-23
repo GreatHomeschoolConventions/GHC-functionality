@@ -36,6 +36,7 @@ function woocommerce_checkout_fields_placeholders( $fields ) {
     $fields['billing']['billing_address_2']['placeholder'] = 'Suite 1001';
     $fields['billing']['billing_city']['placeholder'] = 'Anytown';
     $fields['billing']['billing_postcode']['placeholder'] = '12345';
+    $fields['billing']['billing_phone']['label'] = 'Cell Phone';
     $fields['billing']['billing_phone']['placeholder'] = '234-567-8901';
     $fields['billing']['billing_email']['placeholder'] = 'john.doe@example.com';
 

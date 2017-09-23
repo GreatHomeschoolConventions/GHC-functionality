@@ -124,7 +124,7 @@
         // update add-to-cart button quantity when input is changed
         $('.products input[name^="qty"]').on('change', function () {
             var thisProductQuantity = $(this).val(),
-                thisAddToCartButton = $(this).next('.product').find('.add_to_cart_button');
+                thisAddToCartButton = $(this).parent().next('.product').find('.add_to_cart_button');
 
             thisAddToCartButton.attr('data-quantity', thisProductQuantity);
             $('input#family-members').trigger('change');

@@ -130,5 +130,15 @@
             $('input#family-members').trigger('change');
         });
 
+        // handle location-specific registration page
+        if (window.location.hash) {
+            var thisConvention = window.location.hash.replace('#',''),
+                thisConventionSelector = 'input.registration-choice.convention[value="' + thisConvention + '"]';
+
+            if ((thisConventionSelector).length > 0) {
+                $(thisConventionSelector).attr('checked', true).trigger('change');
+            }
+        }
+
     });
 })(jQuery);

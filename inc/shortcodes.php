@@ -641,6 +641,76 @@ function sponsors_shortcode( $attributes ) {
 }
 add_shortcode( 'sponsors', 'sponsors_shortcode' );
 
+function workshop_list_shortcode( $attributes ) {
+    global $convention_abbreviations;
+    $shortcode_attributes = shortcode_atts( array (
+        'convention'        => NULL,
+        'posts_per_page'    => -1,
+        'offset'            => NULL,
+    ), $attributes );
+    // workaround for posts_per_page overriding offset
+    if ( $shortcode_attributes['offset'] != NULL && $shortcode_attributes['posts_per_page'] == -1 ) {
+        $shortcode_attributes['posts_per_page'] = 500;
+    }
+    $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+    // arguments
+    $workshop_list_args = array(
+        'post_type'         => 'workshop',
+        'posts_per_page'    => esc_attr( $shortcode_attributes['posts_per_page'] ),
+        'offset'            => esc_attr( $shortcode_attributes['offset'] ),
+        'orderby'           => array( 'menu_order', 'title' ),
+        'order'             => 'ASC',
+    );
+
+    // conventions
+    if ( $this_convention ) {
+        $workshop_list_args['tax_query'] = array(
+            'relation' => 'AND',
+            array(
+                'taxonomy'  => 'ghc_conventions_taxonomy',
+                'field'     => 'slug',
+                'terms'     => $convention_abbreviations[$this_convention],
+            ),
+        );
+    }
+
+    // query
+    $workshop_list_query = new WP_Query( $workshop_list_args );
+
+    // loop
+    if ( $workshop_list_query->have_posts() ) {
+        $shortcode_content = '<ul class="workshop-list">';
+        while ( $workshop_list_query->have_posts() ) {
+            $workshop_list_query->the_post();
+            $speaker = get_field( 'speaker' );
+
+            if ( $speaker ) {
+
+                $speaker_string = ' <span class="entry-meta"> | ';
+                foreach ( $speaker as $this_speaker ) {
+                    $speaker_string .= apply_filters( 'the_title', $this_speaker->post_title ) . ', ';
+                }
+                $speaker_string = rtrim( $speaker_string, ', ' ) . '</span>';
+            }
+
+            $shortcode_content .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a>' . $speaker_string . '</li>';
+        }
+
+        if ( $shortcode_attributes['posts_per_page'] != -1 ) {
+            $shortcode_content .= '<li><a href="' . home_url() . '??post_type=workshop&ghc_conventions_taxonomy=' . $convention_abbreviations[$this_convention] . '">And <strong>many</strong> more!</a></li>';
+        }
+
+        echo '</ul>';
+    }
+
+    // reset post data
+    wp_reset_postdata();
+
+    return $shortcode_content;
+}
+add_shortcode( 'workshop_list', 'workshop_list_shortcode' );
+
 /**
  * Shortcode to display workshop schedule
  * @param  array  $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name

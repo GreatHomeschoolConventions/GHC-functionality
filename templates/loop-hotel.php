@@ -27,17 +27,19 @@ if ( $this_convention ) {
 
 // the query
 $hotel_query = new WP_Query( $hotel_args );
+?>
 
+<h3>Hotel Scam Alert</h3>
+
+<p>We have received word that a third-party company is contacting Great Homeschool Conventions attendees. They do this each year, and it is a scam. Their rates are $45&ndash;70 higher than what GHC has negotiated with area hotels.</p>
+
+<p>We have nothing to do with this company and they do not represent us in any way.</p>
+
+<p>Please book your accommodations through one of the options below to take advantage of our negotiated rates.</p>
+
+<?php
 // the loop
 if ( $hotel_query->have_posts() ) { ?>
-    <h3>Hotel Scam Alert</h3>
-
-    <p>We have received word that a third-party company is contacting Great Homeschool Conventions attendees. They do this each year, and it is a scam. Their rates are $45&ndash;70 higher than what GHC has negotiated with area hotels.</p>
-
-    <p>We have nothing to do with this company and they do not represent us in any way.</p>
-
-    <p>Please book your accommodations through one of the options below to take advantage of our negotiated rates.</p>
-
     <div class="hotel-container">
     <?php
     while ( $hotel_query->have_posts() ) {
@@ -46,6 +48,9 @@ if ( $hotel_query->have_posts() ) { ?>
         include( 'hotel-template.php' );
     }
     echo '</div>';
+} else {
+    echo '<h3>Note</h3>
+    <p>We&rsquo;re still working on the hotel discount codes. Please check back later for a list of participating hotels.</p>';
 }
 
 // Restore original Post Data

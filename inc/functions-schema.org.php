@@ -23,6 +23,10 @@ function ghc_schema_org_locations() {
             ';
         }
 
+        // fix protocol-agnostic URLs
+        $registration_url = ghc_format_schema_url( get_field( 'registration' ) );
+        $product_image_url = ghc_format_schema_url( get_the_post_thumbnail_url( $product_id ) );
+
         ob_start(); ?>
         <script type='application/ld+json'>
         {
@@ -47,11 +51,11 @@ function ghc_schema_org_locations() {
             "offers": {
                 <?php echo $price_string; ?>
                 "availability": "available",
-                "url": "<?php the_field( 'registration' ); ?>",
+                "url": "<?php echo $registration_url; ?>",
                 "priceCurrency": "USD",
                 "validFrom": "2017-10-01"
             },
-            "image": "<?php the_post_thumbnail_url( $product_id ); ?>",
+            "image": "<?php echo $product_image_url; ?>",
             "description": "The Homeschool Event of the Year",
             "performer": "Dozens of outstanding featured speakers"
         }
@@ -71,4 +75,17 @@ add_action( 'wp_footer', 'ghc_schema_org_locations', 50 );
 function ghc_format_schema_org_date( $date ) {
     $date = date_create_from_format( 'Ymd', $date );
     return $date->format( 'Y-m-d' );
+}
+
+/**
+ * Fix protocol-agnostic URLs
+ * @param  string $url original URL
+ * @return string URL with https:// prepended
+ */
+function ghc_format_schema_url( $url ) {
+    if ( strpos( $url, 'http' ) === false || strpos( $url, 'http' ) === 0 ) {
+        $url = 'https:' . $url;
+    }
+
+    return $url;
 }

@@ -641,6 +641,14 @@ function sponsors_shortcode( $attributes ) {
 }
 add_shortcode( 'sponsors', 'sponsors_shortcode' );
 
+/**
+ * Display list of workshops
+ * @param  array  $attributes shortcode attributes
+ *                           ['convention']     two-letter convention abbreviation
+ *                           ['posts_per_page'] number of posts to show (defaults to all; if offset is specified, then is set to 500)
+ *                           ['offset']         number of posts to skip (useful mainly in conjunction with posts_per_page)
+ * @return string HTML output
+ */
 function workshop_list_shortcode( $attributes ) {
     global $convention_abbreviations;
     $shortcode_attributes = shortcode_atts( array (

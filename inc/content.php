@@ -221,7 +221,7 @@ function ghc_list_related_workshops( $content ) {
         }
 
         if ( is_int( $speaker_id ) ) {
-            $workshop_content .= '<div class="related-workshops"><h2>' . ( 'workshop' == get_post_type() ? 'Other ' : '' ) . 'Workshops by ' . ( 'speaker' == get_post_type() ? get_the_title() : $related_speakers[0]->post_title ) . '</h2>';
+            $workshop_content .= '<div class="related-workshops" id="workshops"><h2>' . ( 'workshop' == get_post_type() ? 'Other ' : '' ) . 'Workshops by ' . ( 'speaker' == get_post_type() ? get_the_title() : $related_speakers[0]->post_title ) . '</h2>';
 
             $related_workshops_args = array(
                 'post_type'         => 'workshop',

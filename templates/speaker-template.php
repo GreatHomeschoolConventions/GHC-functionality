@@ -1,6 +1,6 @@
 <?php
 if ( ! is_array( $shortcode_attributes ) ) {
-    $shortcode_attributes['show'] = 'image,conventions,name,bio,excerpt';
+    $shortcode_attributes['show'] = 'image,conventions,name,bio,workshops';
     if ( 'speaker' == get_post_type() && ! isset( $thumbnail_size ) ) {
         $thumbnail_size = 'medium';
     } elseif ( 'special_event' == get_post_type() && ! isset( $thumbnail_size ) ) {
@@ -34,6 +34,13 @@ if ( ! is_array( $shortcode_attributes ) ) {
 
         <?php if ( strpos( $shortcode_attributes['show'], 'excerpt' ) !== false ) { ?>
             <div class="excerpt"><?php the_excerpt(); ?></div>
+        <?php } ?>
+
+        <?php if ( strpos( $shortcode_attributes['show'], 'workshops' ) !== false ) { ?>
+            <h3>Workshops</h3>
+            <p class="entry-meta">(Preliminary)</p>
+            <?php echo do_shortcode( '[workshop_list speaker="' . get_the_ID() . '" posts_per_page="5"]' ); ?>
+            <p><a class="button" href="<?php the_permalink(); ?>#workshops">More Workshops&rarr;</a></p>
         <?php } ?>
     <?php } ?>
 </article><!-- .speaker -->

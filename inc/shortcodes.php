@@ -647,6 +647,7 @@ add_shortcode( 'sponsors', 'sponsors_shortcode' );
  *                           ['convention']     two-letter convention abbreviation
  *                           ['posts_per_page'] number of posts to show (defaults to all; if offset is specified, then is set to 500)
  *                           ['offset']         number of posts to skip (useful mainly in conjunction with posts_per_page)
+ *                           ['speaker']        include only workshops from this speaker, specified by post ID
  * @return string HTML output
  */
 function workshop_list_shortcode( $attributes ) {
@@ -655,6 +656,7 @@ function workshop_list_shortcode( $attributes ) {
         'convention'        => NULL,
         'posts_per_page'    => -1,
         'offset'            => NULL,
+        'speaker'           => NULL,
     ), $attributes );
     // workaround for posts_per_page overriding offset
     if ( $shortcode_attributes['offset'] != NULL && $shortcode_attributes['posts_per_page'] == -1 ) {
@@ -683,6 +685,13 @@ function workshop_list_shortcode( $attributes ) {
         );
     }
 
+    // speakers
+    if ( $shortcode_attributes['speaker'] ) {
+        $workshop_list_args['meta_key'] = 'speaker';
+        $workshop_list_args['meta_value'] = $shortcode_attributes['speaker'];
+        $workshop_list_args['meta_compare'] = 'LIKE';
+    }
+
     // query
     $workshop_list_query = new WP_Query( $workshop_list_args );
 
@@ -693,23 +702,24 @@ function workshop_list_shortcode( $attributes ) {
             $workshop_list_query->the_post();
             $speaker = get_field( 'speaker' );
 
-            if ( $speaker ) {
-
+            if ( $speaker && is_null( $shortcode_attributes['speaker'] ) ) {
                 $speaker_string = ' <span class="entry-meta"> | ';
                 foreach ( $speaker as $this_speaker ) {
                     $speaker_string .= apply_filters( 'the_title', $this_speaker->post_title ) . ', ';
                 }
                 $speaker_string = rtrim( $speaker_string, ', ' ) . '</span>';
+            } else {
+                $speaker_string = '';
             }
 
             $shortcode_content .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a>' . $speaker_string . '</li>';
         }
 
-        if ( $shortcode_attributes['posts_per_page'] != -1 ) {
+        if ( $shortcode_attributes['posts_per_page'] !== -1 && ! is_null( $shortcode_attributes['convention'] ) ) {
             $shortcode_content .= '<li><a href="' . home_url() . '??post_type=workshop&ghc_conventions_taxonomy=' . $convention_abbreviations[$this_convention] . '">And <strong>many</strong> more!</a></li>';
         }
 
-        echo '</ul>';
+        $shortcode_content .= '</ul>';
     }
 
     // reset post data

@@ -675,14 +675,43 @@ function workshop_list_shortcode( $attributes ) {
 
     // conventions
     if ( $this_convention ) {
-        $workshop_list_args['tax_query'] = array(
-            'relation' => 'AND',
-            array(
-                'taxonomy'  => 'ghc_conventions_taxonomy',
-                'field'     => 'slug',
-                'terms'     => $convention_abbreviations[$this_convention],
+        $this_convention_speaker_args = array(
+            'post_type'         => 'speaker',
+            'posts_per_page'    => -1,
+            'tax_query'         => array(
+                array(
+                    'taxonomy'  => 'ghc_conventions_taxonomy',
+                    'field'     => 'slug',
+                    'terms'     => $convention_abbreviations[$this_convention],
+                ),
             ),
         );
+
+        $this_convention_speaker = new WP_Query( $this_convention_speaker_args );
+
+        $this_convention_speaker_array = array();
+
+        if ( $this_convention_speaker->have_posts() ) {
+            while ( $this_convention_speaker->have_posts() ) {
+                $this_convention_speaker->the_post();
+
+                $this_convention_speaker_array[] = get_the_ID();
+            }
+        }
+
+        wp_reset_postdata();
+
+        $workshop_list_args['meta_query'] = array(
+            'relation'  => 'OR',
+        );
+
+        foreach ( $this_convention_speaker_array as $this_speaker ) {
+            $workshop_list_args['meta_query'][] = array(
+                'key'       => 'speaker',
+                'value'     => $this_speaker,
+                'compare'   => 'LIKE',
+            );
+        }
     }
 
     // speakers

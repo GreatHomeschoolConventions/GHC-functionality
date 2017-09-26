@@ -534,6 +534,22 @@ function special_event_grid_shortcode( $attributes ) {
 add_shortcode( 'special_event_grid', 'special_event_grid_shortcode' );
 
 /**
+ * Show a list of special events
+ * @param  array  $attributes shortcode parameters
+ * @return string HTML output
+ */
+function special_event_list_shortcode( $attributes ) {
+    $special_event_list_args = array(
+        'taxonomy'  => 'ghc_special_tracks_taxonomy',
+        'title_li'  => '',
+        'echo'      => false,
+        );
+
+    return '<ul>' . wp_list_categories( $special_event_list_args ) . '</ul>';
+}
+add_shortcode( 'special_event_list', 'special_event_list_shortcode' );
+
+/**
  * Shortcode to display sponsors for a particular track
  * @param  array  $attributes shortcode parameters, including the `track` slug
  * @return string HTML output

@@ -708,7 +708,7 @@ function workshop_list_shortcode( $attributes ) {
         foreach ( $this_convention_speaker_array as $this_speaker ) {
             $workshop_list_args['meta_query'][] = array(
                 'key'       => 'speaker',
-                'value'     => $this_speaker,
+                'value'     => '"' . $this_speaker . '"', // add double quotes since the field is serialized; this prevents partial ID matches
                 'compare'   => 'LIKE',
             );
         }

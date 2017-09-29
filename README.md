@@ -28,7 +28,7 @@ Available shortcodes:
 
 ## `[exhibitor_list]`
 
-- displays all exhibitors, optionall for the specified convention; accepts these arguments
+- displays all exhibitors, optionally for the specified convention; accepts these arguments
     - `convention` (two-letter abbreviation)
     - `style` (allowed values “large” and “small”)
 

@@ -103,7 +103,7 @@ add_shortcode( 'discretionary_registration', 'discretionary_registration_shortco
 function exhibitor_list_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'convention'    => NULL,
-        'style'          => 'large',
+        'style'         => 'large',
     ), $attributes );
     global $convention_abbreviations;
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
@@ -115,14 +115,17 @@ function exhibitor_list_shortcode( $attributes ) {
         'post_type'         => 'exhibitor',
         'order'             => 'ASC',
         'orderby'           => 'post_name',
-        'tax_query' => array(
+    );
+
+    if ( $shortcode_attributes['convention'] ) {
+        $exhibitor_args['tax_query'] =array(
             array(
                 'taxonomy'  => 'ghc_conventions_taxonomy',
                 'field'     => 'slug',
                 'terms'     => $convention_abbreviations[$this_convention],
             )
-        ),
-    );
+        );
+    }
 
     $exhibitor_query = new WP_Query( $exhibitor_args );
 

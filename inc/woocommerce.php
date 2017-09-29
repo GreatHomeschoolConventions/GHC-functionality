@@ -107,7 +107,7 @@ function woocommerce_single_variation_add_to_cart_button() {
             if ( in_array( $in_cart_product->id, $all_convention_IDs ) ) {
                 $disable_purchase = true;
                 add_filter( 'woocommerce_product_single_add_to_cart_text', function() {
-                    return 'Please check out before adding another convention to your cart.';
+                    return 'Sorry, you can only purchase tickets for one convention at a time. Please check out before purchasing more tickets.';
                 } );
             }
         }

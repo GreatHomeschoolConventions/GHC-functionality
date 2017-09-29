@@ -117,8 +117,12 @@
         $('input[name="family-members"]').trigger('change');
 
         // set family members to 1 if individual ticket type is selected
-        $('input#attendee-individual').on('change', function() {
-            $('input#family-members').val('1').trigger('change');
+        $('input[name="attendee-type"]').on('change', function() {
+            if ($(this).val() === 'individiual') {
+                $('input#family-members').val('1').trigger('change');
+            } else {
+                fixMaxTickets($('input#family-members'));
+            }
         });
 
         // update add-to-cart button quantity when input is changed

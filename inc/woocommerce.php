@@ -97,40 +97,13 @@ function woocommerce_single_variation_add_to_cart_button() {
     }
 
     if ( $check_cart_for_registration ) {
-        // set up query args
-        $all_conventions_query_args = array (
-            'posts_per_page'    => -1,
-            'post_status'       => 'publish',
-            'post_type'         => 'product',
-            'fields'            => 'ids',
-            'tax_query'         => array(
-                array(
-                    'taxonomy'  => 'product_cat',
-                    'field'     => 'slug',
-                    'terms'     => 'registration'
-                )
-            )
-        );
-
-        $all_conventions = new WP_Query( $all_conventions_query_args );
-
-        // loop through results and add IDs to an array
-        $all_convention_variation_IDs = array();
-        if ( $all_conventions->have_posts() ) {
-            while( $all_conventions->have_posts() ) {
-                $all_conventions->the_post();
-                $all_convention_variation_IDs[] = get_the_ID();
-            }
-        }
-
-        // reset global query
-        wp_reset_query();
+        $all_convention_IDs = ghc_get_convention_IDs();
 
         // check cart products against registration items
         foreach( WC()->cart->get_cart() as $cart_item_key => $values ) {
             $in_cart_product = $values['data'];
 
-            if ( in_array( $in_cart_product->id, $all_convention_variation_IDs ) ) {
+            if ( in_array( $in_cart_product->id, $all_convention_IDs ) ) {
                 $disable_purchase = true;
                 add_filter( 'woocommerce_product_single_add_to_cart_text', function() {
                     return 'Please check out before adding another convention to your cart.';
@@ -235,3 +208,55 @@ function ghc_cart_item_quantity( $product_quantity, $cart_item_key, $cart_item )
     return $product_quantity;
 }
 add_filter( 'woocommerce_cart_item_quantity', 'ghc_cart_item_quantity', 10, 3 );
+
+/**
+ * Get all convention variation IDs
+ * @return array all product variation IDs
+ */
+function ghc_get_convention_IDs() {
+    if ( false === ( $all_convention_IDs = get_transient( 'ghc-all-convention-variation-ids' ) ) ) {
+        $all_convention_IDs = ghc_set_convention_variation_IDs_transient();
+    }
+
+    return $all_convention_IDs;
+}
+
+/**
+ * Save all convention variation IDs to transient to improve performance
+ * @return array all conventian variation product IDs
+ */
+function ghc_set_convention_variation_IDs_transient() {
+    $all_conventions_query_args = array (
+        'posts_per_page'    => -1,
+        'post_status'       => 'publish',
+        'post_type'         => 'product',
+        'fields'            => 'ids',
+        'tax_query'         => array(
+            array(
+                'taxonomy'  => 'product_cat',
+                'field'     => 'slug',
+                'terms'     => 'registration'
+            )
+        )
+    );
+
+    $all_conventions = new WP_Query( $all_conventions_query_args );
+
+    // loop through results and add IDs to an array
+    $all_convention_IDs = array();
+    if ( $all_conventions->have_posts() ) {
+        while( $all_conventions->have_posts() ) {
+            $all_conventions->the_post();
+            $all_convention_IDs[] = get_the_ID();
+        }
+    }
+
+    // reset global query
+    wp_reset_query();
+
+    set_transient( 'ghc-all-convention-variation-ids', $all_convention_IDs );
+    return $all_convention_IDs;
+}
+
+add_action( 'save_post_product', 'ghc_set_convention_variation_IDs_transient' );
+add_action( 'save_post_product_variation', 'ghc_set_convention_variation_IDs_transient' );

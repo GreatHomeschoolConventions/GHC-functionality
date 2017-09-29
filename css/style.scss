@@ -97,6 +97,8 @@ input#attendee-family:checked ~ .products .attribute_attendee-type-individual { 
 .register {
     input[type="number"] {
         display: inline-block;
-        width: 3em;
+        width: 5em;
     }
+
+    .post-30530 .tickets-qty { display: none; } /* program guide ticket quantity text */
 }

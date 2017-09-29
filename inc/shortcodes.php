@@ -316,7 +316,7 @@ function registration_page_shortcode( $attributes ) {
                     <span class="custom-cart-total"><?php echo WC()->cart->get_cart_total(); ?></span>
                 </td>
                 <td>
-                    <a class="button" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">Check Out&rarr;</a>
+                    <a class="button" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'Review your shopping cart' ); ?>">Check Out&rarr;</a>
                 </td>
             </tr>
         </tfoot>

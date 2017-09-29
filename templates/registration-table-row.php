@@ -1,4 +1,11 @@
 <tr id="post-<?php the_ID() ?>" <?php ghc_product_post_class(); ?>>
+    <td class="thumb">
+        <?php
+        if ( has_post_thumbnail() ) {
+            the_post_thumbnail( array( 50, 50 ) );
+        }
+        ?>
+    </td>
     <td class="title"><?php echo $product->get_title(); ?></td>
     <td class="price"><?php echo $product->get_price_html(); ?></td>
     <td class="actions">

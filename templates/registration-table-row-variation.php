@@ -1,4 +1,11 @@
 <tr id="post-<?php echo $variation_array['variation_id']; ?>" <?php ghc_product_post_class( $variation_array['variation_id'] ); ?>>
+    <td class="thumb">
+        <?php
+        if ( has_post_thumbnail() ) {
+            the_post_thumbnail( array( 50, 50 ) );
+        }
+        ?>
+    </td>
     <td class="title">
         <?php echo $variation->get_title(); ?><br/>
         <?php

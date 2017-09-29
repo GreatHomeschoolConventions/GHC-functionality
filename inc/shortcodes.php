@@ -311,7 +311,7 @@ function registration_page_shortcode( $attributes ) {
         </tbody>
         <tfoot>
             <tr class="cart-totals">
-                <td>Total</td>
+                <td colspan="2">Total</td>
                 <td>
                     <span class="custom-cart-total"><?php echo WC()->cart->get_cart_total(); ?></span>
                 </td>

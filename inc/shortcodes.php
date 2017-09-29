@@ -317,6 +317,7 @@ function registration_page_shortcode( $attributes ) {
                 </td>
                 <td>
                     <a class="button" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'Review your shopping cart' ); ?>">Check Out&rarr;</a>
+                    <!-- TODO: after allowing dynamic updates, change to checkout URL -->
                 </td>
             </tr>
         </tfoot>

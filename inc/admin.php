@@ -48,4 +48,4 @@ function ghc_save_extra_profile_fields( $user_id ) {
 add_action( 'personal_options_update', 'ghc_save_extra_profile_fields' );
 add_action( 'edit_user_profile_update', 'ghc_save_extra_profile_fields' );
 
-#TODO: add select2 to dropdown
+#FUTURE: add select2 to dropdown

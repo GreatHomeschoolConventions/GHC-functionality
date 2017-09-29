@@ -133,6 +133,7 @@ function woocommerce_single_variation_add_to_cart_button() {
 function ghc_check_for_individual_registration_in_cart() {
     // loop over products in cart searching for an individual product
     foreach( WC()->cart->get_cart() as $cart_item_key => $values ) {
+        #FIXME: apparently this is old WC behavior? Need to reliably get registration product info and set max tickets based on that
         if ( isset( $values['variation']['attribute_attendee-type'] ) ) {
             // add filter for simple products
             add_filter( 'woocommerce_quantity_input_max', function() { return 0; } );
@@ -194,6 +195,7 @@ function ghc_restrict_max_quantity_variable( $variations ) {
  */
 function ghc_cart_item_quantity( $product_quantity, $cart_item_key, $cart_item ) {
     foreach( WC()->cart->get_cart() as $cart_item_key => $values ) {
+        #FIXME: apparently this is old WC behavior? Need to reliably get registration product info and set max tickets based on that
         if ( isset( $values['variation']['attribute_attendee-type'] ) && strpos( $values['variation']['attribute_attendee-type'], 'Individual' ) !== false ) {
             // set max quantity to 1 if Individual is present for simple products
             $product_quantity = str_replace( 'min="0"', 'min="0" max="1"', $product_quantity );

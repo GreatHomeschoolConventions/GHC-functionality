@@ -88,6 +88,7 @@ function woocommerce_single_variation_add_to_cart_button() {
 
     // check this product’s categories to determine if it’s a registration product
     $this_product_terms = get_the_terms( $product->ID, 'product_cat' );
+    $check_cart_for_registration = false;
     if ( $this_product_terms ) {
         foreach ( $this_product_terms as $this_term ) {
             if ( 'Registration' == $this_term->name ) {

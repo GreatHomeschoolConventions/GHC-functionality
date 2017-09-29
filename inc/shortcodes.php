@@ -264,13 +264,6 @@ function registration_page_shortcode( $attributes ) {
             <input class="registration-choice" type="number" name="family-members" min="2" max="20" value="2" placeholder="2" id="family-members"/>
         </label>
 
-        <h3>Registration Type</h3>
-        <p>Choose one:</p>
-        <input class="registration-choice" type="radio" name="registration-type" value="shopping-only" id="registration-shopping-only" />
-            <label class="registration-choice dashicons-before dashicons-cart" for="registration-shopping-only">Shopping Only</label>
-        <input class="registration-choice" type="radio" name="registration-type" value="full" id="registration-full" checked="checked" />
-            <label class="registration-choice dashicons-before dashicons-tickets-alt" for="registration-full">Full Convention</label>
-
         <table class="products">
         <tbody>
         <?php

@@ -159,7 +159,7 @@ function woocommerce_single_variation_add_to_cart_button() {
 function ghc_check_for_individual_registration_in_cart() {
     // loop over products in cart searching for an individual product
     foreach( WC()->cart->get_cart() as $cart_item_key => $values ) {
-        if ( isset( $values['variation']['attribute_attendee-type'] ) && ( strpos( $values['variation']['attribute_registration-type'], 'Shopping Only' ) !== false ) ) {
+        if ( isset( $values['variation']['attribute_attendee-type'] ) ) {
             // add filter for simple products
             add_filter( 'woocommerce_quantity_input_max', function() { return 0; } );
             // add filter for variable products

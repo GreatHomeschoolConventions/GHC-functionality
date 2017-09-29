@@ -94,11 +94,6 @@ input#attendee-individual:checked {
 }
 input#attendee-family:checked ~ .products .attribute_attendee-type-individual { display: none; }
 
-input#registration-shopping-only:checked ~ .products {
-    .product_cat-special-events, .attribute_registration-type-full-registration { display: none; }
-}
-input#registration-full:checked ~ .products .attribute_registration-type-shopping-only { display: none; }
-
 .register {
     input[type="number"] {
         display: inline-block;

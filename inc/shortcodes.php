@@ -224,17 +224,19 @@ function registration_page_shortcode( $attributes ) {
     echo '<div class="register">';
 
     $registration_args = array(
-        'category'      => 'registration',
-        'orderby'       => 'menu_order',
-        'order'         => 'ASC',
+        'category'          => 'registration',
+        'orderby'           => 'menu_order',
+        'order'             => 'ASC',
+        'posts_per_page'    => -1,
     );
 
     $registration_query = wc_get_products( $registration_args );
 
     $special_events_args = array(
-        'category'      => 'special-events',
-        'orderby'       => 'menu_order',
-        'order'         => 'ASC',
+        'category'          => 'special-events',
+        'orderby'           => 'menu_order',
+        'order'             => 'ASC',
+        'posts_per_page'    => -1,
     );
 
     $special_events_query = wc_get_products( $special_events_args );

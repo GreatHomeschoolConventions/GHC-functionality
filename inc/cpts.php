@@ -511,7 +511,12 @@ add_action( 'admin_menu', 'ghc_admin_menu_separator' );
  * @return array array of modified columns
  */
 function ghc_speaker_columns( $columns ) {
-    $columns['menu_order'] = 'Order';
+    $columns = array_merge(
+        array_slice( $columns, 0 , 1, true ),
+        array( 'thumbnail' => 'Thumbnail' ),
+        array_slice( $columns, 1, count( $column ) - 1, true ),
+        array( 'menu_order' => 'Order' )
+    );
     return $columns;
 }
 add_filter( 'manage_edit-speaker_columns', 'ghc_speaker_columns' );
@@ -525,6 +530,8 @@ function ghc_speaker_column_content( $column, $post_id ) {
     global $post;
     if ( 'menu_order' == $column ) {
         echo $post->menu_order;
+    } elseif ( 'thumbnail' == $column ) {
+        the_post_thumbnail( array( 60, 60 ) );
     }
 }
 add_action( 'manage_speaker_posts_custom_column', 'ghc_speaker_column_content', 10, 2 );

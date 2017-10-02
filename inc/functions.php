@@ -301,14 +301,19 @@ function ghc_cpt_grid( $attributes ) {
 
     // include only the specified convention
     if ( $shortcode_attributes['convention'] ) {
-        $cpt_grid_args['tax_query'] = array_merge( $cpt_grid_args['tax_query'], array(
-            'relation'  => 'AND',
+        $convention_tax_query = array(
             array(
                 'taxonomy'  => 'ghc_conventions_taxonomy',
                 'field'     => 'slug',
                 'terms'     => $convention_abbreviations[$this_convention],
             )
-        ));
+        );
+
+        if ( array_key_exists( 'tax_query', $cpt_grid_args ) ) {
+            $cpt_grid_args['tax_query'] = array_merge( $cpt_grid_args['tax_query'], array( 'relation'  => 'AND', ), $convention_tax_query );
+        } else {
+            $cpt_grid_args['tax_query'] = $convention_tax_query;
+        }
     }
 
     // image size

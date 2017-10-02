@@ -695,3 +695,5 @@ function ghc_exhibitor_post_type_link( $post_link, $post, $leavename, $sample ) 
     return $post_link;
 }
 add_filter( 'post_type_link', 'ghc_exhibitor_post_type_link', 10, 4 );
+
+#TODO: on workshop CPT update/save, set a post_meta for the speaker with an array of all workshop IDs; then use that to query with `posts__in` instead of doing a bunch of extra work

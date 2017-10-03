@@ -45,13 +45,14 @@ function ghc_related_sponsors( $content ) {
             $related_sponsors_query = new WP_Query( $related_sponsors_query_args );
 
             if ( $related_sponsors_query->have_posts() ) {
-                $content .= '<div id="sponsor-stripe">
+                $content .= '<div id="sponsor-container">
                 <h3 class="related-sponsors">Sponsors</h3>
-                <div class="sponsors">';
+                <div class="sponsor-container">';
 
                 while ( $related_sponsors_query->have_posts() ) {
                     $related_sponsors_query->the_post();
-                    $content .= '<div class="sponsor">';
+                    $content .= '<div class="sponsor">
+                    <div class="post-thumbnail">';
                     $grayscale_logo = get_field( 'grayscale_logo' );
                     $permalink = get_permalink();
 
@@ -60,10 +61,11 @@ function ghc_related_sponsors( $content ) {
                     } else {
                         $content .= '<a href="' . $permalink . '">' . get_the_post_thumbnail() . '</a>';
                     }
-                    $content .= '</div><!-- .sponsor -->';
+                    $content .= '</div>
+                    </div><!-- .sponsor -->';
                 }
-                $content .= '</div><!-- .sponsors -->
-                </div><!-- #sponsor-stripe -->';
+                $content .= '</div><!-- .sponsor-container -->
+                </div><!-- #sponsor-container -->';
             }
 
             // reset post data

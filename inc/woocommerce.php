@@ -128,6 +128,40 @@ function woocommerce_single_variation_add_to_cart_button() {
 }
 
 /**
+ * Add custom data fields to cart item metadata
+ *
+ * @link https://wordpress.stackexchange.com/a/138596 Adapted from this sample code
+ *
+ * @param  array   $cart_item_meta WC cart item metadata
+ * @param  integer $product_id     WC product ID
+ * @return array   WC cart itme metadata
+ */
+function ghc_add_cart_item_family_members( $cart_item_meta, $product_id ) {
+    global $woocommerce;
+    $cart_item_meta['family_members'] = $_POST['familyMembers'];
+    return $cart_item_meta;
+}
+add_filter( 'woocommerce_add_cart_item_data', 'ghc_add_cart_item_family_members', 10, 2 );
+
+/**
+ * Add family member count to cart data
+ *
+ * @link https://wordpress.stackexchange.com/a/138596 Adapted from this sample code
+ *
+ * @param  array  $session_data session data
+ * @param  array  $values       WC_Cart_Product data
+ * @param  string $key          WC_Cart_Product key
+ * @return array  session data
+ */
+function ghc_get_cart_items_from_session( $session_data, $values, $key ) {
+    if ( array_key_exists( 'family_members', $values ) ) {
+        $session_data['family_members'] = $values['family_members'];
+    }
+    return $session_data;
+}
+add_filter( 'woocommerce_get_cart_item_from_session', 'ghc_get_cart_items_from_session', 1, 3 );
+
+/**
  * Set the max special event ticket quantities to number of purchased tickets
  */
 function ghc_check_for_individual_registration_in_cart() {

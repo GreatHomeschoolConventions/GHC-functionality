@@ -104,7 +104,7 @@
             });
         }
 
-        // update family members display fields when changed
+        // update all family members display fields when changed
         $('input[name="family-members"]').on('change', function() {
             var familyCount = $(this).val();
 
@@ -113,6 +113,7 @@
                 $(this).attr('max', familyCount);
                 fixMaxTickets($(this));
             });
+            $('.product_cat-registration:visible').find('a[data-family-members]').data('family-members', familyCount);
         });
         $('input[name="family-members"]').trigger('change');
 

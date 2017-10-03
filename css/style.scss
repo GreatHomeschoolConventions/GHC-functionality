@@ -89,16 +89,21 @@ input#convention-mo:checked ~ .products tr.product:not(.product_cat-missouri)   
 input#attendee-individual:checked {
     ~ label[for="family-members"], // immediately following radio buttons
     ~ * label[for="family-members"], // in each product row
+    ~ * p[class*="family-members"], // product addons
     ~ * label.qty,
     ~ .products .attribute_attendee-type-family { display: none; }
 }
 input#attendee-family:checked ~ .products .attribute_attendee-type-individual { display: none; }
 
 .register {
+    .actions input,
     input[type="number"] {
         display: inline-block;
         width: 5em;
     }
 
     .post-30530 .tickets-qty { display: none; } /* program guide ticket quantity text */
+
+    /* product addons */
+    h3.addon-name { display: none; }
 }

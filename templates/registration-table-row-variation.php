@@ -29,8 +29,9 @@
         }
 
         if ( $registration_product ) {
-            echo '<input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="hidden" value="1" min="1" max="1" />
-            <label for="family-members"><input name="family-members" type="number" value="2" min="2" max="20" /> family members</label>';
+            echo '<input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="hidden" value="1" min="1" max="1" />';
+            $addon = new Product_Addon_Display();
+            echo $addon->display();
         } else {
             echo '<label class="qty" for="qty-' . $variation_array['variation_id'] . '"><input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="number" value="0" min="0" max="20" /> <span class="tickets-qty">tickets</span></label>';
         }

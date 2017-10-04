@@ -250,10 +250,19 @@ function ghc_list_related_workshops( $content ) {
             $related_workshops = new WP_Query( $related_workshops_args );
 
             if ( $related_workshops->have_posts() ) {
-                while ( $related_workshops->have_posts() ) {
-                    $related_workshops->the_post();
-                    $workshop_content .= '<h4><a href="' . get_permalink() . '">' . get_the_title() . '</a></h4>
-                    <p>' . apply_filters( 'the_content', get_the_content() ). '</p>';
+                if ( 'speaker' === $this_post_type ) {
+                    while ( $related_workshops->have_posts() ) {
+                        $related_workshops->the_post();
+                        $workshop_content .= '<h4><a href="' . get_permalink() . '">' . get_the_title() . '</a></h4>
+                        <p>' . apply_filters( 'wpautop', get_the_content() ). '</p>';
+                    }
+                } else {
+                    $workshop_content .= '<ul>';
+                    while ( $related_workshops->have_posts() ) {
+                        $related_workshops->the_post();
+                        $workshop_content .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
+                    }
+                    $workshop_content .= '</ul>';
                 }
             }
 

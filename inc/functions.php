@@ -420,5 +420,4 @@ function ghc_mime_types( $mime_types ) {
 }
 add_filter( 'upload_mimes', 'ghc_mime_types' );
 
-include( 'functions-woocommerce.php' );
-include( 'functions-schema.org.php' );
+include( 'schema.org.php' );

@@ -8,6 +8,7 @@ defined( 'ABSPATH' ) or die( 'No access allowed' );
  * @return string modified HTML content
  */
 function ghc_meet_the_author( $content ) {
+    $author_info = '';
     if ( is_singular() && get_the_author_meta( 'speaker_match' ) ) {
         ob_start(); ?>
         <div class="author-info">

@@ -128,89 +128,95 @@ function woocommerce_single_variation_add_to_cart_button() {
 }
 
 /**
+ * Add custom data fields to cart item metadata
+ *
+ * @link https://wordpress.stackexchange.com/a/138596 Adapted from this sample code
+ *
+ * @param  array   $cart_item_meta WC cart item metadata
+ * @param  integer $product_id     WC product ID
+ * @return array   WC cart itme metadata
+ */
+function ghc_add_cart_item_family_members( $cart_item_meta, $product_id ) {
+    global $woocommerce;
+    $cart_item_meta['family_members'] = $_POST['familyMembers'];
+    return $cart_item_meta;
+}
+add_filter( 'woocommerce_add_cart_item_data', 'ghc_add_cart_item_family_members', 10, 2 );
+
+/**
+ * Add family member count to cart data
+ *
+ * @link https://wordpress.stackexchange.com/a/138596 Adapted from this sample code
+ *
+ * @param  array  $session_data session data
+ * @param  array  $values       WC_Cart_Product data
+ * @param  string $key          WC_Cart_Product key
+ * @return array  session data
+ */
+function ghc_get_cart_items_from_session( $session_data, $values, $key ) {
+    if ( array_key_exists( 'family_members', $values ) ) {
+        $session_data['family_members'] = $values['family_members'];
+    }
+    return $session_data;
+}
+add_filter( 'woocommerce_get_cart_item_from_session', 'ghc_get_cart_items_from_session', 1, 3 );
+
+/**
  * Set the max special event ticket quantities to number of purchased tickets
+ * @return integer max allowed quantity
  */
-function ghc_check_for_individual_registration_in_cart() {
-    // loop over products in cart searching for an individual product
-    foreach( WC()->cart->get_cart() as $cart_item_key => $values ) {
-        #FIXME: apparently this is old WC behavior? Need to reliably get registration product info and set max tickets based on that
-        if ( isset( $values['variation']['attribute_attendee-type'] ) ) {
-            // add filter for simple products
-            add_filter( 'woocommerce_quantity_input_max', function() { return 0; } );
-            // add filter for variable products
-            add_filter( 'woocommerce_available_variation', function() { return 0; } );
-        } elseif ( isset( $values['variation']['attribute_attendee-type'] ) && strpos( $values['variation']['attribute_attendee-type'], 'Individual' ) !== false ) {
-            // add filter for simple products
-            add_filter( 'woocommerce_quantity_input_max', function() { return 1; } );
-            // add filter for variable products
-            add_filter( 'woocommerce_available_variation', 'ghc_restrict_max_quantity_variable' );
-        } else {
-            // get the addons quantity and restrict to that number
-            foreach( $values['addons'] as $value ) {
-                if ( 'Family members' == $value['name'] ) {
-                    global $max_special_event_tickets;
-                    $max_special_event_tickets = esc_attr( $value['value'] );
-                    // add filter for simple products
-                    add_filter( 'woocommerce_quantity_input_max', 'ghc_restrict_max_quantity_simple' );
-                    // add filter for variable products
-                    add_filter( 'woocommerce_available_variation', 'ghc_restrict_max_quantity_variable' );
-                }
+function ghc_get_max_ticket_quantity() {
+    // set default
+    $max_quantity = 1;
+
+    // loop over products in cart searching for a product with an attendee-type attribute
+    foreach( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+
+        $attributes = $cart_item['data']->get_attributes();
+
+        if ( array_key_exists( 'attendee-type', $attributes ) && $attributes['attendee-type'] === 'Family' ) {
+            // get family member quantity
+            if ( array_key_exists( 'family_members', $cart_item ) ) {
+                $max_quantity = (int) $cart_item['family_members'];
             }
         }
     }
-}
-add_action( 'woocommerce_single_product_summary', 'ghc_check_for_individual_registration_in_cart' );
 
-/**
- * Restrict product max quantity
- * @return integer max quantity to sell
- */
-function ghc_restrict_max_quantity_simple() {
-    global $max_special_event_tickets;
-    return $max_special_event_tickets;
+    return $max_quantity;
 }
 
 /**
- * Restrict variable product max quantity
- * @param  array $variations array of variations
- * @return array modified array
+ * Set max ticket quantities for simple products
+ * @return integer max ticket quantity
  */
-function ghc_restrict_max_quantity_variable( $variations ) {
-    global $max_special_event_tickets;
-
-    if ( $max_special_event_tickets ) {
-        $variations['max_qty'] = $max_special_event_tickets;
-    } else {
-        $variations['max_qty'] = '1';
-    }
-    return $variations;
+function ghc_get_max_ticket_quantity_simple() {
+    return ghc_get_max_ticket_quantity();
 }
+add_filter( 'woocommerce_quantity_input_max', 'ghc_get_max_ticket_quantity_simple' );
 
 /**
- * Restrict max quantity for products in cart
- * @param  array  $product_quantity array with input name, value, max, and min values
- * @param  string $cart_item_key    cart item key
- * @param  array  $cart_item        cart item
- * @return array  modified $product_quantity array
+ * Set max ticket quantities for simple products
+ * @param  array   $variation_data variation data
+ * @return integer max ticket quantity
  */
-function ghc_cart_item_quantity( $product_quantity, $cart_item_key, $cart_item ) {
-    foreach( WC()->cart->get_cart() as $cart_item_key => $values ) {
-        #FIXME: apparently this is old WC behavior? Need to reliably get registration product info and set max tickets based on that
-        if ( isset( $values['variation']['attribute_attendee-type'] ) && strpos( $values['variation']['attribute_attendee-type'], 'Individual' ) !== false ) {
-            // set max quantity to 1 if Individual is present for simple products
-            $product_quantity = str_replace( 'min="0"', 'min="0" max="1"', $product_quantity );
-        } else {
-            foreach( $values['addons'] as $value ) {
-                if ( 'Family members' == $value['name'] ) {
-            // set max quantity to number of family members
-            $product_quantity = str_replace( 'min="0"', 'min="0" max="' . $value['value'] . '"', $product_quantity );
-                }
-            }
-        }
-    }
+function ghc_get_max_ticket_quantity_variable( $variation_data ) {
+    $variation_data['max_qty'] = ghc_get_max_ticket_quantity();
+    return $variation_data;
+}
+add_filter( 'woocommerce_available_variation', 'ghc_get_max_ticket_quantity_variable' );
+
+/**
+ * Set max ticket quantities for simple products
+ * @param  string  $product_quantity string output from woocommerce_quantity_input
+ * @param  string  $cart_item_key    WC_Cart_Product key
+ * @param  array   $cart_item        WC_Cart_Product data
+ * @return integer max ticket quantity
+ */
+function ghc_get_max_ticket_quantity_cart( $product_quantity, $cart_item_key, $cart_item ) {
+    $product_quantity = str_replace( 'max=""', 'max="' . ghc_get_max_ticket_quantity() . '"', $product_quantity );
     return $product_quantity;
 }
-add_filter( 'woocommerce_cart_item_quantity', 'ghc_cart_item_quantity', 10, 3 );
+add_filter( 'woocommerce_cart_item_quantity', 'ghc_get_max_ticket_quantity_cart', 10, 3 );
 
 /**
  * Get all convention variation IDs
@@ -260,7 +266,6 @@ function ghc_set_convention_variation_IDs_transient() {
     set_transient( 'ghc-all-convention-variation-ids', $all_convention_IDs );
     return $all_convention_IDs;
 }
-
 add_action( 'save_post_product', 'ghc_set_convention_variation_IDs_transient' );
 add_action( 'save_post_product_variation', 'ghc_set_convention_variation_IDs_transient' );
 

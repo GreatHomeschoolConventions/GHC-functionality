@@ -3,7 +3,8 @@
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 
 function ghc_schema_org_locations() {
-    if ( 'location' == get_post_type() ) {
+    $content = '';
+    if ( 'location' === get_post_type() ) {
         $product_id = get_post_meta( get_the_ID(), 'registration', true );
         $product = new WC_Product( $product_id );
 

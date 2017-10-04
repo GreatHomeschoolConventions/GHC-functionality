@@ -603,7 +603,7 @@ add_filter( 'manage_edit-workshop_sortable_columns', 'ghc_workshop_sortable_colu
  * @param object $query WP_Query
  */
 function ghc_sort_workshops_admin( $query ) {
-    if ( 'workshop' == $query->query['post_type'] && is_admin() && $query->is_main_query() ) {
+    if ( array_key_exists( 'post_type', $query->query ) && 'workshop' === $query->query['post_type'] && is_admin() && $query->is_main_query() ) {
         if ( 'date_time' == $query->get( 'orderby' ) && 'menu_order title' == $query->get( 'orderby' ) ) {
             $query->set( 'meta_key', 'date_and_time' );
         } elseif ( 'related_speaker' == $query->get( 'orderby' ) ) {
@@ -618,7 +618,7 @@ add_action( 'pre_get_posts', 'ghc_sort_workshops_admin' );
  * @param  object $query WP_Query
  */
 function ghc_speakers_order( $query ) {
-    if ( 'speaker' == $query->query['post_type'] ) {
+    if ( array_key_exists( 'post_type', $query->query ) && 'speaker' === $query->query['post_type'] ) {
         $query->set( 'orderby', 'menu_order' );
         $query->set( 'order', 'ASC' );
 
@@ -638,7 +638,7 @@ add_action( 'pre_get_posts', 'ghc_speakers_order' );
  * @param object $query WP_Query
  */
 function ghc_modify_exhibitor_archive( $query ) {
-    if ( 'exhibitor' == $query->query['post_type'] && ! is_admin() && $query->is_main_query() ) {
+    if ( array_key_exists( 'post_type', $query->query ) && 'exhibitor' === $query->query['post_type'] && ! is_admin() && $query->is_main_query() ) {
         $query->set( 'posts_per_page', '-1' );
         $query->set( 'pagination', 'false' );
         $query->set( 'orderby', 'title' );
@@ -652,7 +652,7 @@ add_action( 'pre_get_posts', 'ghc_modify_exhibitor_archive' );
  * @param object $query WP_Query
  */
 function ghc_modify_sponsor_archive( $query ) {
-    if ( 'sponsor' == $query->query['post_type'] && ! is_admin() && $query->is_main_query() && is_post_type_archive( 'sponsor' ) ) {
+    if ( array_key_exists( 'post_type', $query->query ) && 'sponsor' === $query->query['post_type'] && ! is_admin() && $query->is_main_query() && is_post_type_archive( 'sponsor' ) ) {
         $query->set( 'posts_per_page', -1 );
         $query->set( 'orderby', 'menu_order' );
         $query->set( 'order', 'ASC' );

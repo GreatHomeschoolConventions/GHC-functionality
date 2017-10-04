@@ -261,6 +261,11 @@ function ghc_list_related_workshops( $content ) {
         }
     }
 
+    // add link to all featured speakers
+    if ( 'speaker' === get_post_type() ) {
+        $workshop_content .= '<p><a class="button" href="' . get_home_url() . '/speakers/">All Featured Speakers</a></p>';
+    }
+
     return $content . $workshop_content;
 }
 add_action( 'the_content', 'ghc_list_related_workshops', 11 );

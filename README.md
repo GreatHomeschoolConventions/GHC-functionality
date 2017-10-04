@@ -1,6 +1,6 @@
 # Introduction
 
-A simple plugin to add custom post types and categories for use on Great Homeschool Convention’s website.
+A plugin to add custom post types and categories for use on Great Homeschool Conventions’ website.
 
 # Usage
 
@@ -9,7 +9,7 @@ A simple plugin to add custom post types and categories for use on Great Homesch
 
 # Other Notes
 
-Available shortcodes:
+Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 ## `[convention_cta]`
 
@@ -101,6 +101,11 @@ Available shortcodes:
 - displays a workshop schedule; accepts the argument `convention` (two-letter abbreviation)
 
 # Changelog
+
+- 3.0.1
+    - Fix WooCommerce cart issues
+        - Auto-complete orders
+        - Restrict max quantities to family-members on registration product
 
 - 3.0.0
     - Rebuild for 2018 convention season

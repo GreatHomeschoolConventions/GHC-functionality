@@ -226,8 +226,6 @@ function ghc_list_related_workshops( $content ) {
         }
 
         if ( is_int( $speaker_id ) ) {
-            $workshop_content .= '<div class="related-workshops" id="workshops"><h2>' . ( 'workshop' === $this_post_type ? 'Other ' : '' ) . 'Workshops by ' . ( 'speaker' === $this_post_type ? get_the_title() : $related_speakers[0]->post_title ) . '</h2>';
-
             $related_workshops_args = array(
                 'post_type'         => 'workshop',
                 'posts_per_page'    => -1,
@@ -254,6 +252,8 @@ function ghc_list_related_workshops( $content ) {
             $related_workshops = new WP_Query( $related_workshops_args );
 
             if ( $related_workshops->have_posts() ) {
+                $workshop_content .= '<div class="related-workshops" id="workshops"><h2>' . ( 'workshop' === $this_post_type ? 'Other ' : '' ) . 'Workshops by ' . ( 'speaker' === $this_post_type ? get_the_title() : $related_speakers[0]->post_title ) . '</h2>';
+
                 if ( 'speaker' === $this_post_type ) {
                     while ( $related_workshops->have_posts() ) {
                         $related_workshops->the_post();

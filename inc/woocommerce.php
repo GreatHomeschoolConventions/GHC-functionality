@@ -162,6 +162,21 @@ function ghc_get_cart_items_from_session( $session_data, $values, $key ) {
 add_filter( 'woocommerce_get_cart_item_from_session', 'ghc_get_cart_items_from_session', 1, 3 );
 
 /**
+ * Add “family members” to cart if greater than 1
+ * @param  string $formatted_name HTML formatted name
+ * @param  array  $cart_item      WC_Cart_Product data
+ * @param  string $cart_item_key  WC_Cart_Product key
+ * @return string HTML formatted name
+ */
+function ghc_cart_item_name_add_family_members( $formatted_name, $cart_item, $cart_item_key ) {
+    if ( array_key_exists( 'family_members', $cart_item ) && ! is_null( $cart_item['family_members'] )  && ( $cart_item['family_members'] > 1 ) ) {
+        $formatted_name .= '<br/>Family members: ' . esc_attr( $cart_item['family_members'] );
+    }
+    return $formatted_name;
+}
+add_filter( 'woocommerce_cart_item_name', 'ghc_cart_item_name_add_family_members', 10, 3 );
+
+/**
  * Set the max special event ticket quantities to number of purchased tickets
  * @return integer max allowed quantity
  */

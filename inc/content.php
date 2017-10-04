@@ -257,7 +257,7 @@ function ghc_list_related_workshops( $content ) {
                 if ( 'speaker' === $this_post_type ) {
                     while ( $related_workshops->have_posts() ) {
                         $related_workshops->the_post();
-                        $workshop_content .= '<h4><a href="' . get_permalink() . '">' . get_the_title() . '</a></h4>
+                        $workshop_content .= '<h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>
                         <p>' . apply_filters( 'wpautop', get_the_content() ). '</p>';
                     }
                 } else {

@@ -90,7 +90,8 @@ input#attendee-individual:checked {
     ~ label[for="family-members"], // immediately following radio buttons
     ~ * label[for="family-members"], // in each product row
     ~ * label.qty,
-    ~ .products .attribute_attendee-type-family { display: none; }
+    ~ .products .attribute_attendee-type-family,
+    ~ .products .product_cat-program-guide { display: none; }
 }
 input#attendee-family:checked ~ .products .attribute_attendee-type-individual { display: none; }
 

@@ -236,7 +236,7 @@ function registration_page_shortcode( $attributes ) {
     $registration_query = wc_get_products( $registration_args );
 
     $special_events_args = array(
-        'category'          => 'special-events',
+        'category'          => array( 'special-events', 'program-guide' ),
         'orderby'           => 'menu_order',
         'order'             => 'ASC',
         'posts_per_page'    => -1,

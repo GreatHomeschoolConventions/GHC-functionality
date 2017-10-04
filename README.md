@@ -102,6 +102,11 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.0.2
+    - Remove workshop names from speaker archive
+    - Add workshop full descriptions to speaker bio pages
+    - Remove current workshop from related workshops list
+
 - 3.0.1
     - Fix WooCommerce cart issues
         - Auto-complete orders

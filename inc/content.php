@@ -198,12 +198,12 @@ add_filter( 'the_content', 'ghc_list_special_tracks', 8 );
  */
 function ghc_speaker_show_locations( $content ) {
     if ( is_singular( array( 'speaker', 'workshop' ) ) ) {
-        $content = '<div class="conventions">' . output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ) . '</div>' . $content;
+        $content = '<p class="conventions">' . output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ) . '</p>' . $content;
     }
 
     return $content;
 }
-add_action( 'the_content', 'ghc_speaker_show_locations', 11 );
+add_filter( 'the_content', 'ghc_speaker_show_locations', 11 );
 
 /**
  * Add workshops list to each speaker and related workshops to each workshop

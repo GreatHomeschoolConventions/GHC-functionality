@@ -247,6 +247,10 @@ function ghc_list_related_workshops( $content ) {
                 ),
             );
 
+            if ( 'workshop' === $this_post_type ) {
+                $related_workshops_args['post__not_in'] = array( get_the_ID() );
+            }
+
             $related_workshops = new WP_Query( $related_workshops_args );
 
             if ( $related_workshops->have_posts() ) {

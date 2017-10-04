@@ -6,7 +6,14 @@
         }
         ?>
     </td>
-    <td class="title"><?php echo $product->get_title(); ?></td>
+    <td class="title">
+        <?php echo $product->get_title(); ?>
+        <?php
+        if ( get_field( 'subtitle' ) ) {
+            echo '<div class="entry-meta">' . get_field( 'subtitle' ) . '</div>';
+        }
+        ?>
+    </td>
     <td class="price"><?php echo $product->get_price_html(); ?></td>
     <td class="actions">
         <?php

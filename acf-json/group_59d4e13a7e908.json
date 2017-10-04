@@ -1,0 +1,43 @@
+{
+    "key": "group_59d4e13a7e908",
+    "title": "Extra Product Information",
+    "fields": [
+        {
+            "key": "field_59d4e16bf66dd",
+            "label": "Subtitle",
+            "name": "subtitle",
+            "type": "text",
+            "instructions": "Short subtitle",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Nationally-Known Musician",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "product"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1507123590
+}

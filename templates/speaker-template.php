@@ -18,13 +18,13 @@ if ( ! is_array( $shortcode_attributes ) ) {
 
     <?php if ( strpos( $shortcode_attributes['show'], 'name' ) !== false || strpos( $shortcode_attributes['show'], 'conventions' ) !== false )  { ?>
         <header class="post-header">
+            <?php if ( strpos( $shortcode_attributes['show'], 'name' ) !== false ) { ?>
+                <h3 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h3>
+            <?php } ?>
             <?php if ( strpos( $shortcode_attributes['show'], 'conventions' ) !== false ) { ?>
                 <div class="conventions-attending">
                     <?php echo output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ); ?>
                 </div>
-            <?php } ?>
-            <?php if ( strpos( $shortcode_attributes['show'], 'name' ) !== false ) { ?>
-                <h3 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h3>
             <?php } ?>
             <?php if ( strpos( $shortcode_attributes['show'], 'bio' ) !== false ) { ?>
                 <?php echo ghc_get_speaker_short_bio( get_the_ID() ); ?>
@@ -34,13 +34,12 @@ if ( ! is_array( $shortcode_attributes ) ) {
 
         <?php if ( strpos( $shortcode_attributes['show'], 'excerpt' ) !== false ) { ?>
             <div class="excerpt"><?php the_excerpt(); ?></div>
+        <?php } else { ?>
+            <p class="text-center"><a class="button" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">Biography</a></p>
         <?php } ?>
 
         <?php if ( strpos( $shortcode_attributes['show'], 'workshops' ) !== false ) { ?>
-            <h3>Workshops</h3>
-            <p class="entry-meta">(Preliminary)</p>
-            <?php echo do_shortcode( '[workshop_list speaker="' . get_the_ID() . '" posts_per_page="5"]' ); ?>
-            <p><a class="button" href="<?php the_permalink(); ?>#workshops">More Workshops&rarr;</a></p>
+            <p class="text-center"><a class="button" href="<?php the_permalink(); ?>#workshops">Workshops</a></p>
         <?php } ?>
     <?php } ?>
 </article><!-- .speaker -->

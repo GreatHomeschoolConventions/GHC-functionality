@@ -46,7 +46,7 @@ function ghc_related_sponsors( $content ) {
             $related_sponsors_query = new WP_Query( $related_sponsors_query_args );
 
             if ( $related_sponsors_query->have_posts() ) {
-                $content .= '<div id="sponsor-container">
+                $content .= '<div id="related-sponsors">
                 <h3 class="related-sponsors">Sponsors</h3>
                 <div class="sponsor-container">';
 

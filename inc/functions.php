@@ -74,6 +74,7 @@ add_action( 'wp_head', 'convention_info' );
 function output_convention_icons( $input_conventions, $args = NULL ) {
     global $conventions, $convention_abbreviations;
     $convention_icons = NULL;
+    $conventions_to_output = array();
 
     // check whether input is a ID number, array, or array of objects
     if ( is_numeric( $input_conventions ) ) {

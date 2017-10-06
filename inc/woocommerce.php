@@ -388,3 +388,17 @@ function ghc_woocommerce_get_registration_product( $order ) {
 
     return $registration_product_name;
 }
+
+/**
+ * Add coupons to admin order email
+ * @param object  $order         WC_Order
+ * @param boolean $sent_to_admin whether this goes to admin or customers
+ * @param string  $plain_text    plain-text email
+ * @param string  $email         HTML email
+ */
+function ghc_add_coupon_code_admin_email( $order, $sent_to_admin, $plain_text, $email ) {
+    if ( $sent_to_admin && $order->get_used_coupons() ) {
+        echo '<p>Coupon(s) used: <span class="highlighted">' . implode( ', ', $order->get_used_coupons() ) . '</span></p>';
+    }
+}
+add_action( 'woocommerce_email_order_details', 'ghc_add_coupon_code_admin_email', 8, 4 );

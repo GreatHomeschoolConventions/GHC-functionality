@@ -345,3 +345,44 @@ function ghc_auto_complete_order( $order_id ) {
     $order->update_status( 'completed' );
 }
 add_action( 'woocommerce_thankyou', 'ghc_auto_complete_order' );
+
+/**
+ * Add customer first/last name and convention to admin order email
+ * @param  string $subject default email subject
+ * @param  object $order   WC_Order object
+ * @return string modified email subject
+ */
+function ghc_woocommmerce_subject_lines( $subject, $order ) {
+    $subject = sprintf(
+        'New Customer Order (#%s) from %s %s (Convention: %s)',
+        $order->id,
+        $order->billing_first_name,
+        $order->billing_last_name,
+        ghc_woocommerce_get_registration_product( $order )
+    );
+
+    return $subject;
+}
+add_filter( 'woocommerce_email_subject_new_order', 'ghc_woocommmerce_subject_lines', 10, 2 );
+
+/**
+ * Get name for the registration product in the order
+ * @param  object $order WC_Order
+ * @return string registration product name or empty
+ */
+function ghc_woocommerce_get_registration_product( $order ) {
+    $registration_product_name = '';
+
+    if ( is_object( $order ) && $order->get_items() ) {
+        foreach ( $order->get_items() as $item ) {
+            $product_id = $item->get_data()['product_id'];
+
+            // check to see if this is a registration product
+            if ( has_term( 'registration', 'product_cat', $product_id ) ) {
+                $registration_product_name = $item->get_data()['name'];
+            }
+        }
+    }
+
+    return $registration_product_name;
+}

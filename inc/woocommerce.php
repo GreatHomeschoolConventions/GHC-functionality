@@ -289,7 +289,7 @@ add_action( 'save_post_product_variation', 'ghc_set_convention_variation_IDs_tra
  * @param  array $fragments array of cart total areas
  * @return array modified array of cart total areas
  */
-function woocommerce_header_add_to_cart_fragment( $fragments ) {
+function ghc_woocommerce_header_add_to_cart_fragment( $fragments ) {
     global $woocommerce;
 
     ob_start();
@@ -303,14 +303,14 @@ function woocommerce_header_add_to_cart_fragment( $fragments ) {
     return $fragments;
 
 }
-add_filter('woocommerce_add_to_cart_fragments', 'woocommerce_header_add_to_cart_fragment');
+add_filter('woocommerce_add_to_cart_fragments', 'ghc_woocommerce_header_add_to_cart_fragment');
 
 /**
  * Add placeholders to all checkout fields
  * @param  array $fields all checkout fields
  * @return array modified checkout fields
  */
-function woocommerce_checkout_fields_placeholders( $fields ) {
+function ghc_woocommerce_checkout_fields_placeholders( $fields ) {
     $fields['billing']['billing_first_name']['placeholder'] = 'John';
     $fields['billing']['billing_last_name']['placeholder'] = 'Doe';
     $fields['billing']['billing_company']['placeholder'] = 'ACME Inc.';
@@ -324,7 +324,7 @@ function woocommerce_checkout_fields_placeholders( $fields ) {
 
     return $fields;
 }
-add_filter( 'woocommerce_checkout_fields', 'woocommerce_checkout_fields_placeholders' );
+add_filter( 'woocommerce_checkout_fields', 'ghc_woocommerce_checkout_fields_placeholders' );
 
 /**
  * Tweak return customer login message

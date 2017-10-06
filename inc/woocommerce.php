@@ -71,7 +71,7 @@ function ghc_show_special_event_tickets() {
 add_action( 'woocommerce_after_single_product_summary', 'ghc_show_special_event_tickets', 5 );
 
 /**
- * Show lots of columns
+ * Show lots of columns in cross-sells section
  * @param  integer $columns number of columns to display
  * @return integer modified number of columns to display
  */
@@ -82,6 +82,8 @@ add_filter( 'woocommerce_cross_sells_columns', 'woocommerce_remove_cross_sells_c
 
 /**
  * Disable the add to cart button if trying to add another registration
+ *
+ * Overrides WooCommerce function
  */
 function woocommerce_single_variation_add_to_cart_button() {
     global $product;

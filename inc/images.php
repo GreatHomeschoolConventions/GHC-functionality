@@ -13,6 +13,7 @@ function ghc_custom_image_sizes() {
     add_image_size( 'square-small', 400, 400, true );
     add_image_size( 'square-medium', 600, 600, true );
     add_image_size( 'square-large', 900, 900, true );
+    add_image_size( 'small-grid-size', 400, 300, true );
     add_image_size( 'small-grid-size-medium', 600, 450, true );
     add_image_size( 'small-grid-size-large', 800, 600, true );
     add_image_size( 'special-event-small', 300, 150, true );
@@ -33,10 +34,11 @@ function ghc_custom_image_sizes_names( $sizes ) {
         'square-small'              => 'Square',
         'square-medium'             => 'Square',
         'square-large'              => 'Square',
+        'small-grid'                => 'Grid',
         'small-grid-size-medium'    => 'Grid',
         'small-grid-size-large'     => 'Grid',
         'special-event-small'       => 'Special Event',
-        'special-event-medium'       => 'Special Event',
+        'special-event-medium'      => 'Special Event',
         'special-event-large'       => 'Special Event',
     ));
 }

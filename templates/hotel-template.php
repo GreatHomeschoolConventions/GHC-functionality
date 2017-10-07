@@ -21,5 +21,14 @@
         <h3 class="accommodation-title"><?php the_title(); ?></h3>
         <?php include('hotel-details.php'); ?>
     </div>
-    <?php if ( get_field( 'hotel_URL' ) && ! get_field( 'sold_out' ) ) { ?><a class="accommodation-button-text button" target="_blank" rel="noopener" href="<?php the_field( 'hotel_URL' ); ?>">BOOK ONLINE NOW</a><?php } ?>
+    <?php
+    if ( ! get_field( 'sold_out' ) ) {
+        if ( get_field( 'hotel_URL' ) ) { ?>
+            <a class="button" target="_blank" rel="noopener" href="<?php the_field( 'hotel_URL' ); ?>">Book Online Now&rarr;</a>
+        <?php } elseif ( get_field( 'hotel_phone' ) ) { ?>
+            <a class="button" target="_blank" rel="noopener" href="tel:+1<?php echo str_replace( '-', '', get_field( 'hotel_phone' ) ); ?>">Call to Book Now&rarr;</a>
+        <?php
+        }
+    }
+    ?>
 </div>

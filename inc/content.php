@@ -284,3 +284,25 @@ function ghc_list_related_workshops( $content ) {
     return $content . $workshop_content;
 }
 add_action( 'the_content', 'ghc_list_related_workshops', 11 );
+
+/**
+ * Add hotel details to single hotel views
+ * @param  string $content post content
+ * @return string post content with hotel info appended
+ */
+function ghc_show_hotel_details( $content ) {
+    if ( 'hotel' === get_post_type() ) {
+        global $conventions;
+        global $convention_abbreviations;
+
+        $conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
+        $this_convention = array_flip( $convention_abbreviations )[$conventions_taxonomy[0]->slug];
+
+        ob_start();
+        include( plugin_dir_path( __FILE__ ) . '../templates/hotel-details.php' );
+        $content .= ob_get_clean();
+    }
+
+    return $content;
+}
+add_filter( 'the_content', 'ghc_show_hotel_details' );

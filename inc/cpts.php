@@ -81,7 +81,7 @@ function ghc_register_cpts() {
         'not_found_in_trash'  => __( 'Not found in Trash', 'GHC' ),
     );
     $hotels_rewrite = array(
-        'slug'                => 'hotels',
+        'slug'                => 'hotel',
         'with_front'          => true,
         'pages'               => true,
         'feeds'               => true,
@@ -101,7 +101,7 @@ function ghc_register_cpts() {
         'show_in_admin_bar'   => true,
         'show_in_nav_menus'   => true,
         'can_export'          => true,
-        'has_archive'         => true,
+        'has_archive'         => 'hotels-all',
         'exclude_from_search' => false,
         'publicly_queryable'  => true,
         'rewrite'             => $hotels_rewrite,

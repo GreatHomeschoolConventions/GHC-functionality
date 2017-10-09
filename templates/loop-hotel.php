@@ -31,7 +31,7 @@ $hotel_query = new WP_Query( $hotel_args );
 
 <h3>Hotel Scam Alert</h3>
 
-<p>We have received word that a third-party company is contacting Great Homeschool Conventions attendees. They do this each year, and it is a scam. Their rates are $45&ndash;70 higher than what GHC has negotiated with area hotels.</p>
+<p>Each year, a third-party company claims to be booking rooms on behalf of Great Homeschool Conventions. This is a scam; their rates are $45&ndash;70 higher than what GHC has negotiated with area hotels.</p>
 
 <p>We have nothing to do with this company and they do not represent us in any way.</p>
 

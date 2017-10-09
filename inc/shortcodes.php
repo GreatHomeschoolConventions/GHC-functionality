@@ -188,6 +188,7 @@ function hotel_grid_shortcode( $attributes ) {
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
     ob_start();
+    $is_shortcode = true;
     require( plugin_dir_path( __FILE__ ) . '../templates/loop-hotel.php' );
     return ob_get_clean();
 }

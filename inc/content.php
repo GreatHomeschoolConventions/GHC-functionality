@@ -206,6 +206,21 @@ function ghc_speaker_show_locations( $content ) {
 add_filter( 'the_content', 'ghc_speaker_show_locations', 11 );
 
 /**
+ * Add speaker location info to each special event
+ * @param  string $content HTML content
+ * @return string modified HTML content
+ */
+function ghc_special_event_show_locations( $content ) {
+    if ( 'special_event' === get_post_type() ) {
+        $content = '<p class="conventions">' . output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ) . '</p>' . $content;
+    }
+
+    return $content;
+}
+add_filter( 'the_content', 'ghc_special_event_show_locations', 11 );
+add_filter( 'the_excerpt', 'ghc_special_event_show_locations', 11 );
+
+/**
  * Add workshops list to each speaker and related workshops to each workshop
  * @param  string $content HTML content
  * @return string modified HTML content

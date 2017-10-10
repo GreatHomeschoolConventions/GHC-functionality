@@ -114,7 +114,7 @@ function exhibitor_list_shortcode( $attributes ) {
         'posts_per_page'    => -1,
         'post_type'         => 'exhibitor',
         'order'             => 'ASC',
-        'orderby'           => 'post_name',
+        'orderby'           => 'post_title',
     );
 
     if ( $shortcode_attributes['convention'] ) {

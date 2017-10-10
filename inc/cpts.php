@@ -569,8 +569,8 @@ function ghc_workshop_column_content( $column, $post_id ) {
     global $post;
     if ( 'date_time' == $column ) {
         echo date( 'n/d/y g:i A', strtotime( get_field( 'date_and_time' ) ) );
-    } elseif ( 'related_speaker' == $column ) {
-        $workshop_speaker = get_field( 'related_speaker' );
+    } elseif ( 'speaker' == $column ) {
+        $workshop_speaker = get_field( 'speaker' );
         if ( $workshop_speaker && 1 == count( $workshop_speaker ) ) {
             echo $workshop_speaker[0]->post_title;
         } elseif ( count( $workshop_speaker ) > 1 ) {

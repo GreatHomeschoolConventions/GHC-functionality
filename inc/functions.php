@@ -421,4 +421,27 @@ function ghc_mime_types( $mime_types ) {
 }
 add_filter( 'upload_mimes', 'ghc_mime_types' );
 
+/**
+ * Get author bio and convention locations
+ * @return string HTML content
+ */
+function ghc_get_author_bio() {
+    ob_start();
+    $speaker_meta = get_the_author_meta( 'speaker_match' );
+
+    if ( $speaker_meta ) {
+        $this_post_terms = get_the_terms( $speaker_meta, 'ghc_conventions_taxonomy' );
+        ?>
+        <div class="author-info">
+            <p><?php echo get_avatar( get_the_author_meta( 'ID' ), 120 ) . get_the_author_meta( 'description' ); ?></p>
+            <?php if ( count( $this_post_terms ) > 0 ) { ?>
+                <p>Meet <a href="<?php the_permalink( $speaker_meta ); ?>"><?php the_author(); ?></a> at these conventions:</p>
+                <p><?php echo output_convention_icons( $this_post_terms ); ?></p>
+            <?php } ?>
+        </div>
+        <?php
+    }
+    return ob_get_clean();
+}
+
 include( 'schema.org.php' );

@@ -6,10 +6,18 @@ A plugin to add custom post types and categories for use on Great Homeschool Con
 
 - Install the plugin
 - Use shortcodes as necessary
+- When posting blog articles, create a new user (if necessary) with the “Contributor” role
+    - Add the square photo from the speaker CPT
+    - Add a few sentences of bio in the biography field
+    - Select their name from the “Select a speaker to match this author” dropdown (this will automatically pull in their conventions info)
 
 # Other Notes
 
 Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
+
+## `[author_bio]`
+
+- displays bio and convention information for the author of the current article
 
 ## `[convention_cta]`
 

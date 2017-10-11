@@ -3,6 +3,19 @@
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 /**
+ * Shortcode to display author bio and conventions
+ * @return string HTML content
+ */
+function author_bio_shortcode() {
+    if ( is_singular() ) {
+        return ghc_get_author_bio();
+    } else {
+        return false;
+    }
+}
+add_shortcode( 'author_bio', 'author_bio_shortcode' );
+
+/**
  * Shortcode to display a convention’s CTA
  * @param  array  $attributes shortcode parameters including convention
  * @return string HTML content

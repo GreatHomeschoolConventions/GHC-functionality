@@ -199,6 +199,19 @@ function ghc_speaker_show_locations( $content ) {
 add_filter( 'the_content', 'ghc_speaker_show_locations', 11 );
 
 /**
+ * Show title and subtitle on speaker bio pages
+ * @param  string $content HTML content
+ * @return string modified HTML content
+ */
+function ghc_speaker_show_title_info( $content ) {
+    if ( is_singular( 'speaker' ) ) {
+        $content = ghc_get_speaker_short_bio( get_the_ID() ) . $content;
+    }
+    return $content;
+}
+add_filter( 'the_content', 'ghc_speaker_show_title_info', 12 );
+
+/**
  * Add speaker location info to each special event
  * @param  string $content HTML content
  * @return string modified HTML content

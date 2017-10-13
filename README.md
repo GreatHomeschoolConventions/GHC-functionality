@@ -110,6 +110,9 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.0.5
+    - Set PopupMaker cookies when adding a product to the cart
+
 - 3.0.4
     - Improve registration page display especially on mobile devices
 

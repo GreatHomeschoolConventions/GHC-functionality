@@ -134,5 +134,26 @@ input#attendee-family:checked ~ .products .attribute_attendee-type-individual { 
         width: 5em;
     }
 
+    @media screen and (max-width: 600px) {
+        table.products {
+            &, tbody { display: block; }
+        }
+
+        tr.product, tr.cart-totals {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+
+            .thumb { width: 25%; }
+            .title { width: 75%; }
+            .price, .actions {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+
+    td.thumb { min-width: 50px; }
+
     .post-30530 .tickets-qty { display: none; } /* program guide ticket quantity text */
 }

@@ -279,8 +279,8 @@ function registration_page_shortcode( $attributes ) {
         <input class="registration-choice attendee-type" type="radio" name="attendee-type" value="family" id="attendee-family" checked="checked" />
             <label class="registration-choice attendee-type theme bg se dashicons-before dashicons-groups" for="attendee-family"><h4>Family</h4></label>
 
-        <label class="registration-choice" for="family-members">Number of Family Members Attending:
-            <input class="registration-choice" type="number" name="family-members" min="2" max="20" value="2" placeholder="2" id="family-members"/>
+        <label class="registration-choice family-members" for="family-members">Number of Family Members Attending:
+            <input class="registration-choice family-members" type="number" name="family-members" min="2" max="20" value="2" placeholder="2" id="family-members"/>
         </label>
 
         <table class="products">
@@ -328,11 +328,11 @@ function registration_page_shortcode( $attributes ) {
         </tbody>
         <tfoot>
             <tr class="cart-totals">
-                <td colspan="2">Total</td>
-                <td>
+                <td colspan="2" class="header">Total</td>
+                <td class="total">
                     <span class="custom-cart-total"><?php echo WC()->cart->get_cart_total(); ?></span>
                 </td>
-                <td>
+                <td class="actions">
                     <a class="button" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'Review your shopping cart' ); ?>">Check Out&rarr;</a>
                     <!-- TODO: after allowing dynamic updates, change to checkout URL -->
                 </td>

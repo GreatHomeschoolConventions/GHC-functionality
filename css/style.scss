@@ -83,11 +83,11 @@ $theme-black:           #333333;
 
             + label:after {
                 display: none;
-                content: "\002714";
-                color: inherit;
+                content: "\002713";
                 position: absolute;
-                top: 1em;
-                right: 1em;
+                font-size: 24px;
+                top: 16px;
+                right: 16px;
             }
 
             &:checked + label:after{ display: block; }

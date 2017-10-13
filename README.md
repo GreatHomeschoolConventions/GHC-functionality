@@ -110,6 +110,9 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.0.4
+    - Improve registration page display especially on mobile devices
+
 - 3.0.3
     - Improve registration page behavior (scroll to attendee type, style attendee types similar to convention choice)
 

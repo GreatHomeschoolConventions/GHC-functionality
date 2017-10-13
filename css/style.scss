@@ -106,13 +106,13 @@ $theme-black:           #333333;
                 text-align: center;
             }
         }
+    }
 
-        .dashicons-before:before {
-            font-size: 30px;
-            height: 30px;
-            width: 30px;
-            margin-right: 5px;
-        }
+    &.dashicons-before:before {
+        font-size: 30px;
+        height: 30px;
+        width: 30px;
+        margin-right: 5px;
     }
 }
 

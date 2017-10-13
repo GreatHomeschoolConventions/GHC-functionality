@@ -267,7 +267,7 @@ function registration_page_shortcode( $attributes ) {
             <?php $convention_abbreviation = strtolower( $convention['convention_abbreviated_name'][0] ); ?>
             <input class="registration-choice convention" type="radio" name="convention" value="<?php echo $convention_abbreviation; ?>" id="convention-<?php echo $convention_abbreviation; ?>" <?php if ( ! $convention_checked && date( 'Ymd' ) < $convention['begin_date'][0] ) { echo ' checked="checked"'; $convention_checked = true; } ?> />
                 <label class="registration-choice convention theme bg <?php echo $convention_abbreviation; ?>" for="convention-<?php echo $convention_abbreviation; ?>">
-                    <h2><?php echo $convention['convention_short_name'][0]; ?></h2>
+                    <h4><?php echo $convention['convention_short_name'][0]; ?></h4>
                     <p class="info"><?php echo ghc_format_date_range( $convention['begin_date'][0], $convention['end_date'][0], 'Ymd' ); ?></p>
                 </label>
         <?php } ?>
@@ -275,9 +275,9 @@ function registration_page_shortcode( $attributes ) {
         <h3 id="attendee-type">Attendee Type</h3>
         <p>Choose one:</p>
         <input class="registration-choice attendee-type" type="radio" name="attendee-type" value="individual" id="attendee-individual" />
-            <label class="registration-choice attendee-type theme bg se dashicons-before dashicons-admin-users" for="attendee-individual">Individual</label>
+            <label class="registration-choice attendee-type theme bg se dashicons-before dashicons-admin-users" for="attendee-individual"><h4>Individual</h4></label>
         <input class="registration-choice attendee-type" type="radio" name="attendee-type" value="family" id="attendee-family" checked="checked" />
-            <label class="registration-choice attendee-type theme bg se dashicons-before dashicons-groups" for="attendee-family">Family</label>
+            <label class="registration-choice attendee-type theme bg se dashicons-before dashicons-groups" for="attendee-family"><h4>Family</h4></label>
 
         <label class="registration-choice" for="family-members">Number of Family Members Attending:
             <input class="registration-choice" type="number" name="family-members" min="2" max="20" value="2" placeholder="2" id="family-members"/>

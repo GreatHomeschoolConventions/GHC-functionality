@@ -77,12 +77,26 @@ $theme-black:           #333333;
 
                 &, * { color: $theme-black; }
             }
+
+            + label:after {
+                display: none;
+                content: "\002714";
+                color: inherit;
+                position: absolute;
+                top: 1em;
+                right: 1em;
+            }
+
+            &:checked + label:after{ display: block; }
         }
 
         label#{&} {
             margin-right: 1em;
+            position: relative;
 
-            .info { margin-bottom: 0; }
+            h4 { margin: 0; }
+
+            .info { margin: 1em 0 0; }
 
             @media screen and (max-width: 700px) {
                 width: 100%;

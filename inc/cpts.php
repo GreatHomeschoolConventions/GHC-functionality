@@ -344,6 +344,16 @@ function ghc_register_cpts() {
 add_action( 'init', 'ghc_register_cpts' );
 
 /**
+ * Remove “Archives: ” from archive titles
+ * @param  string $title archive title
+ * @return string modified archive title
+ */
+function ghc_cpt_archive_titles( $title ) {
+    return str_replace( 'Archives: ', '', $title );
+}
+add_filter( 'get_the_archive_title', 'ghc_cpt_archive_titles' );
+
+/**
  * Register custom taxonomies
  */
 function ghc_register_taxonomies() {

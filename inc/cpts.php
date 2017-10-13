@@ -354,6 +354,22 @@ function ghc_cpt_archive_titles( $title ) {
 add_filter( 'get_the_archive_title', 'ghc_cpt_archive_titles' );
 
 /**
+ * Add CPT descriptions at top of archive pages
+ * @param  string $description default description text
+ * @return string description with custom message prepended
+ */
+function ghc_cpt_archive_intro( $description ) {
+    foreach ( get_field( 'archive_descriptions', 'option' ) as $cpt_message ) {
+        if ( is_post_type_archive( $cpt_message['post_type'] ) ) {
+            $description = apply_filters( 'the_content', $cpt_message['message'] ) . $description;
+        }
+    }
+
+    return $description;
+}
+add_filter( 'get_the_archive_description', 'ghc_cpt_archive_intro' );
+
+/**
  * Register custom taxonomies
  */
 function ghc_register_taxonomies() {

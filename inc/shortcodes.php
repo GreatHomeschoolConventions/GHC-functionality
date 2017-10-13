@@ -260,7 +260,7 @@ function registration_page_shortcode( $attributes ) {
 
     if ( count( $registration_query ) > 0 ) { ?>
 
-        <h3>Convention</h3>
+        <h3 id="convention">Convention</h3>
         <p>Choose one:</p>
         <?php global $conventions; ?>
         <?php foreach ( $conventions as $convention ) { ?>
@@ -272,12 +272,12 @@ function registration_page_shortcode( $attributes ) {
                 </label>
         <?php } ?>
 
-        <h3>Attendee Type</h3>
+        <h3 id="attendee-type">Attendee Type</h3>
         <p>Choose one:</p>
-        <input class="registration-choice" type="radio" name="attendee-type" value="individual" id="attendee-individual" />
-            <label class="registration-choice dashicons-before dashicons-admin-users" for="attendee-individual">Individual</label>
-        <input class="registration-choice" type="radio" name="attendee-type" value="family" id="attendee-family" checked="checked" />
-            <label class="registration-choice dashicons-before dashicons-groups" for="attendee-family">Family</label>
+        <input class="registration-choice attendee-type" type="radio" name="attendee-type" value="individual" id="attendee-individual" />
+            <label class="registration-choice attendee-type theme bg se dashicons-before dashicons-admin-users" for="attendee-individual">Individual</label>
+        <input class="registration-choice attendee-type" type="radio" name="attendee-type" value="family" id="attendee-family" checked="checked" />
+            <label class="registration-choice attendee-type theme bg se dashicons-before dashicons-groups" for="attendee-family">Family</label>
 
         <label class="registration-choice" for="family-members">Number of Family Members Attending:
             <input class="registration-choice" type="number" name="family-members" min="2" max="20" value="2" placeholder="2" id="family-members"/>

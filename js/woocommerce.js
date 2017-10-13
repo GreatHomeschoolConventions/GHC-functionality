@@ -104,6 +104,18 @@
             });
         }
 
+        // scroll to attendee type after choosing a convention and change its color
+        var oldConventionChoice = $('input.registration-choice.convention:checked').val(),
+            newConventionChoice;
+        $('.registration-choice.convention').on('click, change', function() {
+            newConventionChoice = $(this).val();
+            $('label.registration-choice.attendee-type').removeClass(oldConventionChoice).addClass(newConventionChoice);
+            oldConventionChoice = newConventionChoice;
+            $('html, body').animate({
+                scrollTop: $('#attendee-type').offset().top - 50
+            }, 500);
+        });
+
         // update all family members display fields when changed
         $('input[name="family-members"]').on('change', function() {
             var familyCount = $(this).val();

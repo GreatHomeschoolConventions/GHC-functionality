@@ -65,20 +65,37 @@ $theme-black:           #333333;
     display: inline-block;
     margin: 0 1em 1em 0;
     cursor: pointer;
+    padding: 2rem;
+    margin-right: 0;
 
-    &.convention {
-        padding: 2rem;
-        margin-right: 0;
-    }
-}
+    @at-root {
+        input#{&} {
+            display: none;
 
-input.registration-choice.convention {
-    display: none;
+            &:not(:checked) + label.theme {
+                background-color: $theme-gray;
 
-    &:not(:checked) + label {
-        background-color: $theme-gray;
+                &, * { color: $theme-black; }
+            }
+        }
 
-        &, * { color: $theme-black; }
+        label#{&} {
+            margin-right: 1em;
+
+            .info { margin-bottom: 0; }
+
+            @media screen and (max-width: 700px) {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        .dashicons-before:before {
+            font-size: 30px;
+            height: 30px;
+            width: 30px;
+            margin-right: 5px;
+        }
     }
 }
 

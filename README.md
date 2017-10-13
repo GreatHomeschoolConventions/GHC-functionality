@@ -110,6 +110,9 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.0.3
+    - Improve registration page behavior (scroll to attendee type, style attendee types similar to convention choice)
+
 - 3.0.2
     - Remove workshop names from speaker archive
     - Add workshop full descriptions to speaker bio pages

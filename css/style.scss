@@ -64,9 +64,12 @@ $theme-black:           #333333;
 .registration-choice {
     display: inline-block;
     margin: 0 1em 1em 0;
-    cursor: pointer;
-    padding: 2rem;
     margin-right: 0;
+
+    &:not(.family-members) {
+        cursor: pointer;
+        padding: 2rem;
+    }
 
     @at-root {
         input#{&} {

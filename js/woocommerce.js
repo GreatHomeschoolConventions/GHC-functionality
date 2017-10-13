@@ -1,4 +1,9 @@
 (function($){
+    var popupMakerCookie = [
+        'pum-57405', // live site
+        'pum-56888'  // local dev site
+    ];
+
     /**
      * Fix quantity pluralization
      * @param {object} thisField      jQuery element representing the DOM element to check
@@ -139,7 +144,7 @@
         });
 
         // update add-to-cart button quantity when input is changed
-        $('.products input[name^="qty"]').on('change', function () {
+        $('.products input[name^="qty"]').on('change', function() {
             var thisProductQuantity = $(this).val(),
                 thisAddToCartButton = $(this).parent().next('.product').find('.add_to_cart_button');
 
@@ -156,6 +161,13 @@
                 $(thisConventionSelector).attr('checked', true).trigger('change');
             }
         }
+
+        // set cookie to disable popup when adding a product to cart
+        $(document.body).on('added_to_cart', function() {
+            for (i in popupMakerCookie) {
+                Cookies.set(popupMakerCookie[i], true, {expires: 365});
+            }
+        });
 
     });
 })(jQuery);

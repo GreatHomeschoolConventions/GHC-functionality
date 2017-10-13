@@ -167,6 +167,7 @@
             for (i in popupMakerCookie) {
                 Cookies.set(popupMakerCookie[i], true, {expires: 365});
             }
+            // TODO: change to on checkout submit or something further down the process so we don’t lose people who abandoned checkout
         });
 
     });

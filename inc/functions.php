@@ -411,12 +411,13 @@ function ghc_format_date_range( $d1, $d2, $format = '' ) {
 }
 
 /**
- * Allow ICS file uploads
+ * Allow ICS and SVG file uploads
  * @param  array $mime_types array of allowed mime types
  * @return array modified array
  */
 function ghc_mime_types( $mime_types ) {
     $mime_types['ics'] = 'text/calendar';
+	$mime_types['svg'] = 'image/svg+xml';
     return $mime_types;
 }
 add_filter( 'upload_mimes', 'ghc_mime_types' );

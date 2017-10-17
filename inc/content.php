@@ -239,6 +239,7 @@ function ghc_list_related_workshops( $content ) {
 
         if ( 'speaker' === $this_post_type ) {
             $speaker_id = get_the_ID();
+            $workshop_content .= '<p><a class="button" href="' . get_home_url() . '/speakers/">All Featured Speakers</a></p>';
         } elseif ( 'workshop' === $this_post_type ) {
             $related_speakers = get_field( 'speaker' );
             if ( count( $related_speakers ) == 1 ) {
@@ -295,11 +296,6 @@ function ghc_list_related_workshops( $content ) {
 
             $workshop_content .= '</div>';
         }
-    }
-
-    // add link to all featured speakers
-    if ( 'speaker' === $this_post_type ) {
-        $workshop_content .= '<p><a class="button" href="' . get_home_url() . '/speakers/">All Featured Speakers</a></p>';
     }
 
     return $content . $workshop_content;

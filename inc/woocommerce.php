@@ -69,6 +69,7 @@ function ghc_show_special_event_tickets() {
     }
 }
 add_action( 'woocommerce_after_single_product_summary', 'ghc_show_special_event_tickets', 5 );
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
 
 /**
  * Show lots of columns in cross-sells section

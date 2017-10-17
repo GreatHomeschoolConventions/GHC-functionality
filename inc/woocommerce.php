@@ -76,10 +76,10 @@ remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_r
  * @param  integer $columns number of columns to display
  * @return integer modified number of columns to display
  */
-function woocommerce_remove_cross_sells_columns( $columns ) {
+function ghc_woocommerce_remove_cross_sells_columns( $columns ) {
     return 10;
 }
-add_filter( 'woocommerce_cross_sells_columns', 'woocommerce_remove_cross_sells_columns', 10, 1 );
+add_filter( 'woocommerce_cross_sells_columns', 'ghc_woocommerce_remove_cross_sells_columns', 10, 1 );
 
 /**
  * Disable the add to cart button if trying to add another registration
@@ -348,7 +348,7 @@ add_filter( 'woocommerce_checkout_fields', 'ghc_woocommerce_checkout_fields_plac
  * @param string $message returning customer string
  * @param string modified message
  */
-add_filter( 'woocommerce_checkout_login_message', function() {return 'Been to a GHC convention before?';} );
+add_filter( 'woocommerce_checkout_login_message', function() { return 'Been to a GHC convention before?'; } );
 
 /**
  * Auto-complete all orders

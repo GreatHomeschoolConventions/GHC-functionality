@@ -249,6 +249,7 @@ function ghc_get_max_ticket_quantity_cart( $product_quantity, $cart_item_key, $c
     return $product_quantity;
 }
 add_filter( 'woocommerce_cart_item_quantity', 'ghc_get_max_ticket_quantity_cart', 10, 3 );
+#TODO: proactively check cart on the cart and checkout pages to ensure max quantities are respected
 
 /**
  * Get all convention variation IDs

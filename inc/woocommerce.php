@@ -165,6 +165,20 @@ function ghc_get_cart_items_from_session( $session_data, $values, $key ) {
 add_filter( 'woocommerce_get_cart_item_from_session', 'ghc_get_cart_items_from_session', 1, 3 );
 
 /**
+ * Add family members to order item meta
+ * @param object $item          WC_Order_Item_Product
+ * @param string $cart_item_key cart item key
+ * @param array  $values        line item details
+ * @param object $order         WC_Order
+ */
+function ghc_add_order_meta_family_members( $item, $cart_item_key, $values, $order ) {
+    if ( array_key_exists( 'family_members', $values ) ) {
+        $item->add_meta_data( 'Family members', $values['family_members'], true );
+    }
+}
+add_action( 'woocommerce_checkout_create_order_line_item', 'ghc_add_order_meta_family_members', 10, 4 );
+
+/**
  * Add “family members” to cart if greater than 1
  * @param  string $formatted_name HTML formatted name
  * @param  array  $cart_item      WC_Cart_Product data

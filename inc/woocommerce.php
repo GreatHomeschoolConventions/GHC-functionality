@@ -419,7 +419,7 @@ function ghc_add_coupon_code_admin_email( $order, $sent_to_admin, $plain_text, $
 add_action( 'woocommerce_email_order_details', 'ghc_add_coupon_code_admin_email', 8, 4 );
 
 /**
- * Add product categories to checkout review table
+ * Add product categories to checkout review table for styling
  * @param  string $class         default class
  * @param  array  $cart_item     WC_Cart_Product
  * @param  string $cart_item_key cart item key

@@ -109,7 +109,7 @@
             });
         }
 
-        // scroll to attendee type after choosing a convention and change its color
+        // handle convention changes
         var oldConventionChoice = $('input.registration-choice.convention:checked').val(),
             newConventionChoice;
         $('.registration-choice.convention').on('click, change', function() {
@@ -119,10 +119,13 @@
             $('html, body').animate({
                 scrollTop: $('#attendee-type').offset().top - 50
             }, 500);
+
+            // update family members quantities
+            $('input[name="family-members"]').trigger('change');
         });
 
         // update all family members display fields when changed
-        $('input[name="family-members"]').on('change', function() {
+        $('input[name="family-members"]').on('change keydown', function() {
             var familyCount = $(this).val();
 
             $('input[name="family-members"]').val(familyCount);

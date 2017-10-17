@@ -160,3 +160,9 @@ input#attendee-family:checked ~ .products .attribute_attendee-type-individual { 
 
     .post-30530 .tickets-qty { display: none; } /* program guide ticket quantity text */
 }
+
+.woocommerce {
+    &-checkout-review-order {
+        .cart_item.registration .product-quantity { display: none; } // unnecessary because of family members line
+    }
+}

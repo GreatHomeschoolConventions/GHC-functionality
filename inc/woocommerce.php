@@ -417,3 +417,20 @@ function ghc_add_coupon_code_admin_email( $order, $sent_to_admin, $plain_text, $
     }
 }
 add_action( 'woocommerce_email_order_details', 'ghc_add_coupon_code_admin_email', 8, 4 );
+
+/**
+ * Add product categories to checkout review table
+ * @param  string $class         default class
+ * @param  array  $cart_item     WC_Cart_Product
+ * @param  string $cart_item_key cart item key
+ * @return string classes
+ */
+function ghc_checkout_cart_item_class( $class, $cart_item, $cart_item_key ) {
+    $post_categories = wp_get_post_terms( $cart_item['product_id'], 'product_cat');
+    foreach ( $post_categories as $category ) {
+        $class .= ' ' . $category->slug;
+    }
+
+    return $class;
+}
+add_filter( 'woocommerce_cart_item_class', 'ghc_checkout_cart_item_class', 10, 3 );

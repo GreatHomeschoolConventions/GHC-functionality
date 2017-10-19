@@ -411,7 +411,13 @@ function speaker_info_shortcode( $attributes ) {
         'post_type'              => array( 'speaker' ),
         'posts_per_page'         => '-1',
     );
-    if ( $this_postid ) { $args['p'] = $this_postid; }
+    if ( $this_postid ) {
+        if ( strpos( $this_postid, ',' ) !== false ) {
+            $args['post__in'] = explode( ',', $this_postid );
+        } else {
+            $args['p'] = $this_postid;
+        }
+    }
     if ( $this_pagename ) { $args['pagename'] = $this_pagename; }
     if ( ( $this_alignment ) && ( strpos( $this_alignment, 'align' ) === false ) ) { $this_alignment = 'align' . $this_alignment; }
 
@@ -419,19 +425,20 @@ function speaker_info_shortcode( $attributes ) {
     $speaker_query = new WP_Query( $args );
 
     // The Loop
+    $shortcode_content = '';
     if ( $speaker_query->have_posts() ) {
+        $shortcode_content .= '<div class="speaker-container shortcode';
+        if ( $this_alignment ) { $shortcode_content .= ' ' . $this_alignment; }
+        if ( $extra_classes ) { $shortcode_content .= ' ' . $extra_classes; }
+        $shortcode_content .= '">';
         while ( $speaker_query->have_posts() ) {
             $speaker_query->the_post();
             $thumb_array = array( 'class' => 'speaker-thumb' );
 
-            $shortcode_output = NULL;
-            $shortcode_content .= '<div class="speaker-container';
-            if ( $this_alignment ) { $shortcode_content .= ' ' . $this_alignment; }
-            if ( $extra_classes ) { $shortcode_content .= ' ' . $extra_classes; }
-            $shortcode_content .= '">';
-            $shortcode_content .= '<a href="' . get_permalink() . '">';
+            $shortcode_content .= '<div class="speaker">';
+            $shortcode_content .= '<div class="post-thumbnail"><a href="' . get_permalink() . '">';
             $shortcode_content .= get_the_post_thumbnail( get_the_ID(), 'medium', $thumb_array );
-            $shortcode_content .= '</a>';
+            $shortcode_content .= '</a></div>';
             if ( ! $photo_only ) {
                 $shortcode_content .= '<div class="info">';
                 $shortcode_content .= '<h2><a href="' . get_permalink() . '">' . get_the_title() . '</a></h2>';
@@ -442,8 +449,9 @@ function speaker_info_shortcode( $attributes ) {
                 }
                 $shortcode_content .= '</div>';
             }
-            $shortcode_content .= '</div><!-- .speaker-container -->';
+            $shortcode_content .= '</div>';
         }
+        $shortcode_content .= '</div><!-- .speaker-container -->';
     }
 
     // Restore original Post Data

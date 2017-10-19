@@ -327,6 +327,26 @@ function ghc_list_related_workshops( $content ) {
 add_filter( 'the_content', 'ghc_list_related_workshops', 11 );
 
 /**
+ * Add related speaker(s) to workshops
+ * @param  string $content post content
+ * @return string post content with speaker info added
+ */
+function ghc_show_related_speaker( $content ) {
+    $speaker_content = '';
+
+    if ( is_singular( 'workshop' ) ) {
+        $this_speaker = get_post_meta( get_the_ID(), 'speaker', true );
+
+        foreach ( $this_speaker as $speaker ) {
+            $speaker_content .= do_shortcode( '[speaker_info postid="' . $speaker . '" align="right"]' );
+        }
+    }
+
+    return $speaker_content . $content;
+}
+add_filter( 'the_content', 'ghc_show_related_speaker' );
+
+/**
  * Add hotel details to single hotel views
  * @param  string $content post content
  * @return string post content with hotel info appended

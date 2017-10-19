@@ -112,6 +112,26 @@ function ghc_opengraph_video() {
 add_action( 'wp_head', 'ghc_opengraph_video', 8 );
 
 /**
+ * Show convention icons for each exhibitor
+ * @param  string $content HTML content
+ * @return string modified content
+ */
+function ghc_exhibitor_archive_icons( $content ) {
+    global $post;
+    $new_content = '';
+    if ( 'exhibitor' == get_post_type( $post->ID ) ) {
+        if ( get_field( 'exhibitor_URL', $post->ID ) ) {
+            $new_content .= '<p><a href="' . get_field( 'exhibitor_URL', $post->ID ) . '" target="_blank" rel="noopener">Visit website&rarr;</a></p>';
+        }
+        if ( ! is_tax() ) {
+            $new_content .= output_convention_icons( $post->ID );
+        }
+    }
+    return $new_content . $content;
+}
+add_filter( 'the_content', 'ghc_exhibitor_archive_icons' );
+
+/**
  * Add special track info to speakers/workshops
  * @param  string $content HTML content
  * @return string modified HTML content

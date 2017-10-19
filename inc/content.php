@@ -324,7 +324,7 @@ function ghc_list_related_workshops( $content ) {
 
     return $content . $workshop_content;
 }
-add_action( 'the_content', 'ghc_list_related_workshops', 11 );
+add_filter( 'the_content', 'ghc_list_related_workshops', 11 );
 
 /**
  * Add hotel details to single hotel views

@@ -211,7 +211,11 @@ add_filter( 'the_content', 'ghc_list_special_tracks', 8 );
  */
 function ghc_speaker_show_locations( $content ) {
     if ( is_singular( array( 'speaker', 'workshop' ) ) ) {
-        $content = '<p class="conventions">' . output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ) . '</p>' . $content;
+        $post_terms = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
+
+        if ( $post_terms ) {
+            $content = '<p class="conventions">' . output_convention_icons( $post_terms ) . '</p>' . $content;
+        }
     }
 
     return $content;

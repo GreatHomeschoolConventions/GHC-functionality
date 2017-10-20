@@ -38,7 +38,7 @@ if ( ! is_array( $shortcode_attributes ) ) {
             <p class="text-center"><a class="button" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">Biography</a></p>
         <?php } ?>
 
-        <?php if ( strpos( $shortcode_attributes['show'], 'workshops' ) !== false ) { ?>
+        <?php if ( strpos( $shortcode_attributes['show'], 'workshops' ) !== false && get_field( 'related_workshops' ) !== NULL ) { ?>
             <p class="text-center"><a class="button" href="<?php the_permalink(); ?>#workshops">Workshops</a></p>
         <?php } ?>
     <?php } ?>

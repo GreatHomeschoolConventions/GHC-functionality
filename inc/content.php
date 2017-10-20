@@ -284,30 +284,25 @@ function ghc_list_related_workshops( $content ) {
             }
         }
 
-        if ( is_int( $speaker_id ) ) {
+        $related_workshops = get_field( 'related_workshops', $speaker_id );
+
+        // remove this workshop from the array since post__in causes post__not_in to be ignored
+        if ( 'workshop' === $this_post_type && ( ( $key = array_search( get_the_ID(), $related_workshops ) ) !== false ) ) {
+            unset( $related_workshops[$key] );
+        }
+
+        if ( is_int( $speaker_id ) && count( $related_workshops ) > 0 ) {
             $related_workshops_args = array(
                 'post_type'         => 'workshop',
                 'posts_per_page'    => -1,
                 'orderby'           => 'title',
                 'order'             => 'ASC',
-                'meta_query'        => array(
-                    'relation'      => 'AND',
-                    array(
-                        'key'       => 'speaker',
-                        'compare'   => 'EXISTS',
-                    ),
-                    array(
-                        'key'       => 'speaker',
-                        'value'     => '"' . $speaker_id . '"',
-                        'compare'   => 'LIKE',
-                    ),
-                ),
+                'post__in'          => $related_workshops,
             );
 
             if ( 'workshop' === $this_post_type ) {
                 $related_workshops_args['post__not_in'] = array( get_the_ID() );
             }
-
             $related_workshops = new WP_Query( $related_workshops_args );
 
             if ( $related_workshops->have_posts() ) {

@@ -702,4 +702,58 @@ function ghc_exhibitor_post_type_link( $post_link, $post, $leavename, $sample ) 
 }
 add_filter( 'post_type_link', 'ghc_exhibitor_post_type_link', 10, 4 );
 
-#TODO: on workshop CPT update/save, set a post_meta for the speaker with an array of all workshop IDs; then use that to query with `posts__in` instead of doing a bunch of extra work
+/**
+ * Add all the given speaker’s workshops to a post_meta
+ * @param integer $post_id WP post ID
+ * @param object  $post    WP_Post object
+ * @param boolean $update  whether this is being updated or not
+ */
+function ghc_add_speaker_workshop_meta( $post_id, $post, $update ) {
+
+    if ( 'speaker' === get_post_type() ) {
+        ghc_set_speaker_workshops( $post_id );
+    } elseif ( 'workshop' == get_post_type() ) {
+        $this_speaker_id = get_field( 'speaker', $post_id );
+
+        foreach ( $this_speaker_id as $speaker_id ) {
+            ghc_set_speaker_workshops( $speaker_id->ID );
+        }
+    }
+}
+add_action( 'save_post_speaker', 'ghc_add_speaker_workshop_meta', 10, 3 );
+add_action( 'save_post_workshop', 'ghc_add_speaker_workshop_meta', 10, 3 );
+
+/**
+ * Get workshop IDs for a given speaker
+ * @param  integer $speaker_id speaker post ID
+ * @return array   array of workshop IDs
+ */
+function ghc_set_speaker_workshops( $speaker_id ) {
+    $speaker_workshops_args = array(
+        'post_type'         => 'workshop',
+        'posts_per_page'    => -1,
+        'orderby'           => 'title',
+        'order'             => 'ASC',
+        'meta_query'        => array(
+            'relation'      => 'AND',
+            array(
+                'key'       => 'speaker',
+                'compare'   => 'EXISTS',
+            ),
+            array(
+                'key'       => 'speaker',
+                'value'     => '"' . $speaker_id . '"',
+                'compare'   => 'LIKE',
+            ),
+        ),
+    );
+
+    $speaker_workshops_query = new WP_Query( $speaker_workshops_args );
+
+    $speaker_workshops_array = array();
+    foreach ( $speaker_workshops_query->posts as $post ) {
+        $speaker_workshops_array[] = $post->ID;
+    }
+
+    return update_post_meta( $speaker_id, 'related_workshops', maybe_serialize( $speaker_workshops_array ) );
+}

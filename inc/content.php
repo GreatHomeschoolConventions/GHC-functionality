@@ -236,19 +236,32 @@ function ghc_speaker_show_title_info( $content ) {
 add_filter( 'the_content', 'ghc_speaker_show_title_info', 12 );
 
 /**
- * Add speaker location info to each special event
+ * Add speaker location info to each special event (singular)
  * @param  string $content HTML content
  * @return string modified HTML content
  */
-function ghc_special_event_show_locations( $content ) {
-    if ( 'special_event' === get_post_type() ) {
+function ghc_special_event_show_locations_single( $content ) {
+    if ( is_singular( 'special_event' ) ) {
         $content = '<p class="conventions">' . output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ) . '</p>' . $content;
     }
 
     return $content;
 }
-add_filter( 'the_content', 'ghc_special_event_show_locations', 11 );
-add_filter( 'the_excerpt', 'ghc_special_event_show_locations', 11 );
+add_filter( 'the_content', 'ghc_special_event_show_locations_single', 11 );
+
+/**
+ * Add speaker location info to each special event (archive)
+ * @param  string $content HTML content
+ * @return string modified HTML content
+ */
+function ghc_special_event_show_locations_archive( $excerpt ) {
+    if ( 'special_event' === get_post_type() ) {
+        $excerpt = '<p class="conventions">' . output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ) . '</p>' . $excerpt;
+    }
+
+    return $excerpt;
+}
+add_filter( 'the_excerpt', 'ghc_special_event_show_locations_archive', 11 );
 
 /**
  * Add workshops list to each speaker and related workshops to each workshop

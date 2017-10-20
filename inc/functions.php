@@ -111,19 +111,21 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
     }
 
     // add icons to $convention_icons
-    foreach ( $conventions_to_output as $convention ) {
-        // get short convention name
-        if ( is_object( $convention ) ) {
-            $convention_key = array_search( $convention->slug, $convention_abbreviations );
-        } elseif ( 2 == strlen( $convention ) ) {
-            $convention_key = $convention;
-        } else {
-            $convention_key = array_flip( $convention_abbreviations )[$convention];
-        }
+    if ( is_array( $convention_abbreviations ) ) {
+        foreach ( $conventions_to_output as $convention ) {
+            // get short convention name
+            if ( is_object( $convention ) ) {
+                $convention_key = array_search( $convention->slug, $convention_abbreviations );
+            } elseif ( 2 == strlen( $convention ) ) {
+                $convention_key = $convention;
+            } else {
+                $convention_key = array_flip( $convention_abbreviations )[$convention];
+            }
 
-        $convention_icons .= '<a class="convention-link" href="' . get_permalink( $conventions[$convention_key]['landing_page'][0] ) . '">';
-            $convention_icons .= '<svg role="img" title="' . $conventions[$convention_key]['title'] . '"><use xlink:href="' . plugins_url( '../SVG/icons.min.svg#icon-' . ucfirst ($convention_abbreviations[$convention_key] ) . '_small', __FILE__ ) . '"></use></svg><span class="fallback ' . $convention_key . '">' . $conventions[$convention_key]['title'] . '</span>';
-        $convention_icons .= '</a>';
+            $convention_icons .= '<a class="convention-link" href="' . get_permalink( $conventions[$convention_key]['landing_page'][0] ) . '">';
+                $convention_icons .= '<svg role="img" title="' . $conventions[$convention_key]['title'] . '"><use xlink:href="' . plugins_url( '../SVG/icons.min.svg#icon-' . ucfirst ($convention_abbreviations[$convention_key] ) . '_small', __FILE__ ) . '"></use></svg><span class="fallback ' . $convention_key . '">' . $conventions[$convention_key]['title'] . '</span>';
+            $convention_icons .= '</a>';
+        }
     }
 
     // add filter hook
@@ -140,6 +142,7 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
  */
 function array_sort_conventions( $a, $b ) {
     global $convention_abbreviations;
+    $sort_order = NULL;
 
     // convert objects
     if ( is_object( $a ) && is_object( $b ) ) {
@@ -158,17 +161,19 @@ function array_sort_conventions( $a, $b ) {
     }
 
     // strip key names from conventions
-    $convention_names = array_values( $convention_abbreviations );
+    if ( is_array( $convention_abbreviations ) ) {
+        $convention_names = array_values( $convention_abbreviations );
 
-    // get array key numbers
-    $a_position = array_search( $a, $convention_names );
-    $b_position = array_search( $b, $convention_names );
+        // get array key numbers
+        $a_position = array_search( $a, $convention_names );
+        $b_position = array_search( $b, $convention_names );
 
-    // compare and return sort order
-    if ( $a_position > $b_position ) {
-        $sort_order = 1;
-    } else {
-        $sort_order = -1;
+        // compare and return sort order
+        if ( $a_position > $b_position ) {
+            $sort_order = 1;
+        } else {
+            $sort_order = -1;
+        }
     }
 
     return $sort_order;

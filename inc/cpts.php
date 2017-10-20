@@ -705,11 +705,8 @@ add_filter( 'post_type_link', 'ghc_exhibitor_post_type_link', 10, 4 );
 /**
  * Add all the given speaker’s workshops to a post_meta
  * @param integer $post_id WP post ID
- * @param object  $post    WP_Post object
- * @param boolean $update  whether this is being updated or not
  */
-function ghc_add_speaker_workshop_meta( $post_id, $post, $update ) {
-
+function ghc_add_speaker_workshop_meta( $post_id ) {
     if ( 'speaker' === get_post_type() ) {
         ghc_set_speaker_workshops( $post_id );
     } elseif ( 'workshop' == get_post_type() ) {
@@ -720,8 +717,7 @@ function ghc_add_speaker_workshop_meta( $post_id, $post, $update ) {
         }
     }
 }
-add_action( 'save_post_speaker', 'ghc_add_speaker_workshop_meta', 10, 3 );
-add_action( 'save_post_workshop', 'ghc_add_speaker_workshop_meta', 10, 3 );
+add_action( 'acf/save_post', 'ghc_add_speaker_workshop_meta', 12 );
 
 /**
  * Get workshop IDs for a given speaker

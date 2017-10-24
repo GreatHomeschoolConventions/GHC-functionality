@@ -726,29 +726,22 @@ function workshop_list_shortcode( $attributes ) {
 
         $this_convention_speaker = new WP_Query( $this_convention_speaker_args );
 
-        $this_convention_speaker_array = array();
+        $workshop_ids_array = array();
 
         if ( $this_convention_speaker->have_posts() ) {
             while ( $this_convention_speaker->have_posts() ) {
                 $this_convention_speaker->the_post();
 
-                $this_convention_speaker_array[] = get_the_ID();
+                $related_workshops = get_field( 'related_workshops' );
+                if ( is_array( $related_workshops ) ) {
+                    $workshop_ids_array = array_merge( $workshop_ids_array, $related_workshops );
+                }
             }
         }
 
         wp_reset_postdata();
 
-        $workshop_list_args['meta_query'] = array(
-            'relation'  => 'OR',
-        );
-
-        foreach ( $this_convention_speaker_array as $this_speaker ) {
-            $workshop_list_args['meta_query'][] = array(
-                'key'       => 'speaker',
-                'value'     => '"' . $this_speaker . '"', // add double quotes since the field is serialized; this prevents partial ID matches
-                'compare'   => 'LIKE',
-            );
-        }
+        $workshop_list_args['post__in'] = $workshop_ids_array;
     }
 
     // speakers

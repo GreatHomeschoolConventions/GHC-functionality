@@ -775,7 +775,7 @@ function workshop_list_shortcode( $attributes ) {
         }
 
         if ( $shortcode_attributes['posts_per_page'] !== -1 && ! is_null( $shortcode_attributes['convention'] ) ) {
-            $shortcode_content .= '<li><a href="' . home_url() . '??post_type=workshop&ghc_conventions_taxonomy=' . $convention_abbreviations[$this_convention] . '">And <strong>many</strong> more!</a></li>';
+            $shortcode_content .= '<li><a href="' . home_url() . 'workshops/">And <strong>many</strong> more!</a></li>';
         }
 
         $shortcode_content .= '</ul>';

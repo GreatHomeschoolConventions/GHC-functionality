@@ -279,7 +279,7 @@ function ghc_list_related_workshops( $content ) {
             $workshop_content .= '<p><a class="button" href="' . get_home_url() . '/speakers/">All Featured Speakers</a></p>';
         } elseif ( 'workshop' === $this_post_type ) {
             $related_speakers = get_field( 'speaker' );
-            if ( count( $related_speakers ) == 1 ) {
+            if ( count( $related_speakers ) === 1 ) {
                 $speaker_id = $related_speakers[0]->ID;
             }
         }

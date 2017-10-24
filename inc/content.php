@@ -345,7 +345,7 @@ function ghc_show_related_speaker( $content ) {
     if ( is_singular( 'workshop' ) ) {
         $this_speaker = get_post_meta( get_the_ID(), 'speaker', true );
 
-        $speaker_content .= do_shortcode( '[speaker_info no_conventions="true" postid="' . implode( ',', $this_speaker ) . '" ' . ( count( $this_speaker ) === 1 ? 'align="right"' : '' ) . ']' );
+        $speaker_content .= do_shortcode( '[speaker_info postid="' . implode( ',', $this_speaker ) . '" ' . ( count( $this_speaker ) === 1 ? 'align="right"' : '' ) . ']' );
     }
 
     return $speaker_content . $content;

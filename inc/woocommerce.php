@@ -172,7 +172,8 @@ add_filter( 'woocommerce_get_cart_item_from_session', 'ghc_get_cart_items_from_s
  * @param object $order         WC_Order
  */
 function ghc_add_order_meta_family_members( $item, $cart_item_key, $values, $order ) {
-    if ( array_key_exists( 'family_members', $values ) ) {
+    $attributes = $values['data']->get_attributes;
+    if ( array_key_exists( 'family_members', $values ) && array_key_exists( 'attendee-type', $attributes ) && $attributes['attendee-type'] === 'Family' ) {
         $item->add_meta_data( 'Family members', $values['family_members'], true );
     }
 }

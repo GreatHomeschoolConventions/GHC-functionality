@@ -337,7 +337,7 @@ function ghc_cpt_grid( $attributes ) {
     // loop
     ob_start();
     if ( $cpt_grid_query->have_posts() ) {
-        echo '<div class="' . $shortcode_attributes['post_type'] . '-container">';
+        echo '<div class="' . $shortcode_attributes['post_type'] . '-container ghc-cpt container">';
         while ( $cpt_grid_query->have_posts() ) {
             $cpt_grid_query->the_post();
             require( plugin_dir_path( __FILE__ ) . '../templates/speaker-template.php' );

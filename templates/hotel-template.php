@@ -4,6 +4,7 @@
         $this_convention = array_flip( $convention_abbreviations )[$conventions_taxonomy[0]->slug];
     }
     $post_classes = array(
+        'ghc-cpt item',
         $this_convention,
         get_field( 'sold_out' ) ? 'sold-out' : ''
     );

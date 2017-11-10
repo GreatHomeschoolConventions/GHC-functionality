@@ -40,7 +40,7 @@ $hotel_query = new WP_Query( $hotel_args );
 <?php
 // the loop
 if ( $hotel_query->have_posts() ) { ?>
-    <div class="hotel-container">
+    <div class="hotel-container ghc-cpt container">
     <?php
     while ( $hotel_query->have_posts() ) {
         $hotel_query->the_post();

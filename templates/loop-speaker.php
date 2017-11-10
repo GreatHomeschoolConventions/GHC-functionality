@@ -45,13 +45,13 @@
 
     // top speakers (set with $top_speakers_quantity)
     if ( $top_speakers_query->have_posts() ) {
-        echo '<div class="speaker-container">';
+        echo '<div class="speaker-container ghc-cpt container">';
         while ( $top_speakers_query->have_posts() ) {
             $top_speakers_query->the_post();
             $thumbnail_size = 'medium';
             include('speaker-template.php');
         }
-        echo '</div><!-- .speaker-container -->';
+        echo '</div><!-- .speaker-container.ghc-cpt.container -->';
     } else {
         echo '<h2>More information coming soon.</h2>';
         echo do_shortcode( '[contact-form-7 id="28288" title="Signup - Convention Info"]' );
@@ -59,24 +59,24 @@
 
     // entertainers
     if ( $entertainers_query->have_posts() ) {
-        echo '<div class="special_event-container">';
+        echo '<div class="special_event-container ghc-cpt container">';
         while ( $entertainers_query->have_posts() ) {
             $entertainers_query->the_post();
             $thumbnail_size = 'special-event-large';
             include('speaker-template.php');
         }
-        echo '</div><!-- .special_event-container -->';
+        echo '</div><!-- .special_event-container.ghc-cpt.container -->';
     }
 
     // bottom speakers
     if ( $bottom_speakers_query->have_posts() ) {
-        echo '<div class="speaker-container">';
+        echo '<div class="speaker-container ghc-cpt container">';
         while ( $bottom_speakers_query->have_posts() ) {
             $bottom_speakers_query->the_post();
             $thumbnail_size = 'medium';
             include('speaker-template.php');
         }
-        echo '</div><!-- .speaker-container -->';
+        echo '</div><!-- .speaker-container.ghc-cpt.container -->';
     }
 
     // Restore original post data

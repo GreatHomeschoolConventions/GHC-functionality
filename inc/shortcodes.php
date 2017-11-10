@@ -145,9 +145,9 @@ function exhibitor_list_shortcode( $attributes ) {
     if ( $exhibitor_query->have_posts() ) {
         ob_start();
         if ( $shortcode_attributes['style'] == 'list' ) {
-            echo '<ul class="exhibitor-container ' . esc_attr( $shortcode_attributes['style'] ) . '">';
+            echo '<ul class="exhibitor-container ghc-cpt container ' . esc_attr( $shortcode_attributes['style'] ) . '">';
         } else {
-            echo '<div class="exhibitor-container ' . esc_attr( $shortcode_attributes['style'] ) . '">';
+            echo '<div class="exhibitor-container ghc-cpt container ' . esc_attr( $shortcode_attributes['style'] ) . '">';
         }
 
         while ( $exhibitor_query->have_posts() ) {
@@ -427,7 +427,7 @@ function speaker_info_shortcode( $attributes ) {
     // The Loop
     $shortcode_content = '';
     if ( $speaker_query->have_posts() ) {
-        $shortcode_content .= '<div class="speaker-container shortcode';
+        $shortcode_content .= '<div class="speaker-container ghc-cpt container shortcode';
         if ( $this_alignment ) { $shortcode_content .= ' ' . $this_alignment; }
         if ( $extra_classes ) { $shortcode_content .= ' ' . $extra_classes; }
         $shortcode_content .= '">';
@@ -435,7 +435,7 @@ function speaker_info_shortcode( $attributes ) {
             $speaker_query->the_post();
             $thumb_array = array( 'class' => 'speaker-thumb' );
 
-            $shortcode_content .= '<div class="speaker">';
+            $shortcode_content .= '<div class="speaker ghc-cpt item">';
             $shortcode_content .= '<div class="post-thumbnail"><a href="' . get_permalink() . '">';
             $shortcode_content .= get_the_post_thumbnail( get_the_ID(), 'medium', $thumb_array );
             $shortcode_content .= '</a></div>';
@@ -451,7 +451,7 @@ function speaker_info_shortcode( $attributes ) {
             }
             $shortcode_content .= '</div>';
         }
-        $shortcode_content .= '</div><!-- .speaker-container -->';
+        $shortcode_content .= '</div><!-- .speaker-container.ghc-cpt.container -->';
     }
 
     // Restore original Post Data
@@ -600,7 +600,7 @@ function special_track_speakers_shortcode( $attributes ) {
 
     // loop
     if ( $special_track_speakers_query->have_posts() ) {
-        $shortcode_content = '<div class="speaker-container">';
+        $shortcode_content = '<div class="speaker-container ghc-cpt container">';
         while ( $special_track_speakers_query->have_posts() ) {
             $special_track_speakers_query->the_post();
             ob_start();
@@ -646,10 +646,10 @@ function sponsors_shortcode( $attributes ) {
 
     // loop
     if ( $sponsors_query->have_posts() ) {
-        $shortcode_content = '<div class="sponsor-container">';
+        $shortcode_content = '<div class="sponsor-container ghc-cpt container">';
         while ( $sponsors_query->have_posts() ) {
             $sponsors_query->the_post();
-            $shortcode_content .= '<article id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '">';
+            $shortcode_content .= '<article id="post-' . get_the_ID() . '" class="ghc-cpt item ' . implode( ' ', get_post_class() ) . '">';
                 $shortcode_content .= '<a href="' . get_permalink() . '">
                 <div class="sponsor-thumbnail">';
                 if ( $shortcode_attributes['gray'] ) {

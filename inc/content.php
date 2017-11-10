@@ -41,7 +41,7 @@ function ghc_related_sponsors( $content ) {
             if ( $related_sponsors_query->have_posts() ) {
                 $content .= '<div id="related-sponsors">
                 <h3 class="related-sponsors">Sponsors</h3>
-                <div class="sponsor-container">';
+                <div class="sponsor-container ghc-cpt container">';
 
                 while ( $related_sponsors_query->have_posts() ) {
                     $related_sponsors_query->the_post();
@@ -58,8 +58,8 @@ function ghc_related_sponsors( $content ) {
                     $content .= '</div>
                     </div><!-- .sponsor -->';
                 }
-                $content .= '</div><!-- .sponsor-container -->
-                </div><!-- #sponsor-container -->';
+                $content .= '</div><!-- .sponsor-container.ghc-cpt.container -->
+                </div><!-- #sponsor-container.ghc-cpt.container -->';
             }
 
             // reset post data

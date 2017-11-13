@@ -436,3 +436,29 @@ function ghc_checkout_cart_item_class( $class, $cart_item, $cart_item_key ) {
     return $class;
 }
 add_filter( 'woocommerce_cart_item_class', 'ghc_checkout_cart_item_class', 10, 3 );
+
+/**
+ * Add show regular price alongside sale price
+ * @param  string $price   price string
+ * @param  object $product WC_Product
+ * @return string reformatted price string
+ */
+function ghc_variable_product_minmax_price_html( $price, $product ) {
+    $variation_min_price = $product->get_variation_price( 'min', true );
+    $variation_max_price = $product->get_variation_price( 'max', true );
+    $variation_min_regular_price = $product->get_variation_regular_price( 'min', true );
+    $variation_max_regular_price = $product->get_variation_regular_price( 'max', true );
+
+    if ( ( $variation_min_price === $variation_min_regular_price ) && ( $variation_max_price === $variation_max_regular_price ) ) {
+        $html_min_max_price = $price;
+    } else {
+        $html_price = '<p class="price">';
+        $html_price .= '<del>' . woocommerce_price( $variation_min_regular_price ) . '–' . woocommerce_price( $variation_max_regular_price ) . '</del> ';
+        $html_price .= '<ins>' . woocommerce_price( $variation_min_price ) . '–' . woocommerce_price( $variation_max_price ) . '</ins>';
+        $html_min_max_price = $html_price;
+    }
+
+    return $html_min_max_price;
+}
+add_filter( 'woocommerce_variable_sale_price_html', 'ghc_variable_product_minmax_price_html', 10, 2 );
+add_filter( 'woocommerce_variable_price_html', 'ghc_variable_product_minmax_price_html', 10, 2 );

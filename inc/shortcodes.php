@@ -228,6 +228,21 @@ function price_sheet_shortcode( $attributes ) {
 add_shortcode( 'price_sheet', 'price_sheet_shortcode' );
 
 /**
+ * Show product sale/regular prices
+ * @param  array  $attributes shortcode attributes
+ * @return string formatted price string
+ */
+function product_price_shortcode( $attributes ) {
+    ob_start();
+
+    $registration_product = new WC_Product_Variable( get_field( 'registration_product' ) );
+    echo $registration_product->get_price_html();
+
+    return ob_get_clean();
+}
+add_shortcode( 'product_price', 'product_price_shortcode' );
+
+/**
  * Shortcode to display custom registration
  * @param  array  $attributes shortcode parameters
  * @return string HTML output

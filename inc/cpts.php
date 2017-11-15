@@ -674,6 +674,20 @@ function ghc_modify_exhibitor_archive( $query ) {
 add_action( 'pre_get_posts', 'ghc_modify_exhibitor_archive' );
 
 /**
+ * Sort special track CPTs
+ * @param object $query WP_Query
+ */
+function ghc_modify_special_track_tax( $query ) {
+    if ( array_key_exists( 'ghc_special_tracks_taxonomy', $query->query ) && ! is_admin() && $query->is_main_query() ) {
+        $query->set( 'posts_per_page', '-1' );
+        $query->set( 'pagination', 'false' );
+        $query->set( 'orderby', 'post_type menu_order title' );
+        $query->set( 'order', 'ASC' );
+    }
+}
+add_action( 'pre_get_posts', 'ghc_modify_special_track_tax' );
+
+/**
  * Sort sponsors
  * @param object $query WP_Query
  */

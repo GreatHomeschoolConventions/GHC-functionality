@@ -210,7 +210,7 @@ add_filter( 'the_content', 'ghc_list_special_tracks', 8 );
  * @return string modified HTML content
  */
 function ghc_speaker_show_locations( $content ) {
-    if ( is_singular( array( 'speaker', 'workshop' ) ) || is_tax( 'ghc_special_tracks_taxonomy' ) ) {
+    if ( is_singular( array( 'speaker', 'workshop' ) ) ) {
         $post_terms = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 
         if ( $post_terms ) {
@@ -221,7 +221,24 @@ function ghc_speaker_show_locations( $content ) {
     return $content;
 }
 add_filter( 'the_content', 'ghc_speaker_show_locations', 11 );
-add_filter( 'the_excerpt', 'ghc_speaker_show_locations', 11 );
+
+/**
+ * Add speaker location info to each speaker/workshop
+ * @param  string $excerpt HTML content
+ * @return string modified HTML content
+ */
+function ghc_speaker_excerpt_show_locations( $excerpt ) {
+    if ( is_tax( 'ghc_special_tracks_taxonomy' ) ) {
+        $post_terms = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
+
+        if ( $post_terms ) {
+            $excerpt = '<p class="conventions">' . output_convention_icons( $post_terms ) . '</p>' . $excerpt;
+        }
+    }
+
+    return $excerpt;
+}
+add_filter( 'the_excerpt', 'ghc_speaker_excerpt_show_locations', 11 );
 
 /**
  * Show title and subtitle on speaker bio pages

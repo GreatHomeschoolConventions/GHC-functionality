@@ -453,8 +453,8 @@ function ghc_variable_product_minmax_price_html( $price, $product ) {
         $html_min_max_price = $price;
     } else {
         $html_price = '<p class="price">';
-        $html_price .= '<del>' . woocommerce_price( $variation_min_regular_price ) . '–' . woocommerce_price( $variation_max_regular_price ) . '</del> ';
-        $html_price .= '<ins>' . woocommerce_price( $variation_min_price ) . '–' . woocommerce_price( $variation_max_price ) . '</ins>';
+        $html_price .= '<del>' . wc_price( $variation_min_regular_price ) . '–' . wc_price( $variation_max_regular_price ) . '</del> ';
+        $html_price .= '<ins>' . wc_price( $variation_min_price ) . '–' . wc_price( $variation_max_price ) . '</ins>';
         $html_min_max_price = $html_price;
     }
 

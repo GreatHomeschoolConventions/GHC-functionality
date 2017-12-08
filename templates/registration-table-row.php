@@ -34,7 +34,7 @@
         }
         ?>
         <p class="product woocommerce add_to_cart_inline">
-            <a rel="nofollow" href="<?php echo $variation->add_to_cart_url() ?>" data-quantity="1" data-product_id="<?php echo get_the_ID(); ?>" class="button product_type_variation add_to_cart_button ajax_add_to_cart">Add to my order</a>
+            <a rel="nofollow" href="<?php echo $variation->add_to_cart_url(); ?>" data-quantity="1" data-product_id="<?php echo get_the_ID(); ?>" class="button product_type_variation add_to_cart_button ajax_add_to_cart">Add to my order</a>
         </p>
     </td>
 </tr>

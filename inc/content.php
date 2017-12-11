@@ -25,6 +25,7 @@ function ghc_related_sponsors( $content ) {
     if ( is_singular() ) {
         // get related sponsors
         $related_sponsors = get_field( 'related_sponsors' );
+        $show_content_with_logo = get_field( 'show_content_with_logo' );
 
         if ( $related_sponsors ) {
             // set up query args
@@ -41,7 +42,7 @@ function ghc_related_sponsors( $content ) {
             if ( $related_sponsors_query->have_posts() ) {
                 $content .= '<div id="related-sponsors">
                 <h3 class="related-sponsors">Sponsors</h3>
-                <div class="sponsor-container ghc-cpt container">';
+                <div class="sponsor-container ghc-cpt container show-content-' . $show_content_with_logo . '">';
 
                 while ( $related_sponsors_query->have_posts() ) {
                     $related_sponsors_query->the_post();
@@ -55,6 +56,11 @@ function ghc_related_sponsors( $content ) {
                     } else {
                         $content .= '<a href="' . $permalink . '">' . get_the_post_thumbnail() . '</a>';
                     }
+
+                    if ( $show_content_with_logo ) {
+                        $content .= apply_filters( 'the_content', get_the_content() );
+                    }
+
                     $content .= '</div>
                     </div><!-- .sponsor -->';
                 }

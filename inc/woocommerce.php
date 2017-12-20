@@ -180,7 +180,7 @@ function ghc_add_order_meta_family_members( $item, $cart_item_key, $values, $ord
 add_action( 'woocommerce_checkout_create_order_line_item', 'ghc_add_order_meta_family_members', 10, 4 );
 
 /**
- * Add “family members” to cart if greater than 1
+ * Add “family members” to cart frontend display if greater than 1
  * @param  string $formatted_name HTML formatted name
  * @param  array  $cart_item      WC_Cart_Product data
  * @param  string $cart_item_key  WC_Cart_Product key

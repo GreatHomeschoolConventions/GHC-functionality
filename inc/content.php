@@ -160,7 +160,7 @@ function ghc_list_special_tracks( $content ) {
                 $sponsors = get_field( 'related_sponsors', 'ghc_special_tracks_taxonomy_' . $special_track->term_id );
                 if ( $sponsors ) {
                     $sponsor_index = 1;
-                    $track_output .= ' (sponsored by ';
+                    $track_output .= ' <small>(sponsored by ';
                     foreach( $sponsors as $sponsor ) {
                         $track_output .= '<a href="' . get_permalink( $sponsor ) . '">' . get_the_title( $sponsor ) . '</a>';
                         if ( count( $sponsors ) > 2 ) {
@@ -173,7 +173,7 @@ function ghc_list_special_tracks( $content ) {
                         }
                         $sponsor_index++;
                     }
-                    $track_output .= ')';
+                    $track_output .= ')</small>';
                 }
 
                 if ( $special_tracks_count > 2 ) {

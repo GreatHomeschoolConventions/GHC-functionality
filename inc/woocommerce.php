@@ -133,36 +133,39 @@ function woocommerce_single_variation_add_to_cart_button() {
 /**
  * Add custom data fields to cart item metadata
  *
- * @link https://wordpress.stackexchange.com/a/138596 Adapted from this sample code
+ * @link https://wisdmlabs.com/blog/add-custom-data-woocommerce-order-2/ Adapted from this sample code
  *
  * @param  array   $cart_item_meta WC cart item metadata
  * @param  integer $product_id     WC product ID
- * @return array   WC cart itme metadata
+ * @param  integer $variation_id   WC variation ID
+ * @return array   WC cart item metadata
  */
-function ghc_add_cart_item_family_members( $cart_item_meta, $product_id ) {
-    global $woocommerce;
-    $cart_item_meta['family_members'] = $_POST['familyMembers'];
-    return $cart_item_meta;
+function ghc_add_cart_item_family_members( $cart_item_data, $product_id, $variation_id ) {
+    if ( isset( $_REQUEST['familyMembers'] ) ) {
+        $cart_item_data['family_members'] = sanitize_text_field( $_REQUEST['familyMembers'] );
+    }
+
+    return $cart_item_data;
 }
-add_filter( 'woocommerce_add_cart_item_data', 'ghc_add_cart_item_family_members', 10, 2 );
+add_filter( 'woocommerce_add_cart_item_data', 'ghc_add_cart_item_family_members', 10, 3 );
 
 /**
- * Add family member count to cart data
- *
- * @link https://wordpress.stackexchange.com/a/138596 Adapted from this sample code
- *
- * @param  array  $session_data session data
- * @param  array  $values       WC_Cart_Product data
- * @param  string $key          WC_Cart_Product key
- * @return array  session data
+ * Add family members to cart metadata
+ * @param  array $item_data WC cart item data
+ * @param  array $cart_item WC cart item
+ * @return array WC cart item data
  */
-function ghc_get_cart_items_from_session( $session_data, $values, $key ) {
-    if ( array_key_exists( 'family_members', $values ) ) {
-        $session_data['family_members'] = $values['family_members'];
+function ghc_add_cart_family_members_metadata( $item_data, $cart_item ) {
+    if ( array_key_exists( 'family_members', $cart_item ) ) {
+        $item_data[] = array(
+            'key'   => 'Family Members',
+            'value' => $cart_item['family_members'],
+        );
     }
-    return $session_data;
+
+    return $item_data;
 }
-add_filter( 'woocommerce_get_cart_item_from_session', 'ghc_get_cart_items_from_session', 1, 3 );
+add_filter( 'woocommerce_get_item_data', 'ghc_add_cart_family_members_metadata', 10, 2 );
 
 /**
  * Add family members to order item meta
@@ -172,27 +175,11 @@ add_filter( 'woocommerce_get_cart_item_from_session', 'ghc_get_cart_items_from_s
  * @param object $order         WC_Order
  */
 function ghc_add_order_meta_family_members( $item, $cart_item_key, $values, $order ) {
-    $attributes = $values['data']->get_attributes;
-    if ( array_key_exists( 'family_members', $values ) && array_key_exists( 'attendee-type', $attributes ) && $attributes['attendee-type'] === 'Family' ) {
-        $item->add_meta_data( 'Family members', $values['family_members'], true );
+    if ( array_key_exists( 'family_members', $values ) ) {
+        $item->add_meta_data( 'Family Members', $values['family_members'], true );
     }
 }
 add_action( 'woocommerce_checkout_create_order_line_item', 'ghc_add_order_meta_family_members', 10, 4 );
-
-/**
- * Add “family members” to cart frontend display if greater than 1
- * @param  string $formatted_name HTML formatted name
- * @param  array  $cart_item      WC_Cart_Product data
- * @param  string $cart_item_key  WC_Cart_Product key
- * @return string HTML formatted name
- */
-function ghc_cart_item_name_add_family_members( $formatted_name, $cart_item, $cart_item_key ) {
-    if ( array_key_exists( 'family_members', $cart_item ) && ! is_null( $cart_item['family_members'] )  && ( $cart_item['family_members'] > 1 ) ) {
-        $formatted_name .= '<br/>Family members: ' . esc_attr( $cart_item['family_members'] );
-    }
-    return $formatted_name;
-}
-add_filter( 'woocommerce_cart_item_name', 'ghc_cart_item_name_add_family_members', 10, 3 );
 
 /**
  * Set the max special event ticket quantities to number of purchased tickets

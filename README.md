@@ -110,6 +110,21 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.1.0
+    - Fix a bunch of bugs
+    - Add related speakers to workshops
+    - Update `[speaker_info]` handle multiple speakers
+    - Save workshops the related speaker’s post_meta to cut down on meta_queries for each page load
+    - Show speakers’ conventions on their workshops
+    - Add 2018 price sheets
+    - Sort special track taxonomies to show speakers first
+    - Add support for showing sponsor’s content along with their logo
+    - Update family member quantities for WooCommerce v3.2.x
+    - Add related sponsors to special track tax archives
+
+- 3.0.6
+    - Handle family member quantities
+
 - 3.0.5
     - Set PopupMaker cookies when adding a product to the cart
 

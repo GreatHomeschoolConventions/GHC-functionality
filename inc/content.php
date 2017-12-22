@@ -47,15 +47,8 @@ function ghc_related_sponsors( $content ) {
                 while ( $related_sponsors_query->have_posts() ) {
                     $related_sponsors_query->the_post();
                     $content .= '<div class="sponsor">
-                    <div class="post-thumbnail">';
-                    $grayscale_logo = get_field( 'grayscale_logo' );
-                    $permalink = get_permalink();
-
-                    if ( $grayscale_logo ) {
-                        $content .= '<a href="' . $permalink . '"><img class="wp-post-image sponsor wp-image-' . $grayscale_logo['id'] . '" src="' . $grayscale_logo['url'] . '" alt="' . $grayscale_logo['alt'] . '" title="' . $grayscale_logo['title'] . '" /></a>';
-                    } else {
-                        $content .= '<a href="' . $permalink . '">' . get_the_post_thumbnail() . '</a>';
-                    }
+                    <div class="post-thumbnail">
+                    <a href="' . $permalink . '">' . get_the_post_thumbnail( get_the_ID(), 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>';
 
                     if ( $show_content_with_logo ) {
                         $content .= apply_filters( 'the_content', get_the_content() );

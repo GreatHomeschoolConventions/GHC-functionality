@@ -416,6 +416,43 @@ function ghc_format_date_range( $d1, $d2, $format = '' ) {
 }
 
 /**
+ * Get special track related sponsor name(s) and link(s)
+ * @param  integer $term_id ghc_special_track term ID
+ * @return string  HTML output with sponsor name(s) and link(s)
+ */
+function ghc_get_special_track_related_sponsor_names( $term_id, $context = 'inline' ) {
+    $track_output = '';
+    $sponsors = get_field( 'related_sponsors', 'ghc_special_tracks_taxonomy_' . $term_id );
+    if ( $sponsors ) {
+        $sponsor_index = 1;
+        if ( $context === 'inline' ) {
+            $track_output .= ' <small>(sponsored by ';
+        } elseif ( $context === 'standalone' ) {
+            $track_output .= '<p>This track is sponsored by ';
+        }
+        foreach( $sponsors as $sponsor ) {
+            $track_output .= '<a href="' . get_permalink( $sponsor ) . '">' . get_the_title( $sponsor ) . '</a>';
+            if ( count( $sponsors ) > 2 ) {
+                $track_output .= ', ';
+                if ( count( $sponsors ) == $index ) {
+                    $track_output .= ' and ';
+                }
+            } elseif ( count( $sponsors ) == 2 && $sponsor_index != 2 ) {
+                $track_output .= ' and ';
+            }
+            $sponsor_index++;
+        }
+        if ( $context === 'inline' ) {
+            $track_output .= ')</small>';
+        } elseif ( $context === 'standalone' ) {
+            $track_output .= '.</p>';
+        }
+    }
+
+    return $track_output;
+}
+
+/**
  * Allow ICS and SVG file uploads
  * @param  array $mime_types array of allowed mime types
  * @return array modified array

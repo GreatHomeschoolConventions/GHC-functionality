@@ -157,24 +157,7 @@ function ghc_list_special_tracks( $content ) {
                 $track_output .= '<a href="' . get_term_link( $special_track->term_id, 'ghc_special_tracks_taxonomy' ) . '">' . $special_track->name . '</a> track';
 
                 // check for sponsors
-                $sponsors = get_field( 'related_sponsors', 'ghc_special_tracks_taxonomy_' . $special_track->term_id );
-                if ( $sponsors ) {
-                    $sponsor_index = 1;
-                    $track_output .= ' <small>(sponsored by ';
-                    foreach( $sponsors as $sponsor ) {
-                        $track_output .= '<a href="' . get_permalink( $sponsor ) . '">' . get_the_title( $sponsor ) . '</a>';
-                        if ( count( $sponsors ) > 2 ) {
-                            $track_output .= ', ';
-                            if ( count( $sponsors ) == $index ) {
-                                $track_output .= ' and ';
-                            }
-                        } elseif ( count( $sponsors ) == 2 && $sponsor_index != 2 ) {
-                            $track_output .= ' and ';
-                        }
-                        $sponsor_index++;
-                    }
-                    $track_output .= ')</small>';
-                }
+                $track_output .= ghc_get_special_track_related_sponsor_names( $special_track->term_id );
 
                 if ( $special_tracks_count > 2 ) {
                     $track_output .= ', ';
@@ -209,6 +192,17 @@ function ghc_list_special_tracks( $content ) {
     return $intro_content . $content;
 }
 add_filter( 'the_content', 'ghc_list_special_tracks', 8 );
+
+/**
+ * Add sponsor info to special track archive
+ * @param  string $content HTML archive description
+ * @return string HTML archive description with sponsor(s) name(s) and link(s) appended
+ */
+function ghc_list_special_track_sponsors( $content ) {
+    $content .= ghc_get_special_track_related_sponsor_names( get_queried_object_id(), 'standalone' );
+    return $content;
+}
+add_filter( 'get_the_archive_description', 'ghc_list_special_track_sponsors' );
 
 /**
  * Add speaker location info to each speaker/workshop

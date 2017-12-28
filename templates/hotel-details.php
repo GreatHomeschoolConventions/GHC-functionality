@@ -19,6 +19,13 @@
 
     echo get_field( 'hotel_phone' ) ? '<p>Phone: ' . get_field( 'hotel_phone' ) . '</p>' : '';
 
+    if ( $is_shortcode && $shortcode_attributes['show_content'] == true && get_the_content() !== '' ) {
+        // use get_the_content() to bypass the_content filters
+        echo '<div class="small">
+        <h4 class="perks">Perks</h4>
+        ' . get_the_content() . '</div>';
+    }
+
     if ( get_field( 'location' ) ) {
         $location = get_field( 'location' );
 

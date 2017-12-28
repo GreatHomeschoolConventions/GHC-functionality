@@ -197,6 +197,7 @@ add_shortcode( 'exhibit_hall_hours', 'exhibit_hall_hours_shortcode' );
 function hotel_grid_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array (
         'convention'    => NULL,
+        'show_content'  => false,
     ), $attributes );
     $this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 

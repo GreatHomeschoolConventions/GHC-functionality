@@ -446,6 +446,17 @@ function ghc_get_special_track_related_sponsor_names( $term_id, $context = 'inli
             $track_output .= ')</small>';
         } elseif ( $context === 'standalone' ) {
             $track_output .= '.</p>';
+            $track_output .= '<div id="related-sponsors">
+                <div class="sponsor-container ghc-cpt container">';
+                foreach ( $sponsors as $sponsor ) {
+                    $track_output .= '<div class="sponsor">
+                    <div class="post-thumbnail">
+                    <a href="' . get_permalink( $sponsor ) . '">' . get_the_post_thumbnail( $sponsor, 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>
+                    </div>
+                    </div><!-- .sponsor -->';
+                }
+                $track_output .= '</div><!-- .sponsor-container.ghc-cpt.container -->
+                </div><!-- #sponsor-container.ghc-cpt.container -->';
         }
     }
 

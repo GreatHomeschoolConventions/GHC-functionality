@@ -110,7 +110,7 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
-- 3.2.0
+- 3.1.3
     - Add visual indicators when adding products to cart
 
 - 3.1.1

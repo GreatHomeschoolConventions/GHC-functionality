@@ -110,6 +110,12 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.1.1
+    - Hide teen track tickets when individual ticket type is selected
+    - Add related sponsor logos on special track archives
+    - Add `show_content` attribute to `[hotel_grid]` shortcode
+    - Use color related sponsor logos
+
 - 3.1.0
     - Fix a bunch of bugs
     - Add related speakers to workshops

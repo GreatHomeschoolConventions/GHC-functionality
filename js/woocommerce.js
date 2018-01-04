@@ -150,6 +150,16 @@
             thisAddToCartButton.attr('data-quantity', thisProductQuantity);
         });
 
+        // show visual feedback while adding product to cart
+        $(document.body).on('adding_to_cart', function(e, button, data){
+            $(button).next('.spinner').removeClass('hidden');
+        });
+
+        // hide visual feedback after adding product to cart
+        $(document.body).on('added_to_cart', function(e, fragments, cart_hash, $button){
+            $($button).parent('.add_to_cart_inline').find('.spinner').addClass('hidden');
+        });
+
         // handle location-specific registration page
         if (window.location.hash) {
             var thisConvention = window.location.hash.replace('#',''),

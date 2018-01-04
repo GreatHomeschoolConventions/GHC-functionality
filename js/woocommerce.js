@@ -147,7 +147,7 @@
 
             $('input#family-members').trigger('change');
             fixMaxTickets($(this));
-            thisAddToCartButton.attr('data-quantity', thisProductQuantity);
+            thisAddToCartButton.data('quantity', thisProductQuantity).attr('data-quantity', thisProductQuantity);
         });
 
         // show visual feedback while adding product to cart

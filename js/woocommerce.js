@@ -119,7 +119,7 @@
         });
 
         // update all family members display fields when changed
-        $('input[name="family-members"]').on('change keydown', function() {
+        $('input[name="family-members"]').on('change keyup', function() {
             var familyCount = $(this).val();
 
             $('input[name="family-members"]').val(familyCount);
@@ -141,7 +141,7 @@
         });
 
         // update add-to-cart button quantity when input is changed
-        $('.products input[name^="qty"]').on('change keydown', function() {
+        $('.products input[name^="qty"]').on('change keyup', function() {
             var thisProductQuantity = $(this).val(),
                 thisAddToCartButton = $(this).parent().next('.product').find('.add_to_cart_button');
 

@@ -82,12 +82,6 @@
             $('body').on('change', '.product_cat-registration select[name="attribute_attendee-type"]', checkFamilySelection);
         }
 
-        // show/hide gift recipient info
-        if ($('.woocommerce-content > .product_cat-registration').length > 0) {
-            handleGiftMemberships();
-            $('body').on('change', '.product-addon-gift-options input[type="checkbox"]', handleGiftMemberships);
-        }
-
         // hide “family members” line from individual registrations in the cart and handle program guides
         if ($('.woocommerce-cart').length > 0) {
             $('dl.variation').each(function() {

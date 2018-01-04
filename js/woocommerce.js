@@ -152,7 +152,7 @@
 
         // show visual feedback while adding product to cart
         $(document.body).on('adding_to_cart', function(e, button, data){
-            $(button).next('.spinner').removeClass('hidden');
+            $(button).parent('.add_to_cart_inline').find('.spinner').removeClass('hidden');
         });
 
         // hide visual feedback after adding product to cart

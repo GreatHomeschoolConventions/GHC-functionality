@@ -3,7 +3,7 @@
  * Plugin Name: GHC Functionality
  * Plugin URI: https://github.com/greathomeschoolconventions/ghc-functionality
  * Description: Add custom post types and other backend features
- * Version: 3.1.3
+ * Version: 3.2.0
  * Author: AndrewRMinion Design
  * Author URI: https://andrewrminion.com
  * Copyright: 2017 AndrewRMinion Design
@@ -24,7 +24,7 @@
 
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 
-CONST GHC_PLUGIN_VERSION = '3.1.3';
+CONST GHC_PLUGIN_VERSION = '3.2.0';
 
 include( 'inc/acf.php' );
 include( 'inc/admin.php' );

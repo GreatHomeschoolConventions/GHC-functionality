@@ -237,7 +237,37 @@ function ghc_get_max_ticket_quantity_cart( $product_quantity, $cart_item_key, $c
     return $product_quantity;
 }
 add_filter( 'woocommerce_cart_item_quantity', 'ghc_get_max_ticket_quantity_cart', 10, 3 );
-#TODO: proactively check cart on the cart and checkout pages to ensure max quantities are respected
+
+/**
+ * Enforce that only the max number of tickets are added in the cart
+ * @param  integer $quantity   quantity
+ * @param  integer $product_id WC product ID
+ * @return intgere quantity
+ */
+function ghc_enforce_max_ticket_quantity( $quantity, $product_id = 0 ) {
+    $product = new WC_Product( $product_id );
+    $max_quantity = ghc_get_max_ticket_quantity();
+    # FIXME: hardcoded category ID
+    $category_id = 229;
+
+    // check to see if this is a registration product or not
+    if ( ! in_array( $category_id, $product->get_category_ids() ) ) {
+
+        // check to see if this product is in the cart already and if so, deduct the cart quantity from $max_quantity
+        foreach( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+            if ( $product_id === $cart_item['product_id'] ) {
+                $max_quantity = $max_quantity - $cart_item['quantity'];
+            }
+        }
+
+        if ( $quantity > $max_quantity ) {
+            $quantity = $max_quantity;
+        }
+    }
+
+    return $quantity;
+}
+add_filter( 'woocommerce_add_to_cart_quantity', 'ghc_enforce_max_ticket_quantity', 10, 2 );
 
 /**
  * Get all convention variation IDs

@@ -370,7 +370,7 @@ function get_current_CTA( $value ) {
  * @return string  post_class output
  */
 function ghc_product_post_class( $variation_id = '' ) {
-    $variation_classes = '';
+    $variation_classes = array();
 
     if ( $variation_id ) {
         if ( 'product_variation' == get_post_type( $variation_id ) ) {

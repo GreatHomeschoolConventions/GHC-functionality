@@ -497,4 +497,5 @@ function ghc_download_url_redirect( $downloads ) {
 
     return $downloads;
 }
-add_filter( 'woocommerce_order_get_downloadable_items', 'ghc_download_url_redirect' );
+#TODO: enable if/when https://github.com/woocommerce/woocommerce/pull/18408 is accepted
+#add_filter( 'woocommerce_order_get_downloadable_items', 'ghc_download_url_redirect' );

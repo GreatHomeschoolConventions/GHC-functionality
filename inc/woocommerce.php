@@ -479,3 +479,22 @@ function ghc_variable_product_minmax_price_html( $price, $product ) {
 }
 add_filter( 'woocommerce_variable_sale_price_html', 'ghc_variable_product_minmax_price_html', 10, 2 );
 add_filter( 'woocommerce_variable_price_html', 'ghc_variable_product_minmax_price_html', 10, 2 );
+
+/**
+ * Add simple redirect for specific downloads
+ * @param  array $downloads all downloads available to this customer
+ * @return array modified array
+ */
+function ghc_download_url_redirect( $downloads ) {
+    // array of file names to redirect instead of protect
+    $downloads_to_redirect = array( 'Chart', 'Bible Timeline with World History' );
+
+    foreach ( $downloads as $key => $download ) {
+        if ( in_array( $download['download_name'], $downloads_to_redirect ) ) {
+            $downloads[$key]['download_url'] = $download['file']['file'];
+        }
+    }
+
+    return $downloads;
+}
+add_filter( 'woocommerce_order_get_downloadable_items', 'ghc_download_url_redirect' );

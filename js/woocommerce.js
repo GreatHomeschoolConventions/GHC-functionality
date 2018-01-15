@@ -50,6 +50,23 @@
     }
 
     /**
+     * Extract parameters from URI fragment
+     * @param   {string} hash window.location.hash string
+     * @returns {object} named key/value pairs for all parameters in fragment hash
+     */
+    function extractParametersFromHash(hash) {
+        var parameters = {},
+            hashParameters = hash.substr(1).split('&');
+
+        for (i=0; i < hashParameters.length; i++) {
+            var parameterValue = hashParameters[i].split('=');
+            parameters[parameterValue[0]] = parameterValue[1];
+        }
+
+        return parameters;
+    }
+
+    /**
      * Show/hide gift recipient info
      *
      * Used on product pages with (global) Product Add-ons
@@ -162,8 +179,20 @@
 
         // handle location-specific registration page
         if (window.location.hash) {
-            var thisConvention = window.location.hash.replace('#',''),
-                thisConventionSelector = 'input.registration-choice.convention[value="' + thisConvention + '"]';
+            // name and info from bot
+            if (window.location.hash.length > 3) {
+                var allParameters = extractParametersFromHash(window.location.hash),
+                    thisConvention = allParameters.convention.toLowerCase();
+
+                // update family members
+                if (typeof allParameters.familyMembers !== 'undefined') {
+                    $('input#family-members').val(allParameters.familyMembers).trigger('change');
+                }
+            } else {
+                var thisConvention = window.location.hash.replace('#','').toLowerCase();
+            }
+
+            var thisConventionSelector = 'input.registration-choice.convention[value="' + thisConvention + '"]';
 
             if ((thisConventionSelector).length > 0) {
                 $(thisConventionSelector).attr('checked', true).trigger('change');

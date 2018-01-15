@@ -110,6 +110,9 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.2.1
+    - Add support for GET-style parameters in URI fragment
+
 - 3.2.0
     - Enforce special event ticket quantity on server-side based on family members in cart
 

@@ -87,8 +87,8 @@
     $(document).ready(function(){
 
         // fix pluralization on registration page, product pages, and in cart
-        $('.quantity input[type=number]').on('change', changePeopleAgreement($(this), $('.quantity .people'), 'person', 'people'));
-        $('input.qty').on('change', function() {
+        $('.quantity input[type=number]').on('change keyup', changePeopleAgreement($(this), $('.quantity .people'), 'person', 'people'));
+        $('input.qty').on('change keyup', function() {
             changePeopleAgreement($(this), $(this).next('.tickets-qty'), 'ticket', 'tickets');
         });
         $('.quantity input[type=number], input.qty').trigger('change');
@@ -137,6 +137,7 @@
 
         // update all family members display fields when changed
         $('input[name="family-members"]').on('change keyup', function() {
+            fixMaxTickets($(this));
             var familyCount = $(this).val();
 
             $('input[name="family-members"]').val(familyCount);

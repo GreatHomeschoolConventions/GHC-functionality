@@ -110,6 +110,9 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.2.3
+    - Handle FlowXO bot-provided family member data
+
 - 3.2.2
     - Set max ticket quantity to 6
     - Visually disable special event tickets (for logged-out users) until registration is in cart

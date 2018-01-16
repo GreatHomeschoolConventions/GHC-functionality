@@ -188,6 +188,9 @@
                 // update family members
                 if (typeof allParameters.familyMembers !== 'undefined') {
                     $('input#family-members').val(allParameters.familyMembers).trigger('change');
+                    if (allParameters.familyMembers === '1') {
+                        $('input#attendee-individual').prop('checked', true);
+                    }
                 }
             } else {
                 var thisConvention = window.location.hash.replace('#','').toLowerCase();

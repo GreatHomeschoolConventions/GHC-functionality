@@ -110,6 +110,10 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.2.2
+    - Set max ticket quantity to 6
+    - Visually disable special event tickets (for logged-out users) until registration is in cart
+
 - 3.2.1
     - Add support for GET-style parameters in URI fragment
 

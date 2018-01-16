@@ -173,9 +173,9 @@
             $(button).parent('.add_to_cart_inline').find('.spinner').removeClass('hidden');
         });
 
-        // hide visual feedback after adding product to cart
+        // hide visual feedback after adding product to cart and add class to parent row for visual indicator
         $(document.body).on('added_to_cart', function(e, fragments, cart_hash, $button){
-            $($button).parent('.add_to_cart_inline').find('.spinner').addClass('hidden');
+            $($button).parent('.add_to_cart_inline').find('.spinner').addClass('hidden').parents('tr.product').addClass('added-to-cart');
         });
 
         // handle location-specific registration page

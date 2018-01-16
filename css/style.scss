@@ -161,6 +161,14 @@ input#attendee-family:checked ~ .products .attribute_attendee-type-individual { 
 
     .post-30530 .tickets-qty { display: none; } /* program guide ticket quantity text */
 
+    /* visually disable special events */
+    /* only for logged-out users, since this page doesn’t know what people have purchased in the past */
+    body:not(.logged-in) & tr.product {
+        &:not(.product_cat-registration) { opacity: 0.5; }
+
+        &.added-to-cart ~ tr.product:not(.product_cat-registration) { opacity: inherit; }
+    }
+
     .spinner {
         position: relative;
         top: 10px;

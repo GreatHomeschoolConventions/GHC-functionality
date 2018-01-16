@@ -296,7 +296,7 @@ function registration_page_shortcode( $attributes ) {
             <label class="registration-choice attendee-type theme bg se dashicons-before dashicons-groups" for="attendee-family"><h4>Family</h4></label>
 
         <label class="registration-choice family-members" for="family-members">Number of Family Members Attending:
-            <input class="registration-choice family-members" type="number" name="family-members" min="2" max="20" value="2" placeholder="2" id="family-members"/>
+            <input class="registration-choice family-members" type="number" name="family-members" min="2" max="6" value="2" placeholder="2" id="family-members"/>
         </label>
 
         <table class="products">

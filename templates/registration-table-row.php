@@ -31,7 +31,7 @@
             echo '<input name="qty-' . get_the_ID()  . '" type="hidden" value="1" min="1" max="1" />
             <label for="family-members"><input name="family-members-display" type="number" value="1" disabled /> family members</label>';
         } else {
-            echo '<label class="qty" for="qty-' . $variation_array['variation_id'] . '"><input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="number" value="0" min="0" max="20" /> <span class="tickets-qty">tickets</span></label>';
+            echo '<label class="qty" for="qty-' . $variation_array['variation_id'] . '"><input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="number" value="0" min="0" max="6" /> <span class="tickets-qty">tickets</span></label>';
         }
         ?>
         <p class="product woocommerce add_to_cart_inline">

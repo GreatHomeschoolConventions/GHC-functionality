@@ -1,6 +1,6 @@
 # Introduction
 
-A plugin to add custom post types and categories for use on Great Homeschool Conventions’ website.
+A plugin to add custom post types and categories for use on [Great Homeschool Conventions’ website](https://www.greathomeschoolconventions.com/).
 
 # Usage
 

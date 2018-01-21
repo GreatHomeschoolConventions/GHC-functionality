@@ -110,6 +110,9 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.2.4
+    - Add workaround `onkeyup` min/max ticket fix for touchscreen devices
+
 - 3.2.3
     - Handle FlowXO bot-provided family member data
 

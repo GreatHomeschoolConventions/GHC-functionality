@@ -89,7 +89,7 @@
         // fix pluralization on registration page, product pages, and in cart
         $('.quantity input[type=number]').on('change keyup', changePeopleAgreement($(this), $('.quantity .people'), 'person', 'people'));
         $('input.qty').on('change keyup', function() {
-            changePeopleAgreement($(this), $(this).next('.tickets-qty'), 'ticket', 'tickets');
+            changePeopleAgreement($(this), $(this).prevAll('.tickets-qty'), 'Ticket', 'Tickets');
         });
         $('.quantity input[type=number], input.qty').trigger('change');
 
@@ -166,6 +166,20 @@
             $('input#family-members').trigger('change');
             fixMaxTickets($(this));
             thisAddToCartButton.data('quantity', thisProductQuantity).attr('data-quantity', thisProductQuantity);
+        });
+
+        // add decrement/increment buttons
+        // allows touchscreen users to easily modify input.qty, since fixMaxTickets runs on keyup, and deleting the value to enter a new resets the field to the min value
+        $('.decrement').on('click', function() {
+            var qtyInput = $(this).next('input[type="number"]'),
+                currentQty = parseInt(qtyInput.val());
+            qtyInput.val(currentQty - 1).trigger('change');
+        });
+
+        $('.increment').on('click', function() {
+            var qtyInput = $(this).prev('input[type="number"]'),
+                currentQty = parseInt(qtyInput.val());
+            qtyInput.val(currentQty + 1).trigger('change');
         });
 
         // show visual feedback while adding product to cart

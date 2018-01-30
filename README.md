@@ -110,6 +110,11 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.2.5
+    - Add `rel="noopener noreferrer"` to all outbound links
+    - Add support for location feature icons
+    - Tweak product name meta
+
 - 3.2.4
     - Add workaround `onkeyup` min/max ticket fix for touchscreen devices
 

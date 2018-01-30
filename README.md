@@ -110,6 +110,9 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.2.7
+    - Include convention icons as `<img>`s rather than SVG `<use>` for better performance
+
 - 3.2.6
     - Modify responsive images `sizes` attribute so only the max size needed is downloaded
 

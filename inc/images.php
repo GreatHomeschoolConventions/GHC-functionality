@@ -9,6 +9,7 @@ function ghc_custom_image_sizes() {
     add_image_size( 'thumbnail-no-crop', 140, 140, false );
     add_image_size( 'pinterest-thumb', 173, 345, true );
     add_image_size( 'pinterest-medium', 346, 690, true );
+    add_image_size( 'square-tiny', 150, 150, true );
     add_image_size( 'square-thumb', 250, 250, true );
     add_image_size( 'square-small', 400, 400, true );
     add_image_size( 'square-medium', 600, 600, true );

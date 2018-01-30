@@ -110,6 +110,9 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 3.2.6
+    - Modify responsive images `sizes` attribute so only the max size needed is downloaded
+
 - 3.2.5
     - Add `rel="noopener noreferrer"` to all outbound links
     - Add support for location feature icons

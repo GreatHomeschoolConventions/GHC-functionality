@@ -83,7 +83,7 @@ function ghc_pinterest_image( $content ) {
             $description = get_the_title();
         }
 
-        $content = '<figure class="pinterest-image"><a target="_blank" href="http://www.pinterest.com/pin/create/button/?url=' . get_permalink() . '&media=' . $pinterest_image['url'] . '&description=' . $description . '">' . wp_get_attachment_image( $pinterest_image['ID'], 'pinterest-thumb' ) . '</a></figure>' . $content;
+        $content = '<figure class="pinterest-image"><a target="_blank" rel="noopener noreferrer" href="http://www.pinterest.com/pin/create/button/?url=' . get_permalink() . '&media=' . $pinterest_image['url'] . '&description=' . $description . '">' . wp_get_attachment_image( $pinterest_image['ID'], 'pinterest-thumb' ) . '</a></figure>' . $content;
     }
     return $content;
 }
@@ -120,7 +120,7 @@ function ghc_exhibitor_archive_icons( $content ) {
     $new_content = '';
     if ( 'exhibitor' == get_post_type( $post->ID ) ) {
         if ( get_field( 'exhibitor_URL', $post->ID ) ) {
-            $new_content .= '<p><a href="' . get_field( 'exhibitor_URL', $post->ID ) . '" target="_blank" rel="noopener">Visit website&rarr;</a></p>';
+            $new_content .= '<p><a href="' . get_field( 'exhibitor_URL', $post->ID ) . '" target="_blank" rel="noopener noreferrer">Visit website&rarr;</a></p>';
         }
         if ( ! is_tax() ) {
             $new_content .= output_convention_icons( $post->ID );

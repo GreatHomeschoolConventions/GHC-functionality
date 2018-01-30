@@ -159,7 +159,7 @@ function ghc_e3_thumbnail_content( $html, $post_id, $post_thumbnail_id, $size, $
         if ( $speaker_company ) {
             $html .= '<br/>';
             if ( $speaker_company_url && is_user_logged_in() ) {
-                $html .= '<a class="speaker-company" target="_blank" href="' . $speaker_company_url . '">' . $speaker_company . '</a>';
+                $html .= '<a class="speaker-company" target="_blank" rel="noopener noreferrer" href="' . $speaker_company_url . '">' . $speaker_company . '</a>';
             } else {
                 $html .= '<span class="speaker-company">' . $speaker_company . '</span>';
             }

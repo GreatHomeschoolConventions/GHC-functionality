@@ -34,7 +34,7 @@ function ghc_hotel_single( $content ) {
         $content .= ob_get_clean();
 
         if ( get_field( 'hotel_URL' ) && ! get_field( 'sold_out' ) ) {
-            $content .= '<a class="button book-hotel" target="_blank" href="' . get_field( 'hotel_URL' ) . '">Book Online Now</a>';
+            $content .= '<a class="button book-hotel" target="_blank" rel="noopener noreferrer" href="' . get_field( 'hotel_URL' ) . '">Book Online Now</a>';
         }
     }
 

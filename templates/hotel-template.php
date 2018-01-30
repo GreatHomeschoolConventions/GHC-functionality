@@ -23,9 +23,9 @@
     <?php
     if ( ! get_field( 'sold_out' ) ) {
         if ( get_field( 'hotel_URL' ) ) { ?>
-            <a class="button" target="_blank" rel="noopener" href="<?php the_field( 'hotel_URL' ); ?>">Book Online Now&rarr;</a>
+            <a class="button" target="_blank" rel="noopener noreferrer" href="<?php the_field( 'hotel_URL' ); ?>">Book Online Now&rarr;</a>
         <?php } elseif ( get_field( 'hotel_phone' ) ) { ?>
-            <a class="button" target="_blank" rel="noopener" href="tel:+1<?php echo str_replace( '-', '', get_field( 'hotel_phone' ) ); ?>">Call to Book Now&rarr;</a>
+            <a class="button" target="_blank" rel="noopener noreferrer" href="tel:+1<?php echo str_replace( '-', '', get_field( 'hotel_phone' ) ); ?>">Call to Book Now&rarr;</a>
         <?php
         }
     }

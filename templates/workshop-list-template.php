@@ -12,7 +12,7 @@ $exhibitors = get_field( 'related_exhibitors' );
 if ( $exhibitors ) {
     $exhibitors_string = NULL;
     foreach ( $exhibitors as $exhibitor ) {
-        $exhibitors_string .= '<a href="' . get_permalink( $exhibitor ) . '" target="_blank">' . get_the_title( $exhibitor ) . '</a>, ';
+        $exhibitors_string .= '<a href="' . get_permalink( $exhibitor ) . '" target="_blank" rel="noopener noreferrer">' . get_the_title( $exhibitor ) . '</a>, ';
     }
     $exhibitors_string = rtrim( $exhibitors_string, ', ' );
 }

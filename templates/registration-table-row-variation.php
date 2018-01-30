@@ -9,16 +9,16 @@
     <td class="title">
         <?php echo $variation->get_title(); ?><br/>
         <?php
+        if ( get_field( 'subtitle' ) ) {
+            echo '<div class="entry-meta">' . get_field( 'subtitle' ) . '</div>';
+        }
+        ?>
+        <?php
         $attribute_string = '';
         foreach ( $variation->get_variation_attributes() as $key => $value ) {
             $attribute_string .= $value . ', ';
         }
         echo '<div class="entry-meta">' . rtrim( $attribute_string, ', ' ) . '</div>';
-        ?>
-        <?php
-        if ( get_field( 'subtitle' ) ) {
-            echo '<br/><div class="entry-meta">' . get_field( 'subtitle' ) . '</div>';
-        }
         ?>
     </td>
     <td class="price"><?php echo $variation->get_price_html(); ?></td>

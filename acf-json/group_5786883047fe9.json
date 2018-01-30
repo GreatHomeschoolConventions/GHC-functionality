@@ -3,11 +3,26 @@
     "title": "Location Information",
     "fields": [
         {
+            "key": "field_5a707fcd9fcdf",
+            "label": "Convention Information",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
             "key": "field_57866c1a06192",
             "label": "Begin Date",
             "name": "begin_date",
             "type": "date_picker",
-            "value": null,
             "instructions": "",
             "required": 1,
             "conditional_logic": 0,
@@ -25,7 +40,6 @@
             "label": "End Date",
             "name": "end_date",
             "type": "date_picker",
-            "value": null,
             "instructions": "",
             "required": 1,
             "conditional_logic": 0,
@@ -43,7 +57,6 @@
             "label": "ICS File",
             "name": "ics_file",
             "type": "file",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -63,7 +76,6 @@
             "label": "Short Convention Name",
             "name": "convention_short_name",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -83,7 +95,6 @@
             "label": "Abbreviated Convention Name",
             "name": "convention_abbreviated_name",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -103,7 +114,6 @@
             "label": "Convention Center Name",
             "name": "convention_center_name",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -123,7 +133,6 @@
             "label": "Address",
             "name": "address",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -143,7 +152,6 @@
             "label": "City",
             "name": "city",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -163,7 +171,6 @@
             "label": "State",
             "name": "state",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -183,7 +190,6 @@
             "label": "Zip",
             "name": "zip",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -203,7 +209,6 @@
             "label": "Registration Product",
             "name": "registration_product",
             "type": "post_object",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -226,7 +231,6 @@
             "label": "Registration URL",
             "name": "registration",
             "type": "url",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -235,7 +239,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "https:\/\/www.greathomeschoolconventions.com\/register\/",
+            "default_value": "https:\/\/ghc.dev\/register\/",
             "placeholder": ""
         },
         {
@@ -243,7 +247,6 @@
             "label": "General Convention Hours",
             "name": "hours",
             "type": "wysiwyg",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -259,11 +262,229 @@
             "delay": 0
         },
         {
+            "key": "field_5a708020ea654",
+            "label": "Features",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5a6f8a78d65ac",
+            "label": "Feature Icons",
+            "name": "feature_icons",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "field_5a6f8a83d65ad",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_5a6f8a83d65ad",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5a6f8ca7781d6",
+                    "label": "Icon (Dashicon)",
+                    "name": "icon_dashicon",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "dashicons-",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5a6f8ab2d65af",
+                    "label": "URL",
+                    "name": "url",
+                    "type": "link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url"
+                },
+                {
+                    "key": "field_5a6f8aded65b0",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0
+                }
+            ]
+        },
+        {
+            "key": "field_5a707e819fcd7",
+            "label": "Price Sheet",
+            "name": "price_sheet",
+            "type": "link",
+            "instructions": "Displayed with the features icon list",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url"
+        },
+        {
+            "key": "field_5a707ee19fcda",
+            "label": "Workshop Schedule",
+            "name": "workshop_schedule",
+            "type": "group",
+            "instructions": "Displayed with the features icon list",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "67",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_5a707efa9fcdb",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url"
+                },
+                {
+                    "key": "field_5a707f089fcdc",
+                    "label": "Status",
+                    "name": "status",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "preliminary": "Preliminary",
+                        "final": "Final"
+                    },
+                    "allow_null": 0,
+                    "default_value": "preliminary",
+                    "layout": "horizontal",
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_5a707f2f9fcdd",
+                    "label": "Last Updated Date",
+                    "name": "date",
+                    "type": "date_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5a707f089fcdc",
+                                "operator": "==",
+                                "value": "preliminary"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "m\/d\/Y",
+                    "return_format": "m\/d\/Y",
+                    "first_day": 0
+                }
+            ]
+        },
+        {
+            "key": "field_5a707f699fcde",
+            "label": "CTA content",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
             "key": "field_57866bb2b34fd",
             "label": "CTA",
             "name": "cta",
             "type": "repeater",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -283,7 +504,6 @@
                     "label": "Begin Date",
                     "name": "begin_date",
                     "type": "date_time_picker",
-                    "value": null,
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -301,7 +521,6 @@
                     "label": "End Date",
                     "name": "end_date",
                     "type": "date_time_picker",
-                    "value": null,
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -319,7 +538,6 @@
                     "label": "CTA Content",
                     "name": "cta_content",
                     "type": "wysiwyg",
-                    "value": null,
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -354,5 +572,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1510585649
+    "modified": 1517322620
 }

@@ -14,30 +14,15 @@ $theme-black:           #333333;
 .speaker-convention-link {
     .entry-content & { box-shadow: none; }
 
-    svg {
+    .convention-icon {
         width: 3em;
         max-width: 20%;
         height: 3em;
     }
 
-    &.convention-shortcode svg {
+    &.convention-shortcode .convention-icon {
         position: relative;
         top: 0.66em;
-    }
-
-    .fallback {
-        display: none;
-
-        .no-svg & {
-            display: block;
-            color: white;
-            padding: 5px;
-        }
-        .no-svg &.ca { background-color: $theme-orange; }
-        .no-svg &.mw { background-color: $theme-green; color: $theme-black; }
-        .no-svg &.se { background-color: $theme-blue; }
-        .no-svg &.tx { background-color: $theme-yellow; color: $theme-black; }
-        .no-svg &.mo { background-color: $theme-magenta; }
     }
 }
 

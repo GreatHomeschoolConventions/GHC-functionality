@@ -6,6 +6,7 @@ defined( 'ABSPATH' ) or die( 'No access allowed' );
  * Add custom image sizes
  */
 function ghc_custom_image_sizes() {
+    // update ghc_resp_image_sizes() function in functions.php as well
     add_image_size( 'thumbnail-no-crop', 140, 140, false );
     add_image_size( 'pinterest-thumb', 173, 345, true );
     add_image_size( 'pinterest-medium', 346, 690, true );
@@ -20,6 +21,7 @@ function ghc_custom_image_sizes() {
     add_image_size( 'special-event-small', 300, 150, true );
     add_image_size( 'special-event-medium', 450, 225, true );
     add_image_size( 'special-event-large', 600, 300, true );
+    // update ghc_resp_image_sizes() function in functions.php as well
 }
 add_action( 'after_setup_theme', 'ghc_custom_image_sizes' );
 

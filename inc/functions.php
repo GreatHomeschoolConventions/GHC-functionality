@@ -499,3 +499,46 @@ function ghc_get_author_bio() {
 }
 
 include( 'schema.org.php' );
+
+/**
+ * Set sizes atribute for responsive images and better performance
+ * @param  array        $attr       markup attributes
+ * @param  object       $attachment WP_Post image attachment post
+ * @param  string|array $size       named image size or array
+ * @return array        markup attributes
+ */
+function ghc_resp_img_sizes( $attr, $attachment, $size ) {
+    if ( is_array( $size ) ) {
+        $attr['sizes'] = $size[0] . 'px';
+    } elseif ( $size == 'thumbnail-no-crop') {
+        $attr['sizes'] = '140px';
+    } elseif ( $size == 'pinterest-thumb') {
+        $attr['sizes'] = '173px';
+    } elseif ( $size == 'pinterest-medium') {
+        $attr['sizes'] = '346px';
+    } elseif ( $size == 'square-tiny') {
+        $attr['sizes'] = '150px';
+    } elseif ( $size == 'square-thumb' ) {
+        $attr['sizes'] = '250px';
+    } elseif ( $size == 'square-small' ) {
+        $attr['sizes'] = '400px';
+    } elseif ( $size == 'square-medium' ) {
+        $attr['sizes'] = '600px';
+    } elseif ( $size == 'square-large' ) {
+        $attr['sizes'] = '900px';
+    } elseif ( $size == 'small-grid-size' ) {
+        $attr['sizes'] = '400px';
+    } elseif ( $size == 'small-grid-size-medium' ) {
+        $attr['sizes'] = '600px';
+    } elseif ( $size == 'small-grid-size-large' ) {
+        $attr['sizes'] = '800px';
+    } elseif ( $size == 'special-event-small' ) {
+        $attr['sizes'] = '300px';
+    } elseif ( $size == 'special-event-medium' ) {
+        $attr['sizes'] = '450px';
+    } elseif ( $size == 'special-event-large' ) {
+        $attr['sizes'] = '600px';
+    }
+    return $attr;
+}
+add_filter( 'wp_get_attachment_image_attributes', 'ghc_resp_img_sizes', 25, 3 );

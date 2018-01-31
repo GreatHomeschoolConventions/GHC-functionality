@@ -247,14 +247,15 @@ add_filter( 'woocommerce_cart_item_quantity', 'ghc_get_max_ticket_quantity_cart'
 function ghc_enforce_max_ticket_quantity( $quantity, $product_id = 0 ) {
     $product = new WC_Product( $product_id );
     $max_quantity = ghc_get_max_ticket_quantity();
-    # FIXME: hardcoded category ID
+    # FIXME: hardcoded category ID for registration products
     $category_id = 229;
+    $cart_items = WC()->cart->get_cart();
 
-    // check to see if this is a registration product or not
+    // handle special events
     if ( ! in_array( $category_id, $product->get_category_ids() ) ) {
 
         // check to see if this product is in the cart already and if so, deduct the cart quantity from $max_quantity
-        foreach( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+        foreach( $cart_items as $cart_item_key => $cart_item ) {
             if ( $product_id === $cart_item['product_id'] ) {
                 $max_quantity = $max_quantity - $cart_item['quantity'];
             }
@@ -262,6 +263,13 @@ function ghc_enforce_max_ticket_quantity( $quantity, $product_id = 0 ) {
 
         if ( $quantity > $max_quantity ) {
             $quantity = $max_quantity;
+        }
+    } else {
+        // handle registration tickets with different meta
+        foreach ( $cart_items as $cart_item_key => $cart_item ) {
+            if ( $product_id === $cart_item['product_id'] ) {
+                return 0;
+            }
         }
     }
 

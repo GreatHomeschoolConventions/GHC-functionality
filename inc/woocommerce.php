@@ -242,7 +242,7 @@ add_filter( 'woocommerce_cart_item_quantity', 'ghc_get_max_ticket_quantity_cart'
  * Enforce that only the max number of tickets are added in the cart
  * @param  integer $quantity   quantity
  * @param  integer $product_id WC product ID
- * @return intgere quantity
+ * @return integer quantity
  */
 function ghc_enforce_max_ticket_quantity( $quantity, $product_id = 0 ) {
     $product = new WC_Product( $product_id );

@@ -16,6 +16,9 @@
         <?php
         $attribute_string = '';
         foreach ( $variation->get_variation_attributes() as $key => $value ) {
+            if ( $value === 'Family' ) {
+                $value .= ' <span class="lowercase">(parents, children/teens, and grandparents)</span>';
+            }
             $attribute_string .= $value . ', ';
         }
         echo '<div class="entry-meta">' . rtrim( $attribute_string, ', ' ) . '</div>';

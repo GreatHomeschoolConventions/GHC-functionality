@@ -27,7 +27,10 @@ function ghc_related_sponsors( $content ) {
         $related_sponsors = get_field( 'related_sponsors' );
         $show_content_with_logo = get_field( 'show_content_with_logo' );
 
-        if ( $related_sponsors ) {
+        if ( isset( $related_sponsors ) && $related_sponsors !== '' ) {
+            global $post;
+            $this_post = $post;
+
             // set up query args
             $related_sponsors_query_args = array(
                 'post_type'         => 'sponsor',
@@ -48,7 +51,7 @@ function ghc_related_sponsors( $content ) {
                     $related_sponsors_query->the_post();
                     $content .= '<div class="sponsor">
                     <div class="post-thumbnail">
-                    <a href="' . $permalink . '">' . get_the_post_thumbnail( get_the_ID(), 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>';
+                    <a href="' . get_permalink() . '">' . get_the_post_thumbnail( get_the_ID(), 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>';
 
                     if ( $show_content_with_logo ) {
                         $content .= apply_filters( 'the_content', get_the_content() );
@@ -61,8 +64,7 @@ function ghc_related_sponsors( $content ) {
                 </div><!-- #sponsor-container.ghc-cpt.container -->';
             }
 
-            // reset post data
-            wp_reset_query();
+            $post = $this_post;
         }
     }
     return $content;

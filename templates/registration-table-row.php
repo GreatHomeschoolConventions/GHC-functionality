@@ -35,7 +35,7 @@
                 <button type="button" class="increment btn">+</button>
             </label>';
         } else {
-            echo '<label class="qty" for="qty-' . $variation_array['variation_id'] . '"><span class="tickets-qty">Tickets</span>:<br/>
+            echo '<label class="qty" for="qty-' . $variation_array['variation_id'] . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
                 <button type="button" class="decrement btn">-</button>
                 <input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="number" value="0" min="0" max="6" />
                 <button type="button" class="increment btn">+</button>

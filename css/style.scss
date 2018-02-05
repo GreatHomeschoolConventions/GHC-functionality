@@ -144,7 +144,10 @@ input#attendee-family:checked ~ .products .attribute_attendee-type-individual { 
 
     td.thumb { min-width: 50px; }
 
-    .post-30530 .tickets-qty { display: none; } /* program guide ticket quantity text */
+    .post-30530 {
+        /* program guide ticket quantity text */
+        .tickets-qty, .tickets-separator { display: none; }
+    }
 
     /* visually disable special events */
     /* only for logged-out users, since this page doesn’t know what people have purchased in the past */

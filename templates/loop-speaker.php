@@ -33,4 +33,4 @@
     }
 
     // Restore original post data
-    wp_reset_postdata();
+    $top_speakers_query->reset_postdata();

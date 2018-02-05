@@ -174,7 +174,7 @@ function exhibitor_list_shortcode( $attributes ) {
         $shortcode_content = ob_get_clean();
     }
 
-    wp_reset_postdata();
+    $exhibitor_query->reset_postdata();
 
     return $shortcode_content;
 }
@@ -356,7 +356,7 @@ function registration_page_shortcode( $attributes ) {
 
     echo '</div><!-- .register -->';
 
-    wp_reset_postdata();
+    wp_reset_query();
 
     return ob_get_clean();
 }
@@ -466,8 +466,8 @@ function speaker_info_shortcode( $attributes ) {
         $shortcode_content .= '</div><!-- .speaker-container.ghc-cpt.container -->';
     }
 
-    // Restore original Post Data
-    wp_reset_postdata();
+    // restore original post data
+    $speaker_query->reset_postdata();
 
     // return shortcode content
     return $shortcode_content;
@@ -542,8 +542,8 @@ function speaker_list_shortcode( $attributes ) {
         echo '</ul>';
     }
 
-    // reset post data
-    wp_reset_postdata();
+    // restore original post data
+    $speaker_list_query->reset_postdata();
 
     return $shortcode_content;
 }
@@ -622,8 +622,8 @@ function special_track_speakers_shortcode( $attributes ) {
         $shortcode_content .= '</div>';
     }
 
-    // reset post data
-    wp_reset_postdata();
+    // restore original post data
+    $special_track_speakers_query->reset_postdata();
 
     return $shortcode_content;
 }
@@ -683,8 +683,8 @@ function sponsors_shortcode( $attributes ) {
         $shortcode_content .= '</div>';
     }
 
-    // reset post data
-    wp_reset_postdata();
+    // restore original post data
+    $sponsors_query->reset_postdata();
 
     return $shortcode_content;
 }
@@ -751,7 +751,7 @@ function workshop_list_shortcode( $attributes ) {
             }
         }
 
-        wp_reset_postdata();
+        $this_convention_speaker->reset_postdata();
 
         $workshop_list_args['post__in'] = $workshop_ids_array;
     }
@@ -793,8 +793,8 @@ function workshop_list_shortcode( $attributes ) {
         $shortcode_content .= '</ul>';
     }
 
-    // reset post data
-    wp_reset_postdata();
+    // restore original post data
+    $workshop_list_query->reset_postdata();
 
     return $shortcode_content;
 }
@@ -926,8 +926,8 @@ function workshops_schedule_shortcode( $attributes ) {
                         </div><!-- .gldr-session-item-content-wrapper -->';
                     }
 
-                    // reset post data
-                    wp_reset_postdata();
+                    // restore original post data
+                    $workshops_query->reset_postdata();
 
                 }
             }

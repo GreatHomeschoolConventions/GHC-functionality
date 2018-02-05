@@ -207,12 +207,15 @@ function ghc_get_max_ticket_quantity() {
 
 /**
  * Set max ticket quantities for simple products
- * @return integer max ticket quantity
+ * @param  array  $args    arguments for the input
+ * @param  object $product WC_Product
+ * @return array  modified argument array
  */
-function ghc_get_max_ticket_quantity_simple() {
-    return ghc_get_max_ticket_quantity();
+function ghc_get_max_ticket_quantity_simple( $args, $product ) {
+    $args['max_value'] = min( ghc_get_max_ticket_quantity(), $product->get_stock_quantity() );
+    return $args;
 }
-add_filter( 'woocommerce_quantity_input_max', 'ghc_get_max_ticket_quantity_simple' );
+add_filter( 'woocommerce_quantity_input_args', 'ghc_get_max_ticket_quantity_simple', 10, 2 );
 
 /**
  * Set max ticket quantities for simple products

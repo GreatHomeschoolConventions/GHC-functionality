@@ -3,6 +3,11 @@
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 
 /**
+ * Include schema.org microdata
+ */
+include( 'schema.org.php' );
+
+/**
  * Read all convention info into global arrays
  */
 function convention_info() {
@@ -497,8 +502,6 @@ function ghc_get_author_bio() {
     }
     return ob_get_clean();
 }
-
-include( 'schema.org.php' );
 
 /**
  * Set sizes atribute for responsive images and better performance

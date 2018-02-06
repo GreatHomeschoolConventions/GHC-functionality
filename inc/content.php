@@ -64,6 +64,7 @@ function ghc_related_sponsors( $content ) {
                 </div><!-- #sponsor-container.ghc-cpt.container -->';
             }
 
+            // reset post data
             $post = $this_post;
         }
     }

@@ -54,4 +54,4 @@ if ( $hotel_query->have_posts() ) { ?>
 }
 
 // Restore original Post Data
-$hotel_query->reset_postdata(); ?>
+wp_reset_postdata(); ?>

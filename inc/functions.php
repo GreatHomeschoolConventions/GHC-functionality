@@ -43,8 +43,7 @@ function convention_info() {
             $conventions[$convention_key] = array_merge( $convention_info, get_post_meta( get_the_ID() ) );
         }
     }
-
-    $locations_query->reset_postdata();
+    wp_reset_postdata();
 
     /* $conventions: each key is the two-letter abbreviation */
 
@@ -352,8 +351,8 @@ function ghc_cpt_grid( $attributes ) {
         echo '</div>';
     }
 
-    // restore original post data
-    $cpt_grid_query->reset_postdata();
+    // reset post data
+    wp_reset_postdata();
 
     return ob_get_clean();
 }

@@ -209,7 +209,7 @@ function ghc_get_max_ticket_quantity() {
  * Set max ticket quantities for simple products
  * @param  array  $args    arguments for the input
  * @param  object $product WC_Product
- * @return array  modified argument array
+ *                         @return array  modified argument array
  */
 function ghc_get_max_ticket_quantity_simple( $args, $product ) {
     $args['max_value'] = min( ghc_get_max_ticket_quantity(), $product->get_stock_quantity() );
@@ -456,6 +456,10 @@ add_action( 'woocommerce_email_order_details', 'ghc_add_coupon_code_admin_email'
  * @param object  $email         WC_Email_Customer_Invoice object
  */
 function ghc_customer_email_note( $order, $sent_to_admin, $plain_text, $email ) {
+    if ( $sent_to_admin ) {
+        return;
+    }
+
     if ( $plain_text ) { ?>
         Order Confirmation
 

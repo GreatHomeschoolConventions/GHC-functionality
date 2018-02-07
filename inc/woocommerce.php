@@ -449,6 +449,43 @@ function ghc_add_coupon_code_admin_email( $order, $sent_to_admin, $plain_text, $
 add_action( 'woocommerce_email_order_details', 'ghc_add_coupon_code_admin_email', 8, 4 );
 
 /**
+ * Add intro content to customer email
+ * @param object  $order         WC_Order
+ * @param boolean $sent_to_admin whether or not this email is sent to the admin
+ * @param boolean $plain_text    whether this email is HTML formatted or plain-text
+ * @param object  $email         WC_Email_Customer_Invoice object
+ */
+function ghc_customer_email_note( $order, $sent_to_admin, $plain_text, $email ) {
+    if ( $plain_text ) { ?>
+        Order Confirmation
+
+        Your recent order on %s has been completed and your order details are shown below. Please print a copy of this email and bring it to the convention with you.
+
+        To keep registration costs low, nothing will be mailed to you; your packet and any special event tickets will be available when you arrive at the convention.
+
+        Special Events and More
+
+        Watch your email in the coming weeks for FAQs, deals on hotels, and more.
+
+        If you would like to add anything to your order, log in and place another order online (https://www.greathomeschoolconventions.com/product-category/special-events/) or email us at addtomyorder@greathomeschoolconventions.com.
+    <?php } else { ?>
+        <h2>Order Confirmation</h2>
+
+        <p>Your order from Great Homeschool Conventions has been completed and your order details are shown below. Please print a copy of this email and bring it to the convention with you.</p>
+
+        <p>To keep registration costs low, <strong>nothing</strong> will be mailed to you; your packet and any special event tickets will be available when you arrive at the convention.</p>
+
+        <h2>Special Events and More</h2>
+
+        <p>Watch your email in the coming weeks for FAQs, deals on hotels, and more.</p>
+
+        <p>If you would like to add anything to your order, log in and <a href="https://www.greathomeschoolconventions.com/product-category/special-events/?utm_source=woocommerce&utm_medium=email-receipt&utm_campaign=registration-receipt&utm_content=add-to-order">place another order online</a> or email us at <a href="mailto:addtomyorder@greathomeschoolconventions.com/" target="_blank" >addtomyorder@greathomeschoolconventions.com</a>.</p>
+        <?php
+    }
+}
+add_action( 'woocommerce_email_order_details', 'ghc_customer_email_note', 5, 4 );
+
+/**
  * Add product categories to checkout review table for styling
  * @param  string $class         default class
  * @param  array  $cart_item     WC_Cart_Product

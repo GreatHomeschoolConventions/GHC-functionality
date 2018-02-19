@@ -405,13 +405,18 @@ add_shortcode( 'speaker_grid', 'speaker_grid_shortcode' );
 function speaker_info_shortcode( $attributes ) {
     $shortcode_attributes = shortcode_atts( array(
         'postid'            => NULL,
+        'post_id'           => NULL,
         'pagename'          => NULL,
         'align'             => NULL,
         'no_conventions'    => NULL,
         'photo_only'        => NULL,
         'extra_classes'     => NULL,
     ), $attributes );
-    $this_postid = esc_attr( $shortcode_attributes['postid'] );
+    if ( is_null( $shortcode_attributes['postid'] ) && ! is_null( $shortcode_attributes['post_id'] ) ) {
+        $this_postid = esc_attr( $shortcode_attributes['post_id'] );
+    } else {
+        $this_postid = esc_attr( $shortcode_attributes['postid'] );
+    }
     $this_pagename = esc_attr( $shortcode_attributes['pagename'] );
     $this_alignment = esc_attr( $shortcode_attributes['align'] );
     $no_conventions = esc_attr( $shortcode_attributes['no_conventions'] );

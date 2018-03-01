@@ -10,7 +10,7 @@
     );
 ?>
 <div class="<?php echo implode( ' ', get_post_class( $post_classes ) ); ?>">
-    <?php if ( is_post_type_archive( 'hotel' ) || $is_shortcode ) {
+    <?php if ( ( is_post_type_archive( 'hotel' ) || $is_shortcode ) && ! isset( $this_convention ) ) {
         echo do_shortcode( '[convention_icon convention="' . $this_convention . '"]' );
     } ?>
     <?php if ( has_post_thumbnail() ) { ?>

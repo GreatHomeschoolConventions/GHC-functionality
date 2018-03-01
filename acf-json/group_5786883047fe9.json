@@ -379,7 +379,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "33",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
@@ -394,7 +394,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "67",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -463,6 +463,21 @@
                     "first_day": 0
                 }
             ]
+        },
+        {
+            "key": "field_5a8b441a13081",
+            "label": "Workshop Descriptions",
+            "name": "workshop_descriptions",
+            "type": "link",
+            "instructions": "Link to expanded descriptions URL or PDF",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         },
         {
             "key": "field_5a707f699fcde",
@@ -572,5 +587,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1517322620
+    "modified": 1519917792
 }

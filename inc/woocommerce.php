@@ -220,7 +220,7 @@ function ghc_get_max_ticket_quantity_simple( $args, $product ) {
 add_filter( 'woocommerce_quantity_input_args', 'ghc_get_max_ticket_quantity_simple', 10, 2 );
 
 /**
- * Set max ticket quantities for simple products
+ * Set max ticket quantities for variable products
  * @param  array   $variation_data variation data
  * @return integer max ticket quantity
  */
@@ -231,7 +231,7 @@ function ghc_get_max_ticket_quantity_variable( $variation_data ) {
 add_filter( 'woocommerce_available_variation', 'ghc_get_max_ticket_quantity_variable' );
 
 /**
- * Set max ticket quantities for simple products
+ * Set max ticket quantities for cart quantity inputs
  * @param  string  $product_quantity string output from woocommerce_quantity_input
  * @param  string  $cart_item_key    WC_Cart_Product key
  * @param  array   $cart_item        WC_Cart_Product data

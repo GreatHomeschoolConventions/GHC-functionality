@@ -212,7 +212,9 @@ function ghc_get_max_ticket_quantity() {
  *                         @return array  modified argument array
  */
 function ghc_get_max_ticket_quantity_simple( $args, $product ) {
-    $args['max_value'] = min( ghc_get_max_ticket_quantity(), $product->get_stock_quantity() );
+    if ( strpos( $product->get_categories(), 'Public Tickets' ) === false ) {
+        $args['max_value'] = min( ghc_get_max_ticket_quantity(), $product->get_stock_quantity() );
+    }
     return $args;
 }
 add_filter( 'woocommerce_quantity_input_args', 'ghc_get_max_ticket_quantity_simple', 10, 2 );

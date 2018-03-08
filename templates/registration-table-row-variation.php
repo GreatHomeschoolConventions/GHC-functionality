@@ -59,7 +59,13 @@
         </td>
     <?php } else { ?>
         <td colspan="2">
-            <?php echo do_shortcode( '[convention_cta convention="' . $convention_abbreviation . '"]' ); ?>
+            <?php
+            global $convention_abbreviations;
+            $full_name = strtolower( str_replace( ' Homeschool Convention', '', $variation->get_title() ) );
+            $this_abbreviation = array_flip( $convention_abbreviations )[$full_name];
+
+            echo do_shortcode( '[convention_cta convention="' . $this_abbreviation . '"]' );
+            ?>
         </td>
     <?php } ?>
 </tr>

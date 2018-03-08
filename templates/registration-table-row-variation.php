@@ -24,36 +24,42 @@
         echo '<div class="entry-meta">' . rtrim( $attribute_string, ', ' ) . '</div>';
         ?>
     </td>
-    <td class="price"><?php echo $variation->get_price_html(); ?></td>
-    <td class="actions">
-        <?php
-        $product_terms = get_the_terms( get_the_ID(), 'product_cat' );
-        $registration_product = false;
+    <?php if ( $variation->is_in_stock() ) { ?>
+        <td class="price"><?php echo $variation->get_price_html(); ?></td>
+        <td class="actions">
+            <?php
+            $product_terms = get_the_terms( get_the_ID(), 'product_cat' );
+            $registration_product = false;
 
-        foreach ( $product_terms as $term ) {
-            if ( 'registration' == $term->slug ) {
-                $registration_product = true;
+            foreach ( $product_terms as $term ) {
+                if ( 'registration' == $term->slug ) {
+                    $registration_product = true;
+                }
             }
-        }
 
-        if ( $registration_product ) {
-            echo '<input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="hidden" value="1" min="1" max="1" />
-            <label for="family-members">Family members:<br/>
-                <button type="button" class="decrement btn">-</button>
-                <input name="family-members" type="number" value="2" min="2" max="6" />
-                <button type="button" class="increment btn">+</button>
-            </label>';
-        } else {
-            echo '<label class="qty" for="qty-' . $variation_array['variation_id'] . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
-                <button type="button" class="decrement btn">-</button>
-                <input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="number" value="0" min="0" max="6" />
-                <button type="button" class="increment btn">+</button>
-            </label>';
-        }
-        ?>
-        <p class="product woocommerce add_to_cart_inline">
-            <a rel="nofollow" href="<?php echo $variation->add_to_cart_url() ?>" data-quantity="1" data-family-members="1" data-product_id="<?php echo $variation_array['variation_id']; ?>" class="button product_type_variation add_to_cart_button ajax_add_to_cart">Add to my order</a>
-            <span class="spinner hidden"></span>
-        </p>
-    </td>
+            if ( $registration_product ) {
+                echo '<input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="hidden" value="1" min="1" max="1" />
+                <label for="family-members">Family members:<br/>
+                    <button type="button" class="decrement btn">-</button>
+                    <input name="family-members" type="number" value="2" min="2" max="6" />
+                    <button type="button" class="increment btn">+</button>
+                </label>';
+            } else {
+                echo '<label class="qty" for="qty-' . $variation_array['variation_id'] . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
+                    <button type="button" class="decrement btn">-</button>
+                    <input class="qty" name="qty-' . $variation_array['variation_id']  . '" type="number" value="0" min="0" max="6" />
+                    <button type="button" class="increment btn">+</button>
+                </label>';
+            }
+            ?>
+            <p class="product woocommerce add_to_cart_inline">
+                <a rel="nofollow" href="<?php echo $variation->add_to_cart_url() ?>" data-quantity="1" data-family-members="1" data-product_id="<?php echo $variation_array['variation_id']; ?>" class="button product_type_variation add_to_cart_button ajax_add_to_cart">Add to my order</a>
+                <span class="spinner hidden"></span>
+            </p>
+        </td>
+    <?php } else { ?>
+        <td colspan="2">
+            <?php echo do_shortcode( '[convention_cta convention="' . $convention_abbreviation . '"]' ); ?>
+        </td>
+    <?php } ?>
 </tr>

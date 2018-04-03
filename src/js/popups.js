@@ -8,7 +8,7 @@
 
             // loop over all triggers
             for (i = 0; i < triggers.length; i++) {
-                cookieTriggers = triggers[i].settings.cookie.name;
+                cookieTriggers = triggers[i].settings.cookie_name;
 
                 // check for cookie-based triggers
                 if (triggers[i].type === 'auto_open' && cookieTriggers.length > 0) {

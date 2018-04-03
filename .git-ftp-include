@@ -6,6 +6,8 @@ dist/images/svg/MO.svg:src/images/svg/MO.svg
 
 dist/js/exhibitor-backend.min.js:src/js/exhibitor-backend.js
 dist/js/exhibitor-backend.min.js.map:src/js/exhibitor-backend.js
+dist/js/popups.min.js:src/js/popups.js
+dist/js/popups.min.js.map:src/js/popups.js
 dist/js/price-sheets.min.js:src/js/price-sheets.js
 dist/js/price-sheets.min.js.map:src/js/price-sheets.js
 dist/js/robly-lists.min.js:src/js/robly-lists.js

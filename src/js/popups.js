@@ -17,7 +17,6 @@
                     for (j = 0; j < cookieTriggers.length; j++) {
                         // if found, set a 30-day cookie to prevent this popup from showing again
                         Cookies.set(cookieTriggers[j], true, {expires: 30});
-                        console.log('Setting cookie ' + cookieTriggers[j]);
                     }
                 }
             }

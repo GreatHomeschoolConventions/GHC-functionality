@@ -42,6 +42,7 @@ function ghc_register_frontend_resources() {
     wp_register_script( 'ghc-woocommerce', plugins_url( 'dist/js/woocommerce.min.js', __FILE__ ), array( 'jquery', 'woocommerce' ), GHC_PLUGIN_VERSION );
     wp_register_script( 'ghc-price-sheets', plugins_url( 'dist/js/price-sheets.min.js', __FILE__ ), array( 'jquery' ), GHC_PLUGIN_VERSION );
     wp_register_script( 'ghc-workshop-filter', plugins_url( 'dist/js/workshop-filter.min.js', __FILE__ ), array( 'jquery' ), GHC_PLUGIN_VERSION );
+    wp_enqueue_script( 'ghc-popups', plugins_url( 'dist/js/popups.min.js', __FILE__ ), array( 'jquery', 'popup-maker-site' ), GHC_PLUGIN_VERSION, true );
 
     wp_enqueue_style( 'ghc-functionality', plugins_url( 'dist/css/style.min.css', __FILE__ ), array(), GHC_PLUGIN_VERSION );
 

@@ -2,7 +2,9 @@
     $('document').ready(function(){
         $('.popmake-content').on('click', 'a', function(e) {
             // get popup cookie settings
-            var popup = $(this).parents('.popmake-overlay'),
+            var i,
+                j,
+                popup = $(this).parents('.popmake-overlay'),
                 triggers = popup.data('popmake').triggers,
                 cookieTriggers;
 

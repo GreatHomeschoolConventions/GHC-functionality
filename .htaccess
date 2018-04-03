@@ -1,0 +1,1 @@
+RewriteRule ^/svg/(.+) /wp-content/plugins/ghc-speakers/dist/images/svg/$1 [R,L]

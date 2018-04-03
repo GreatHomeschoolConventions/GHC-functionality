@@ -314,7 +314,7 @@ function ghc_e3_buy_now_button( $attributes ) {
     if ( $shortcode_attributes['product_id'] ) {
         echo '<section class="buy-now">
         <p><a class="button" rel="nofollow" href="' . home_url() . '/checkout/?add-to-cart=' . $shortcode_attributes['product_id'] . '">' . $shortcode_attributes['button_text'] . '</a><br/>
-        <img src="' . plugin_dir_url( __FILE__ ) . 'images/credit-cards.svg" alt="credit card icons" /></p>
+        <img src="' . plugin_dir_url( __FILE__ ) . 'dist/images/svg/credit-cards.svg" alt="credit card icons" /></p>
         </section>';
     }
     return ob_get_clean();

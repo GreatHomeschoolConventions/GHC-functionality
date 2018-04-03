@@ -1,14 +1,19 @@
-SVG/icons.min.svg:SVG/raw/California_small.svg
-SVG/icons.min.svg:SVG/raw/Midwest_small.svg
-SVG/icons.min.svg:SVG/raw/Missouri_small.svg
-SVG/icons.min.svg:SVG/raw/Southeast_small.svg
-SVG/icons.min.svg:SVG/raw/Texas_small.svg
+dist/images/svg/SE.svg:src/images/svg/SE.svg
+dist/images/svg/TX.svg:src/images/svg/TX.svg
+dist/images/svg/MW.svg:src/images/svg/MW.svg
+dist/images/svg/CA.svg:src/images/svg/CA.svg
+dist/images/svg/MO.svg:src/images/svg/MO.svg
 
-js/exhibitor-backend.min.js:js/exhibitor-backend.js
-js/price-sheets.min.js:js/price-sheets.js
-js/robly-lists.min.js:js/robly-lists.js
-js/woocommerce.min.js:js/woocommerce.js
-js/workshop-filter.min.js:js/workshop-filter.js
+dist/js/exhibitor-backend.min.js:src/js/exhibitor-backend.js
+dist/js/exhibitor-backend.min.js.map:src/js/exhibitor-backend.js
+dist/js/price-sheets.min.js:src/js/price-sheets.js
+dist/js/price-sheets.min.js.map:src/js/price-sheets.js
+dist/js/robly-lists.min.js:src/js/robly-lists.js
+dist/js/robly-lists.min.js.map:src/js/robly-lists.js
+dist/js/woocommerce.min.js:src/js/woocommerce.js
+dist/js/woocommerce.min.js.map:src/js/woocommerce.js
+dist/js/workshop-filter.min.js:src/js/workshop-filter.js
+dist/js/workshop-filter.min.js.map:src/js/workshop-filter.js
 
-css/style.min.css:css/style.scss
-css/style.min.css.map:css/style.scss
+dist/css/style.min.css:src/scss/style.scss
+dist/css/style.min.css.map:src/scss/style.scss

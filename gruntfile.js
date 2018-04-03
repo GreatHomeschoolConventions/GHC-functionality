@@ -3,22 +3,22 @@ module.exports = function (grunt) {
     // Watch task config
     watch: {
         styles: {
-            files: "css/*.scss",
+            files: "src/scss/*",
             tasks: ['sass', 'postcss'],
         },
         svg: {
-            files: "SVG/raw/*.svg",
+            files: "src/images/**/*.svg",
             tasks: ['svgmin'],
         },
         javascript: {
-            files: ["js/*.js", "!js/*.min.js"],
+            files: "src/js/*",
             tasks: ['uglify'],
         },
     },
     sass: {
         dev: {
             files: {
-                "css/style.min.css" : "css/style.scss",
+                "dist/css/style.min.css" : "src/scss/style.scss",
             }
         }
     },
@@ -41,7 +41,7 @@ module.exports = function (grunt) {
     browserSync: {
         dev: {
             bsFiles: {
-                src : ['css/*.min.css', '**/*.php', '**/*.js', '**/*.svg', '**/*.html', '!node_modules'],
+                src : ['dist/**/*', '**/*.php', '**/*.html', '!node_modules'],
             },
             options: {
                 watchTask: true,
@@ -65,20 +65,23 @@ module.exports = function (grunt) {
         icons: {
             files: [{
                 expand: true,
-                cwd: 'SVG/raw',
+                cwd: 'src/images/svg/',
                 src: '*.svg',
-                dest: 'SVG',
+                dest: 'dist/images/svg/',
             }],
         },
     },
     uglify: {
+        options: {
+            sourceMap: true
+        },
         custom: {
             files: {
-                'js/exhibitor-backend.min.js': ['js/exhibitor-backend.js'],
-                'js/price-sheets.min.js': ['js/price-sheets.js'],
-                'js/robly-lists.min.js': ['js/robly-lists.js'],
-                'js/woocommerce.min.js': ['js/woocommerce.js'],
-                'js/workshop-filter.min.js': ['js/workshop-filter.js'],
+                'dist/js/exhibitor-backend.min.js': ['src/js/exhibitor-backend.js'],
+                'dist/js/price-sheets.min.js': ['src/js/price-sheets.js'],
+                'dist/js/robly-lists.min.js': ['src/js/robly-lists.js'],
+                'dist/js/woocommerce.min.js': ['src/js/woocommerce.js'],
+                'dist/js/workshop-filter.min.js': ['src/js/workshop-filter.js'],
             },
         },
     },

@@ -129,7 +129,7 @@ function output_convention_icons( $input_conventions, $args = NULL ) {
             }
 
             $convention_icons .= '<a class="convention-link" href="' . $conventions[$convention_key]['permalink'] . '">';
-                $convention_icons .= '<img src="' . plugins_url( '../svg/' . strtoupper( $convention_key ), __FILE__ ) . '.svg" alt="' . $conventions[$convention_key]['title'] . '" class="convention-icon" />';
+                $convention_icons .= '<img src="' . plugins_url( '../dist/images/svg/' . strtoupper( $convention_key ), __FILE__ ) . '.svg" alt="' . $conventions[$convention_key]['title'] . '" class="convention-icon" />';
             $convention_icons .= '</a>';
         }
     }

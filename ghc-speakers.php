@@ -39,11 +39,11 @@ include( 'inc/woocommerce.php' );
  * Register frontend JS and styles
  */
 function ghc_register_frontend_resources() {
-    wp_register_script( 'ghc-woocommerce', plugins_url( 'js/woocommerce.min.js', __FILE__ ), array( 'jquery', 'woocommerce' ), GHC_PLUGIN_VERSION );
-    wp_register_script( 'ghc-price-sheets', plugins_url( 'js/price-sheets.min.js', __FILE__ ), array( 'jquery' ), GHC_PLUGIN_VERSION );
-    wp_register_script( 'ghc-workshop-filter', plugins_url( 'js/workshop-filter.min.js', __FILE__ ), array( 'jquery' ), GHC_PLUGIN_VERSION );
+    wp_register_script( 'ghc-woocommerce', plugins_url( 'dist/js/woocommerce.min.js', __FILE__ ), array( 'jquery', 'woocommerce' ), GHC_PLUGIN_VERSION );
+    wp_register_script( 'ghc-price-sheets', plugins_url( 'dist/js/price-sheets.min.js', __FILE__ ), array( 'jquery' ), GHC_PLUGIN_VERSION );
+    wp_register_script( 'ghc-workshop-filter', plugins_url( 'dist/js/workshop-filter.min.js', __FILE__ ), array( 'jquery' ), GHC_PLUGIN_VERSION );
 
-    wp_enqueue_style( 'ghc-functionality', plugins_url( 'css/style.min.css', __FILE__ ), array(), GHC_PLUGIN_VERSION );
+    wp_enqueue_style( 'ghc-functionality', plugins_url( 'dist/css/style.min.css', __FILE__ ), array(), GHC_PLUGIN_VERSION );
 
     // load WooCommerce script only on WC pages
     if ( function_exists( 'is_product' ) && function_exists( 'is_cart' ) ) {

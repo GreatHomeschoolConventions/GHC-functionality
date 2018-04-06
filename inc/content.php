@@ -122,15 +122,16 @@ function ghc_exhibitor_archive_icons( $content ) {
     global $post;
     $new_content = '';
     if ( 'exhibitor' == get_post_type( $post->ID ) ) {
-        if ( get_field( 'exhibitor_URL', $post->ID ) ) {
-            $new_content .= '<p><a href="' . get_field( 'exhibitor_URL', $post->ID ) . '" target="_blank" rel="noopener noreferrer">Visit website&rarr;</a></p>';
-        }
         if ( ! is_tax() ) {
             $new_content .= output_convention_icons( $post->ID );
+        }
+        if ( get_field( 'exhibitor_URL', $post->ID ) && is_singular() ) {
+            $new_content .= '<p><a class="button" href="' . get_field( 'exhibitor_URL', $post->ID ) . '" target="_blank" rel="noopener noreferrer">Visit website&rarr;</a></p>';
         }
     }
     return $new_content . $content;
 }
+add_filter( 'the_excerpt', 'ghc_exhibitor_archive_icons' );
 add_filter( 'the_content', 'ghc_exhibitor_archive_icons' );
 
 /**

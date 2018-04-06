@@ -158,7 +158,7 @@ function exhibitor_list_shortcode( $attributes ) {
                 if ( $shortcode_attributes['style'] == 'list' ) {
                     echo '<li id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '">';
                 }
-                echo '<a href="' . get_field( 'exhibitor_URL' ) . '" target="_blank" rel="noopener noreferrer">' . get_the_title() . '</a>';
+                echo '<a href="' . get_permalink() . '">' . get_the_title() . '</a>';
                 if ( $shortcode_attributes['style'] == 'list' ) {
                     echo '</li>';
                 }

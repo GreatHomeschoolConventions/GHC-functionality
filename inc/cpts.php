@@ -701,22 +701,6 @@ function ghc_modify_sponsor_archive( $query ) {
 add_action( 'pre_get_posts', 'ghc_modify_sponsor_archive' );
 
 /**
- * Change exhibitor URL to be their website URL
- * @param  string  $post_link post permalink
- * @param  object  $post      WP_Post
- * @param  boolean $leavename whether or not to keep the post name
- * @param  boolean $sample    whether or not it’s a sample permalink
- * @return string  modified link
- */
-function ghc_exhibitor_post_type_link( $post_link, $post, $leavename, $sample ) {
-    if ( 'exhibitor' == get_post_type( $post ) ) {
-        $post_link = get_field( 'exhibitor_URL', $post->ID );
-    }
-    return $post_link;
-}
-add_filter( 'post_type_link', 'ghc_exhibitor_post_type_link', 10, 4 );
-
-/**
  * Add all the given speaker’s workshops to a post_meta
  * @param integer $post_id WP post ID
  */

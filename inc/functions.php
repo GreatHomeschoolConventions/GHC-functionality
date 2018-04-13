@@ -69,7 +69,7 @@ function convention_info() {
     /* $convention_dates: each key is the two-letter abbreviation, and the value is the Unix time */
 
 }
-add_action( 'wp_head', 'convention_info' );
+add_action( 'get_header', 'convention_info' );
 
 /**
  * Output convention icons

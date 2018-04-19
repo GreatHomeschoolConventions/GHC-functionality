@@ -404,9 +404,9 @@ add_action( 'woocommerce_thankyou', 'ghc_auto_complete_order' );
 function ghc_woocommmerce_subject_lines( $subject, $order ) {
     $subject = sprintf(
         'New Customer Order (#%s) from %s %s (Convention: %s)',
-        $order->id,
-        $order->billing_first_name,
-        $order->billing_last_name,
+        $order->get_order_number(),
+        $order->get_billing_first_name(),
+        $order->get_billing_last_name(),
         ghc_woocommerce_get_registration_product( $order )
     );
 

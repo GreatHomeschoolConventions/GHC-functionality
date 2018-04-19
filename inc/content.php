@@ -302,7 +302,7 @@ function ghc_list_related_workshops( $content ) {
         $related_workshops = get_field( 'related_workshops', $speaker_id );
 
         // remove this workshop from the array since post__in causes post__not_in to be ignored
-        if ( 'workshop' === $this_post_type && ( ( $key = array_search( get_the_ID(), $related_workshops ) ) !== false ) ) {
+        if ( is_array( $related_workshops ) && 'workshop' === $this_post_type && ( ( $key = array_search( get_the_ID(), $related_workshops ) ) !== false ) ) {
             unset( $related_workshops[$key] );
         }
 

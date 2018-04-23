@@ -2,7 +2,7 @@
 /**
  * Custom hotel archive template
  *
- * @package GHC Functionality Plugin
+ * @package GHC_Functionality_Plugin
  */
 
 get_header();

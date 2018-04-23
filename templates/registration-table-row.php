@@ -2,7 +2,7 @@
 /**
  * Register page single row template for normal products (convention locations)
  *
- * @package GHC Functionality Plugin
+ * @package GHC_Functionality_Plugin
  */
 
 if ( $product->is_in_stock() ) { ?>

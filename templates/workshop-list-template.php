@@ -2,7 +2,7 @@
 /**
  * Workshop list template
  *
- * @package GHC Functionality Plugin
+ * @package GHC_Functionality_Plugin
  */
 
 $speakers        = get_field( 'speaker' );

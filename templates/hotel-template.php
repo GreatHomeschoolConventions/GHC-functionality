@@ -2,7 +2,7 @@
 /**
  * Single hotel template
  *
- * @package GHC Functionality Plugin
+ * @package GHC_Functionality_Plugin
  */
 
 if ( is_post_type_archive( 'hotel' ) || $is_shortcode ) {

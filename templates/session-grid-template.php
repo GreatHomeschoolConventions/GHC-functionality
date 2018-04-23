@@ -2,7 +2,7 @@
 /**
  * Single session grid template
  *
- * @package GHC Functionality Plugin
+ * @package GHC_Functionality_Plugin
  */
 
 	$speaker_slug = get_post_meta( get_the_ID(), 'session-speaker', true );

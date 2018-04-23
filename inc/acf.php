@@ -2,7 +2,7 @@
 /**
  * ACF Pro-related functions
  *
- * @package GHC Functionality Plugin
+ * @package GHC_Functionality_Plugin
  */
 
 defined( 'ABSPATH' ) or die( 'No access allowed' );

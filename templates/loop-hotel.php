@@ -2,7 +2,7 @@
 /**
  * Hotel loop template
  *
- * @package GHC Functionality Plugin
+ * @package GHC_Functionality_Plugin
  */
 
 global $convention_abbreviations;

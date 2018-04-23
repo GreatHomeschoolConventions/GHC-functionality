@@ -2,7 +2,7 @@
 /**
  * Single exhibitor template
  *
- * @package GHC Functionality Plugin
+ * @package GHC_Functionality_Plugin
  */
 
 ?>

@@ -1,4 +1,9 @@
 <?php
+/**
+ * GHC custom post types
+ *
+ * @package GHC Functionality Plugin
+ */
 
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 

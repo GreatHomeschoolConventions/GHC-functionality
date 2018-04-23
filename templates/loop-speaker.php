@@ -1,4 +1,10 @@
 <?php
+/**
+ * Speaker loop template
+ *
+ * @package GHC Functionality Plugin
+ */
+
 	// new queries
 	$top_speakers_args = array(
 		'post_type'              => 'speaker',

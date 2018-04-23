@@ -1,3 +1,11 @@
+<?php
+/**
+ * Register page single row template for variable products (addons)
+ *
+ * @package GHC Functionality Plugin
+ */
+
+?>
 <tr id="post-<?php echo $variation_array['variation_id']; ?>" <?php ghc_product_post_class( $variation_array['variation_id'] ); ?>>
 	<td class="thumb">
 		<?php
@@ -16,7 +24,7 @@
 		<?php
 		$attribute_string = '';
 		foreach ( $variation->get_variation_attributes() as $key => $value ) {
-			if ( $value === 'Family' ) {
+			if ( 'Family' === $value ) {
 				$value .= ' <span class="lowercase">(parents, children/teens, and grandparents)</span>';
 			}
 			$attribute_string .= $value . ', ';
@@ -39,17 +47,17 @@
 
 			if ( $registration_product ) {
 				echo '<input class="qty" name="qty-' . $variation_array['variation_id'] . '" type="hidden" value="1" min="1" max="1" />
-                <label for="family-members">Family members:<br/>
-                    <button type="button" class="decrement btn">-</button>
-                    <input name="family-members" type="number" value="2" min="2" max="6" />
-                    <button type="button" class="increment btn">+</button>
-                </label>';
+				<label for="family-members">Family members:<br/>
+					<button type="button" class="decrement btn">-</button>
+					<input name="family-members" type="number" value="2" min="2" max="6" />
+					<button type="button" class="increment btn">+</button>
+				</label>';
 			} else {
 				echo '<label class="qty" for="qty-' . $variation_array['variation_id'] . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
-                    <button type="button" class="decrement btn">-</button>
-                    <input class="qty" name="qty-' . $variation_array['variation_id'] . '" type="number" value="0" min="0" max="6" />
-                    <button type="button" class="increment btn">+</button>
-                </label>';
+					<button type="button" class="decrement btn">-</button>
+					<input class="qty" name="qty-' . $variation_array['variation_id'] . '" type="number" value="0" min="0" max="6" />
+					<button type="button" class="increment btn">+</button>
+				</label>';
 			}
 			?>
 			<p class="product woocommerce add_to_cart_inline">

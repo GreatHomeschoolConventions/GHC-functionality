@@ -1,4 +1,10 @@
 <?php
+/**
+ * Single hotel template
+ *
+ * @package GHC Functionality Plugin
+ */
+
 if ( is_post_type_archive( 'hotel' ) || $is_shortcode ) {
 	$conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 	$this_convention      = array_flip( $convention_abbreviations )[ $conventions_taxonomy[0]->slug ];

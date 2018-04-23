@@ -1,4 +1,9 @@
 <?php
+/**
+ * WooCommerce-related functions
+ *
+ * @package GHC Functionality Plugin
+ */
 
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 
@@ -106,13 +111,13 @@ function woocommerce_single_variation_add_to_cart_button() {
 	}
 
 	if ( $check_cart_for_registration ) {
-		$all_convention_IDs = ghc_get_convention_IDs();
+		$all_convention_ids = ghc_get_convention_ids();
 
 		// check cart products against registration items
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
 			$in_cart_product = $values['data'];
 
-			if ( in_array( $in_cart_product->id, $all_convention_IDs ) ) {
+			if ( in_array( $in_cart_product->id, $all_convention_ids ) ) {
 				$disable_purchase = true;
 				add_filter(
 					'woocommerce_product_single_add_to_cart_text', function() {
@@ -131,18 +136,18 @@ function woocommerce_single_variation_add_to_cart_button() {
 		echo ' disabled" disabled="true';
 	}
 		echo '">' . esc_html( $product->single_add_to_cart_text() ) . '</button>
-        <input type="hidden" name="add-to-cart" value="' . absint( $product->id ) . '" />
-        <input type="hidden" name="product_id" value="' . absint( $product->id ) . '" />
-        <input type="hidden" name="variation_id" class="variation_id" value="" />
-    </div>';
+		<input type="hidden" name="add-to-cart" value="' . absint( $product->id ) . '" />
+		<input type="hidden" name="product_id" value="' . absint( $product->id ) . '" />
+		<input type="hidden" name="variation_id" class="variation_id" value="" />
+	</div>';
 }
 
 /**
  * Add custom data fields to cart item metadata
  *
- * @link https://wisdmlabs.com/blog/add-custom-data-woocommerce-order-2/ Adapted from this sample code
+ * @link https://wisdmlabs.com/blog/add-custom-data-woocommerce-order-2/ Adapted from this sample code.
  *
- * @param  array   $cart_item_meta WC cart item metadata
+ * @param  array   $cart_item_data WC cart item data
  * @param  integer $product_id     WC product ID
  * @param  integer $variation_id   WC variation ID
  * @return array   WC cart item metadata
@@ -204,7 +209,7 @@ function ghc_get_max_ticket_quantity() {
 
 		$attributes = $cart_item['data']->get_attributes();
 
-		if ( array_key_exists( 'attendee-type', $attributes ) && $attributes['attendee-type'] === 'Family' ) {
+		if ( array_key_exists( 'attendee-type', $attributes ) && 'Family' === $attributes['attendee-type'] ) {
 			// get family member quantity
 			if ( array_key_exists( 'family_members', $cart_item ) ) {
 				$max_quantity = (int) $cart_item['family_members'];
@@ -266,8 +271,7 @@ add_filter( 'woocommerce_cart_item_quantity', 'ghc_get_max_ticket_quantity_cart'
 function ghc_enforce_max_ticket_quantity( $quantity, $product_id = 0 ) {
 	$product      = new WC_Product( $product_id );
 	$max_quantity = ghc_get_max_ticket_quantity();
-	// FIXME: hardcoded category ID for registration products
-	$category_id = 229;
+	$category_id = get_field( 'woocommerce_product_categories', 'option' );
 	$cart_items  = WC()->cart->get_cart();
 
 	// handle special events
@@ -301,12 +305,13 @@ add_filter( 'woocommerce_add_to_cart_quantity', 'ghc_enforce_max_ticket_quantity
  *
  * @return array all product variation IDs
  */
-function ghc_get_convention_IDs() {
-	if ( false === ( $all_convention_IDs = get_transient( 'ghc-all-convention-variation-ids' ) ) ) {
-		$all_convention_IDs = ghc_set_convention_variation_IDs_transient();
+function ghc_get_convention_ids() {
+	$all_convention_ids = get_transient( 'ghc-all-convention-variation-ids' );
+	if ( false === $all_convention_ids ) {
+		$all_convention_ids = ghc_set_convention_variation_ids_transient();
 	}
 
-	return $all_convention_IDs;
+	return $all_convention_ids;
 }
 
 /**
@@ -314,7 +319,7 @@ function ghc_get_convention_IDs() {
  *
  * @return array all conventian variation product IDs
  */
-function ghc_set_convention_variation_IDs_transient() {
+function ghc_set_convention_variation_ids_transient() {
 	$all_conventions_query_args = array(
 		'posts_per_page' => -1,
 		'post_status'    => 'publish',
@@ -332,22 +337,22 @@ function ghc_set_convention_variation_IDs_transient() {
 	$all_conventions = new WP_Query( $all_conventions_query_args );
 
 	// loop through results and add IDs to an array
-	$all_convention_IDs = array();
+	$all_convention_ids = array();
 	if ( $all_conventions->have_posts() ) {
 		while ( $all_conventions->have_posts() ) {
 			$all_conventions->the_post();
-			$all_convention_IDs[] = get_the_ID();
+			$all_convention_ids[] = get_the_ID();
 		}
 	}
 
 	// reset global query
 	wp_reset_query();
 
-	set_transient( 'ghc-all-convention-variation-ids', $all_convention_IDs );
-	return $all_convention_IDs;
+	set_transient( 'ghc-all-convention-variation-ids', $all_convention_ids );
+	return $all_convention_ids;
 }
-add_action( 'save_post_product', 'ghc_set_convention_variation_IDs_transient' );
-add_action( 'save_post_product_variation', 'ghc_set_convention_variation_IDs_transient' );
+add_action( 'save_post_product', 'ghc_set_convention_variation_ids_transient' );
+add_action( 'save_post_product_variation', 'ghc_set_convention_variation_ids_transient' );
 
 /**
  * Add custom cart total location
@@ -407,6 +412,8 @@ add_filter(
 
 /**
  * Auto-complete all orders
+ *
+ * @param integer $order_id WC_Order ID.
  */
 function ghc_auto_complete_order( $order_id ) {
 	if ( ! $order_id ) {

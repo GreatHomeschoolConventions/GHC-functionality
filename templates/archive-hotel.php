@@ -1,4 +1,9 @@
 <?php
+/**
+ * Custom hotel archive template
+ *
+ * @package GHC Functionality Plugin
+ */
 
 get_header();
 

@@ -20,6 +20,8 @@
 	You should have received a copy of the GNU General Public License
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * @package GHC Functionality Plugin
  */
 
 defined( 'ABSPATH' ) or die( 'No access allowed' );
@@ -122,7 +124,7 @@ function ghc_e3_content( $content ) {
 		if ( is_singular() ) {
 			$new_content .= '
             <audio class="wp-audio-shortcode" controls="controls" preload="none" style="width: 100%">
-                <source type="audio/mpeg" src="' . ghc_e3_get_signed_URL( get_field( 'e3_workshop_media_url' ) ) . '" />
+                <source type="audio/mpeg" src="' . ghc_e3_get_signed_url( get_field( 'e3_workshop_media_url' ) ) . '" />
             </audio>';
 
 			if ( $speaker_bio ) {
@@ -178,7 +180,7 @@ add_filter( 'post_thumbnail_html', 'ghc_e3_thumbnail_content', 10, 5 );
  * @param  string $resource resource URL
  * @return string signed resource URL
  */
-function ghc_e3_get_signed_URL( $resource ) {
+function ghc_e3_get_signed_url( $resource ) {
 	$key_pair_id           = get_field( 'aws_cloudfront_key_pair_id', 'option' );
 	$private_key           = get_field( 'aws_cloudfront_private_key', 'option' );
 	$aws_s3_domain         = get_field( 'aws_s3_domain', 'option' );

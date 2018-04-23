@@ -1,4 +1,9 @@
 <?php
+/**
+ * Content-related functions
+ *
+ * @package GHC Functionality Plugin
+ */
 
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 
@@ -29,7 +34,7 @@ function ghc_related_sponsors( $content ) {
 		$related_sponsors       = get_field( 'related_sponsors' );
 		$show_content_with_logo = get_field( 'show_content_with_logo' );
 
-		if ( isset( $related_sponsors ) && $related_sponsors !== '' ) {
+		if ( isset( $related_sponsors ) && ! empty( $related_sponsors ) ) {
 			global $post;
 			$this_post = $post;
 
@@ -46,24 +51,24 @@ function ghc_related_sponsors( $content ) {
 
 			if ( $related_sponsors_query->have_posts() ) {
 				$content .= '<div id="related-sponsors">
-                <h3 class="related-sponsors">Sponsors</h3>
-                <div class="sponsor-container ghc-cpt container show-content-' . $show_content_with_logo . '">';
+				<h3 class="related-sponsors">Sponsors</h3>
+				<div class="sponsor-container ghc-cpt container show-content-' . $show_content_with_logo . '">';
 
 				while ( $related_sponsors_query->have_posts() ) {
 					$related_sponsors_query->the_post();
 					$content .= '<div class="sponsor">
-                    <div class="post-thumbnail">
-                    <a href="' . get_permalink() . '">' . get_the_post_thumbnail( get_the_ID(), 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>';
+					<div class="post-thumbnail">
+					<a href="' . get_permalink() . '">' . get_the_post_thumbnail( get_the_ID(), 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>';
 
 					if ( $show_content_with_logo ) {
 						$content .= apply_filters( 'the_content', get_the_content() );
 					}
 
 					$content .= '</div>
-                    </div><!-- .sponsor -->';
+					</div><!-- .sponsor -->';
 				}
 				$content .= '</div><!-- .sponsor-container.ghc-cpt.container -->
-                </div><!-- #sponsor-container.ghc-cpt.container -->';
+				</div><!-- #sponsor-container.ghc-cpt.container -->';
 			}
 
 			// reset post data
@@ -101,7 +106,7 @@ add_filter( 'the_content', 'ghc_pinterest_image' );
 function ghc_opengraph_video() {
 	$featured_video = get_field( 'featured_video' );
 	if ( $featured_video ) {
-		$video_ID            = get_video_ID( $featured_video );
+		$video_id            = get_video_id( $featured_video );
 		$featured_video_meta = get_post_meta( get_the_ID(), 'featured_video_meta', true );
 
 		// video
@@ -166,7 +171,7 @@ function ghc_list_special_tracks( $content ) {
 					if ( $track_index == $special_tracks_count ) {
 						$track_output .= ' and ';
 					}
-				} elseif ( $special_tracks_count == 2 && $track_index != 2 ) {
+				} elseif ( 2 === $special_tracks_count && 2 !== $track_index ) {
 					$track_output .= ' and ';
 				}
 				$track_index++;
@@ -178,14 +183,14 @@ function ghc_list_special_tracks( $content ) {
 			if ( 'speaker' == get_post_type() ) {
 				$intro_content = sprintf(
 					'
-                <p>We are honored to have %1$s participating in this year&rsquo;s %2$s.</p>',
+				<p>We are honored to have %1$s participating in this year&rsquo;s %2$s.</p>',
 					get_the_title(),
 					$track_output
 				);
 			} elseif ( 'workshop' == get_post_type() ) {
 				$intro_content = sprintf(
 					'
-                <p>%1$s is part of this year&rsquo;s %2$s.</p>',
+				<p>%1$s is part of this year&rsquo;s %2$s.</p>',
 					get_the_title(),
 					$track_output
 				);
@@ -279,7 +284,7 @@ add_filter( 'the_content', 'ghc_special_event_show_locations_single', 11 );
 /**
  * Add speaker location info to each special event (archive)
  *
- * @param  string $content HTML content
+ * @param  string $excerpt Post excerpt.
  * @return string modified HTML content
  */
 function ghc_special_event_show_locations_archive( $excerpt ) {
@@ -316,7 +321,8 @@ function ghc_list_related_workshops( $content ) {
 		$related_workshops = get_field( 'related_workshops', $speaker_id );
 
 		// remove this workshop from the array since post__in causes post__not_in to be ignored
-		if ( is_array( $related_workshops ) && 'workshop' === $this_post_type && ( ( $key = array_search( get_the_ID(), $related_workshops ) ) !== false ) ) {
+		$key = array_search( get_the_ID(), $related_workshops );
+		if ( is_array( $related_workshops ) && 'workshop' === $this_post_type && false !== $key ) {
 			unset( $related_workshops[ $key ] );
 		}
 
@@ -341,7 +347,7 @@ function ghc_list_related_workshops( $content ) {
 					while ( $related_workshops->have_posts() ) {
 						$related_workshops->the_post();
 						$workshop_content .= '<h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>
-                        <p>' . apply_filters( 'wpautop', get_the_content() ) . '</p>';
+						<p>' . apply_filters( 'wpautop', get_the_content() ) . '</p>';
 					}
 				} else {
 					$workshop_content .= '<ul>';

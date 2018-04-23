@@ -7,7 +7,6 @@
             "label": "Exhibit Hall Hours",
             "name": "exhibit_hall_hours",
             "type": "wysiwyg",
-            "value": null,
             "instructions": "Shown at the top of the Exhibitors CPT as well as when called with the <code>[exhibit_hall_hours]<\/code> shortcode",
             "required": 0,
             "conditional_logic": 0,
@@ -27,7 +26,6 @@
             "label": "Google API Key",
             "name": "api_key",
             "type": "text",
-            "value": null,
             "instructions": "Used for Google Maps in ACF, etc.",
             "required": 0,
             "conditional_logic": 0,
@@ -43,11 +41,91 @@
             "maxlength": ""
         },
         {
+            "key": "field_5ade2f1b1fab0",
+            "label": "WooCommerce Product Categories",
+            "name": "woocommerce_product_categories",
+            "type": "taxonomy",
+            "instructions": "Which category are the main registration products in?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "product_cat",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_59e0da9f13c6d",
+            "label": "CPT Archive Descriptions",
+            "name": "archive_descriptions",
+            "type": "repeater",
+            "instructions": "Set custom introductory messages for CPT archives.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "row",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_59e0daaa13c6e",
+                    "label": "post_type",
+                    "name": "post_type",
+                    "type": "text",
+                    "instructions": "Post type key",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_59e0dad213c6f",
+                    "label": "Message",
+                    "name": "message",
+                    "type": "wysiwyg",
+                    "instructions": "Custom message to display",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "75",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "full",
+                    "media_upload": 1,
+                    "delay": 0
+                }
+            ]
+        },
+        {
             "key": "field_5973a19d2c8a0",
             "label": "AWS Cloudfront Key Pair ID",
             "name": "aws_cloudfront_key_pair_id",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -67,7 +145,6 @@
             "label": "AWS Cloudfront Private Key",
             "name": "aws_cloudfront_private_key",
             "type": "textarea",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -87,7 +164,6 @@
             "label": "AWS Cloudfront Signed URL Lifetime",
             "name": "aws_cloudfront_signed_url_lifetime",
             "type": "number",
-            "value": null,
             "instructions": "Length of time signed URLs should be active, in seconds",
             "required": 0,
             "conditional_logic": 0,
@@ -109,7 +185,6 @@
             "label": "AWS S3 Domain",
             "name": "aws_s3_domain",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -129,7 +204,6 @@
             "label": "AWS CloudFront Domain",
             "name": "aws_cloudfront_domain",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -143,68 +217,6 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
-        },
-        {
-            "key": "field_59e0da9f13c6d",
-            "label": "CPT Archive Descriptions",
-            "name": "archive_descriptions",
-            "type": "repeater",
-            "value": null,
-            "instructions": "Set custom introductory messages for CPT archives.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "row",
-            "button_label": "",
-            "sub_fields": [
-                {
-                    "key": "field_59e0daaa13c6e",
-                    "label": "post_type",
-                    "name": "post_type",
-                    "type": "text",
-                    "value": null,
-                    "instructions": "Post type key",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "25",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                },
-                {
-                    "key": "field_59e0dad213c6f",
-                    "label": "Message",
-                    "name": "message",
-                    "type": "wysiwyg",
-                    "value": null,
-                    "instructions": "Custom message to display",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "75",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "tabs": "all",
-                    "toolbar": "full",
-                    "media_upload": 1,
-                    "delay": 0
-                }
-            ]
         }
     ],
     "location": [
@@ -224,5 +236,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1507908891
+    "modified": 1524510607
 }

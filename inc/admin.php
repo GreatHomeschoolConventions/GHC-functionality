@@ -1,4 +1,9 @@
 <?php
+/**
+ * Admin functions
+ *
+ * @package GHC Functionality Plugin
+ */
 
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 
@@ -9,12 +14,12 @@ defined( 'ABSPATH' ) or die( 'No access allowed' );
  */
 function show_speaker_matching_box( $user ) {
 	echo '<h3>Select a speaker to match to this author</h3>
-    <table class="form-table">
-        <tr>
-            <th><label for="speaker_match">Speaker</label></th>
-            <td>
-                <select name="speaker_match" id="speaker_match">
-                    <option value="">- Select one -</option>';
+	<table class="form-table">
+		<tr>
+			<th><label for="speaker_match">Speaker</label></th>
+			<td>
+				<select name="speaker_match" id="speaker_match">
+					<option value="">- Select one -</option>';
 					$speakers_query_args = array(
 						'post_type'      => array( 'speaker' ),
 						'posts_per_page' => '-1',
@@ -30,9 +35,9 @@ function show_speaker_matching_box( $user ) {
 		}
 	}
 				echo '</select>
-            </td>
-        </tr>
-    </table>';
+			</td>
+		</tr>
+	</table>';
 }
 add_action( 'show_user_profile', 'show_speaker_matching_box' );
 add_action( 'edit_user_profile', 'show_speaker_matching_box' );

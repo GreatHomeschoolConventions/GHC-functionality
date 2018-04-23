@@ -1,4 +1,10 @@
 <?php
+/**
+ * Single session grid template
+ *
+ * @package GHC Functionality Plugin
+ */
+
 	$speaker_slug = get_post_meta( get_the_ID(), 'session-speaker', true );
 	$speaker      = get_page_by_path( $speaker_slug, OBJECT, 'speaker' );
 ?>
@@ -11,8 +17,8 @@
 		// add speaker photo
 		if ( $speaker ) {
 			echo '<div class="speaker-thumbnail">
-                <a href="' . get_permalink( $speaker->ID ) . '">' . ( has_post_thumbnail( $speaker->ID ) ? get_the_post_thumbnail( $speaker->ID, array( 80, 80 ) ) : '' ) . '<br/>' . get_the_title( $speaker->ID ) . '</a>
-            </div>';
+				<a href="' . get_permalink( $speaker->ID ) . '">' . ( has_post_thumbnail( $speaker->ID ) ? get_the_post_thumbnail( $speaker->ID, array( 80, 80 ) ) : '' ) . '<br/>' . get_the_title( $speaker->ID ) . '</a>
+			</div>';
 		}
 
 		// add hook for convention and special tracks

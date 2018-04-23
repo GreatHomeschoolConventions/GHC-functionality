@@ -1,11 +1,16 @@
 <?php
+/**
+ * Custom content templates
+ *
+ * @package GHC Functionality Plugin
+ */
 
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 
 /**
  * Use custom hotel archive template
  *
- * @param  string $archive_template name of template to use
+ * @param  string $archive_template name of template to use.
  * @return string modified name of template to use
  */
 function ghc_hotel_archive( $archive_template ) {
@@ -20,7 +25,7 @@ add_filter( 'archive_template', 'ghc_hotel_archive' );
 /**
  * Add hotel info to single views
  *
- * @param  string $content HTML content
+ * @param  string $content HTML content.
  * @return string modified HTML content
  */
 function ghc_hotel_single( $content ) {

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Generic functions
+ *
+ * @package GHC Functionality Plugin
+ */
 
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 
@@ -74,8 +79,8 @@ add_action( 'get_header', 'convention_info' );
 /**
  * Output convention icons
  *
- * @param  array    $input_conventions         conventions to display
- * @param  array  [ $args             = NULL] options to use
+ * @param  array    $input_conventions         conventions to display.
+ * @param  array  [ $args             = NULL] options to use.
  * @return string $convention_icons HTML string with content
  */
 function output_convention_icons( $input_conventions, $args = null ) {
@@ -144,8 +149,8 @@ function output_convention_icons( $input_conventions, $args = null ) {
 /**
  * Sort locations in correct order
  *
- * @param  string $a array member 1
- * @param  string $b array member 2
+ * @param  string $a Array member 1.
+ * @param  string $b Array member 2.
  * @return array  sorted array
  */
 function array_sort_conventions( $a, $b ) {
@@ -190,14 +195,14 @@ function array_sort_conventions( $a, $b ) {
 /**
  * Save featured_video thumbnail to postmeta
  *
- * @param integer $post_id wp post ID
+ * @param integer $post_id wp post ID.
  */
 function ghc_opengraph_video_get_meta( $post_id ) {
 	if ( get_field( 'featured_video' ) ) {
-		$video_ID = get_video_ID( sanitize_text_field( get_field( 'featured_video' ) ) );
+		$video_id = get_video_id( sanitize_text_field( get_field( 'featured_video' ) ) );
 
 		// get video meta
-		$youtube_api_url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' . $video_ID . '&key=' . get_option( 'options_api_key' );
+		$youtube_api_url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' . $video_id . '&key=' . get_option( 'options_api_key' );
 		$youtube_meta_ch = curl_init();
 		curl_setopt( $youtube_meta_ch, CURLOPT_URL, $youtube_api_url );
 		curl_setopt( $youtube_meta_ch, CURLOPT_REFERER, site_url() );
@@ -216,30 +221,30 @@ add_action( 'acf/save_post', 'ghc_opengraph_video_get_meta', 20 );
 /**
  * Retrieve ID from video URL
  *
- * @param  string $video_url public URL of video
+ * @param  string $video_url Public URL of video.
  * @return string video ID
  */
-function get_video_ID( $video_url ) {
+function get_video_id( $video_url ) {
 	if ( strpos( $video_url, '//youtu.be' ) !== false ) {
-		$video_ID = basename( parse_url( $video_url, PHP_URL_PATH ) );
+		$video_id = basename( parse_url( $video_url, PHP_URL_PATH ) );
 	} elseif ( strpos( $video_url, 'youtube.com' ) !== false ) {
 		parse_str( parse_url( $video_url, PHP_URL_QUERY ), $video_array );
-		$video_ID = $video_array['v'];
+		$video_id = $video_array['v'];
 	}
 
-	return $video_ID;
+	return $video_id;
 }
 
 /**
  * Get speaker’s position and company name/link
  *
- * @param  integer $id WP post ID
+ * @param  integer $id WP post ID.
  * @return string  HTML content
  */
 function ghc_get_speaker_short_bio( $id ) {
 	$speaker_position    = get_field( 'position', $id );
 	$speaker_company     = get_field( 'company', $id );
-	$speaker_company_URL = get_field( 'company_url', $id );
+	$speaker_company_url = get_field( 'company_url', $id );
 
 	ob_start();
 
@@ -252,7 +257,7 @@ function ghc_get_speaker_short_bio( $id ) {
 			echo ' <span class="separator">|</span> ';
 		}
 		if ( $speaker_company ) {
-			echo ( $speaker_company_URL && is_singular( 'speaker' ) ? '<a target="_blank" rel="noopener noreferrer" href="' . $speaker_company_URL . '">' : '' ) . $speaker_company . ( $speaker_company_URL ? '</a>' : '' );
+			echo ( $speaker_company_url && is_singular( 'speaker' ) ? '<a target="_blank" rel="noopener noreferrer" href="' . $speaker_company_url . '">' : '' ) . $speaker_company . ( $speaker_company_url ? '</a>' : '' );
 		}
 		echo '</p>';
 	}
@@ -263,7 +268,7 @@ function ghc_get_speaker_short_bio( $id ) {
 /**
  * Add slug to body class
  *
- * @param  array $classes body classes
+ * @param  array $classes Body classes.
  * @return array modified body classes
  */
 function ghc_add_slug_body_class( $classes ) {
@@ -278,7 +283,7 @@ add_filter( 'body_class', 'ghc_add_slug_body_class' );
 /**
  * Custom post type grid
  *
- * @param  array $attributes shortcode parameters, including `convention` as a two-letter abbreviation or full name
+ * @param  array $attributes Shortcode parameters, including `convention` as a two-letter abbreviation or full name.
  *                          ['post_type']      string      post type
  *                          ['convention']     string      two-letter abbreviation or short convention name
  *                          ['posts_per_page'] integer     number of posts to display; defaults to -1 (all)
@@ -369,10 +374,10 @@ function ghc_cpt_grid( $attributes ) {
 /**
  * Filter to get the current convention for a CTA
  *
- * @param  array $value input array
- * @return boolean whether or not this is the correct convention
+ * @param  array $value Input array.
+ * @return boolean Whether or not this is the correct convention
  */
-function get_current_CTA( $value ) {
+function get_current_cta( $value ) {
 	if ( ( ! isset( $value['begin_date'] ) || strtotime( $value['begin_date'] ) <= time() ) && ( ! isset( $value['end_date'] ) || strtotime( $value['end_date'] ) >= time() ) ) {
 		return true;
 	} else {
@@ -383,8 +388,8 @@ function get_current_CTA( $value ) {
 /**
  * Add product attribute classes
  *
- * @param  integer $variation_id product variation ID
- * @return string  post_class output
+ * @param  integer $variation_id Product variation ID.
+ * @return string  `post_class` output
  */
 function ghc_product_post_class( $variation_id = '' ) {
 	$variation_classes = array();
@@ -398,7 +403,7 @@ function ghc_product_post_class( $variation_id = '' ) {
 		}
 	}
 
-	post_class( $variation_classes );
+	return post_class( $variation_classes );
 }
 
 /**
@@ -406,9 +411,9 @@ function ghc_product_post_class( $variation_id = '' ) {
  *
  * @link https://codereview.stackexchange.com/a/78303 Adapted from this answer
  *
- * @param  object|string   $d1            start DateTime object or string
- * @param  object|string   $d2            end DateTime object or string
- * @param  string        [ $format       = ''] input date format if passed as strings
+ * @param  object|string   $d1            start DateTime object or string.
+ * @param  object|string   $d2            end DateTime object or string.
+ * @param  string        [ $format       = ''] Input date format if passed as strings.
  * @return string        formatted date string
  */
 function ghc_format_date_range( $d1, $d2, $format = '' ) {
@@ -435,7 +440,8 @@ function ghc_format_date_range( $d1, $d2, $format = '' ) {
 /**
  * Get special track related sponsor name(s) and link(s)
  *
- * @param  integer $term_id ghc_special_track term ID
+ * @param  integer   $term_id              ghc_special_track term ID.
+ * @param  string  [ $context             = 'inline'] “inline” or “standalone” context.
  * @return string  HTML output with sponsor name(s) and link(s)
  */
 function ghc_get_special_track_related_sponsor_names( $term_id, $context = 'inline' ) {
@@ -443,9 +449,9 @@ function ghc_get_special_track_related_sponsor_names( $term_id, $context = 'inli
 	$sponsors     = get_field( 'related_sponsors', 'ghc_special_tracks_taxonomy_' . $term_id );
 	if ( $sponsors ) {
 		$sponsor_index = 1;
-		if ( $context === 'inline' ) {
+		if ( 'inline' === $context ) {
 			$track_output .= ' <small>(sponsored by ';
-		} elseif ( $context === 'standalone' ) {
+		} elseif ( 'standalone' === $context ) {
 			$track_output .= '<p>This track is sponsored by ';
 		}
 		foreach ( $sponsors as $sponsor ) {
@@ -455,26 +461,26 @@ function ghc_get_special_track_related_sponsor_names( $term_id, $context = 'inli
 				if ( count( $sponsors ) == $index ) {
 					$track_output .= ' and ';
 				}
-			} elseif ( count( $sponsors ) == 2 && $sponsor_index != 2 ) {
+			} elseif ( 2 === count( $sponsors ) && 2 !== $sponsor_index ) {
 				$track_output .= ' and ';
 			}
 			$sponsor_index++;
 		}
-		if ( $context === 'inline' ) {
+		if ( 'inline' === $context ) {
 			$track_output .= ')</small>';
-		} elseif ( $context === 'standalone' ) {
+		} elseif ( 'standalone' === $context ) {
 			$track_output .= '.</p>';
 			$track_output .= '<div id="related-sponsors">
-                <div class="sponsor-container ghc-cpt container">';
+				<div class="sponsor-container ghc-cpt container">';
 			foreach ( $sponsors as $sponsor ) {
 				$track_output .= '<div class="sponsor">
-                    <div class="post-thumbnail">
-                    <a href="' . get_permalink( $sponsor ) . '">' . get_the_post_thumbnail( $sponsor, 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>
-                    </div>
-                    </div><!-- .sponsor -->';
+					<div class="post-thumbnail">
+					<a href="' . get_permalink( $sponsor ) . '">' . get_the_post_thumbnail( $sponsor, 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>
+					</div>
+					</div><!-- .sponsor -->';
 			}
 				$track_output .= '</div><!-- .sponsor-container.ghc-cpt.container -->
-                </div><!-- #sponsor-container.ghc-cpt.container -->';
+				</div><!-- #sponsor-container.ghc-cpt.container -->';
 		}
 	}
 
@@ -484,7 +490,7 @@ function ghc_get_special_track_related_sponsor_names( $term_id, $context = 'inli
 /**
  * Allow ICS and SVG file uploads
  *
- * @param  array $mime_types array of allowed mime types
+ * @param  array $mime_types Array of allowed mime types.
  * @return array modified array
  */
 function ghc_mime_types( $mime_types ) {
@@ -521,41 +527,41 @@ function ghc_get_author_bio() {
 /**
  * Set sizes atribute for responsive images and better performance
  *
- * @param  array        $attr       markup attributes
- * @param  object       $attachment WP_Post image attachment post
- * @param  string|array $size       named image size or array
+ * @param  array        $attr       Markup attributes.
+ * @param  object       $attachment WP_Post image attachment post.
+ * @param  string|array $size       Named image size or array.
  * @return array        markup attributes
  */
 function ghc_resp_img_sizes( $attr, $attachment, $size ) {
 	if ( is_array( $size ) ) {
 		$attr['sizes'] = $size[0] . 'px';
-	} elseif ( $size == 'thumbnail-no-crop' ) {
+	} elseif ( 'thumbnail-no-crop' === $size ) {
 		$attr['sizes'] = '140px';
-	} elseif ( $size == 'pinterest-thumb' ) {
+	} elseif ( 'pinterest-thumb' === $size ) {
 		$attr['sizes'] = '173px';
-	} elseif ( $size == 'pinterest-medium' ) {
+	} elseif ( 'pinterest-medium' === $size ) {
 		$attr['sizes'] = '346px';
-	} elseif ( $size == 'square-tiny' ) {
+	} elseif ( 'square-tiny' === $size ) {
 		$attr['sizes'] = '150px';
-	} elseif ( $size == 'square-thumb' ) {
+	} elseif ( 'square-thumb' === $size ) {
 		$attr['sizes'] = '250px';
-	} elseif ( $size == 'square-small' ) {
+	} elseif ( 'square-small' === $size ) {
 		$attr['sizes'] = '400px';
-	} elseif ( $size == 'square-medium' ) {
+	} elseif ( 'square-medium' === $size ) {
 		$attr['sizes'] = '600px';
-	} elseif ( $size == 'square-large' ) {
+	} elseif ( 'square-large' === $size ) {
 		$attr['sizes'] = '900px';
-	} elseif ( $size == 'small-grid-size' ) {
+	} elseif ( 'small-grid-size' === $size ) {
 		$attr['sizes'] = '400px';
-	} elseif ( $size == 'small-grid-size-medium' ) {
+	} elseif ( 'small-grid-size-medium' === $size ) {
 		$attr['sizes'] = '600px';
-	} elseif ( $size == 'small-grid-size-large' ) {
+	} elseif ( 'small-grid-size-large' === $size ) {
 		$attr['sizes'] = '800px';
-	} elseif ( $size == 'special-event-small' ) {
+	} elseif ( 'special-event-small' === $size ) {
 		$attr['sizes'] = '300px';
-	} elseif ( $size == 'special-event-medium' ) {
+	} elseif ( 'special-event-medium' === $size ) {
 		$attr['sizes'] = '450px';
-	} elseif ( $size == 'special-event-large' ) {
+	} elseif ( 'special-event-large' === $size ) {
 		$attr['sizes'] = '600px';
 	}
 	return $attr;

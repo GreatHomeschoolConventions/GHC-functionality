@@ -1,4 +1,10 @@
 <?php
+/**
+ * Workshop list template
+ *
+ * @package GHC Functionality Plugin
+ */
+
 $speakers        = get_field( 'speaker' );
 $speakers_string = null;
 if ( $speakers ) {

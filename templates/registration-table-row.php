@@ -1,4 +1,11 @@
-<?php if ( $product->is_in_stock() ) { ?>
+<?php
+/**
+ * Register page single row template for normal products (convention locations)
+ *
+ * @package GHC Functionality Plugin
+ */
+
+if ( $product->is_in_stock() ) { ?>
 	<tr id="post-<?php the_ID(); ?>" <?php ghc_product_post_class(); ?>>
 		<td class="thumb">
 			<?php
@@ -33,17 +40,17 @@
 
 			if ( $registration_product ) {
 				echo '<input name="qty-' . get_the_ID() . '" type="hidden" value="1" min="1" max="1" />
-                <label for="family-members">Family members: <br/>
-                    <button type="button" class="decrement btn">-</button>
-                    <input name="family-members-display" type="number" value="1" disabled />
-                    <button type="button" class="increment btn">+</button>
-                </label>';
+				<label for="family-members">Family members: <br/>
+					<button type="button" class="decrement btn">-</button>
+					<input name="family-members-display" type="number" value="1" disabled />
+					<button type="button" class="increment btn">+</button>
+				</label>';
 			} else {
 				echo '<label class="qty" for="qty-' . $variation_array['variation_id'] . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
-                    <button type="button" class="decrement btn">-</button>
-                    <input class="qty" name="qty-' . $variation_array['variation_id'] . '" type="number" value="0" min="0" max="6" />
-                    <button type="button" class="increment btn">+</button>
-                </label>';
+					<button type="button" class="decrement btn">-</button>
+					<input class="qty" name="qty-' . $variation_array['variation_id'] . '" type="number" value="0" min="0" max="6" />
+					<button type="button" class="increment btn">+</button>
+				</label>';
 			}
 			?>
 			<p class="product woocommerce add_to_cart_inline">

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Hotel loop template
+ *
+ * @package GHC Functionality Plugin
+ */
+
 global $convention_abbreviations;
 
 // arguments
@@ -51,7 +57,7 @@ if ( $hotel_query->have_posts() ) {
 	echo '</div>';
 } else {
 	echo '<h3>Note</h3>
-    <p>We&rsquo;re still working on the hotel discount codes. Please check back later for a list of participating hotels.</p>';
+	<p>We&rsquo;re still working on the hotel discount codes. Please check back later for a list of participating hotels.</p>';
 }
 
 // Restore original Post Data

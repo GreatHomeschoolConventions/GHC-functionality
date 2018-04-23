@@ -1,4 +1,13 @@
-<div class="accommodation-caption"><?php
+<?php
+/**
+ * Hotel details template
+ *
+ * @package GHC Functionality Plugin
+ */
+
+?>
+<div class="accommodation-caption">
+<?php
 	echo get_field( 'sold_out' ) ? '<h4 class="sold-out">Sold Out</h4>' : '';
 
 	echo get_field( 'discount_rate' ) ? '<p>From $' . get_field( 'discount_rate' ) . ' per night' : '';
@@ -19,11 +28,11 @@ if ( ! is_singular() ) {
 
 	echo get_field( 'hotel_phone' ) ? '<p>Phone: ' . get_field( 'hotel_phone' ) . '</p>' : '';
 
-if ( $is_shortcode && $shortcode_attributes['show_content'] == true && get_the_content() !== '' ) {
+if ( $is_shortcode && $shortcode_attributes['show_content'] && ! empty( get_the_content() ) ) {
 	// use get_the_content() to bypass the_content filters
 	echo '<div class="small">
-        <h4 class="perks">Perks</h4>
-        ' . get_the_content() . '</div>';
+		<h4 class="perks">Perks</h4>
+		' . get_the_content() . '</div>';
 }
 
 if ( get_field( 'location' ) ) {
@@ -31,6 +40,7 @@ if ( get_field( 'location' ) ) {
 
 	$convention_address = $conventions[ $this_convention ]['address'][0] . ' ' . $conventions[ $this_convention ]['city'][0] . ', ' . $conventions[ $this_convention ]['state'][0] . ' ' . $conventions[ $this_convention ]['zip'][0];
 	echo '<p><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/dir/' . str_replace( ' ', '+', $location['address'] ) . '/' . str_replace( ' ', '+', $convention_address ) . '/">Directions to ' . $conventions[ $this_convention ]['convention_center_name'][0] . ' <span class="fa fa-map"></span></a></p>
-        <div class="map" data-source-address="' . $location['address'] . '" data-destination-address="' . $convention_address . '"></div>';
+		<div class="map" data-source-address="' . $location['address'] . '" data-destination-address="' . $convention_address . '"></div>';
 }
-?></div>
+?>
+</div>

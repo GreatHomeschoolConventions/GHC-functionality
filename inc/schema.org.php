@@ -1,7 +1,15 @@
 <?php
+/**
+ * Microdata functions
+ *
+ * @package GHC Functionality Plugin
+ */
 
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 
+/**
+ * Add JSON-LD microdata to each location single view
+ */
 function ghc_schema_org_locations() {
 	$content = '';
 	if ( 'location' === get_post_type() ) {
@@ -13,15 +21,15 @@ function ghc_schema_org_locations() {
 			$lowest       = reset( $prices['price'] );
 			$highest      = end( $prices['price'] );
 			$price_string = '
-                "@type": "AggregateOffer",
-                "lowPrice": ' . wc_format_decimal( $lowest, wc_get_price_decimals() ) . ',
-                "highPrice": ' . wc_format_decimal( $highest, wc_get_price_decimals() ) . ',
-            ';
+				"@type": "AggregateOffer",
+				"lowPrice": ' . wc_format_decimal( $lowest, wc_get_price_decimals() ) . ',
+				"highPrice": ' . wc_format_decimal( $highest, wc_get_price_decimals() ) . ',
+			';
 		} else {
 			$price_string = '
-                "@type": "Offer",
-                "price": ' . wc_format_decimal( $product->get_price(), wc_get_price_decimals() ) . ',
-            ';
+				"@type": "Offer",
+				"price": ' . wc_format_decimal( $product->get_price(), wc_get_price_decimals() ) . ',
+			';
 		}
 
 		// fix protocol-agnostic URLs
@@ -37,16 +45,16 @@ function ghc_schema_org_locations() {
 			"endDate": "<?php echo ghc_format_schema_org_date( get_field( 'begin_date' ) ); ?>",
 			"name": "<?php the_title(); ?>",
 			"location": {
-			  "@type": "Place",
-			  "name": "<?php the_field( 'convention_center_name' ); ?>",
-			  "address": {
-				  "@type": "PostalAddress",
-				  "addressCountry": "United States",
-				  "addressLocality": "<?php the_field( 'state' ); ?>",
-				  "addressRegion": "<?php the_field( 'city' ); ?>",
-				  "postalCode": "<?php the_field( 'zip' ); ?>",
-				  "streetAddress": "<?php the_field( 'address' ); ?>"
-			  }
+				"@type": "Place",
+				"name": "<?php the_field( 'convention_center_name' ); ?>",
+				"address": {
+					"@type": "PostalAddress",
+					"addressCountry": "United States",
+					"addressLocality": "<?php the_field( 'state' ); ?>",
+					"addressRegion": "<?php the_field( 'city' ); ?>",
+					"postalCode": "<?php the_field( 'zip' ); ?>",
+					"streetAddress": "<?php the_field( 'address' ); ?>"
+				}
 			},
 			"isAccessibleForFree": "false",
 			"offers": {

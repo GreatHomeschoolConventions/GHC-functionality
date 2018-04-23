@@ -1,4 +1,10 @@
 <?php
+/**
+ * Single exhibitor template
+ *
+ * @package GHC Functionality Plugin
+ */
+
 if ( ! is_array( $shortcode_attributes ) ) {
 	$shortcode_attributes['show'] = 'image,conventions,name,bio,workshops';
 	if ( 'speaker' == get_post_type() && ! isset( $thumbnail_size ) ) {

@@ -247,7 +247,7 @@ function ghc_get_speaker_short_bio( $id ) {
             echo ' <span class="separator">|</span> ';
         }
         if ( $speaker_company ) {
-            echo ( $speaker_company_URL ? '<a target="_blank" rel="noopener noreferrer" href="' . $speaker_company_URL . '">' : '' ) . $speaker_company . ( $speaker_company_URL ? '</a>' : '' );
+            echo ( $speaker_company_URL && is_singular( 'speaker' ) ? '<a target="_blank" rel="noopener noreferrer" href="' . $speaker_company_URL . '">' : '' ) . $speaker_company . ( $speaker_company_URL ? '</a>' : '' );
         }
         echo '</p>';
     }

@@ -3,26 +3,26 @@ global $convention_abbreviations;
 
 // arguments
 $hotel_args = array(
-    'post_type'              => 'hotel',
-    'posts_per_page'         => -1,
-    'orderby'                => 'menu_order',
-    'order'                  => 'ASC',
-    'meta_query' => array(
-        array(
-            'meta_key'  => 'discount_valid_date',
-            'value'     => date( 'Ymd' ),
-            'compare'   => '<=',
-        ),
-    ),
+	'post_type'      => 'hotel',
+	'posts_per_page' => -1,
+	'orderby'        => 'menu_order',
+	'order'          => 'ASC',
+	'meta_query'     => array(
+		array(
+			'meta_key' => 'discount_valid_date',
+			'value'    => date( 'Ymd' ),
+			'compare'  => '<=',
+		),
+	),
 );
 if ( $this_convention ) {
-    $hotel_args['tax_query'] = array(
-        array(
-            'taxonomy'  => 'ghc_conventions_taxonomy',
-            'field'     => 'slug',
-            'terms'     => $convention_abbreviations[$this_convention],
-        )
-    );
+	$hotel_args['tax_query'] = array(
+		array(
+			'taxonomy' => 'ghc_conventions_taxonomy',
+			'field'    => 'slug',
+			'terms'    => $convention_abbreviations[ $this_convention ],
+		),
+	);
 }
 
 // the query
@@ -39,17 +39,18 @@ $hotel_query = new WP_Query( $hotel_args );
 
 <?php
 // the loop
-if ( $hotel_query->have_posts() ) { ?>
-    <div class="hotel-container ghc-cpt container">
-    <?php
-    while ( $hotel_query->have_posts() ) {
-        $hotel_query->the_post();
-        global $conventions;
-        include( 'hotel-template.php' );
-    }
-    echo '</div>';
+if ( $hotel_query->have_posts() ) {
+?>
+	<div class="hotel-container ghc-cpt container">
+	<?php
+	while ( $hotel_query->have_posts() ) {
+		$hotel_query->the_post();
+		global $conventions;
+		include( 'hotel-template.php' );
+	}
+	echo '</div>';
 } else {
-    echo '<h3>Note</h3>
+	echo '<h3>Note</h3>
     <p>We&rsquo;re still working on the hotel discount codes. Please check back later for a list of participating hotels.</p>';
 }
 

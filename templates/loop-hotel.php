@@ -43,10 +43,7 @@ $hotel_query = new WP_Query( $hotel_args );
 
 <p>Please book your accommodations through one of the options below to take advantage of our negotiated rates.</p>
 
-<?php
-// the loop
-if ( $hotel_query->have_posts() ) {
-?>
+<?php if ( $hotel_query->have_posts() ) { ?>
 	<div class="hotel-container ghc-cpt container">
 	<?php
 	while ( $hotel_query->have_posts() ) {
@@ -60,5 +57,5 @@ if ( $hotel_query->have_posts() ) {
 	<p>We&rsquo;re still working on the hotel discount codes. Please check back later for a list of participating hotels.</p>';
 }
 
-// Restore original Post Data
+// Restore original post data.
 wp_reset_postdata(); ?>

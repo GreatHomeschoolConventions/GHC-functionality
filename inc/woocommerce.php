@@ -18,7 +18,7 @@ add_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_sing
 function ghc_show_special_event_tickets() {
 	global $post;
 
-	// get terms and filter out the “Registration” item
+	// Get terms and filter out the “Registration” item.
 	$terms = get_the_terms( $post->ID, 'product_cat' );
 	if ( $terms ) {
 		foreach ( $terms as $term ) {
@@ -28,7 +28,6 @@ function ghc_show_special_event_tickets() {
 			}
 		}
 
-		// set up query args
 		$special_events_query_args = array(
 			'post__not_in'   => array( $post->ID ),
 			'posts_per_page' => -1,
@@ -52,28 +51,23 @@ function ghc_show_special_event_tickets() {
 
 		$special_events = new WP_Query( $special_events_query_args );
 
-		// loop through results
 		if ( $special_events->have_posts() ) {
 			?>
 			<div class="cross-sells">
 				<h2>Special Events</h2>
-				<?php woocommerce_product_loop_start(); ?>
-
-					<?php
-					while ( $special_events->have_posts() ) :
-						$special_events->the_post();
-?>
-
-						<?php wc_get_template_part( 'content', 'product' ); ?>
-
-					<?php endwhile; // end of the loop. ?>
-
-				<?php woocommerce_product_loop_end(); ?>
+				<?php
+				woocommerce_product_loop_start();
+				while ( $special_events->have_posts() ) {
+					$special_events->the_post();
+					wc_get_template_part( 'content', 'product' );
+				}
+				woocommerce_product_loop_end();
+				?>
 			</div>
 		<?php
 		}
 
-		// reset global query
+		// Reset global query.
 		wp_reset_query();
 	}
 }
@@ -99,7 +93,7 @@ add_filter( 'woocommerce_cross_sells_columns', 'ghc_woocommerce_remove_cross_sel
 function woocommerce_single_variation_add_to_cart_button() {
 	global $product;
 
-	// check this product’s categories to determine if it’s a registration product
+	// Check this product’s categories to determine if it’s a registration product.
 	$this_product_terms          = get_the_terms( $product->ID, 'product_cat' );
 	$check_cart_for_registration = false;
 	if ( $this_product_terms ) {
@@ -113,7 +107,7 @@ function woocommerce_single_variation_add_to_cart_button() {
 	if ( $check_cart_for_registration ) {
 		$all_convention_ids = ghc_get_convention_ids();
 
-		// check cart products against registration items
+		// Check cart products against registration items.
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
 			$in_cart_product = $values['data'];
 
@@ -128,7 +122,7 @@ function woocommerce_single_variation_add_to_cart_button() {
 		}
 	}
 
-	// output buttons
+	// Output buttons.
 	echo '<div class="variations_button">';
 		woocommerce_quantity_input( array( 'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( $_POST['quantity'] ) : 1 ) );
 		echo '<button type="submit" class="single_add_to_cart_button button alt';
@@ -271,8 +265,8 @@ add_filter( 'woocommerce_cart_item_quantity', 'ghc_get_max_ticket_quantity_cart'
 function ghc_enforce_max_ticket_quantity( $quantity, $product_id = 0 ) {
 	$product      = new WC_Product( $product_id );
 	$max_quantity = ghc_get_max_ticket_quantity();
-	$category_id = get_field( 'woocommerce_product_categories', 'option' );
-	$cart_items  = WC()->cart->get_cart();
+	$category_id  = get_field( 'woocommerce_product_categories', 'option' );
+	$cart_items   = WC()->cart->get_cart();
 
 	// handle special events
 	if ( ! in_array( $category_id, $product->get_category_ids() ) ) {

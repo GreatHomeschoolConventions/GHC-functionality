@@ -28,7 +28,7 @@ add_shortcode( 'author_bio', 'author_bio_shortcode' );
  * @return string HTML content
  */
 function convention_cta_shortcode( $attributes ) {
-	global $conventions, $convention_abbreviations;
+	global $conventions;
 
 	$shortcode_attributes = shortcode_atts(
 		array(
@@ -82,7 +82,7 @@ function discretionary_registration_shortcode( $attributes ) {
 		), $attributes
 	);
 
-	// first check agaist dates
+	// First, check agaist dates.
 	global $convention_dates;
 	foreach ( $convention_dates as $convention_date ) {
 		if ( time() <= $convention_date ) {
@@ -91,28 +91,21 @@ function discretionary_registration_shortcode( $attributes ) {
 	}
 
 	if ( true === $continue ) {
-		global $convention_abbreviations, $convention_urls;
-
-		// output wrapper
+		// Output wrapper.
 		$shortcode_content .= '<div class="discretionary-registration">';
 
-		// output intro text
+		// Output intro text.
 		if ( $shortcode_attributes['intro_text'] ) {
 			$shortcode_content .= '<p>' . esc_attr( $shortcode_attributes['intro_text'] ) . '</p>';
 		}
 
-		// output top of button
-		$shortcode_content .= '<h3 class="large-button orange speaker-convention-link convention-shortcode"><a href="' . esc_url( home_url() ) . '/registration/">Register <strong>now</strong>!';
+		// Output top of button.
+		$shortcode_content .= '<h3 class="large-button orange speaker-convention-link convention-shortcode"><a href="' . esc_url( home_url() ) . '/register/">Register <strong>now</strong>!';
 
-		// output line break if conventions present
-		if ( $convention ) {
-			$shortcode_content .= '<br/>';
-		}
-
-		// output each convention icon
+		// Output each convention icon.
 		$shortcode_content .= output_convention_icons( explode( ',', $shortcode_attributes['convention'] ) );
 
-		// output bottom of button
+		// Output bottom of button.
 		$shortcode_content .= '</a></h3></div>' . "\n";
 
 		return $shortcode_content;
@@ -124,8 +117,8 @@ add_shortcode( 'discretionary_registration', 'discretionary_registration_shortco
  * Shortcode to display all exhibitors for a given convention
  *
  * @param  array $attributes Shortcode parameters.
- *                           ['convention']    two-letter convention abbreviation
- *                           ['style']         type of list to display; allowed values include “large,” “small,” and “list”
+ *                           ['convention']    two-letter convention abbreviation.
+ *                           ['style']         type of list to display; allowed values include “large,” “small,” and “list”.
  * @return string  HTML output
  */
 function exhibitor_list_shortcode( $attributes ) {
@@ -244,10 +237,9 @@ function price_sheet_shortcode( $attributes ) {
 	$this_convention      = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
 	wp_enqueue_script( 'ghc-price-sheets' );
-	// get content
+
 	ob_start();
 	include( plugin_dir_path( __FILE__ ) . '/../price-sheets/price-sheet-' . $this_convention . '.html' );
-
 	return ob_get_clean();
 }
 add_shortcode( 'price_sheet', 'price_sheet_shortcode' );
@@ -255,10 +247,9 @@ add_shortcode( 'price_sheet', 'price_sheet_shortcode' );
 /**
  * Show product sale/regular prices
  *
- * @param  array $attributes Shortcode attributes.
  * @return string formatted price string
  */
-function product_price_shortcode( $attributes ) {
+function product_price_shortcode() {
 	ob_start();
 
 	$registration_product = new WC_Product_Variable( get_field( 'registration_product' ) );
@@ -271,14 +262,9 @@ add_shortcode( 'product_price', 'product_price_shortcode' );
 /**
  * Shortcode to display custom registration
  *
- * @param  array $attributes Shortcode parameters.
  * @return string HTML output
  */
-function registration_page_shortcode( $attributes ) {
-	$shortcode_attributes = shortcode_atts(
-		array(), $attributes
-	);
-
+function registration_page_shortcode() {
 	ob_start();
 
 	echo '<div class="register">';
@@ -310,7 +296,7 @@ function registration_page_shortcode( $attributes ) {
 		$next_convention = '';
 		foreach ( $conventions as $convention ) {
 			$convention_abbreviation = strtolower( $convention['convention_abbreviated_name'][0] );
-			if (  empty( $next_convention ) && date( 'Ymd' ) < $convention['begin_date'][0] ) {
+			if ( empty( $next_convention ) && date( 'Ymd' ) < $convention['begin_date'][0] ) {
 				$next_convention = $convention_abbreviation;
 			}
 			?>
@@ -415,11 +401,11 @@ add_shortcode( 'speaker_archive', 'speaker_archive_shortcode' );
  * Shortcode to display speaker grid
  *
  * @param  array $attributes Shortcode parameters, including `convention` as a two-letter abbreviation or full name.
- *                          ['convention']     string      two-letter abbreviation or short convention name
- *                          ['posts_per_page'] integer     number of posts to display; defaults to -1 (all)
- *                          ['offset']         integer     number of posts to skip
- *                          ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt
- *                          ['image_size']     string      named image size or two comma-separated integers creating an image size array
+ *                          ['convention']     string      two-letter abbreviation or short convention name.
+ *                          ['posts_per_page'] integer     number of posts to display; defaults to -1 (all).
+ *                          ['offset']         integer     number of posts to skip.
+ *                          ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt.
+ *                          ['image_size']     string      named image size or two comma-separated integers creating an image size array.
  * @return string HTML output
  */
 function speaker_grid_shortcode( $attributes ) {
@@ -432,11 +418,11 @@ add_shortcode( 'speaker_grid', 'speaker_grid_shortcode' );
  * Shortcode to display speaker(s) info
  *
  * @param  array $attributes Shortcode parameters (see array above).
- *                          ['postid']          integer post ID for a specific speaker
- *                          ['pagename']        string  post slug for a specific speaker
- *                          ['align']           string  align right, left, or center
- *                          ['no_conventions']  boolean whether or not to show convention icons beneath speaker’s name
- *                          ['extra_classes']   string  extra classes to add to the output
+ *                          ['postid']          integer post ID for a specific speaker.
+ *                          ['pagename']        string  post slug for a specific speaker.
+ *                          ['align']           string  align right, left, or center.
+ *                          ['no_conventions']  boolean whether or not to show convention icons beneath speaker’s name.
+ *                          ['extra_classes']   string  extra classes to add to the output.
  * @return string HTML output
  */
 function speaker_info_shortcode( $attributes ) {
@@ -462,7 +448,6 @@ function speaker_info_shortcode( $attributes ) {
 	$photo_only     = esc_attr( $shortcode_attributes['photo_only'] );
 	$extra_classes  = esc_attr( $shortcode_attributes['extra_classes'] );
 
-	// WP_Query arguments
 	$args = array(
 		'post_type'      => array( 'speaker' ),
 		'posts_per_page' => '-1',
@@ -479,10 +464,8 @@ function speaker_info_shortcode( $attributes ) {
 	if ( ( $this_alignment ) && ( strpos( $this_alignment, 'align' ) === false ) ) {
 		$this_alignment = 'align' . $this_alignment; }
 
-	// The Query
 	$speaker_query = new WP_Query( $args );
 
-	// The Loop
 	$shortcode_content = '';
 	if ( $speaker_query->have_posts() ) {
 		$shortcode_content .= '<div class="speaker-container ghc-cpt container shortcode';
@@ -514,10 +497,9 @@ function speaker_info_shortcode( $attributes ) {
 		$shortcode_content .= '</div><!-- .speaker-container.ghc-cpt.container -->';
 	}
 
-	// Restore original Post Data
+	// Restore original post data.
 	wp_reset_postdata();
 
-	// return shortcode content
 	return $shortcode_content;
 }
 add_shortcode( 'speaker_info', 'speaker_info_shortcode' );
@@ -526,12 +508,12 @@ add_shortcode( 'speaker_info', 'speaker_info_shortcode' );
  * Shortcode to display a list of speakers
  *
  * @param  array $attributes Shortcode parameters (see array above).
- *                          ['convention']      string  two-letter abbreviation or full name
- *                          ['posts_per_page']  integer number of posts to display
- *                          ['offset']          integer how many posts to skip
- *                          ['ul_class']        string  class(es) to add to the wrapping <ul>
- *                          ['li_class']        string  class(es) to add to each speaker <li>
- *                          ['a_class']         string  class(es) to add to each speaker <a>
+ *                          ['convention']      string  two-letter abbreviation or full name.
+ *                          ['posts_per_page']  integer number of posts to display.
+ *                          ['offset']          integer how many posts to skip.
+ *                          ['ul_class']        string  class(es) to add to the wrapping <ul>.
+ *                          ['li_class']        string  class(es) to add to each speaker <li>.
+ *                          ['a_class']         string  class(es) to add to each speaker <a>.
  * @return string HTML output
  */
 function speaker_list_shortcode( $attributes ) {
@@ -546,13 +528,13 @@ function speaker_list_shortcode( $attributes ) {
 			'a_class'        => null,
 		), $attributes
 	);
-	// workaround for posts_per_page overriding offset
+
+	// Workaround for posts_per_page overriding offset.
 	if ( ! is_null( $shortcode_attributes['offset'] ) && -1 === $shortcode_attributes['posts_per_page'] ) {
 		$shortcode_attributes['posts_per_page'] = 500;
 	}
 	$this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
-	// arguments
 	$speaker_list_args = array(
 		'post_type'      => 'speaker',
 		'posts_per_page' => esc_attr( $shortcode_attributes['posts_per_page'] ),
@@ -568,7 +550,7 @@ function speaker_list_shortcode( $attributes ) {
 		),
 	);
 
-	// conventions
+	// If single convention is specified, add to the WP_Query.
 	if ( $this_convention ) {
 		$speaker_list_args['tax_query'] = array_merge(
 			$speaker_list_args['tax_query'], array(
@@ -582,10 +564,8 @@ function speaker_list_shortcode( $attributes ) {
 		);
 	}
 
-	// query
 	$speaker_list_query = new WP_Query( $speaker_list_args );
 
-	// loop
 	if ( $speaker_list_query->have_posts() ) {
 		$shortcode_content = '<ul class="speaker-list ' . esc_attr( $shortcode_attributes['ul_class'] ) . '">';
 		while ( $speaker_list_query->have_posts() ) {
@@ -595,7 +575,7 @@ function speaker_list_shortcode( $attributes ) {
 		echo '</ul>';
 	}
 
-	// reset post data
+	// Reset the post data.
 	wp_reset_postdata();
 
 	return $shortcode_content;
@@ -606,12 +586,12 @@ add_shortcode( 'speaker_list', 'speaker_list_shortcode' );
  * Shortcode to display special event grid
  *
  * @param  array $attributes Shortcode parameters, including `convention` as a two-letter abbreviation or full name.
- *                          ['post_type']      string      post type; defaults to 'special_event'
- *                          ['convention']     string      two-letter abbreviation or short convention name
- *                          ['posts_per_page'] integer     number of posts to display; defaults to -1 (all)
- *                          ['offset']         integer     number of posts to skip
- *                          ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt
- *                          ['image_size']     string      named image size or two comma-separated integers creating an image size array
+ *                          ['post_type']      string      post type; defaults to 'special_event'.
+ *                          ['convention']     string      two-letter abbreviation or short convention name.
+ *                          ['posts_per_page'] integer     number of posts to display; defaults to -1 (all).
+ *                          ['offset']         integer     number of posts to skip.
+ *                          ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt.
+ *                          ['image_size']     string      named image size or two comma-separated integers creating an image size array.
  * @return string HTML output
  */
 function special_event_grid_shortcode( $attributes ) {
@@ -623,10 +603,9 @@ add_shortcode( 'special_event_grid', 'special_event_grid_shortcode' );
 /**
  * Show a list of special events
  *
- * @param  array $attributes Shortcode parameters.
  * @return string HTML output
  */
-function special_event_list_shortcode( $attributes ) {
+function special_event_list_shortcode() {
 	$special_event_list_args = array(
 		'taxonomy' => 'ghc_special_tracks_taxonomy',
 		'title_li' => '',
@@ -650,7 +629,6 @@ function special_track_speakers_shortcode( $attributes ) {
 		), $attributes
 	);
 
-	// arguments
 	$special_track_speakers_args = array(
 		'post_type'      => 'speaker',
 		'posts_per_page' => -1,
@@ -665,10 +643,8 @@ function special_track_speakers_shortcode( $attributes ) {
 		),
 	);
 
-	// query
 	$special_track_speakers_query = new WP_Query( $special_track_speakers_args );
 
-	// loop
 	if ( $special_track_speakers_query->have_posts() ) {
 		$shortcode_content = '<div class="speaker-container ghc-cpt container">';
 		while ( $special_track_speakers_query->have_posts() ) {
@@ -680,7 +656,7 @@ function special_track_speakers_shortcode( $attributes ) {
 		$shortcode_content .= '</div>';
 	}
 
-	// reset post data
+	// Restore original post data.
 	wp_reset_postdata();
 
 	return $shortcode_content;
@@ -691,8 +667,8 @@ add_shortcode( 'special_track_speakers', 'special_track_speakers_shortcode' );
  * Shortcode to display all sponsors
  *
  * Example: array[]
- *                 ['gray']    boolean whether to show the featured image or the gray version
- *                 ['width']   integer width in pixels for the output image
+ *                 ['gray']    boolean whether to show the featured image or the gray version.
+ *                 ['width']   integer width in pixels for the output image.
  *
  * @param  array $attributes Shortcode parameters (see above array).
  * @return string HTML output
@@ -705,7 +681,6 @@ function sponsors_shortcode( $attributes ) {
 		), $attributes
 	);
 
-	// arguments
 	$sponsors_args = array(
 		'post_type'      => 'sponsor',
 		'posts_per_page' => -1,
@@ -713,10 +688,8 @@ function sponsors_shortcode( $attributes ) {
 		'order'          => 'ASC',
 	);
 
-	// query
 	$sponsors_query = new WP_Query( $sponsors_args );
 
-	// loop
 	if ( $sponsors_query->have_posts() ) {
 		$shortcode_content = '<div class="sponsor-container ghc-cpt container">';
 		while ( $sponsors_query->have_posts() ) {
@@ -743,7 +716,7 @@ function sponsors_shortcode( $attributes ) {
 		$shortcode_content .= '</div>';
 	}
 
-	// reset post data
+	// Restore original post data.
 	wp_reset_postdata();
 
 	return $shortcode_content;
@@ -754,10 +727,10 @@ add_shortcode( 'sponsors', 'sponsors_shortcode' );
  * Display list of workshops
  *
  * @param  array $attributes Shortcode attributes.
- *                          ['convention']     two-letter convention abbreviation
- *                          ['posts_per_page'] number of posts to show (defaults to all; if offset is specified, then is set to 500)
- *                          ['offset']         number of posts to skip (useful mainly in conjunction with posts_per_page)
- *                          ['speaker']        include only workshops from this speaker, specified by post ID
+ *                          ['convention']     two-letter convention abbreviation.
+ *                          ['posts_per_page'] number of posts to show (defaults to all; if offset is specified, then is set to 500).
+ *                          ['offset']         number of posts to skip (useful mainly in conjunction with posts_per_page).
+ *                          ['speaker']        include only workshops from this speaker, specified by post ID.
  * @return string HTML output
  */
 function workshop_list_shortcode( $attributes ) {
@@ -770,13 +743,13 @@ function workshop_list_shortcode( $attributes ) {
 			'speaker'        => null,
 		), $attributes
 	);
-	// workaround for posts_per_page overriding offset
+
+	// Add workaround for posts_per_page overriding offset.
 	if ( ! is_null( $shortcode_attributes['offset'] ) && -1 === $shortcode_attributes['posts_per_page'] ) {
 		$shortcode_attributes['posts_per_page'] = 500;
 	}
 	$this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
-	// arguments
 	$workshop_list_args = array(
 		'post_type'      => 'workshop',
 		'posts_per_page' => esc_attr( $shortcode_attributes['posts_per_page'] ),
@@ -785,7 +758,6 @@ function workshop_list_shortcode( $attributes ) {
 		'order'          => 'ASC',
 	);
 
-	// conventions
 	if ( $this_convention ) {
 		$this_convention_speaker_args = array(
 			'post_type'      => 'speaker',
@@ -814,22 +786,21 @@ function workshop_list_shortcode( $attributes ) {
 			}
 		}
 
+		// Restore original post data.
 		wp_reset_postdata();
 
 		$workshop_list_args['post__in'] = $workshop_ids_array;
 	}
 
-	// speakers
+	// If speaker is specified, add to meta query.
 	if ( $shortcode_attributes['speaker'] ) {
 		$workshop_list_args['meta_key']     = 'speaker';
 		$workshop_list_args['meta_value']   = $shortcode_attributes['speaker'];
 		$workshop_list_args['meta_compare'] = 'LIKE';
 	}
 
-	// query
 	$workshop_list_query = new WP_Query( $workshop_list_args );
 
-	// loop
 	if ( $workshop_list_query->have_posts() ) {
 		$shortcode_content = '<ul class="workshop-list">';
 		while ( $workshop_list_query->have_posts() ) {
@@ -856,7 +827,7 @@ function workshop_list_shortcode( $attributes ) {
 		$shortcode_content .= '</ul>';
 	}
 
-	// reset post data
+	// Restore original post data.
 	wp_reset_postdata();
 
 	return $shortcode_content;
@@ -877,10 +848,10 @@ function workshops_schedule_shortcode( $attributes ) {
 	);
 	global $convention_abbreviations, $wpdb;
 
-	// enqueue filter script
+	// Enqueue filter script.
 	wp_enqueue_script( 'ghc-workshop-filter' );
 
-	// get all special tracks
+	// Get all special tracks.
 	$categories_args = array(
 		'taxonomy' => 'ghc_special_tracks_taxonomy',
 		'echo'     => false,
@@ -897,7 +868,7 @@ function workshops_schedule_shortcode( $attributes ) {
 	$shortcode_content .= '<a class="legend-key clear-filters" href="" data-special-track="clear" title="Clear filters">&times;</a></p>
 	</section>';
 
-	// get total number of days
+	// Get total number of days.
 	$distinct_dates = $wpdb->get_results(
 		$wpdb->prepare(
 			"SELECT DISTINCT DATE(meta.meta_value) AS workshop_date
@@ -920,7 +891,7 @@ function workshops_schedule_shortcode( $attributes ) {
 		$shortcode_content .= '<div class="session-item-wrapper clearfix workshop-schedule">
 			<div class="gdlr-session-item gdlr-tab-session-item gdlr-item">';
 
-		// table header
+		// Output table header.
 		$shortcode_content .= '<div class="gdlr-session-item-head">';
 		$i                  = 1;
 		foreach ( $distinct_dates as $date ) {
@@ -932,18 +903,17 @@ function workshops_schedule_shortcode( $attributes ) {
 		}
 		$shortcode_content .= '<div class="clear"></div></div><!-- .gdlr-session-item-head -->';
 
-		// table body
+		// Output table body.
 		$i = 1;
 		foreach ( $distinct_dates as $date ) {
 			$shortcode_content .= '<div class="gdlr-session-item-tab-content gdlr-tab-' . $i . ' ' . ( 1 === $i ? 'gdlr-active' : '' ) . '">';
 
-			// get distinct times
+			// Get distinct times.
 			$distinct_times = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT meta_value AS workshop_time FROM {$wpdb->postmeta} meta JOIN {$wpdb->posts} posts ON posts.ID = meta.post_id WHERE posts.post_type = 'workshop' AND meta.meta_key = 'date_and_time' AND DATE(meta.meta_value) = %s ORDER BY meta.meta_value;", $date->workshop_date ) );
 
 			if ( $distinct_times ) {
 				foreach ( $distinct_times as $time ) {
 
-					// arguments
 					$workshops_args = array(
 						'post_type'      => 'workshop',
 						'posts_per_page' => -1,
@@ -960,10 +930,8 @@ function workshops_schedule_shortcode( $attributes ) {
 						),
 					);
 
-					// query
 					$workshops_query = new WP_Query( $workshops_args );
 
-					// loop
 					if ( $workshops_query->have_posts() ) {
 						$shortcode_content .= '<div class="gdlr-session-item-content-wrapper">
 							<div class="gdlr-session-item-divider"></div>
@@ -996,18 +964,18 @@ function workshops_schedule_shortcode( $attributes ) {
 						</div><!-- .gldr-session-item-content-wrapper -->';
 					}
 
-					// reset post data
+					// Restore original post data.
 					wp_reset_postdata();
 
 				}
 			}
 
-			// close this day’s content
+			// Close this day’s content.
 			$shortcode_content .= '</div><!-- .gdlr-session-item-tab-content.gdlr-tab-' . $i . ' -->';
 			$i++;
 		}
 
-		// close wrapper
+		// Close wrapper.
 		$shortcode_content .= '</div><!-- .gdlr-session-item -->
 		</div><!-- .session-item-wrapper -->';
 

@@ -19,7 +19,6 @@ function convention_info() {
 	global $conventions;
 	$conventions = array();
 
-	// WP_Query arguments
 	$args = array(
 		'post_type'      => array( 'location' ),
 		'posts_per_page' => -1,
@@ -30,10 +29,8 @@ function convention_info() {
 		'no_found_rows'  => true,
 	);
 
-	// The Query
 	$locations_query = new WP_Query( $args );
 
-	// The Loop
 	if ( $locations_query->have_posts() ) {
 		while ( $locations_query->have_posts() ) {
 			$locations_query->the_post();
@@ -50,28 +47,28 @@ function convention_info() {
 	}
 	wp_reset_postdata();
 
-	/* $conventions: each key is the two-letter abbreviation */
+	/** $conventions: each key is the two-letter abbreviation */
 
-	// convention abbreviations
+	// Set up convention abbreviations.
 	global $convention_abbreviations;
 	foreach ( $conventions as $key => $values ) {
 		$convention_abbreviations[ $key ] = strtolower( implode( '', $values['convention_short_name'] ) );
 	}
-	/* $convention_abbreviations: each key is the two-letter abbreviation */
+	/** $convention_abbreviations: each key is the two-letter abbreviation */
 
-	// convention URLs
+	// Set up convention URLs.
 	global $convention_urls;
 	foreach ( $conventions as $key => $values ) {
 		$convention_urls[ $key ] = get_permalink( $values['ID'] );
 	}
 	/* $convention_urls: each key is the two-letter abbreviation */
 
-	// convention dates (end dates)
+	// Set up convention dates (end dates).
 	global $convention_dates;
 	foreach ( $conventions as $key => $values ) {
 		$convention_dates[ $key ] = mktime( get_field( 'end_date', $values['ID'] ) );
 	}
-	/* $convention_dates: each key is the two-letter abbreviation, and the value is the Unix time */
+	/** $convention_dates: each key is the two-letter abbreviation, and the value is the Unix time */
 
 }
 add_action( 'get_header', 'convention_info' );
@@ -88,7 +85,7 @@ function output_convention_icons( $input_conventions, $args = null ) {
 	$convention_icons      = null;
 	$conventions_to_output = array();
 
-	// check whether input is a ID number, array, or array of objects
+	// Check whether input is a ID number, array, or array of objects.
 	if ( is_numeric( $input_conventions ) ) {
 		$this_post_terms       = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 		$conventions_to_output = array();
@@ -99,14 +96,14 @@ function output_convention_icons( $input_conventions, $args = null ) {
 			usort( $conventions_to_output, 'array_sort_conventions' );
 		}
 	} elseif ( is_string( $input_conventions ) ) {
-		// handle two-letter abbreviations
+		// Handle two-letter abbreviations.
 		if ( strlen( $input_conventions ) > 2 ) {
 			$input_conventions = str_replace( $convention_abbreviations, array_keys( $convention_abbreviations ), $input_conventions );
 		}
 		$conventions_to_output[] = $input_conventions;
 	} elseif ( is_array( $input_conventions ) ) {
 		if ( ! is_object( $input_conventions[0] ) ) {
-			// if not an object, then it's an array of abbreviations
+			// If not an object, then it's an array of abbreviations.
 			$conventions_to_output = array();
 			foreach ( $input_conventions as $convention ) {
 				if ( strlen( $convention ) > 2 ) {
@@ -115,17 +112,17 @@ function output_convention_icons( $input_conventions, $args = null ) {
 				$conventions_to_output[] = trim( $convention );
 			}
 		} else {
-			// if an object, then it's a WP_Term object and we can pass directly to the output section
+			// If an object, then it's a WP_Term object and we can pass directly to the output section.
 			$conventions_to_output = $input_conventions;
 		}
-		// sort by date (original WP_Query sorted by begin_date)
+		// Sort by date (original WP_Query sorted by begin_date).
 		usort( $conventions_to_output, 'array_sort_conventions' );
 	}
 
-	// add icons to $convention_icons
+	// Add icons to $convention_icons.
 	if ( is_array( $convention_abbreviations ) ) {
 		foreach ( $conventions_to_output as $convention ) {
-			// get short convention name
+			// Get short convention name.
 			if ( is_object( $convention ) ) {
 				$convention_key = array_search( $convention->slug, $convention_abbreviations );
 			} elseif ( 2 == strlen( $convention ) ) {
@@ -140,7 +137,7 @@ function output_convention_icons( $input_conventions, $args = null ) {
 		}
 	}
 
-	// add filter hook
+	// Add filter hook.
 	$convention_icons = apply_filters( 'ghc_convention_icons', $convention_icons );
 
 	return $convention_icons;
@@ -157,31 +154,31 @@ function array_sort_conventions( $a, $b ) {
 	global $convention_abbreviations;
 	$sort_order = null;
 
-	// convert objects
+	// Convert objects.
 	if ( is_object( $a ) && is_object( $b ) ) {
 		$a = $a->slug;
 		$b = $b->slug;
 	}
 
-	// strip spaces
+	// Strip spaces.
 	$a = trim( $a );
 	$b = trim( $b );
 
-	// convert two-letter abbreviations to names
+	// Convert two-letter abbreviations to names.
 	if ( strlen( $a ) == 2 && strlen( $b ) == 2 ) {
 		$a = str_replace( array_flip( $convention_abbreviations ), $convention_abbreviations, $a );
 		$b = str_replace( array_flip( $convention_abbreviations ), $convention_abbreviations, $b );
 	}
 
-	// strip key names from conventions
+	// Strip key names from conventions.
 	if ( is_array( $convention_abbreviations ) ) {
 		$convention_names = array_values( $convention_abbreviations );
 
-		// get array key numbers
+		// Get array key numbers.
 		$a_position = array_search( $a, $convention_names );
 		$b_position = array_search( $b, $convention_names );
 
-		// compare and return sort order
+		// Compare and return sort order.
 		if ( $a_position > $b_position ) {
 			$sort_order = 1;
 		} else {
@@ -195,13 +192,14 @@ function array_sort_conventions( $a, $b ) {
 /**
  * Save featured_video thumbnail to postmeta
  *
- * @param integer $post_id wp post ID.
+ * @param  integer $post_id wp post ID.
+ * @return boolean Whether postmeta was succesfully updated
  */
 function ghc_opengraph_video_get_meta( $post_id ) {
 	if ( get_field( 'featured_video' ) ) {
 		$video_id = get_video_id( sanitize_text_field( get_field( 'featured_video' ) ) );
 
-		// get video meta
+		// Get video meta.
 		$youtube_api_url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' . $video_id . '&key=' . get_option( 'options_api_key' );
 		$youtube_meta_ch = curl_init();
 		curl_setopt( $youtube_meta_ch, CURLOPT_URL, $youtube_api_url );
@@ -212,8 +210,8 @@ function ghc_opengraph_video_get_meta( $post_id ) {
 		$youtube_meta      = json_decode( $youtube_meta_json );
 		$youtube_thumbnail = $youtube_meta->items[0];
 
-		// save post meta
-		update_post_meta( $post_id, 'featured_video_meta', $youtube_thumbnail );
+		// Save post meta.
+		return update_post_meta( $post_id, 'featured_video_meta', $youtube_thumbnail );
 	}
 }
 add_action( 'acf/save_post', 'ghc_opengraph_video_get_meta', 20 );
@@ -284,12 +282,12 @@ add_filter( 'body_class', 'ghc_add_slug_body_class' );
  * Custom post type grid
  *
  * @param  array $attributes Shortcode parameters, including `convention` as a two-letter abbreviation or full name.
- *                          ['post_type']      string      post type
- *                          ['convention']     string      two-letter abbreviation or short convention name
- *                          ['posts_per_page'] integer     number of posts to display; defaults to -1 (all)
- *                          ['offset']         integer     number of posts to skip
- *                          ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt
- *                          ['image_size']     string      named image size or two comma-separated integers creating an image size array
+ *                          ['post_type']      string      post type.
+ *                          ['convention']     string      two-letter abbreviation or short convention name.
+ *                          ['posts_per_page'] integer     number of posts to display; defaults to -1 (all).
+ *                          ['offset']         integer     number of posts to skip.
+ *                          ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt.
+ *                          ['image_size']     string      named image size or two comma-separated integers creating an image size array.
  * @return string HTML output
  */
 function ghc_cpt_grid( $attributes ) {
@@ -306,7 +304,6 @@ function ghc_cpt_grid( $attributes ) {
 	);
 	$this_convention      = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
-	// arguments
 	$cpt_grid_args = array(
 		'post_type'      => $shortcode_attributes['post_type'],
 		'posts_per_page' => $shortcode_attributes['posts_per_page'],
@@ -325,8 +322,8 @@ function ghc_cpt_grid( $attributes ) {
 		);
 	}
 
-	// include only the specified convention
-	if ( $shortcode_attributes['convention'] ) {
+	// If specified, include only the specified convention.
+	if ( ! is_null( $shortcode_attributes['convention'] ) ) {
 		$convention_tax_query = array(
 			array(
 				'taxonomy' => 'ghc_conventions_taxonomy',
@@ -342,7 +339,7 @@ function ghc_cpt_grid( $attributes ) {
 		}
 	}
 
-	// image size
+	// Set image size.
 	if ( strpos( $shortcode_attributes['image_size'], ',' ) !== false ) {
 		$shortcode_attributes['image_size'] = str_replace( ' ', '', $shortcode_attributes['image_size'] );
 		$thumbnail_size                     = explode( ',', $shortcode_attributes['image_size'] );
@@ -351,10 +348,8 @@ function ghc_cpt_grid( $attributes ) {
 		$thumbnail_size = $shortcode_attributes['image_size'];
 	}
 
-	// query
 	$cpt_grid_query = new WP_Query( $cpt_grid_args );
 
-	// loop
 	ob_start();
 	if ( $cpt_grid_query->have_posts() ) {
 		echo '<div class="' . $shortcode_attributes['post_type'] . '-container ghc-cpt container">';
@@ -365,7 +360,7 @@ function ghc_cpt_grid( $attributes ) {
 		echo '</div>';
 	}
 
-	// reset post data
+	// Restore original post data.
 	wp_reset_postdata();
 
 	return ob_get_clean();
@@ -423,16 +418,16 @@ function ghc_format_date_range( $d1, $d2, $format = '' ) {
 	}
 
 	if ( $d1->format( 'Y-m-d' ) === $d2->format( 'Y-m-d' ) ) {
-		// Same day
+		// Same day.
 		return $d1->format( 'F j, Y' );
 	} elseif ( $d1->format( 'Y-m' ) === $d2->format( 'Y-m' ) ) {
-		// Same calendar month
+		// Same calendar month.
 		return $d1->format( 'F j' ) . '&ndash;' . $d2->format( 'd, Y' );
 	} elseif ( $d1->format( 'Y' ) === $d2->format( 'Y' ) ) {
-		// Same calendar year
+		// Same calendar year.
 		return $d1->format( 'F j' ) . '&ndash;' . $d2->format( 'F j, Y' );
 	} else {
-		// General case (spans calendar years)
+		// General case (spans calendar years).
 		return $d1->format( 'F j, Y' ) . '&ndash;' . $d2->format( 'F j, Y' );
 	}
 }
@@ -479,8 +474,8 @@ function ghc_get_special_track_related_sponsor_names( $term_id, $context = 'inli
 					</div>
 					</div><!-- .sponsor -->';
 			}
-				$track_output .= '</div><!-- .sponsor-container.ghc-cpt.container -->
-				</div><!-- #sponsor-container.ghc-cpt.container -->';
+			$track_output .= '</div><!-- .sponsor-container.ghc-cpt.container -->
+			</div><!-- #sponsor-container.ghc-cpt.container -->';
 		}
 	}
 

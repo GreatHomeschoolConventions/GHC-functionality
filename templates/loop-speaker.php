@@ -38,5 +38,5 @@
 		echo do_shortcode( '[contact-form-7 id="28288" title="Signup - Convention Info"]' );
 	}
 
-	// Restore original post data
+	// Restore original post data.
 	wp_reset_postdata();

@@ -30,12 +30,12 @@ add_filter( 'archive_template', 'ghc_hotel_archive' );
  */
 function ghc_hotel_single( $content ) {
 	if ( is_singular( 'hotel' ) ) {
-		// get convention info
+		// Get convention info.
 		global $conventions, $convention_abbreviations;
 		$conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 		$this_convention      = array_flip( $convention_abbreviations )[ $conventions_taxonomy[0]->slug ];
 
-		// get hotel details
+		// Get hotel details.
 		ob_start();
 		include( '../templates/hotel-details.php' );
 		$content .= ob_get_clean();

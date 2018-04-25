@@ -3,6 +3,22 @@
     "title": "Options",
     "fields": [
         {
+            "key": "field_5adfe51ebb767",
+            "label": "General Convention Info",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
             "key": "field_58dc01b0e0872",
             "label": "Exhibit Hall Hours",
             "name": "exhibit_hall_hours",
@@ -122,6 +138,22 @@
             ]
         },
         {
+            "key": "field_5adfe507bb766",
+            "label": "E3 Bundle",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
             "key": "field_5973a19d2c8a0",
             "label": "AWS Cloudfront Key Pair ID",
             "name": "aws_cloudfront_key_pair_id",
@@ -236,5 +268,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1524510607
+    "modified": 1524622639
 }

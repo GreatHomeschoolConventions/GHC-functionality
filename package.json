@@ -23,6 +23,7 @@
     "grunt-browser-sync": "^2.2.0",
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-phpcs": "^0.4.0",
     "grunt-postcss": "^0.8.0",
     "grunt-sass": "^1.2.1",
     "grunt-svgmin": "^3.3.0",

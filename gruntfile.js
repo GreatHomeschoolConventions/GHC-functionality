@@ -14,6 +14,10 @@ module.exports = function (grunt) {
             files: "src/js/*",
             tasks: ['uglify'],
         },
+		php: {
+			files: "**/*.php",
+			tasks: ['phpcs'],
+		}
     },
     sass: {
         dev: {
@@ -71,6 +75,15 @@ module.exports = function (grunt) {
             }],
         },
     },
+	phpcs: {
+		plugin_files: {
+			src: ['**/*.php'],
+		},
+		options: {
+			bin: '/usr/local/bin/phpcs',
+			standard: 'WordPress-Extra',
+		}
+	},
     uglify: {
         options: {
             sourceMap: true
@@ -90,6 +103,7 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-svgmin');
     grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-phpcs');
     grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');

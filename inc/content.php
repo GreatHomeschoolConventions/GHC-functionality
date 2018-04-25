@@ -130,7 +130,8 @@ add_action( 'wp_head', 'ghc_opengraph_video', 8 );
 function ghc_exhibitor_archive_icons( $content ) {
 	global $post;
 	$new_content = '';
-	if ( 'exhibitor' == get_post_type( $post->ID ) ) {
+	if ( 'exhibitor' === get_post_type( $post->ID ) ) {
+		// TODO: don’t add icon to exhibitor archive description
 		if ( ! is_tax() ) {
 			$new_content .= output_convention_icons( $post->ID );
 		}

@@ -14,14 +14,14 @@
 			<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 		</h3>
 		<?php
-		// add speaker photo
+		// Add speaker photo.
 		if ( $speaker ) {
 			echo '<div class="speaker-thumbnail">
 				<a href="' . get_permalink( $speaker->ID ) . '">' . ( has_post_thumbnail( $speaker->ID ) ? get_the_post_thumbnail( $speaker->ID, array( 80, 80 ) ) : '' ) . '<br/>' . get_the_title( $speaker->ID ) . '</a>
 			</div>';
 		}
 
-		// add hook for convention and special tracks
+		// Add hook for convention and special tracks.
 		do_action( 'ghc_workshops_shortcode_after_title' );
 		?>
 	</header>

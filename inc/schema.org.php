@@ -32,7 +32,7 @@ function ghc_schema_org_locations() {
 			';
 		}
 
-		// fix protocol-agnostic URLs
+		// Fix protocol-agnostic URLs.
 		$registration_url  = ghc_format_schema_url( get_field( 'registration' ) );
 		$product_image_url = ghc_format_schema_url( get_the_post_thumbnail_url( $product_id ) );
 
@@ -79,7 +79,7 @@ add_action( 'wp_footer', 'ghc_schema_org_locations', 50 );
 /**
  * Format date as Y-m-d for schema.org use
  *
- * @param  string $date Ymd-formatted date
+ * @param  string $date Ymd-formatted date.
  * @return string Y-m-d-formatted date
  */
 function ghc_format_schema_org_date( $date ) {
@@ -90,7 +90,7 @@ function ghc_format_schema_org_date( $date ) {
 /**
  * Fix protocol-agnostic URLs
  *
- * @param  string $url original URL
+ * @param  string $url Original URL.
  * @return string URL with https:// prepended
  */
 function ghc_format_schema_url( $url ) {

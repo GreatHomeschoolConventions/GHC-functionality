@@ -345,13 +345,12 @@ function ghc_register_cpts() {
 
 	register_taxonomy_for_object_type( 'post_tag', 'workshop' );
 }
-// Hook into the 'init' action to register custom post types
 add_action( 'init', 'ghc_register_cpts' );
 
 /**
  * Remove “Archives: ” from archive titles
  *
- * @param  string $title archive title
+ * @param  string $title Archive title.
  * @return string modified archive title
  */
 function ghc_cpt_archive_titles( $title ) {
@@ -362,7 +361,7 @@ add_filter( 'get_the_archive_title', 'ghc_cpt_archive_titles' );
 /**
  * Add CPT descriptions at top of archive pages
  *
- * @param  string $description default description text
+ * @param  string $description Default description text.
  * @return string description with custom message prepended
  */
 function ghc_cpt_archive_intro( $description ) {
@@ -541,7 +540,7 @@ add_action( 'admin_menu', 'ghc_admin_menu_separator' );
 /**
  * Add sort order header to speakers backend
  *
- * @param  array $columns array of all columns
+ * @param  array $columns Array of all columns.
  * @return array array of modified columns
  */
 function ghc_speaker_columns( $columns ) {
@@ -558,8 +557,8 @@ add_filter( 'manage_edit-speaker_columns', 'ghc_speaker_columns' );
 /**
  * Display sort order on speakers backend
  *
- * @param string  $column  column name
- * @param integer $post_id post ID
+ * @param string  $column  Column name.
+ * @param integer $post_id Post ID.
  */
 function ghc_speaker_column_content( $column, $post_id ) {
 	global $post;
@@ -574,7 +573,7 @@ add_action( 'manage_speaker_posts_custom_column', 'ghc_speaker_column_content', 
 /**
  * Make speakers order column header sortable
  *
- * @param  array $columns array of all columns
+ * @param  array $columns Array of all columns.
  * @return array array of modified columns
  */
 function ghc_speaker_sortable_columns( $columns ) {
@@ -586,7 +585,7 @@ add_filter( 'manage_edit-speaker_sortable_columns', 'ghc_speaker_sortable_column
 /**
  * Add workshop date/time and speaker headers to workshops backend
  *
- * @param  array $columns array of all columns
+ * @param  array $columns Array of all columns.
  * @return array array of modified columns
  */
 function ghc_workshop_columns( $columns ) {
@@ -600,8 +599,8 @@ add_filter( 'manage_edit-workshop_columns', 'ghc_workshop_columns' );
 /**
  * Display speaker name on workshops backend
  *
- * @param string  $column  column name
- * @param integer $post_id post ID
+ * @param string  $column  Column name.
+ * @param integer $post_id Post ID.
  */
 function ghc_workshop_column_content( $column, $post_id ) {
 	global $post;
@@ -627,7 +626,7 @@ add_action( 'manage_workshop_posts_custom_column', 'ghc_workshop_column_content'
 /**
  * Make workshop speaker name header sortable
  *
- * @param  array $columns array of all columns
+ * @param  array $columns Array of all columns.
  * @return array array of modified columns
  */
 function ghc_workshop_sortable_columns( $columns ) {
@@ -640,7 +639,7 @@ add_filter( 'manage_edit-workshop_sortable_columns', 'ghc_workshop_sortable_colu
 /**
  * Sort workshops by speaker name
  *
- * @param object $query WP_Query
+ * @param object $query WP_Query.
  */
 function ghc_sort_workshops_admin( $query ) {
 	if ( array_key_exists( 'post_type', $query->query ) && 'workshop' === $query->query['post_type'] && is_admin() && $query->is_main_query() ) {
@@ -656,7 +655,7 @@ add_action( 'pre_get_posts', 'ghc_sort_workshops_admin' );
 /**
  * Sort speakers and hide non-featured speakers
  *
- * @param  object $query WP_Query
+ * @param  object $query WP_Query.
  */
 function ghc_speakers_order( $query ) {
 	if ( array_key_exists( 'post_type', $query->query ) && 'speaker' === $query->query['post_type'] ) {
@@ -679,7 +678,7 @@ add_action( 'pre_get_posts', 'ghc_speakers_order' );
 /**
  * Sort exhibitors
  *
- * @param object $query WP_Query
+ * @param object $query WP_Query.
  */
 function ghc_modify_exhibitor_archive( $query ) {
 	if ( array_key_exists( 'post_type', $query->query ) && 'exhibitor' === $query->query['post_type'] && ! is_admin() && $query->is_main_query() ) {
@@ -694,7 +693,7 @@ add_action( 'pre_get_posts', 'ghc_modify_exhibitor_archive' );
 /**
  * Sort special track CPTs
  *
- * @param object $query WP_Query
+ * @param object $query WP_Query.
  */
 function ghc_modify_special_track_tax( $query ) {
 	if ( array_key_exists( 'ghc_special_tracks_taxonomy', $query->query ) && ! is_admin() && $query->is_main_query() ) {
@@ -709,7 +708,7 @@ add_action( 'pre_get_posts', 'ghc_modify_special_track_tax' );
 /**
  * Sort sponsors
  *
- * @param object $query WP_Query
+ * @param object $query WP_Query.
  */
 function ghc_modify_sponsor_archive( $query ) {
 	if ( array_key_exists( 'post_type', $query->query ) && 'sponsor' === $query->query['post_type'] && ! is_admin() && $query->is_main_query() && is_post_type_archive( 'sponsor' ) ) {
@@ -723,12 +722,12 @@ add_action( 'pre_get_posts', 'ghc_modify_sponsor_archive' );
 /**
  * Add all the given speaker’s workshops to a post_meta
  *
- * @param integer $post_id WP post ID
+ * @param integer $post_id WP post ID.
  */
 function ghc_add_speaker_workshop_meta( $post_id ) {
 	if ( 'speaker' === get_post_type() ) {
 		ghc_set_speaker_workshops( $post_id );
-	} elseif ( 'workshop' == get_post_type() ) {
+	} elseif ( 'workshop' === get_post_type() ) {
 		$this_speaker_id = get_field( 'speaker', $post_id );
 
 		foreach ( $this_speaker_id as $speaker_id ) {
@@ -741,7 +740,7 @@ add_action( 'acf/save_post', 'ghc_add_speaker_workshop_meta', 12 );
 /**
  * Get workshop IDs for a given speaker
  *
- * @param  integer $speaker_id speaker post ID
+ * @param  integer $speaker_id Speaker post ID.
  * @return array   array of workshop IDs
  */
 function ghc_set_speaker_workshops( $speaker_id ) {

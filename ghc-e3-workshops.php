@@ -95,7 +95,7 @@ add_action( 'init', 'ghc_e3_cpts' );
 /**
  * Modify workshops query
  *
- * @param  object $query WP_Query object
+ * @param  object $query WP_Query object.
  * @return object modified WP_Query object
  */
 function ghc_e3_post_order( $query ) {
@@ -112,7 +112,7 @@ add_action( 'pre_get_posts', 'ghc_e3_post_order' );
 /**
  * Add media player and speaker bio to E3 workshop content
  *
- * @param  string $content HTML content
+ * @param  string $content HTML content.
  * @return string modified HTML content
  */
 function ghc_e3_content( $content ) {
@@ -123,9 +123,9 @@ function ghc_e3_content( $content ) {
 
 		if ( is_singular() ) {
 			$new_content .= '
-            <audio class="wp-audio-shortcode" controls="controls" preload="none" style="width: 100%">
-                <source type="audio/mpeg" src="' . ghc_e3_get_signed_url( get_field( 'e3_workshop_media_url' ) ) . '" />
-            </audio>';
+			<audio class="wp-audio-shortcode" controls="controls" preload="none" style="width: 100%">
+				<source type="audio/mpeg" src="' . ghc_e3_get_signed_url( get_field( 'e3_workshop_media_url' ) ) . '" />
+			</audio>';
 
 			if ( $speaker_bio ) {
 				$content .= '<p>' . $speaker_bio_content . '</p>';
@@ -146,11 +146,11 @@ add_filter( 'the_excerpt', 'ghc_e3_content' );
 /**
  * Add speaker info to post thumbnail
  *
- * @param  string       $html              featured image HTML
- * @param  integer      $post_id           WP post ID
- * @param  integer      $post_thumbnail_id WP media post ID
- * @param  string/array $size              image size
- * @param  array        $attr              query string of attributes
+ * @param  string       $html              featured image HTML.
+ * @param  integer      $post_id           WP post ID.
+ * @param  integer      $post_thumbnail_id WP media post ID.
+ * @param  string/array $size              image size.
+ * @param  array        $attr              query string of attributes.
  * @return string       featured image HTML
  */
 function ghc_e3_thumbnail_content( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
@@ -177,7 +177,7 @@ add_filter( 'post_thumbnail_html', 'ghc_e3_thumbnail_content', 10, 5 );
 /**
  * Generate signed URL
  *
- * @param  string $resource resource URL
+ * @param  string $resource resource URL.
  * @return string signed resource URL
  */
 function ghc_e3_get_signed_url( $resource ) {
@@ -186,31 +186,31 @@ function ghc_e3_get_signed_url( $resource ) {
 	$aws_s3_domain         = get_field( 'aws_s3_domain', 'option' );
 	$aws_cloudfront_domain = get_field( 'aws_cloudfront_domain', 'option' );
 
-	// use CloudFront domain instead of S3 domain
+	// Use CloudFront domain instead of S3 domain.
 	$resource = str_replace( $aws_s3_domain, $aws_cloudfront_domain, $resource );
 
-	// get expiration time
+	// Get expiration time.
 	$expires = time() + get_field( 'aws_cloudfront_signed_url_lifetime', 'option' );
 	$json    = '{"Statement":[{"Resource":"' . $resource . '","Condition":{"DateLessThan":{"AWS:EpochTime":' . $expires . '}}}]}';
 
-	// get private key
+	// Get private key.
 	$key = openssl_get_privatekey( $private_key );
 	if ( ! $key ) {
 		error_log( 'Failed to read private key: ' . openssl_error_string() );
 		return $resource;
 	}
 
-	// sign the policy with the private key
+	// Sign the policy with the private key.
 	if ( ! openssl_sign( $json, $signed_policy, $key ) ) {
 		error_log( 'Failed to sign url: ' . openssl_error_string() );
 		return $resource;
 	}
 
-	// create signature
+	// Create signature.
 	$base64_signed_policy = base64_encode( $signed_policy );
 	$signature            = str_replace( array( '+', '=', '/' ), array( '-', '_', '~' ), $base64_signed_policy );
 
-	// construct the URL
+	// Construct the URL.
 	$url = $resource . '?Expires=' . $expires . '&Signature=' . $signature . '&Key-Pair-Id=' . $key_pair_id;
 
 	return $url;
@@ -219,7 +219,7 @@ function ghc_e3_get_signed_url( $resource ) {
 /**
  * Tweak archive title
  *
- * @param  string $title HTML archive title
+ * @param  string $title HTML archive title.
  * @return string modified HTML archive title
  */
 function ghc_e3_archive_title( $title ) {
@@ -264,7 +264,7 @@ add_filter( 'woocommerce_product_single_add_to_cart_text', 'ghc_e3_cart_button_t
 /**
  * Add shortcode for purchase page
  *
- * @param  array $attributes shortcode attributes
+ * @param  array $attributes shortcode attributes.
  * @return string HTML content
  */
 function ghc_e3_workshop_promo_list( $attributes ) {
@@ -297,9 +297,9 @@ function ghc_e3_workshop_promo_list( $attributes ) {
 			}
 
 			echo '<h3>' . get_the_title() . '</h3>
-            <p><a class="workshop-description expand-trigger dashicons-after">Workshop Description <span class="dashicons dashicons-arrow-down-alt2"></span></a></p>
-            <div class="excerpt click-to-expand">' . get_the_content() . '</div>
-            </article>';
+			<p><a class="workshop-description expand-trigger dashicons-after">Workshop Description <span class="dashicons dashicons-arrow-down-alt2"></span></a></p>
+			<div class="excerpt click-to-expand">' . get_the_content() . '</div>
+			</article>';
 		}
 		echo '</section>';
 	}
@@ -312,7 +312,7 @@ add_shortcode( 'e3_workshop_promo_list', 'ghc_e3_workshop_promo_list' );
 /**
  * Add shortcode for buy now button
  *
- * @param  array $attributes shortcode attributes
+ * @param  array $attributes shortcode attributes.
  * @return string HTML content
  */
 function ghc_e3_buy_now_button( $attributes ) {
@@ -326,9 +326,9 @@ function ghc_e3_buy_now_button( $attributes ) {
 	ob_start();
 	if ( $shortcode_attributes['product_id'] ) {
 		echo '<section class="buy-now">
-        <p><a class="button" rel="nofollow" href="' . home_url() . '/checkout/?add-to-cart=' . $shortcode_attributes['product_id'] . '">' . $shortcode_attributes['button_text'] . '</a><br/>
-        <img src="' . plugin_dir_url( __FILE__ ) . 'dist/images/svg/credit-cards.svg" alt="credit card icons" /></p>
-        </section>';
+		<p><a class="button" rel="nofollow" href="' . home_url() . '/checkout/?add-to-cart=' . $shortcode_attributes['product_id'] . '">' . $shortcode_attributes['button_text'] . '</a><br/>
+		<img src="' . plugin_dir_url( __FILE__ ) . 'dist/images/svg/credit-cards.svg" alt="credit card icons" /></p>
+		</section>';
 	}
 	return ob_get_clean();
 }

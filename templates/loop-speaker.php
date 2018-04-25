@@ -5,7 +5,6 @@
  * @package GHC_Functionality_Plugin
  */
 
-	// new queries
 	$top_speakers_args = array(
 		'post_type'              => 'speaker',
 		'pagination'             => false,
@@ -21,10 +20,8 @@
 		),
 	);
 
-	// the queries
 	$top_speakers_query = new WP_Query( $top_speakers_args );
 
-	// top speakers (set with $top_speakers_quantity)
 	if ( $top_speakers_query->have_posts() ) {
 		echo '<div class="speaker-container ghc-cpt container">';
 		while ( $top_speakers_query->have_posts() ) {

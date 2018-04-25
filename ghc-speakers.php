@@ -48,7 +48,7 @@ function ghc_register_frontend_resources() {
 
 	wp_enqueue_style( 'ghc-functionality', plugins_url( 'dist/css/style.min.css', __FILE__ ), array(), GHC_PLUGIN_VERSION );
 
-	// load WooCommerce script only on WC pages
+	// Load WooCommerce script only on WC pages.
 	if ( function_exists( 'is_product' ) && function_exists( 'is_cart' ) ) {
 		if ( is_product() || is_cart() ) {
 			wp_enqueue_script( 'ghc-woocommerce' );

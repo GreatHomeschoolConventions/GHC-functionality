@@ -7,7 +7,6 @@
 
 global $convention_abbreviations;
 
-// arguments
 $hotel_args = array(
 	'post_type'      => 'hotel',
 	'posts_per_page' => -1,
@@ -31,7 +30,6 @@ if ( $this_convention ) {
 	);
 }
 
-// the query
 $hotel_query = new WP_Query( $hotel_args );
 ?>
 

@@ -41,7 +41,7 @@ if ( ! function_exists( 'ghc_acf_json_save_point' ) ) {
 	/**
 	 * Set ACF local JSON save directory
 	 *
-	 * @param  string $path ACF local JSON save directory
+	 * @param  string $path ACF local JSON save directory.
 	 * @return string ACF local JSON save directory
 	 */
 	function ghc_acf_json_save_point( $path ) {
@@ -54,7 +54,7 @@ if ( ! function_exists( 'ghc_acf_json_load_point' ) ) {
 	/**
 	 * Set ACF local JSON open directory
 	 *
-	 * @param  array $path ACF local JSON open directory
+	 * @param  array $path ACF local JSON open directory.
 	 * @return array ACF local JSON open directory
 	 */
 	function ghc_acf_json_load_point( $path ) {

@@ -24,46 +24,19 @@
  * @package GHC_Functionality_Plugin
  */
 
-defined( 'ABSPATH' ) or die( 'No access allowed' );
-
-const GHC_PLUGIN_VERSION = '3.2.10';
-
-include( 'inc/acf.php' );
-include( 'inc/admin.php' );
-include( 'inc/content.php' );
-include( 'inc/cpts.php' );
-include( 'inc/functions.php' );
-include( 'inc/images.php' );
-include( 'inc/shortcodes.php' );
-include( 'inc/woocommerce.php' );
-
-/**
- * Register frontend JS and styles
- */
-function ghc_register_frontend_resources() {
-	wp_register_script( 'ghc-woocommerce', plugins_url( 'dist/js/woocommerce.min.js', __FILE__ ), array( 'jquery', 'woocommerce' ), GHC_PLUGIN_VERSION );
-	wp_register_script( 'ghc-price-sheets', plugins_url( 'dist/js/price-sheets.min.js', __FILE__ ), array( 'jquery' ), GHC_PLUGIN_VERSION );
-	wp_register_script( 'ghc-workshop-filter', plugins_url( 'dist/js/workshop-filter.min.js', __FILE__ ), array( 'jquery' ), GHC_PLUGIN_VERSION );
-	wp_enqueue_script( 'ghc-popups', plugins_url( 'dist/js/popups.min.js', __FILE__ ), array( 'jquery', 'popup-maker-site' ), GHC_PLUGIN_VERSION, true );
-
-	wp_enqueue_style( 'ghc-functionality', plugins_url( 'dist/css/style.min.css', __FILE__ ), array(), GHC_PLUGIN_VERSION );
-
-	// Load WooCommerce script only on WC pages.
-	if ( function_exists( 'is_product' ) && function_exists( 'is_cart' ) ) {
-		if ( is_product() || is_cart() ) {
-			wp_enqueue_script( 'ghc-woocommerce' );
-		}
-	}
+if ( ! function_exists( 'add_filter' ) ) {
+	header( 'Status: 403 Forbidden' );
+	header( 'HTTP/1.1 403 Forbidden' );
+	exit();
 }
-add_action( 'wp_enqueue_scripts', 'ghc_register_frontend_resources' );
 
-/**
- * Register backend JS and styles
- */
-function ghc_register_backend_resources() {
-	global $post_type;
-	if ( 'exhibitor' == $post_type ) {
-		wp_enqueue_script( 'ghc-exhibitor-backend', plugins_url( 'js/exhibitor-backend.min.js', __FILE__ ), array( 'jquery' ), GHC_PLUGIN_VERSION, true );
-	}
+// Define GHC_PLUGIN_FILE.
+if ( ! defined( 'GHC_PLUGIN_FILE' ) ) {
+	define( 'GHC_PLUGIN_FILE', __FILE__ );
 }
-add_action( 'admin_enqueue_scripts', 'ghc_register_backend_resources' );
+
+// Include the main class.
+if ( ! class_exists( 'GHC_Base' ) ) {
+	include_once dirname( __FILE__ ) . '/inc/class-ghc-base.php';
+	new GHC_Base();
+}

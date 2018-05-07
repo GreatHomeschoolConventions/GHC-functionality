@@ -14,9 +14,10 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
  */
 function author_bio_shortcode() {
 	if ( is_singular() ) {
-		return ghc_get_author_bio();
+		$speakers = new GHC_Speakers();
+		return $speakers->get_author_bio();
 	} else {
-		return false;
+		return '';
 	}
 }
 add_shortcode( 'author_bio', 'author_bio_shortcode' );

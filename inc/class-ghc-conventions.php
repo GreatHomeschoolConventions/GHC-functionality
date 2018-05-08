@@ -32,16 +32,42 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
+	 * All conventions with full info
+	 *
+	 * @var array
+	 */
+	public $conventions = array();
+
+	/**
+	 * All conventions abbreviations
+	 *
+	 * @var array
+	 */
+	public $conventions_abbreviations = array();
+
+	/**
+	 * All convention dates
+	 *
+	 * @var array
+	 */
+	public $conventions_dates = array();
+
+	/**
 	 * Get convention info
 	 *
 	 * @return array All convention info
 	 */
 	public function get_conventions_info() {
-		$transient = get_transient( 'ghc_conventions' );
-		if ( $transient ) {
-			return $transient;
+		if ( ! empty( $this->conventions ) ) {
+			return $this->conventions;
 		} else {
-			return $this->load_conventions_info();
+			$transient = get_transient( 'ghc_conventions' );
+			if ( $transient ) {
+				$this->conventions = $transient;
+				return $transient;
+			} else {
+				return $this->load_conventions_info();
+			}
 		}
 	}
 
@@ -51,11 +77,16 @@ class GHC_Conventions extends GHC_Base {
 	 * @return array Convention locations abbreviations
 	 */
 	public function get_conventions_abbreviations() {
-		$transient = get_transient( 'ghc_conventions_abbreviations' );
-		if ( $transient ) {
-			return $transient;
+		if ( ! empty( $this->conventions_abbreviations ) ) {
+			return $this->conventions_abbreviations;
 		} else {
-			return $this->load_conventions_abbreviations();
+			$transient = get_transient( 'ghc_conventions_abbreviations' );
+			if ( $transient ) {
+				$this->conventions_abbreviations = $transient;
+				return $transient;
+			} else {
+				return $this->load_conventions_abbreviations();
+			}
 		}
 	}
 
@@ -65,11 +96,16 @@ class GHC_Conventions extends GHC_Base {
 	 * @return array Conventions dates
 	 */
 	public function get_conventions_dates() {
-		$transient = get_transient( 'ghc_conventions_dates' );
-		if ( $transient ) {
-			return $transient;
+		if ( ! empty( $this->conventions_dates ) ) {
+			return $this->conventions_dates;
 		} else {
-			return $this->load_conventions_dates();
+			$transient = get_transient( 'ghc_conventions_dates' );
+			if ( $transient ) {
+				$this->convention_dates = $transient;
+				return $transient;
+			} else {
+				return $this->load_conventions_dates();
+			}
 		}
 	}
 
@@ -99,15 +135,27 @@ class GHC_Conventions extends GHC_Base {
 			while ( $locations_query->have_posts() ) {
 				$locations_query->the_post();
 
-				$convention_info                = array(
-					'ID'        => get_the_ID(),
-					'title'     => get_the_title(),
-					'permalink' => get_the_permalink(),
-					// 'cta_list'  => get_field( 'cta' ),
-					// FIXME: get_base_country() on null when cta_list is enabled.
-				);
 				$convention_key                 = strtolower( get_field( 'convention_abbreviated_name' ) );
-				$conventions[ $convention_key ] = array_merge( $convention_info, get_post_meta( get_the_ID() ) );
+				$conventions[ $convention_key ] = array(
+					'ID'                          => get_the_ID(),
+					'title'                       => get_the_title(),
+					'permalink'                   => get_the_permalink(),
+					'convention'                  => get_field( 'convention' ),
+					'convention_short_name'       => get_field( 'convention_short_name' ),
+					'convention_abbreviated_name' => get_field( 'convention_abbreviated_name' ),
+					'icon'                        => $this->plugin_dir_url( 'dist/images/svg/' . strtoupper( $convention_key ) . '.svg' ),
+					'begin_date'                  => get_field( 'begin_date' ),
+					'end_date'                    => get_field( 'end_date' ),
+					'address'                     => array(
+						'convention_center_name' => get_field( 'convention_center_name' ),
+						'street_address'         => get_field( 'address' ),
+						'city'                   => get_field( 'city' ),
+						'state'                  => get_field( 'state' ),
+						'zip'                    => get_field( 'zip' ),
+					),
+					'registration'                => get_field( 'registration' ),
+					'cta_list'                    => get_field( 'cta' ),
+				);
 			}
 		}
 		wp_reset_postdata();
@@ -126,7 +174,7 @@ class GHC_Conventions extends GHC_Base {
 		$conventions_abbreviations = array();
 
 		foreach ( $this->get_conventions_info() as $key => $values ) {
-			$convention_abbreviations[ $key ] = strtolower( implode( '', $values['convention_short_name'] ) );
+			$convention_abbreviations[ $key ] = strtolower( $values['convention_short_name'] );
 		}
 
 		set_transient( 'ghc_conventions_abbreviations', $convention_abbreviations );

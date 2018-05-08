@@ -71,6 +71,7 @@ class GHC_Base {
 	 */
 	public function __construct() {
 
+		include_once 'class-ghc-post-types.php'; // Loaded in class.
 		include_once 'class-ghc-conventions.php'; // Loaded in class.
 
 		include_once 'class-ghc-acf.php'; // Loaded in class.

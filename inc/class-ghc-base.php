@@ -58,10 +58,11 @@ class GHC_Base {
 	/**
 	 * Get this plugin directory URL
 	 *
+	 * @param  string [$path       = ''] Optional path to append
 	 * @return string Base URL for this plugin’s directory
 	 */
-	protected function plugin_dir_url() {
-		return plugin_dir_url( GHC_PLUGIN_FILE );
+	protected function plugin_dir_url( $path = '' ) {
+		return plugin_dir_url( GHC_PLUGIN_FILE ) . $path;
 	}
 
 	/**

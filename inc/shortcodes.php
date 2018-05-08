@@ -8,21 +8,6 @@
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 /**
- * Shortcode to display author bio and conventions
- *
- * @return string HTML content
- */
-function author_bio_shortcode() {
-	if ( is_singular() ) {
-		$speakers = new GHC_Speakers();
-		return $speakers->get_author_bio();
-	} else {
-		return '';
-	}
-}
-add_shortcode( 'author_bio', 'author_bio_shortcode' );
-
-/**
  * Shortcode to display a convention’s CTA
  *
  * @param  array $attributes Shortcode parameters including convention.

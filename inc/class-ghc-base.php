@@ -77,7 +77,6 @@ class GHC_Base {
 
 		include_once 'class-ghc-acf.php'; // Loaded in class.
 		include_once 'class-ghc-content.php'; // Loaded in class.
-		include_once 'class-ghc-speakers.php'; // Loaded in class.
 
 //		include_once 'cpts.php';
 //		include_once 'functions.php';

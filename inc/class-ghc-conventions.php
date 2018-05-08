@@ -209,60 +209,68 @@ class GHC_Conventions extends GHC_Base {
 		$convention_icons      = '';
 		$conventions_to_output = array();
 
-		// Check whether input is a ID number, array, or array of objects.
-		if ( is_numeric( $input_conventions ) ) {
-			$this_post_terms       = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
-			$conventions_to_output = array();
+		// Check whether input is a post ID, a string, or an array of strings or WP_Term objects.
+		if ( is_int( $input_conventions ) ) {
+			$this_post_terms = get_the_terms( $input_conventions, 'ghc_conventions_taxonomy' );
 			if ( $this_post_terms ) {
 				foreach ( $this_post_terms as $term ) {
 					$conventions_to_output[] = $term->slug;
 				}
-				usort( $conventions_to_output, $this->sort_conventions() );
 			}
 		} elseif ( is_string( $input_conventions ) ) {
 			// Handle two-letter abbreviations.
 			if ( strlen( $input_conventions ) > 2 ) {
-				$input_conventions = str_replace( $this->get_convention_abbreviations(), array_keys( $this->get_convention_abbreviations() ), $input_conventions );
+				$input_conventions = $this->get_abbreviation( $input_conventions );
 			}
 			$conventions_to_output[] = $input_conventions;
 		} elseif ( is_array( $input_conventions ) ) {
 			if ( ! is_object( $input_conventions[0] ) ) {
-				// If not an object, then it's an array of abbreviations.
-				$conventions_to_output = array();
+				// If not an object, then it’s an array of abbreviations.
 				foreach ( $input_conventions as $convention ) {
 					if ( strlen( $convention ) > 2 ) {
-						$convention = str_replace( $this->get_convention_abbreviations(), array_keys( $this->get_convention_abbreviations() ), $convention );
+						$convention = $this->get_abbreviation( $convention );
 					}
 					$conventions_to_output[] = trim( $convention );
 				}
 			} else {
-				// If an object, then it’s a WP_Term object and we can pass directly to the output section.
+				// If an object, then it should be a WP_Term object and we can pass directly to the output section.
 				$conventions_to_output = $input_conventions;
 			}
 
 			// Sort by date (original WP_Query sorted by begin_date).
-			usort( $conventions_to_output, $this->sort_conventions() );
+			usort( $conventions_to_output, array( $this, 'sort_conventions' ) );
 		}
 
 		// Add icons to $convention_icons.
-		if ( is_array( $this->get_convention_abbreviations() ) ) {
+		if ( is_array( $this->get_conventions_abbreviations() ) ) {
 			foreach ( $conventions_to_output as $convention ) {
 				// Get short convention name.
 				if ( is_object( $convention ) ) {
-					$convention_key = array_search( $convention->slug, $this->get_convention_abbreviations(), true );
+					$convention_key = array_search( $convention->slug, $this->get_conventions_abbreviations(), true );
 				} elseif ( 2 === strlen( $convention ) ) {
 					$convention_key = $convention;
 				} else {
-					$convention_key = array_flip( $this->get_convention_abbreviations() )[ $convention ];
+					$convention_key = array_flip( $this->get_conventions_abbreviations() )[ $convention ];
 				}
 
-				$convention_icons .= '<a class="convention-link" href="' . esc_url( $conventions[ $convention_key ]['permalink'] ) . '">
-					<img src="' . esc_url( plugins_url( 'dist/images/svg/' . strtoupper( $convention_key ), GHC_PLUGIN_FULE ) ) . '.svg" alt="' . esc_attr( $conventions[ $convention_key ]['title'] ) . '" class="convention-icon" />
+				$convention_icons .= '<a class="convention-link" href="' . esc_url( $this->get_conventions_info()[ $convention_key ]['permalink'] ) . '">
+					<img src="' . esc_url( $this->plugin_dir_url( 'dist/images/svg/' . strtoupper( $convention_key ) . '.svg' ) ) . '" alt="' . esc_attr( $this->get_conventions_info()[ $convention_key ]['title'] ) . '" class="convention-icon" />
 				</a>';
 			}
 		}
 
 		return apply_filters( 'ghc_convention_icons', $convention_icons );
+	}
+
+	/**
+	 * Get convention abbreviation from full name
+	 *
+	 * @private
+	 * @param  string $convention Convention long name.
+	 * @return string Two-letter convention abbreviation
+	 */
+	private function get_abbreviation( $convention ) {
+		return str_replace( $this->get_conventions_abbreviations(), array_keys( $this->get_conventions_abbreviations() ), $convention );
 	}
 
 	/**
@@ -287,13 +295,13 @@ class GHC_Conventions extends GHC_Base {
 
 		// Convert two-letter abbreviations to names.
 		if ( strlen( $a ) === 2 && strlen( $b ) === 2 ) {
-			$a = str_replace( array_flip( $this->get_convention_abbreviations() ), $this->get_convention_abbreviations(), $a );
-			$b = str_replace( array_flip( $this->get_convention_abbreviations() ), $this->get_convention_abbreviations(), $b );
+			$a = str_replace( array_flip( $this->get_conventions_abbreviations() ), $this->get_conventions_abbreviations(), $a );
+			$b = str_replace( array_flip( $this->get_conventions_abbreviations() ), $this->get_conventions_abbreviations(), $b );
 		}
 
 		// Strip key names from conventions.
-		if ( is_array( $this->get_convention_abbreviations() ) ) {
-			$convention_names = array_values( $this->get_convention_abbreviations() );
+		if ( is_array( $this->get_conventions_abbreviations() ) ) {
+			$convention_names = array_values( $this->get_conventions_abbreviations() );
 
 			// Get array key numbers.
 			$a_position = array_search( $a, $convention_names, true );

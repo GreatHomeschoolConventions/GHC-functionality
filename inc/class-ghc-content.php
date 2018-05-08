@@ -17,7 +17,6 @@ if ( ! function_exists( 'add_filter' ) ) {
 class GHC_Content extends GHC_Base {
 
 	public function __construct() {
-//		add_filter( 'the_content', array( $this, 'add_meet_the_author' ), 50 );
 
 //		add_filter( 'the_excerpt', 'ghc_exhibitor_archive_icons' );
 //		add_filter( 'the_content', 'ghc_exhibitor_archive_icons' );
@@ -38,19 +37,10 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Add author info to posts
 	 *
 	 * @param  string $content HTML content.
-	 * @return string modified HTML content
 	 */
-	function add_meet_the_author( $content ) {
-		$author_info = '';
-		if ( is_singular() ) {
-			$speakers = new GHC_Speakers();
-			$content .= $speakers->get_author_bio();
 		}
-
-		return $content;
 	}
 
 	/**

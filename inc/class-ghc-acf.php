@@ -52,7 +52,6 @@ class GHC_ACF extends GHC_Base {
 		acf_update_setting( 'google_api_key', get_option( 'options_api_key' ) );
 	}
 
-
 	/**
 	 * Set ACF local JSON save directory
 	 *
@@ -62,7 +61,6 @@ class GHC_ACF extends GHC_Base {
 	public function acf_json_save_point( $path ) {
 		return $this->plugin_dir_path() . '/acf-json';
 	}
-
 
 	/**
 	 * Set ACF local JSON open directory

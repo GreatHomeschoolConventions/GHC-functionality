@@ -102,7 +102,7 @@ class GHC_Base {
 	 *
 	 * @return array All convention info.
 	 */
-	public function get_conventions() {
+	public function get_conventions_info() {
 		if ( 0 === count( $this->conventions ) ) {
 			$conventions       = new GHC_Conventions();
 			$this->conventions = $conventions->get_conventions_info();
@@ -133,7 +133,7 @@ class GHC_Base {
 	public function get_conventions_dates() {
 		if ( 0 === count( $this->conventions_dates ) ) {
 			$conventions             = new GHC_Conventions();
-			$this->conventions_dates = $conventions->load_conventions_dates();
+			$this->conventions_dates = $conventions->get_conventions_dates();
 		}
 
 		return $this->conventions_dates;

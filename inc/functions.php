@@ -8,11 +8,6 @@
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 
 /**
- * Include schema.org microdata
- */
-include( 'schema.org.php' );
-
-/**
  * Add slug to body class
  *
  * @param  array $classes Body classes.

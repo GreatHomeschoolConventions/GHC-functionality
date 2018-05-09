@@ -16,31 +16,62 @@ if ( ! function_exists( 'add_filter' ) ) {
  */
 class GHC_Content extends GHC_Base {
 
+	/**
+	 * Kick things off
+	 *
+	 * @private
+	 */
 	public function __construct() {
+		// Convention icons.
+		add_filter( 'the_excerpt', array( $this, 'archive_icons' ) );
+		add_filter( 'the_content', array( $this, 'archive_icons' ) );
 
-//		add_filter( 'the_excerpt', 'ghc_exhibitor_archive_icons' );
-//		add_filter( 'the_content', 'ghc_exhibitor_archive_icons' );
-//		add_filter( 'the_content', 'ghc_list_special_tracks', 8 );
-//		add_filter( 'get_the_archive_description', 'ghc_list_special_track_sponsors' );
-//		add_filter( 'the_content', 'ghc_speaker_show_locations', 11 );
-//		add_filter( 'the_excerpt', 'ghc_speaker_excerpt_show_locations', 11 );
-//		add_filter( 'the_content', 'ghc_speaker_show_title_info', 12 );
-//		add_filter( 'the_content', 'ghc_special_event_show_locations_single', 11 );
-//		add_filter( 'the_excerpt', 'ghc_special_event_show_locations_archive', 11 );
-//
-//		add_filter( 'the_content', 'ghc_show_hotel_details' );
-//
-//		add_filter( 'the_content', 'ghc_related_sponsors', 15 );
-//		add_filter( 'the_content', 'ghc_pinterest_image' );
-//		add_action( 'wp_head', 'ghc_opengraph_video', 8 );
-//		add_filter( 'the_content', 'ghc_list_related_workshops', 11 );
+		// Sponsors.
+		add_filter( 'the_content', array( $this, 'add_related_sponsors' ), 15 );
+
+		// Social media.
+		add_action( 'wp_head', array( $this, 'add_opengraph_video' ), 8 );
+		add_action( 'acf/save_post', array( $this, 'opengraph_video_get_meta' ), 20 );
+
+		// Special tracks.
+		add_filter( 'the_content', array( $this, 'list_special_tracks' ), 8 );
+		add_filter( 'get_the_archive_description', array( $this, 'list_special_track_sponsors' ) );
+
+		// Speakers and Special Events.
+		add_filter( 'the_content', array( $this, 'show_locations' ), 11 );
+		add_filter( 'the_excerpt', array( $this, 'show_locations' ), 11 );
+
+		// Speakers.
+		add_filter( 'the_content', array( $this, 'show_title_info' ), 12 );
+		add_filter( 'the_content', array( $this, 'show_related_workshops' ), 11 );
+
+		// Workshops.
+		add_filter( 'the_content', array( $this, 'show_related_speaker' ), 8 );
+
+		// Hotels.
+		add_filter( 'the_content', array( $this, 'show_hotel_details' ) );
 	}
 
 	/**
+	 * Show convention icons for each exhibitor
 	 *
 	 * @param  string $content HTML content.
+	 * @return string modified content
 	 */
+	public function archive_icons( $content ) {
+		global $post;
+		$new_content = '';
+		if ( 'exhibitor' === get_post_type( $post->ID ) ) {
+			// TODO: don’t add icon to exhibitor archive description.
+			if ( ! is_tax() ) {
+				$conventions  = new GHC_Conventions();
+				$new_content .= $conventions->get_icons( $post->ID );
+			}
+			if ( is_singular() && get_field( 'exhibitor_URL', $post->ID ) ) {
+				$new_content .= '<p><a class="button" href="' . get_field( 'exhibitor_URL', $post->ID ) . '" target="_blank" rel="noopener noreferrer">Visit website&rarr;</a></p>';
+			}
 		}
+		return $new_content . $content;
 	}
 
 	/**
@@ -49,15 +80,13 @@ class GHC_Content extends GHC_Base {
 	 * @param  string $content HTML content.
 	 * @return string modified HTML content
 	 */
-	function add_related_sponsors( $content ) {
+	public function add_related_sponsors( $content ) {
 		if ( is_singular() ) {
 			// Get related sponsors.
-			$related_sponsors       = get_field( 'related_sponsors' );
-			$show_content_with_logo = get_field( 'show_content_with_logo' );
+			$related_sponsors = get_field( 'related_sponsors' );
 
 			if ( isset( $related_sponsors ) && ! empty( $related_sponsors ) ) {
-				global $post;
-				$this_post = $post;
+				$show_content_with_logo = get_field( 'show_content_with_logo' );
 
 				$related_sponsors_query_args = array(
 					'post_type'      => 'sponsor',
@@ -92,28 +121,8 @@ class GHC_Content extends GHC_Base {
 				}
 
 				// Restore original post data.
-				$post = $this_post;
+				wp_reset_postdata();
 			}
-		}
-		return $content;
-	}
-
-	/**
-	 * Add Pinterest image to singular content
-	 *
-	 * @param  string $content HTML content string.
-	 * @return string modified HTML content string
-	 */
-	function ghc_pinterest_image( $content ) {
-		$pinterest_image = get_field( 'pinterest_image' );
-		if ( is_singular() && $pinterest_image ) {
-			// Get description.
-			$description = get_post_meta( get_the_ID(), '_yoast_wpseo_metadesc', true );
-			if ( ! $description ) {
-				$description = get_the_title();
-			}
-
-			$content = '<figure class="pinterest-image"><a target="_blank" rel="noopener noreferrer" href="http://www.pinterest.com/pin/create/button/?url=' . get_permalink() . '&media=' . $pinterest_image['url'] . '&description=' . $description . '">' . wp_get_attachment_image( $pinterest_image['ID'], 'pinterest-thumb' ) . '</a></figure>' . $content;
 		}
 		return $content;
 	}
@@ -121,42 +130,78 @@ class GHC_Content extends GHC_Base {
 	/**
 	 * Add video OpenGraph data if featured_video is specified
 	 */
-	function ghc_opengraph_video() {
+	public function add_opengraph_video() {
 		$featured_video = get_field( 'featured_video' );
-		if ( $featured_video ) {
-			$video_id            = get_video_id( $featured_video );
-			$featured_video_meta = get_post_meta( get_the_ID(), 'featured_video_meta', true );
+		if ( ! empty( $featured_video ) ) {
+			$video_id                 = $this->get_video_id( $featured_video );
+			$featured_video_thumbnail = get_post_meta( get_the_ID(), 'featured_video_thumbnail', true );
 
-			// Video.
-			echo '<meta property="og:video" content="' . $featured_video . '" />';
-			echo strpos( $featured_video, 'https' ) !== false ? '<meta property="og:video:secure_url" content="' . $featured_video . '" />' : '';
-			echo '<meta property="og:video:width" content="' . $featured_video_meta->snippet->thumbnails->maxres->width . '" />';
-			echo '<meta property="og:video:height" content="' . $featured_video_meta->snippet->thumbnails->maxres->height . '" />';
+			// Check for old-style meta.
+			// FUTURE: remove after featured_video_meta no longer exists in db.
+			if ( empty( $featured_video_thumbnail ) ) {
+				$featured_video_meta      = get_post_meta( get_the_ID(), 'featured_video_meta', true );
+				$featured_video_thumbnail = $featured_video_meta->snippet->thumbnails->maxres;
 
-			// Placeholder image.
-			echo '<meta property="og:image" content="' . $featured_video_meta->snippet->thumbnails->maxres->url . '" />';
+				// Delete old meta.
+				update_post_meta( get_the_ID(), 'featured_video_thumbnail', $featured_video_thumbnail );
+				delete_post_meta( get_the_ID(), 'featured_video_meta' );
+			}
+
+			// Add video tags.
+			echo '<meta property="og:video" content="' . esc_url( $featured_video ) . '" />';
+			echo strpos( $featured_video, 'https' ) !== false ? '<meta property="og:video:secure_url" content="' . esc_url( $featured_video ) . '" />' : '';
+			echo '<meta property="og:video:width" content="' . esc_attr( $featured_video_thumbnail->width ) . '" />';
+			echo '<meta property="og:video:height" content="' . esc_attr( $featured_video_thumbnail->height ) . '" />';
+
+			// Add placeholder image.
+			echo '<meta property="og:image" content="' . esc_url( $featured_video_thumbnail->url ) . '" />';
 		}
 	}
 
 	/**
-	 * Show convention icons for each exhibitor
+	 * Save featured_video thumbnail to postmeta
 	 *
-	 * @param  string $content HTML content.
-	 * @return string modified content
+	 * @param  integer $post_id wp post ID.
+	 * @return boolean Whether postmeta was succesfully updated
 	 */
-	function ghc_exhibitor_archive_icons( $content ) {
-		global $post;
-		$new_content = '';
-		if ( 'exhibitor' === get_post_type( $post->ID ) ) {
-			// TODO: don’t add icon to exhibitor archive description.
-			if ( ! is_tax() ) {
-				$new_content .= output_convention_icons( $post->ID );
-			}
-			if ( get_field( 'exhibitor_URL', $post->ID ) && is_singular() ) {
-				$new_content .= '<p><a class="button" href="' . get_field( 'exhibitor_URL', $post->ID ) . '" target="_blank" rel="noopener noreferrer">Visit website&rarr;</a></p>';
-			}
+	public function opengraph_video_get_meta( $post_id ) {
+		if ( ! empty( get_field( 'featured_video' ) ) ) {
+			$video_id = $this->get_video_id( esc_url( get_field( 'featured_video' ) ) );
+
+			// Set up request.
+			$youtube_api_url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' . $video_id . '&key=' . get_option( 'options_api_key' );
+			$response_args   = array(
+				'headers' => 'Referer: ' . site_url(),
+			);
+			$response        = wp_remote_get( $youtube_api_url, $response_args );
+
+			// Parse response.
+			$youtube_meta      = json_decode( $response['body'] );
+			$youtube_thumbnail = $youtube_meta->items[0]->snippet->thumbnails->maxres;
+
+			// Save post meta.
+			return update_post_meta( $post_id, 'featured_video_thumbnail', $youtube_thumbnail );
+		} else {
+			// Delete post meta if no video is specified.
+			return delete_post_meta( $post_id, 'featured_video_thumbnail' );
 		}
-		return $new_content . $content;
+	}
+
+	/**
+	 * Retrieve ID from YouTube URL
+	 *
+	 * @param  string $video_url Public URL of video.
+	 * @return string video ID
+	 */
+	public function get_video_id( $video_url ) {
+		if ( strpos( $video_url, '//youtu.be' ) !== false ) {
+			$video_id = basename( wp_parse_url( $video_url, PHP_URL_PATH ) );
+		} elseif ( strpos( $video_url, 'youtube.com' ) !== false ) {
+			parse_str( wp_parse_url( $video_url, PHP_URL_QUERY ), $video_array );
+			$video_id = $video_array['v'];
+		}
+
+		return $video_id;
 	}
 
 	/**
@@ -165,7 +210,7 @@ class GHC_Content extends GHC_Base {
 	 * @param  string $content HTML content.
 	 * @return string modified HTML content
 	 */
-	function ghc_list_special_tracks( $content ) {
+	public function list_special_tracks( $content ) {
 		$intro_content = '';
 
 		if ( is_singular( array( 'speaker', 'workshop' ) ) ) {
@@ -177,14 +222,14 @@ class GHC_Content extends GHC_Base {
 				$track_output = '';
 				$track_index  = 1;
 				foreach ( $special_tracks as $special_track ) {
-					$track_output .= '<a href="' . get_term_link( $special_track->term_id, 'ghc_special_tracks_taxonomy' ) . '">' . $special_track->name . '</a> track';
+					$track_output .= '<a href="' . esc_url( get_term_link( $special_track->term_id, 'ghc_special_tracks_taxonomy' ) ) . '">' . esc_attr( $special_track->name ) . '</a> track';
 
 					// Check for sponsors.
-					$track_output .= ghc_get_special_track_related_sponsor_names( $special_track->term_id );
+					$track_output .= $this->get_special_track_related_sponsor_names( $special_track->term_id );
 
 					if ( $special_tracks_count > 2 ) {
 						$track_output .= ', ';
-						if ( $track_index == $special_tracks_count ) {
+						if ( $track_index === $special_tracks_count ) {
 							$track_output .= ' and ';
 						}
 					} elseif ( 2 === $special_tracks_count && 2 !== $track_index ) {
@@ -196,13 +241,15 @@ class GHC_Content extends GHC_Base {
 				// Output content.
 				$intro_content = '<h4 class="related-special-tracks">Special Tracks</h2>';
 
-				if ( 'speaker' == get_post_type() ) {
+				if ( 'speaker' === get_post_type() ) {
+					// Translators: %1$s: speaker name(s); %2$s special track name(s).
 					$intro_content = sprintf(
 						'<p>We are honored to have %1$s participating in this year&rsquo;s %2$s.</p>',
 						get_the_title(),
 						$track_output
 					);
-				} elseif ( 'workshop' == get_post_type() ) {
+				} elseif ( 'workshop' === get_post_type() ) {
+					// Translators: %1$s: speaker name(s); %2$s special track name(s).
 					$intro_content = sprintf(
 						'<p>%1$s is part of this year&rsquo;s %2$s.</p>',
 						get_the_title(),
@@ -216,50 +263,83 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
+	 * Get special track related sponsor name(s) and link(s)
+	 *
+	 * @param  integer   $term_id              ghc_special_track term ID.
+	 * @param  string  [ $context             = 'inline'] “inline” or “standalone” context.
+	 * @return string  HTML output with sponsor name(s) and link(s)
+	 */
+	private function get_special_track_related_sponsor_names( $term_id, $context = 'inline' ) {
+		$track_output = '';
+		$sponsors     = get_field( 'related_sponsors', 'ghc_special_tracks_taxonomy_' . $term_id );
+		if ( $sponsors ) {
+			$sponsor_index = 1;
+			if ( 'inline' === $context ) {
+				$track_output .= ' <small>(sponsored by ';
+			} elseif ( 'standalone' === $context ) {
+				$track_output .= '<p>This track is sponsored by ';
+			}
+			foreach ( $sponsors as $sponsor ) {
+				$track_output .= '<a href="' . esc_url( get_permalink( $sponsor ) ) . '">' . wp_kses_post( get_the_title( $sponsor ) ) . '</a>';
+				if ( count( $sponsors ) > 2 ) {
+					$track_output .= ', ';
+					if ( count( $sponsors ) === $index ) {
+						$track_output .= ' and ';
+					}
+				} elseif ( 2 === count( $sponsors ) && 2 !== $sponsor_index ) {
+					$track_output .= ' and ';
+				}
+				$sponsor_index++;
+			}
+			if ( 'inline' === $context ) {
+				$track_output .= ')</small>';
+			} elseif ( 'standalone' === $context ) {
+				$track_output .= '.</p>';
+				$track_output .= '<div id="related-sponsors">
+					<div class="sponsor-container ghc-cpt container">';
+				foreach ( $sponsors as $sponsor ) {
+					$track_output .= '<div class="sponsor">
+						<div class="post-thumbnail">
+						<a href="' . esc_url( get_permalink( $sponsor ) ) . '">' . wp_kses_post( get_the_post_thumbnail( $sponsor, 'post-thumbnail', array( 'class' => 'sponsor' ) ) ) . '</a>
+						</div>
+						</div><!-- .sponsor -->';
+				}
+				$track_output .= '</div><!-- .sponsor-container.ghc-cpt.container -->
+				</div><!-- #sponsor-container.ghc-cpt.container -->';
+			}
+		}
+
+		return $track_output;
+	}
+
+	/**
 	 * Add sponsor info to special track archive
 	 *
 	 * @param  string $content HTML archive description.
 	 * @return string HTML archive description with sponsor(s) name(s) and link(s) appended
 	 */
-	function ghc_list_special_track_sponsors( $content ) {
-		$content .= ghc_get_special_track_related_sponsor_names( get_queried_object_id(), 'standalone' );
+	public function list_special_track_sponsors( $content ) {
+		$content .= $this->get_special_track_related_sponsor_names( get_queried_object_id(), 'standalone' );
 		return $content;
 	}
 
 	/**
 	 * Add speaker location info to each speaker/workshop
 	 *
-	 * @param  string $content HTML content.
-	 * @return string modified HTML content
+	 * @param  string $content HTML content or excerpt.
+	 * @return string modified HTML content or excerpt
 	 */
-	function ghc_speaker_show_locations( $content ) {
-		if ( is_singular( array( 'speaker', 'workshop' ) ) ) {
+	public function show_locations( $content ) {
+		if ( is_singular( array( 'special_event', 'speaker', 'workshop' ) ) || is_tax( 'ghc_special_tracks_taxonomy' ) ) {
 			$post_terms = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 
 			if ( $post_terms ) {
-				$content = '<p class="conventions">' . output_convention_icons( $post_terms ) . '</p>' . $content;
+				$conventions = new GHC_Conventions();
+				$content     = '<p class="conventions">' . $conventions->get_icons( $post_terms ) . '</p>' . $content;
 			}
 		}
 
 		return $content;
-	}
-
-	/**
-	 * Add speaker location info to each speaker/workshop
-	 *
-	 * @param  string $excerpt HTML content.
-	 * @return string modified HTML content
-	 */
-	function ghc_speaker_excerpt_show_locations( $excerpt ) {
-		if ( is_tax( 'ghc_special_tracks_taxonomy' ) ) {
-			$post_terms = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
-
-			if ( $post_terms ) {
-				$excerpt = '<p class="conventions">' . output_convention_icons( $post_terms ) . '</p>' . $excerpt;
-			}
-		}
-
-		return $excerpt;
 	}
 
 	/**
@@ -268,39 +348,31 @@ class GHC_Content extends GHC_Base {
 	 * @param  string $content HTML content.
 	 * @return string modified HTML content
 	 */
-	function ghc_speaker_show_title_info( $content ) {
+	public function show_title_info( $content ) {
 		if ( is_singular( 'speaker' ) ) {
-			$content = ghc_get_speaker_short_bio( get_the_ID() ) . $content;
+			$speaker_position    = get_field( 'position', $id );
+			$speaker_company     = get_field( 'company', $id );
+			$speaker_company_url = get_field( 'company_url', $id );
+
+			ob_start();
+
+			if ( $speaker_position || $speaker_company ) {
+				echo '<p class="entry-meta speaker-info">';
+				if ( $speaker_position ) {
+					echo wp_kses_post( $speaker_position );
+				}
+				if ( $speaker_position && $speaker_company ) {
+					echo ' <span class="separator">|</span> ';
+				}
+				if ( $speaker_company ) {
+					echo ( $speaker_company_url && is_singular( 'speaker' ) ? '<a target="_blank" rel="noopener noreferrer" href="' . esc_url( $speaker_company_url ) . '">' : '' ) . wp_kses_post( $speaker_company ) . ( esc_url( $speaker_company_url ) ? '</a>' : '' );
+				}
+				echo '</p>';
+			}
+
+			$content = ob_get_clean() . $content;
 		}
 		return $content;
-	}
-
-	/**
-	 * Add speaker location info to each special event (singular)
-	 *
-	 * @param  string $content HTML content.
-	 * @return string modified HTML content
-	 */
-	function ghc_special_event_show_locations_single( $content ) {
-		if ( is_singular( 'special_event' ) ) {
-			$content = '<p class="conventions">' . output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ) . '</p>' . $content;
-		}
-
-		return $content;
-	}
-
-	/**
-	 * Add speaker location info to each special event (archive)
-	 *
-	 * @param  string $excerpt Post excerpt.
-	 * @return string modified HTML content
-	 */
-	function ghc_special_event_show_locations_archive( $excerpt ) {
-		if ( 'special_event' === get_post_type() ) {
-			$excerpt = '<p class="conventions">' . output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ) . '</p>' . $excerpt;
-		}
-
-		return $excerpt;
 	}
 
 	/**
@@ -309,7 +381,7 @@ class GHC_Content extends GHC_Base {
 	 * @param  string $content HTML content.
 	 * @return string modified HTML content
 	 */
-	function ghc_list_related_workshops( $content ) {
+	public function show_related_workshops( $content ) {
 		$workshop_content = '';
 
 		if ( is_singular( array( 'speaker', 'workshop' ) ) ) {
@@ -317,7 +389,7 @@ class GHC_Content extends GHC_Base {
 
 			if ( 'speaker' === $this_post_type ) {
 				$speaker_id        = get_the_ID();
-				$workshop_content .= '<p><a class="button" href="' . get_home_url() . '/speakers/">All Featured Speakers</a></p>';
+				$workshop_content .= '<p><a class="button" href="' . esc_url( get_home_url() ) . '/speakers/">All Featured Speakers</a></p>';
 			} elseif ( 'workshop' === $this_post_type ) {
 				$related_speakers = get_field( 'speaker' );
 				if ( count( $related_speakers ) === 1 ) {
@@ -328,7 +400,7 @@ class GHC_Content extends GHC_Base {
 			$related_workshops = get_field( 'related_workshops', $speaker_id );
 
 			// Remove this workshop from the array since `post__in` causes `post__not_in` to be ignored.
-			$key = array_search( get_the_ID(), $related_workshops );
+			$key = array_search( get_the_ID(), $related_workshops, true );
 			if ( is_array( $related_workshops ) && 'workshop' === $this_post_type && false !== $key ) {
 				unset( $related_workshops[ $key ] );
 			}
@@ -353,20 +425,20 @@ class GHC_Content extends GHC_Base {
 					if ( 'speaker' === $this_post_type ) {
 						while ( $related_workshops->have_posts() ) {
 							$related_workshops->the_post();
-							$workshop_content .= '<h3><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>
+							$workshop_content .= '<h3><a href="' . esc_url( get_permalink() ) . '">' . wp_kses_post( get_the_title() ) . '</a></h3>
 							<p>' . apply_filters( 'wpautop', get_the_content() ) . '</p>';
 						}
 					} else {
 						$workshop_content .= '<ul>';
 						while ( $related_workshops->have_posts() ) {
 							$related_workshops->the_post();
-							$workshop_content .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
+							$workshop_content .= '<li><a href="' . esc_url( get_permalink() ) . '">' . wp_kses_post( get_the_title() ) . '</a></li>';
 						}
 						$workshop_content .= '</ul>';
 					}
 				}
 
-				wp_reset_query();
+				wp_reset_postdata();
 
 				$workshop_content .= '</div>';
 			}
@@ -381,7 +453,7 @@ class GHC_Content extends GHC_Base {
 	 * @param  string $content post content.
 	 * @return string post content with speaker info added
 	 */
-	function ghc_show_related_speaker( $content ) {
+	public function show_related_speaker( $content ) {
 		$speaker_content = '';
 
 		if ( is_singular( 'workshop' ) ) {
@@ -399,16 +471,13 @@ class GHC_Content extends GHC_Base {
 	 * @param  string $content post content.
 	 * @return string post content with hotel info appended
 	 */
-	function ghc_show_hotel_details( $content ) {
+	public function show_hotel_details( $content ) {
 		if ( 'hotel' === get_post_type() ) {
-			global $conventions;
-			global $convention_abbreviations;
-
 			$conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
-			$this_convention      = array_flip( $convention_abbreviations )[ $conventions_taxonomy[0]->slug ];
+			$this_convention      = array_flip( $this->get_conventions_abbreviations() )[ $conventions_taxonomy[0]->slug ];
 
 			ob_start();
-			include( plugin_dir_path( __FILE__ ) . '../templates/hotel-details.php' );
+			include $this->plugin_dir_path( 'templates/hotel-details.php' );
 			$content .= ob_get_clean();
 		}
 

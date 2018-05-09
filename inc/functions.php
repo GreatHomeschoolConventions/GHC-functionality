@@ -13,80 +13,6 @@ defined( 'ABSPATH' ) or die( 'No access allowed' );
 include( 'schema.org.php' );
 
 /**
- * Save featured_video thumbnail to postmeta
- *
- * @param  integer $post_id wp post ID.
- * @return boolean Whether postmeta was succesfully updated
- */
-function ghc_opengraph_video_get_meta( $post_id ) {
-	if ( get_field( 'featured_video' ) ) {
-		$video_id = get_video_id( sanitize_text_field( get_field( 'featured_video' ) ) );
-
-		// Get video meta.
-		$youtube_api_url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' . $video_id . '&key=' . get_option( 'options_api_key' );
-		$youtube_meta_ch = curl_init();
-		curl_setopt( $youtube_meta_ch, CURLOPT_URL, $youtube_api_url );
-		curl_setopt( $youtube_meta_ch, CURLOPT_REFERER, site_url() );
-		curl_setopt( $youtube_meta_ch, CURLOPT_RETURNTRANSFER, 1 );
-		$youtube_meta_json = curl_exec( $youtube_meta_ch );
-		curl_close( $youtube_meta_ch );
-		$youtube_meta      = json_decode( $youtube_meta_json );
-		$youtube_thumbnail = $youtube_meta->items[0];
-
-		// Save post meta.
-		return update_post_meta( $post_id, 'featured_video_meta', $youtube_thumbnail );
-	}
-}
-add_action( 'acf/save_post', 'ghc_opengraph_video_get_meta', 20 );
-
-/**
- * Retrieve ID from video URL
- *
- * @param  string $video_url Public URL of video.
- * @return string video ID
- */
-function get_video_id( $video_url ) {
-	if ( strpos( $video_url, '//youtu.be' ) !== false ) {
-		$video_id = basename( parse_url( $video_url, PHP_URL_PATH ) );
-	} elseif ( strpos( $video_url, 'youtube.com' ) !== false ) {
-		parse_str( parse_url( $video_url, PHP_URL_QUERY ), $video_array );
-		$video_id = $video_array['v'];
-	}
-
-	return $video_id;
-}
-
-/**
- * Get speaker’s position and company name/link
- *
- * @param  integer $id WP post ID.
- * @return string  HTML content
- */
-function ghc_get_speaker_short_bio( $id ) {
-	$speaker_position    = get_field( 'position', $id );
-	$speaker_company     = get_field( 'company', $id );
-	$speaker_company_url = get_field( 'company_url', $id );
-
-	ob_start();
-
-	if ( $speaker_position || $speaker_company ) {
-		echo '<p class="entry-meta speaker-info">';
-		if ( $speaker_position ) {
-			echo $speaker_position;
-		}
-		if ( $speaker_position && $speaker_company ) {
-			echo ' <span class="separator">|</span> ';
-		}
-		if ( $speaker_company ) {
-			echo ( $speaker_company_url && is_singular( 'speaker' ) ? '<a target="_blank" rel="noopener noreferrer" href="' . $speaker_company_url . '">' : '' ) . $speaker_company . ( $speaker_company_url ? '</a>' : '' );
-		}
-		echo '</p>';
-	}
-
-	return ob_get_clean();
-}
-
-/**
  * Add slug to body class
  *
  * @param  array $classes Body classes.
@@ -253,56 +179,6 @@ function ghc_format_date_range( $d1, $d2, $format = '' ) {
 		// General case (spans calendar years).
 		return $d1->format( 'F j, Y' ) . '&ndash;' . $d2->format( 'F j, Y' );
 	}
-}
-
-/**
- * Get special track related sponsor name(s) and link(s)
- *
- * @param  integer   $term_id              ghc_special_track term ID.
- * @param  string  [ $context             = 'inline'] “inline” or “standalone” context.
- * @return string  HTML output with sponsor name(s) and link(s)
- */
-function ghc_get_special_track_related_sponsor_names( $term_id, $context = 'inline' ) {
-	$track_output = '';
-	$sponsors     = get_field( 'related_sponsors', 'ghc_special_tracks_taxonomy_' . $term_id );
-	if ( $sponsors ) {
-		$sponsor_index = 1;
-		if ( 'inline' === $context ) {
-			$track_output .= ' <small>(sponsored by ';
-		} elseif ( 'standalone' === $context ) {
-			$track_output .= '<p>This track is sponsored by ';
-		}
-		foreach ( $sponsors as $sponsor ) {
-			$track_output .= '<a href="' . get_permalink( $sponsor ) . '">' . get_the_title( $sponsor ) . '</a>';
-			if ( count( $sponsors ) > 2 ) {
-				$track_output .= ', ';
-				if ( count( $sponsors ) == $index ) {
-					$track_output .= ' and ';
-				}
-			} elseif ( 2 === count( $sponsors ) && 2 !== $sponsor_index ) {
-				$track_output .= ' and ';
-			}
-			$sponsor_index++;
-		}
-		if ( 'inline' === $context ) {
-			$track_output .= ')</small>';
-		} elseif ( 'standalone' === $context ) {
-			$track_output .= '.</p>';
-			$track_output .= '<div id="related-sponsors">
-				<div class="sponsor-container ghc-cpt container">';
-			foreach ( $sponsors as $sponsor ) {
-				$track_output .= '<div class="sponsor">
-					<div class="post-thumbnail">
-					<a href="' . get_permalink( $sponsor ) . '">' . get_the_post_thumbnail( $sponsor, 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>
-					</div>
-					</div><!-- .sponsor -->';
-			}
-			$track_output .= '</div><!-- .sponsor-container.ghc-cpt.container -->
-			</div><!-- #sponsor-container.ghc-cpt.container -->';
-		}
-	}
-
-	return $track_output;
 }
 
 /**

@@ -142,16 +142,16 @@ class GHC_Base {
 	 * Register or enqueue frontend assets
 	 */
 	public function register_assets() {
-		wp_enqueue_style( 'ghc-functionality', plugins_url( 'dist/css/style.min.css', __FILE__ ), array(), $this->version );
+		wp_enqueue_style( 'ghc-functionality', $this->plugin_dir_url( 'dist/css/style.min.css' ), array(), $this->version );
 
-		wp_enqueue_script( 'ghc-popups', plugins_url( 'dist/js/popups.min.js', __FILE__ ), array( 'jquery', 'popup-maker-site' ), $this->version, true );
+		wp_enqueue_script( 'ghc-popups', $this->plugin_dir_url( 'dist/js/popups.min.js' ), array( 'jquery', 'popup-maker-site' ), $this->version, true );
 	}
 
 	// TODO: move to sub-class.
 	public function ghc_register_frontend_resources() {
-		wp_register_script( 'ghc-woocommerce', plugins_url( 'dist/js/woocommerce.min.js', __FILE__ ), array( 'jquery', 'woocommerce' ), $this->version );
-		wp_register_script( 'ghc-price-sheets', plugins_url( 'dist/js/price-sheets.min.js', __FILE__ ), array( 'jquery' ), $this->version );
-		wp_register_script( 'ghc-workshop-filter', plugins_url( 'dist/js/workshop-filter.min.js', __FILE__ ), array( 'jquery' ), $this->version );
+		wp_register_script( 'ghc-woocommerce', $this->plugin_dir_url( 'dist/js/woocommerce.min.js' ), array( 'jquery', 'woocommerce' ), $this->version );
+		wp_register_script( 'ghc-price-sheets', $this->plugin_dir_url( 'dist/js/price-sheets.min.js' ), array( 'jquery' ), $this->version );
+		wp_register_script( 'ghc-workshop-filter', $this->plugin_dir_url( 'dist/js/workshop-filter.min.js' ), array( 'jquery' ), $this->version );
 
 		// Load WooCommerce script only on WC pages.
 		if ( function_exists( 'is_product' ) && function_exists( 'is_cart' ) ) {

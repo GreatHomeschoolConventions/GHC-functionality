@@ -140,6 +140,17 @@ class GHC_Base {
 	}
 
 	/**
+	 * Get info for a single convention
+	 *
+	 * @param  string [$convention       = ''] Two-letter convention abbreviation.
+	 * @return array  Convention info
+	 */
+	public function get_single_convention_info( $convention = '' ) {
+		$all_conventions = $this->get_conventions_info();
+		return $all_conventions[ $convention ];
+	}
+
+	/**
 	 * Register or enqueue frontend assets
 	 */
 	public function register_assets() {

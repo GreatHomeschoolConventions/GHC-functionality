@@ -42,12 +42,6 @@ if ( get_field( 'location' ) ) {
 	$convention_address = $convention_info['address']['street_address'] . ' ' . $convention_info['address']['city'] . ', ' . $convention_info['address']['state'] . ' ' . $convention_info['address']['zip'];
 
 	echo '<p><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/dir/' . esc_url( str_replace( ' ', '+', $location['address'] ) ) . '/' . esc_url( str_replace( ' ', '+', $convention_address_url ) ) . '/">Directions to ' . esc_attr( $convention_info['address']['convention_center_name'] ) . '</a></p>';
-
-	if ( is_singular() ) {
-		wp_enqueue_script( 'ghc-hotel-map' );
-		wp_enqueue_style( 'leaflet' );
-		echo '<div class="hotel map" data-source-address="' . esc_attr( $location['address'] ) . '" data-destination-address="' . esc_attr( $convention_address ) . '"></div>';
-	}
 }
 ?>
 </div>

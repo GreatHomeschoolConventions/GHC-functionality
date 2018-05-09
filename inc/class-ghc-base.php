@@ -49,7 +49,7 @@ class GHC_Base {
 	/**
 	 * Get this plugin directory path
 	 *
-	 * @param  string [$path       = ''] Optional path to append
+	 * @param  string [$path       = ''] Optional path to append.
 	 * @return string Base path for this plugin’s directory
 	 */
 	protected function plugin_dir_path( $path = '' ) {
@@ -59,7 +59,7 @@ class GHC_Base {
 	/**
 	 * Get this plugin directory URL
 	 *
-	 * @param  string [$path       = ''] Optional path to append
+	 * @param  string [$path       = ''] Optional path to append.
 	 * @return string Base URL for this plugin’s directory
 	 */
 	protected function plugin_dir_url( $path = '' ) {

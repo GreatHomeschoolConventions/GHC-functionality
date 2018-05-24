@@ -72,7 +72,7 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Get convention info
+	 * Get convention abbreviations
 	 *
 	 * @return array Convention locations abbreviations
 	 */
@@ -91,7 +91,7 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Get convention info
+	 * Get convention dates
 	 *
 	 * @return array Conventions dates
 	 */

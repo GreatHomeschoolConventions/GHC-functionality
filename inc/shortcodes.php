@@ -44,7 +44,7 @@ function convention_icon_shortcode( $attributes ) {
 	);
 	$this_convention      = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
-	return output_convention_icons( $this_convention );
+	return $conventions->get_icons( $this_convention );
 }
 add_shortcode( 'convention_icon', 'convention_icon_shortcode' );
 
@@ -89,7 +89,7 @@ function discretionary_registration_shortcode( $attributes ) {
 		$shortcode_content .= '<h3 class="large-button orange speaker-convention-link convention-shortcode"><a href="' . esc_url( home_url() ) . '/register/">Register <strong>now</strong>!';
 
 		// Output each convention icon.
-		$shortcode_content .= output_convention_icons( explode( ',', $shortcode_attributes['convention'] ) );
+		$shortcode_content .= $conventions->get_icons( explode( ',', $shortcode_attributes['convention'] ) );
 
 		// Output bottom of button.
 		$shortcode_content .= '</a></h3></div>' . "\n";
@@ -473,7 +473,7 @@ function speaker_info_shortcode( $attributes ) {
 				$shortcode_content .= '<h2><a href="' . get_permalink() . '">' . get_the_title() . '</a></h2>';
 				if ( ! $no_conventions ) {
 					$shortcode_content .= '<div class="conventions-attending">';
-					$shortcode_content .= output_convention_icons( get_the_ID() );
+					$shortcode_content .= $conventions->get_icons( get_the_ID() );
 					$shortcode_content .= '</div>';
 				}
 				$shortcode_content .= '</div>';

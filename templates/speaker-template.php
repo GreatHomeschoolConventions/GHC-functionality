@@ -31,7 +31,7 @@ if ( ! is_array( $shortcode_attributes ) ) {
 			<?php } ?>
 			<?php if ( strpos( $shortcode_attributes['show'], 'conventions' ) !== false ) { ?>
 				<div class="conventions-attending">
-					<?php echo output_convention_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ); ?>
+					<?php echo $conventions->get_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ); ?>
 				</div>
 			<?php } ?>
 			<?php if ( strpos( $shortcode_attributes['show'], 'bio' ) !== false ) { ?>

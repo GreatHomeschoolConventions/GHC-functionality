@@ -29,6 +29,10 @@ class GHC_Conventions extends GHC_Base {
 		add_action( 'save_post_location', array( $this, 'load_conventions_info' ) );
 		add_action( 'save_post_location', array( $this, 'load_conventions_abbreviations' ) );
 		add_action( 'save_post_location', array( $this, 'load_conventions_dates' ) );
+
+		// Add microdata.
+		add_action( 'wp_footer', array( $this, 'add_schema_org_microdata' ), 50 );
+		// FIXME: this is being added multiple times—one for each time new GHC_Conventions is called.
 	}
 
 	/**
@@ -316,6 +320,98 @@ class GHC_Conventions extends GHC_Base {
 		}
 
 		return $sort_order;
+	}
+
+	/**
+	 * Add JSON-LD microdata to each location single view
+	 */
+	public function add_schema_org_microdata() {
+		$content = '';
+		if ( 'location' === get_post_type() ) {
+			$product_id = get_post_meta( get_the_ID(), 'registration', true );
+			$product    = new WC_Product( $product_id );
+
+			if ( $product->is_type( 'variable' ) ) {
+				$prices       = $product->get_variation_prices();
+				$lowest       = reset( $prices['price'] );
+				$highest      = end( $prices['price'] );
+				$price_string = '
+					"@type": "AggregateOffer",
+					"lowPrice": ' . wc_format_decimal( $lowest, wc_get_price_decimals() ) . ',
+					"highPrice": ' . wc_format_decimal( $highest, wc_get_price_decimals() ) . ',
+				';
+			} else {
+				$price_string = '
+					"@type": "Offer",
+					"price": ' . wc_format_decimal( $product->get_price(), wc_get_price_decimals() ) . ',
+				';
+			}
+
+			// Fix protocol-agnostic URLs.
+			$registration_url  = $this->format_schema_url( get_field( 'registration' ) );
+			$product_image_url = $this->format_schema_url( get_the_post_thumbnail_url( $product_id ) );
+
+			ob_start(); ?>
+			<script type='application/ld+json'>
+			{
+				"@context": "http://schema.org/",
+				"@type": "Event",
+				"startDate": "<?php echo esc_attr( $this->format_schema_org_date( get_field( 'begin_date' ) ) ); ?>",
+				"endDate": "<?php echo esc_attr( $this->format_schema_org_date( get_field( 'begin_date' ) ) ); ?>",
+				"name": "<?php the_title(); ?>",
+				"location": {
+					"@type": "Place",
+					"name": "<?php the_field( 'convention_center_name' ); ?>",
+					"address": {
+						"@type": "PostalAddress",
+						"addressCountry": "United States",
+						"addressLocality": "<?php the_field( 'state' ); ?>",
+						"addressRegion": "<?php the_field( 'city' ); ?>",
+						"postalCode": "<?php the_field( 'zip' ); ?>",
+						"streetAddress": "<?php the_field( 'address' ); ?>"
+					}
+				},
+				"isAccessibleForFree": "false",
+				"offers": {
+					<?php echo esc_attr( $price_string ); ?>
+					"availability": "available",
+					"url": "<?php echo esc_url( $registration_url ); ?>",
+					"priceCurrency": "USD"
+				},
+				"image": "<?php echo esc_url( $product_image_url ); ?>",
+				"description": "The Homeschool Event of the Year",
+				"performer": "Dozens of outstanding featured speakers"
+			}
+			</script>
+			<?php
+			$content .= ob_get_clean();
+		}
+		echo $content; // WPCS: XSS ok.
+	}
+
+	/**
+	 * Format date as Y-m-d for schema.org use
+	 *
+	 * @param  string $date Ymd-formatted date.
+	 * @return string Y-m-d-formatted date
+	 */
+	private function format_schema_org_date( $date ) {
+		$date = date_create_from_format( 'Ymd', $date );
+		return $date->format( 'Y-m-d' );
+	}
+
+	/**
+	 * Fix protocol-agnostic URLs
+	 *
+	 * @param  string $url Original URL.
+	 * @return string URL with https:// prepended
+	 */
+	private function format_schema_url( $url ) {
+		if ( strpos( $url, 'http' ) === false || strpos( $url, 'http' ) === 0 ) {
+			$url = 'https:' . $url;
+		}
+
+		return $url;
 	}
 
 }

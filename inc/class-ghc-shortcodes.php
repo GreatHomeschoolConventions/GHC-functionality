@@ -155,7 +155,7 @@ class GHC_Shortcodes extends GHC_Base {
 			echo '<div class="' . esc_attr( $shortcode_attributes['post_type'] ) . '-container ghc-cpt container">';
 			while ( $cpt_grid_query->have_posts() ) {
 				$cpt_grid_query->the_post();
-				require plugin_dir_path( __FILE__ ) . '../templates/speaker-template.php';
+				require $this->plugin_dir_path( 'templates/speaker-template.php' );
 			}
 			echo '</div>';
 		}
@@ -257,7 +257,7 @@ class GHC_Shortcodes extends GHC_Base {
 			while ( $exhibitor_query->have_posts() ) {
 				$exhibitor_query->the_post();
 				if ( 'large' === $shortcode_attributes['style'] ) {
-					require plugin_dir_path( __FILE__ ) . '../templates/exhibitor-template.php';
+					require $this->plugin_dir_path( 'templates/exhibitor-template.php' );
 				} else {
 					if ( 'list' === $shortcode_attributes['style'] ) {
 						echo '<li id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '">';
@@ -307,7 +307,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 		ob_start();
 		$is_shortcode = true;
-		require plugin_dir_path( __FILE__ ) . '../templates/loop-hotel.php';
+		require $this->plugin_dir_path( 'templates/loop-hotel.php' );
 		return ob_get_clean();
 	}
 
@@ -329,7 +329,7 @@ class GHC_Shortcodes extends GHC_Base {
 		wp_enqueue_script( 'ghc-price-sheets' );
 
 		ob_start();
-		include plugin_dir_path( __FILE__ ) . '/../price-sheets/price-sheet-' . $this_convention . '.html';
+		include $this->plugin_dir_path( 'price-sheets/price-sheet-' . $this_convention . '.html' );
 		return ob_get_clean();
 	}
 
@@ -414,10 +414,10 @@ class GHC_Shortcodes extends GHC_Base {
 
 					foreach ( $variations as $variation_array ) {
 						$variation = new WC_Product_Variation( $variation_array['variation_id'] );
-						require plugin_dir_path( __FILE__ ) . '../templates/registration-table-row-variation.php';
+						require $this->plugin_dir_path( 'templates/registration-table-row-variation.php' );
 					}
 				} else {
-					require plugin_dir_path( __FILE__ ) . '../templates/registration-table-row.php';
+					require $this->plugin_dir_path( 'templates/registration-table-row.php' );
 				}
 			}
 
@@ -433,10 +433,10 @@ class GHC_Shortcodes extends GHC_Base {
 
 						foreach ( $variations as $variation_array ) {
 							$variation = new WC_Product_Variation( $variation_array['variation_id'] );
-							require plugin_dir_path( __FILE__ ) . '../templates/registration-table-row-variation.php';
+							require $this->plugin_dir_path( 'templates/registration-table-row-variation.php' );
 						}
 					} else {
-						require plugin_dir_path( __FILE__ ) . '../templates/registration-table-row.php';
+						require $this->plugin_dir_path( 'templates/registration-table-row.php' );
 					}
 				}
 			}
@@ -474,7 +474,7 @@ class GHC_Shortcodes extends GHC_Base {
 	public function speaker_archive() : string {
 		ob_start();
 		echo '<div class="speaker-archive">';
-			require plugin_dir_path( __FILE__ ) . '../templates/loop-speaker.php';
+			require $this->plugin_dir_path( 'templates/loop-speaker.php' );
 		echo '</div>';
 		return ob_get_clean();
 	}
@@ -741,7 +741,7 @@ class GHC_Shortcodes extends GHC_Base {
 			while ( $special_track_speakers_query->have_posts() ) {
 				$special_track_speakers_query->the_post();
 				ob_start();
-				require plugin_dir_path( __FILE__ ) . '../templates/speaker-template.php';
+				require $this->plugin_dir_path( 'templates/speaker-template.php' );
 				echo ob_get_clean();
 			}
 			echo '</div>';

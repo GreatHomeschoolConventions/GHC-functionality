@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) or die( 'No access allowed' );
 function ghc_hotel_archive( $archive_template ) {
 	global $post;
 	if ( is_post_type_archive( 'hotel' ) ) {
-		$archive_template = plugin_dir_path( __FILE__ ) . '/../templates/archive-hotel.php';
+		$archive_template = $this->plugin_dir_path( 'templates/archive-hotel.php' );
 	}
 	return $archive_template;
 }

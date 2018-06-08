@@ -7,6 +7,6 @@
 
 get_header();
 
-require plugin_dir_path( __FILE__ ) . '/loop-hotel.php';
+require $this->plugin_dir_path( 'loop-hotel.php' );
 
 get_footer();

@@ -41,7 +41,7 @@ if ( get_field( 'location' ) ) {
 
 	$convention_address = $convention_info['address']['street_address'] . ' ' . $convention_info['address']['city'] . ', ' . $convention_info['address']['state'] . ' ' . $convention_info['address']['zip'];
 
-	echo '<p><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/dir/' . esc_url( str_replace( ' ', '+', $location['address'] ) ) . '/' . esc_url( str_replace( ' ', '+', $convention_address_url ) ) . '/">Directions to ' . esc_attr( $convention_info['address']['convention_center_name'] ) . '</a></p>';
+	echo '<p><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/dir/' . esc_attr( str_replace( ' ', '+', $location['address'] ) ) . '/' . esc_attr( str_replace( ' ', '+', $convention_address ) ) . '/">Directions to ' . esc_attr( $convention_info['address']['convention_center_name'] ) . '</a></p>';
 }
 ?>
 </div>

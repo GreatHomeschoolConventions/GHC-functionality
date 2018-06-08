@@ -80,6 +80,7 @@ class GHC_Base {
 		include_once 'class-ghc-content.php'; // Loaded in class.
 		include_once 'class-ghc-images.php'; // Loaded in class.
 		include_once 'class-ghc-shortcodes.php'; // Loaded in class.
+		include_once 'class-ghc-speakers.php'; // Loaded in class.
 		include_once 'class-ghc-woocommerce.php'; // Loaded in class.
 
 //		include_once 'shortcodes.php';

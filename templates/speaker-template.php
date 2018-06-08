@@ -6,21 +6,26 @@
  * @package GHC_Functionality_Plugin
  */
 
+$conventions = GHC_Conventions::get_instance();
+$speakers    = GHC_Speakers::get_instance();
+
 if ( ! is_array( $shortcode_attributes ) ) {
 	$shortcode_attributes['show'] = 'image,conventions,name,bio,workshops';
-	if ( 'speaker' == get_post_type() && ! isset( $thumbnail_size ) ) {
-		$thumbnail_size = 'medium';
-	} elseif ( 'special_event' == get_post_type() && ! isset( $thumbnail_size ) ) {
-		$thumbnail_size = 'special-event-large';
+	if ( ! isset( $thumbnail_size ) ) {
+		if ( 'speaker' === get_post_type() ) {
+			$thumbnail_size = 'medium';
+		} elseif ( 'special_event' === get_post_type() ) {
+			$thumbnail_size = 'special-event-large';
+		}
 	}
 }
 ?><article id="post-<?php the_ID(); ?>" <?php post_class( 'ghc-cpt item contains-' . str_replace( ',', ' contains-', esc_attr( $shortcode_attributes['show'] ) ) ); ?>>
 	<?php if ( has_post_thumbnail() && strpos( $shortcode_attributes['show'], 'image' ) !== false ) { ?>
-	<div class="speaker-thumbnail">
-		<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-			<?php the_post_thumbnail( $thumbnail_size );?>
-		</a>
-	</div>
+		<div class="speaker-thumbnail">
+			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+				<?php the_post_thumbnail( $thumbnail_size );?>
+			</a>
+		</div>
 	<?php } ?>
 
 	<?php if ( strpos( $shortcode_attributes['show'], 'name' ) !== false || strpos( $shortcode_attributes['show'], 'conventions' ) !== false ) { ?>
@@ -34,7 +39,7 @@ if ( ! is_array( $shortcode_attributes ) ) {
 				</div>
 			<?php } ?>
 			<?php if ( strpos( $shortcode_attributes['show'], 'bio' ) !== false ) { ?>
-				<?php echo ghc_get_speaker_short_bio( get_the_ID() ); ?>
+				<?php echo $speakers->get_short_bio( get_the_ID() ); ?>
 			<?php } ?>
 		</header>
 		<!-- entry-header -->

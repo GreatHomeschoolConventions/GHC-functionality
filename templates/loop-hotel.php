@@ -5,8 +5,6 @@
  * @package GHC_Functionality_Plugin
  */
 
-global $convention_abbreviations;
-
 $hotel_args = array(
 	'post_type'      => 'hotel',
 	'posts_per_page' => -1,
@@ -25,7 +23,7 @@ if ( $this_convention ) {
 		array(
 			'taxonomy' => 'ghc_conventions_taxonomy',
 			'field'    => 'slug',
-			'terms'    => $convention_abbreviations[ $this_convention ],
+			'terms'    => $this->get_single_convention_abbreviation( $this_convention ),
 		),
 	);
 }

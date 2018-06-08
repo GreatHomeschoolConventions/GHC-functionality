@@ -37,7 +37,7 @@ function ghc_hotel_single( $content ) {
 
 		// Get hotel details.
 		ob_start();
-		include( '../templates/hotel-details.php' );
+		include '../templates/hotel-details.php';
 		$content .= ob_get_clean();
 
 		if ( get_field( 'hotel_URL' ) && ! get_field( 'sold_out' ) ) {

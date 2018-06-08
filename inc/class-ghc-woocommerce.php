@@ -31,7 +31,7 @@ class GHC_Woocommerce extends GHC_Base {
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_frontend_resources' ) );
 	}
 
- 	/**
+	/**
 	 * Return only one instance of this class.
 	 *
 	 * @return GHC_Woocommerce class.

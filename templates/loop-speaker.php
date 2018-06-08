@@ -27,7 +27,7 @@
 		while ( $top_speakers_query->have_posts() ) {
 			$top_speakers_query->the_post();
 			$thumbnail_size = 'medium';
-			include( 'speaker-template.php' );
+			include 'speaker-template.php';
 		}
 		echo '</div><!-- .speaker-container.ghc-cpt.container -->';
 	} else {

@@ -23,7 +23,7 @@ if ( ! is_array( $shortcode_attributes ) ) {
 	<?php if ( has_post_thumbnail() && strpos( $shortcode_attributes['show'], 'image' ) !== false ) { ?>
 		<div class="speaker-thumbnail">
 			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-				<?php the_post_thumbnail( $thumbnail_size );?>
+				<?php the_post_thumbnail( $thumbnail_size ); ?>
 			</a>
 		</div>
 	<?php } ?>

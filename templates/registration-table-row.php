@@ -5,8 +5,10 @@
  * @package GHC_Functionality_Plugin
  */
 
+$ghc_wc = GHC_Woocommerce::get_instance();
+
 if ( $product->is_in_stock() ) { ?>
-	<tr id="post-<?php the_ID(); ?>" <?php $ghc_wc = GHC_Woocommerce::get_instance(); $ghc_wc->ghc_product_post_class(); ?>>
+	<tr id="post-<?php the_ID(); ?>" <?php $ghc_wc->ghc_product_post_class(); ?>>
 		<td class="thumb">
 			<?php
 			if ( has_post_thumbnail() ) {

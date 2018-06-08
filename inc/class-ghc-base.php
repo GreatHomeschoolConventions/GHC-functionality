@@ -73,7 +73,7 @@ class GHC_Base {
 	 */
 	private static $instance = null;
 
- 	/**
+	/**
 	 * Return only one instance of this class.
 	 *
 	 * @return GHC_Base class.

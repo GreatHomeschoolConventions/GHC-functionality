@@ -27,7 +27,7 @@
 defined( 'ABSPATH' ) or die( 'No access allowed' );
 
 if ( ! function_exists( 'ghc_admin_options' ) ) {
-	include( 'inc/acf.php' );
+	include 'inc/acf.php';
 }
 
 /**

@@ -26,7 +26,7 @@ if ( is_post_type_archive( 'hotel' ) || $is_shortcode ) {
 	<?php } ?>
 	<div class="accommodation-content-wrapper">
 		<h3 class="accommodation-title"><?php the_title(); ?></h3>
-		<?php include( 'hotel-details.php' ); ?>
+		<?php require 'hotel-details.php'; ?>
 	</div>
 	<?php
 	if ( ! get_field( 'sold_out' ) ) {

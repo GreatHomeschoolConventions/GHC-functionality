@@ -34,7 +34,7 @@ class GHC_Images extends GHC_Base {
 		add_filter( 'wp_get_attachment_image_attributes', array( $this, 'responzive_img_sizes' ), 25, 3 );
 	}
 
- 	/**
+	/**
 	 * Return only one instance of this class.
 	 *
 	 * @return GHC_Images class.
@@ -89,7 +89,6 @@ class GHC_Images extends GHC_Base {
 			$attr['sizes'] = '600px';
 		}
 		// If changed, update custom_image_sizes and custom_image_sizes_names.
-
 		return $attr;
 	}
 

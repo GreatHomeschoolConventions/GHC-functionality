@@ -27,7 +27,9 @@ class GHC_Woocommerce extends GHC_Base {
 	/**
 	 * Kick things off
 	 */
-	private function __construct() {}
+	private function __construct() {
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_frontend_resources' ) );
+	}
 
  	/**
 	 * Return only one instance of this class.
@@ -40,6 +42,24 @@ class GHC_Woocommerce extends GHC_Base {
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * Register and enqueue WooCommerce scripts.
+	 *
+	 * @return void Enqueues WooCommerce assets.
+	 */
+	public function register_frontend_resources() {
+		wp_register_script( 'ghc-woocommerce', $this->plugin_dir_url( 'dist/js/woocommerce.min.js' ), array( 'jquery', 'woocommerce' ), $this->version );
+		wp_register_script( 'ghc-price-sheets', $this->plugin_dir_url( 'dist/js/price-sheets.min.js' ), array( 'jquery' ), $this->version );
+		wp_register_script( 'ghc-workshop-filter', $this->plugin_dir_url( 'dist/js/workshop-filter.min.js' ), array( 'jquery' ), $this->version );
+
+		// Load WooCommerce script only on WC pages.
+		if ( function_exists( 'is_product' ) && function_exists( 'is_cart' ) ) {
+			if ( is_product() || is_cart() ) {
+				wp_enqueue_script( 'ghc-woocommerce' );
+			}
+		}
 	}
 
 	/**

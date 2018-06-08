@@ -83,7 +83,6 @@ class GHC_Base {
 		include_once 'class-ghc-speakers.php'; // Loaded in class.
 		include_once 'class-ghc-woocommerce.php'; // Loaded in class.
 
-//		include_once 'shortcodes.php';
 //		include_once 'woocommerce.php';
 
 		// Set up convention info.

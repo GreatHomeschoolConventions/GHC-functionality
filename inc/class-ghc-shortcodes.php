@@ -18,14 +18,66 @@ if ( ! function_exists( 'add_filter' ) ) {
 class GHC_Shortcodes extends GHC_Base {
 
 	/**
-	 * Kick things off
+	 * Subclass instance.
 	 *
-	 * @private
+	 * @var null
 	 */
-	public function __construct() {}
+	private static $instance = null;
+
+ 	/**
+	 * Return only one instance of this class.
+	 *
+	 * @return GHC_Shortcodes class.
+	 */
+	public function get_instance() : GHC_Shortcodes {
+		if ( null === self::$instance ) {
+			self::$instance = new GHC_Shortcodes();
+		}
+
+		return self::$instance;
+	}
 
 	/**
-	 * Custom post type grid helper
+	 * Kick things off
+	 *
+	 * @access  private
+	 */
+	private function __construct() {
+		$this->init_shortcodes();
+	}
+
+	/**
+	 * Initialize all shortcodes.
+	 *
+	 * @return void Registers shortcodes.
+	 */
+	public function init_shortcodes() {
+		$shortcodes = array(
+			'convention_cta',
+			'convention_icon',
+			'exhibitor_list',
+			'exhibit_hall_hours',
+			'hotel_grid',
+			'price_sheet',
+			'product_price',
+			'registration_page',
+			'speaker_archive',
+			'speaker_info',
+			'speaker_list',
+			'special_event_grid',
+			'special_event_list',
+			'special_track_speakers',
+			'sponsors',
+			'workshop_list',
+		);
+
+		foreach ( $shortcodes as $shortcode ) {
+			add_shortcode( $shortcode, array( $this, $shortcode ) );
+		}
+	}
+
+	/**
+	 * Custom post type grid helper.
 	 *
 	 * @param  array $attributes Shortcode parameters, including `convention` as a two-letter abbreviation or full name.
 	 *                          ['post_type']      string      post type.
@@ -37,7 +89,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	private function ghc_cpt_grid( array $attributes = array() ) : string {
+	private function cpt_grid( array $attributes = array() ) : string {
 		global $convention_abbreviations;
 		$shortcode_attributes = shortcode_atts(
 			array(
@@ -114,7 +166,760 @@ class GHC_Shortcodes extends GHC_Base {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Display a convention’s CTA.
+	 *
+	 * @param  array $attributes Shortcode parameters including convention.
+	 *
+	 * @return string HTML content.
+	 */
+	public function convention_cta( array $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'convention' => null,
+			), $attributes
+		);
+		$this_convention      = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+		$cta_array   = array_filter( $this->get_conventions_info()[ $this_convention ]['cta_list'], array( 'GHC_Conventions', 'get_current_cta' ) );
+		$current_cta = array_pop( $cta_array )['cta_content'];
+
+		return apply_filters( 'the_content', $current_cta );
+	}
+
+	/**
+	 * Display a single convention icon.
+	 *
+	 * @param  array $attributes Shortcode parameters, including `convention` as a two-letter abbreviation or full name.
+	 *
+	 * @return string HTML output.
+	 */
+	public function convention_icon( array $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'convention' => null,
+			), $attributes
+		);
+		$this_convention      = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+		$conventions = GHC_Conventions::get_instance();
+		return $conventions->get_icons( $this_convention );
+	}
+
+	/**
+	 * Display all exhibitors for a given convention.
+	 *
+	 * @param  array $attributes Shortcode parameters.
+	 *                           ['convention']    Two-letter convention abbreviation.
+	 *                           ['style']         Type of list to display; allowed values include “large,” “small,” and “list”.
+	 *
+	 * @return string  HTML output.
+	 */
+	public function exhibitor_list( array $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'convention' => null,
+				'style'      => 'large',
+			), $attributes
+		);
+
+		$this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+		echo '';
+
+		$exhibitor_args = array(
+			'posts_per_page' => -1,
+			'post_type'      => 'exhibitor',
+			'order'          => 'ASC',
+			'orderby'        => 'post_title',
+		);
+
+		if ( $shortcode_attributes['convention'] ) {
+			$exhibitor_args['tax_query'] = array(
+				array(
+					'taxonomy' => 'ghc_conventions_taxonomy',
+					'field'    => 'slug',
+					'terms'    => $this->get_convention_abbreviations( $this_convention ),
+				),
+			);
+		}
+
+		$exhibitor_query = new WP_Query( $exhibitor_args );
+
+		ob_start();
+		if ( $exhibitor_query->have_posts() ) {
+			if ( 'list' === $shortcode_attributes['style'] ) {
+				echo '<ul class="exhibitor-container ghc-cpt container ' . esc_attr( $shortcode_attributes['style'] ) . '">';
+			} else {
+				echo '<div class="exhibitor-container ghc-cpt container ' . esc_attr( $shortcode_attributes['style'] ) . '">';
+			}
+
+			while ( $exhibitor_query->have_posts() ) {
+				$exhibitor_query->the_post();
+				if ( 'large' === $shortcode_attributes['style'] ) {
+					require( plugin_dir_path( __FILE__ ) . '../templates/exhibitor-template.php' );
+				} else {
+					if ( 'list' === $shortcode_attributes['style'] ) {
+						echo '<li id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '">';
+					}
+					echo '<a href="' . get_permalink() . '">' . get_the_title() . '</a>';
+					if ( 'list' === $shortcode_attributes['style'] ) {
+						echo '</li>';
+					}
+				}
+			}
+
+			if ( 'list' === $shortcode_attributes['style'] ) {
+				echo '</ul>';
+			} else {
+				echo '</div>';
+			}
+		}
+		wp_reset_postdata();
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Display exhibit hall hours.
+	 *
+	 * @return string HTML output.
+	 */
+	public function exhibit_hall_hours_shortcode() : string {
+		return get_field( 'exhibit_hall_hours', 'option' );
+	}
+
+	/**
+	 * Display hotels.
+	 *
+	 * @param  array $attributes Shortcode parameters, including `convention` as a two-letter abbreviation or full name.
+	 *
+	 * @return string HTML output.
+	 */
+	public function hotel_grid( array $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'convention'   => null,
+				'show_content' => false,
+			), $attributes
+		);
+		$this_convention      = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+		ob_start();
+		$is_shortcode = true;
+		require( plugin_dir_path( __FILE__ ) . '../templates/loop-hotel.php' );
+		return ob_get_clean();
+	}
+
+	/**
+	 * Display price sheet.
+	 *
+	 * @param  array $attributes Shortcode parameters, including `convention` as a two-letter abbreviation or full name.
+	 *
+	 * @return string HTML output.
+	 */
+	public function price_sheet( array $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'convention' => null,
+			), $attributes
+		);
+		$this_convention      = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+		wp_enqueue_script( 'ghc-price-sheets' );
+
+		ob_start();
+		include( plugin_dir_path( __FILE__ ) . '/../price-sheets/price-sheet-' . $this_convention . '.html' );
+		return ob_get_clean();
+	}
+
+	/**
+	 * Show product sale/regular prices.
+	 *
+	 * @return string Formatted price string.
+	 */
+	public function product_price_shortcode() : string {
+		$registration_product = new WC_Product_Variable( get_field( 'registration_product' ) );
+		return $registration_product->get_price_html();
+	}
+
+
+	/**
+	 * Display custom registration.
+	 *
+	 * @return string HTML output.
+	 */
+	public function registration_page() : string {
+		ob_start();
+
+		echo '<div class="register">';
+
+		$registration_args = array(
+			'category'       => 'registration',
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
+			'posts_per_page' => -1,
+		);
+
+		$registration_query = wc_get_products( $registration_args );
+
+		$special_events_args = array(
+			'category'       => array( 'special-events', 'program-guide' ),
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
+			'posts_per_page' => -1,
+		);
+
+		$special_events_query = wc_get_products( $special_events_args );
+
+		if ( count( $registration_query ) > 0 ) { ?>
+
+			<h3 id="convention">Convention</h3>
+			<p>Choose one:</p>
+			<?php
+			$next_convention = '';
+			foreach ( $this->get_conventions_info() as $convention ) {
+				$convention_abbreviation = strtolower( $convention['convention_abbreviated_name'][0] );
+				if ( empty( $next_convention ) && date( 'Ymd' ) < $convention['begin_date'][0] ) {
+					$next_convention = $convention_abbreviation;
+				}
+				?>
+				<input class="registration-choice convention" type="radio" name="convention" value="<?php echo $convention_abbreviation; ?>" id="convention-<?php echo $convention_abbreviation; ?>" <?php checked( $next_convention, $convention_abbreviation ); ?> />
+					<label class="registration-choice convention theme bg <?php echo $convention_abbreviation; ?>" for="convention-<?php echo $convention_abbreviation; ?>">
+						<h4><?php echo $convention['convention_short_name'][0]; ?></h4>
+						<p class="info"><?php echo $this->format_date_range( $convention['begin_date'][0], $convention['end_date'][0], 'Ymd' ); ?></p>
+					</label>
+			<?php } ?>
+
+			<h3 id="attendee-type">Attendee Type</h3>
+			<p>Choose one:</p>
+			<input class="registration-choice attendee-type" type="radio" name="attendee-type" value="individual" id="attendee-individual" />
+				<label class="registration-choice attendee-type theme bg se dashicons-before dashicons-admin-users" for="attendee-individual"><h4>Individual</h4></label>
+			<input class="registration-choice attendee-type" type="radio" name="attendee-type" value="family" id="attendee-family" checked="checked" />
+				<label class="registration-choice attendee-type theme bg se dashicons-before dashicons-groups" for="attendee-family"><h4>Family</h4></label>
+
+			<table class="products">
+			<tbody>
+			<?php
+			wp_enqueue_script( 'ghc-woocommerce' );
+
+			foreach ( $registration_query as $this_product ) {
+				$product_object  = get_post( $this_product->get_id() );
+				$GLOBALS['post'] = &$product_object;
+				setup_postdata( $product_object );
+				global $product;
+
+				if ( $product->is_type( 'variable' ) ) {
+					$variations = $product->get_available_variations();
+
+					foreach ( $variations as $variation_array ) {
+						$variation = new WC_Product_Variation( $variation_array['variation_id'] );
+						require( plugin_dir_path( __FILE__ ) . '../templates/registration-table-row-variation.php' );
+					}
+				} else {
+					require( plugin_dir_path( __FILE__ ) . '../templates/registration-table-row.php' );
+				}
+			}
+
+			if ( count( $special_events_query ) > 0 ) {
+				foreach ( $special_events_query as $this_product ) {
+					$product_object  = get_post( $this_product->get_id() );
+					$GLOBALS['post'] = &$product_object;
+					setup_postdata( $product_object );
+					global $product;
+
+					if ( $product->is_type( 'variable' ) ) {
+						$variations = $product->get_available_variations();
+
+						foreach ( $variations as $variation_array ) {
+							$variation = new WC_Product_Variation( $variation_array['variation_id'] );
+							require( plugin_dir_path( __FILE__ ) . '../templates/registration-table-row-variation.php' );
+						}
+					} else {
+						require( plugin_dir_path( __FILE__ ) . '../templates/registration-table-row.php' );
+					}
+				}
+			}
+			?>
+			</tbody>
+			<tfoot>
+				<tr class="cart-totals">
+					<td colspan="2" class="header">Total</td>
+					<td class="total">
+						<span class="custom-cart-total"><?php echo WC()->cart->get_cart_total(); ?></span>
+					</td>
+					<td class="actions">
+						<a class="button" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'Review your shopping cart' ); ?>">Check Out&rarr;</a>
+						<!-- TODO: after allowing dynamic updates, change to checkout URL, basically making this shortcode replace the cart -->
+					</td>
+				</tr>
+			</tfoot>
+
+			<?php
+			echo '</table>';
+		}
+
+		echo '</div><!-- .register -->';
+
+		wp_reset_postdata();
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Display custom speaker/special event archive.
+	 *
+	 * @return string HTML of entire archive.
+	 */
+	public function speaker_archive() : string {
+		ob_start();
+		echo '<div class="speaker-archive">';
+			require( plugin_dir_path( __FILE__ ) . '../templates/loop-speaker.php' );
+		echo '</div>';
+		return ob_get_clean();
+	}
+
+	/**
+	 * Display speaker grid.
+	 *
+	 * @param  array $attributes Shortcode parameters, including `convention` as a two-letter abbreviation or full name.
+	 *                          ['convention']     string      two-letter abbreviation or short convention name.
+	 *                          ['posts_per_page'] integer     number of posts to display; defaults to -1 (all).
+	 *                          ['offset']         integer     number of posts to skip.
+	 *                          ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt.
+	 *                          ['image_size']     string      named image size or two comma-separated integers creating an image size array.
+	 *
+	 * @return string HTML output.
+	 */
+	public function speaker_grid( array $attributes = array() ) : string {
+		$attributes['post_type'] = 'speaker';
+		return $this->cpt_grid( $attributes );
+	}
+
+	/**
+	 * Display speaker(s) info.
+	 *
+	 * @param  array $attributes Shortcode parameters (see array above).
+	 *                          ['postid']          integer post ID for a specific speaker.
+	 *                          ['pagename']        string  post slug for a specific speaker.
+	 *                          ['align']           string  align right, left, or center.
+	 *                          ['no_conventions']  boolean whether or not to show convention icons beneath speaker’s name.
+	 *                          ['extra_classes']   string  extra classes to add to the output.
+	 *
+	 * @return string HTML output.
+	 */
+	public function speaker_info( array $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'postid'         => null,
+				'post_id'        => null,
+				'pagename'       => null,
+				'align'          => null,
+				'no_conventions' => null,
+				'photo_only'     => null,
+				'extra_classes'  => null,
+			), $attributes
+		);
+
+		if ( is_null( $shortcode_attributes['postid'] ) && ! is_null( $shortcode_attributes['post_id'] ) ) {
+			$this_postid = esc_attr( $shortcode_attributes['post_id'] );
+		} else {
+			$this_postid = esc_attr( $shortcode_attributes['postid'] );
+		}
+
+		$this_pagename  = esc_attr( $shortcode_attributes['pagename'] );
+		$this_alignment = esc_attr( $shortcode_attributes['align'] );
+		$no_conventions = esc_attr( $shortcode_attributes['no_conventions'] );
+		$photo_only     = esc_attr( $shortcode_attributes['photo_only'] );
+		$extra_classes  = esc_attr( $shortcode_attributes['extra_classes'] );
+
+		$args = array(
+			'post_type'      => array( 'speaker' ),
+			'posts_per_page' => '-1',
+		);
+
+		if ( ! empty( $this_postid ) ) {
+			if ( strpos( $this_postid, ',' ) !== false ) {
+				$args['post__in'] = explode( ',', $this_postid );
+			} else {
+				$args['p'] = $this_postid;
+			}
+		}
+
+		if ( $this_pagename ) {
+			$args['pagename'] = $this_pagename; }
+		if ( ( $this_alignment ) && ( strpos( $this_alignment, 'align' ) === false ) ) {
+			$this_alignment = 'align' . $this_alignment; }
+
+		$speaker_query = new WP_Query( $args );
+
+		ob_start();
+		if ( $speaker_query->have_posts() ) {
+			echo '<div class="speaker-container ghc-cpt container shortcode';
+			if ( $this_alignment ) {
+				echo ' ' . $this_alignment;
+			}
+			if ( $extra_classes ) {
+				echo ' ' . $extra_classes;
+			}
+			echo '">';
+
+			while ( $speaker_query->have_posts() ) {
+				$speaker_query->the_post();
+				?>
+
+				<div class="speaker ghc-cpt item">
+					<div class="post-thumbnail">
+						<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium', array( 'class' => 'speaker-thumb' ) ); ?></a>
+					</div>
+					<?php if ( ! $photo_only ) { ?>
+						<div class="info">
+							<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+							<?php if ( ! $no_conventions ) { ?>
+								<div class="conventions-attending">
+									<?php echo $conventions->get_icons( get_the_ID() ); ?>
+								</div>
+							<?php } ?>
+						</div>
+					<?php } ?>
+				</div>
+				<?php
+			}
+			echo '</div><!-- .speaker-container.ghc-cpt.container -->';
+		}
+
+		// Restore original post data.
+		wp_reset_postdata();
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Display a list of speakers.
+	 *
+	 * @param  array $attributes Shortcode parameters (see array above).
+	 *                          ['convention']      string  two-letter abbreviation or full name.
+	 *                          ['posts_per_page']  integer number of posts to display.
+	 *                          ['offset']          integer how many posts to skip.
+	 *                          ['ul_class']        string  class(es) to add to the wrapping <ul>.
+	 *                          ['li_class']        string  class(es) to add to each speaker <li>.
+	 *                          ['a_class']         string  class(es) to add to each speaker <a>.
+	 *
+	 * @return string HTML output.
+	 */
+	public function speaker_list( array $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'convention'     => null,
+				'posts_per_page' => -1,
+				'offset'         => null,
+				'ul_class'       => null,
+				'li_class'       => null,
+				'a_class'        => null,
+			), $attributes
+		);
+
+		// Workaround for posts_per_page overriding offset.
+		if ( ! is_null( $shortcode_attributes['offset'] ) && -1 === $shortcode_attributes['posts_per_page'] ) {
+			$shortcode_attributes['posts_per_page'] = 500;
+		}
+		$this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+		$speaker_list_args = array(
+			'post_type'      => 'speaker',
+			'posts_per_page' => esc_attr( $shortcode_attributes['posts_per_page'] ),
+			'offset'         => esc_attr( $shortcode_attributes['offset'] ),
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
+			'tax_query'      => array(
+				array(
+					'taxonomy' => 'ghc_speaker_category_taxonomy',
+					'field'    => 'slug',
+					'terms'    => 'featured',
+				),
+			),
+		);
+
+		// If single convention is specified, add to the WP_Query.
+		if ( $this_convention ) {
+			$speaker_list_args['tax_query'] = array_merge(
+				$speaker_list_args['tax_query'], array(
+					'relation' => 'AND',
+					array(
+						'taxonomy' => 'ghc_conventions_taxonomy',
+						'field'    => 'slug',
+						'terms'    => $this->get_single_convention_abbreviation( $this_convention ),
+					),
+				)
+			);
+		}
+
+		$speaker_list_query = new WP_Query( $speaker_list_args );
+
+		ob_start();
+		if ( $speaker_list_query->have_posts() ) {
+			echo '<ul class="speaker-list ' . esc_attr( $shortcode_attributes['ul_class'] ) . '">';
+			while ( $speaker_list_query->have_posts() ) {
+				$speaker_list_query->the_post();
+				echo '<li class="' . esc_attr( $shortcode_attributes['li_class'] ) . '"><a class="' . esc_attr( $shortcode_attributes['a_class'] ) . '" href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
+			}
+			echo '</ul>';
+		}
+
+		// Reset the post data.
+		wp_reset_postdata();
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Display special event grid.
+	 *
+	 * @param  array $attributes Shortcode parameters, including `convention` as a two-letter abbreviation or full name.
+	 *                          ['post_type']      string      post type; defaults to 'special_event'.
+	 *                          ['convention']     string      two-letter abbreviation or short convention name.
+	 *                          ['posts_per_page'] integer     number of posts to display; defaults to -1 (all).
+	 *                          ['offset']         integer     number of posts to skip.
+	 *                          ['show']           string      comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt.
+	 *                          ['image_size']     string      named image size or two comma-separated integers creating an image size array.
+	 *
+	 * @return string HTML output.
+	 */
+	public function special_event_grid( array $attributes = array() ) : string {
+		$attributes['post_type'] = 'special_event';
+		return $this->cpt_grid( $attributes );
+	}
+
+	/**
+	 * Show a list of special events.
+	 *
+	 * @return string HTML output.
+	 */
+	public function special_event_list_shortcode() {
+		$special_event_list_args = array(
+			'taxonomy' => 'ghc_special_tracks_taxonomy',
+			'title_li' => '',
+			'echo'     => false,
+		);
+
+		return '<ul>' . wp_list_categories( $special_event_list_args ) . '</ul>';
+	}
+
+	/**
+	 * Display sponsors for a particular track.
+	 *
+	 * @param  array $attributes Shortcode parameters, including the `track` slug.
+	 *
+	 * @return string HTML output.
+	 */
+	public function special_track_speakers( array $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'track' => null,
+			), $attributes
+		);
+
+		$special_track_speakers_args = array(
+			'post_type'      => 'speaker',
+			'posts_per_page' => -1,
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
+			'tax_query'      => array(
+				array(
+					'taxonomy' => 'ghc_special_tracks_taxonomy',
+					'field'    => 'slug',
+					'terms'    => $shortcode_attributes['track'],
+				),
+			),
+		);
+
+		$special_track_speakers_query = new WP_Query( $special_track_speakers_args );
+
+		ob_start();
+		if ( $special_track_speakers_query->have_posts() ) {
+			echo '<div class="speaker-container ghc-cpt container">';
+			while ( $special_track_speakers_query->have_posts() ) {
+				$special_track_speakers_query->the_post();
+				ob_start();
+				require( plugin_dir_path( __FILE__ ) . '../templates/speaker-template.php' );
+				echo ob_get_clean();
+			}
+			echo '</div>';
+		}
+
+		// Restore original post data.
+		wp_reset_postdata();
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Display all sponsors.
+	 *
+	 * Example: array[]
+	 *                 ['gray']    bool Whether to show the featured image or the gray version.
+	 *                 ['width']   int  Width in pixels for the output image.
+	 *
+	 * @param  array $attributes Shortcode parameters (see above array).
+	 *
+	 * @return string HTML output.
+	 */
+	public function sponsors( array $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'gray'  => null,
+				'width' => null,
+			), $attributes
+		);
+
+		$sponsors_args = array(
+			'post_type'      => 'sponsor',
+			'posts_per_page' => -1,
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
+		);
+
+		$sponsors_query = new WP_Query( $sponsors_args );
+
+		ob_start();
+		if ( $sponsors_query->have_posts() ) {
+			echo '<div class="sponsor-container ghc-cpt container">';
+			while ( $sponsors_query->have_posts() ) {
+				$sponsors_query->the_post();
+				echo '<article id="post-' . get_the_ID() . '" class="ghc-cpt item ' . implode( ' ', get_post_class() ) . '">';
+				echo '<a href="' . get_permalink() . '">
+					<div class="sponsor-thumbnail">';
+				if ( $shortcode_attributes['gray'] ) {
+					if ( $shortcode_attributes['width'] ) {
+						echo wp_get_attachment_image( get_field( 'grayscale_logo' )['id'], array( $shortcode_attributes['width'], -1 ) );
+					} else {
+						echo wp_get_attachment_image( get_field( 'grayscale_logo' )['id'] );
+					}
+				} else {
+					if ( $shortcode_attributes['width'] ) {
+						echo get_the_post_thumbnail( get_the_ID(), array( $shortcode_attributes['width'], -1 ) );
+					} else {
+						echo get_the_post_thumbnail();
+					}
+				}
+					echo '</div></a>
+				</article>';
+			}
+			echo '</div>';
+		}
+		wp_reset_postdata();
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Display list of workshops
+	 *
+	 * @param  array $attributes Shortcode attributes.
+	 *                          ['convention']     Two-letter convention abbreviation.
+	 *                          ['posts_per_page'] Number of posts to show (defaults to all; if offset is specified, then is set to 500).
+	 *                          ['offset']         Number of posts to skip (useful mainly in conjunction with posts_per_page).
+	 *                          ['speaker']        Include only workshops from this speaker, specified by post ID.
+	 *
+	 * @return string HTML output.
+	 */
+	public function workshop_list( array $attributes = array() ) : string {
+		global $convention_abbreviations;
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'convention'     => null,
+				'posts_per_page' => -1,
+				'offset'         => null,
+				'speaker'        => null,
+			), $attributes
+		);
+
+		// Add workaround for posts_per_page overriding offset.
+		if ( ! is_null( $shortcode_attributes['offset'] ) && -1 === $shortcode_attributes['posts_per_page'] ) {
+			$shortcode_attributes['posts_per_page'] = 500;
+		}
+		$this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+		$workshop_list_args = array(
+			'post_type'      => 'workshop',
+			'posts_per_page' => esc_attr( $shortcode_attributes['posts_per_page'] ),
+			'offset'         => esc_attr( $shortcode_attributes['offset'] ),
+			'orderby'        => array( 'menu_order', 'title' ),
+			'order'          => 'ASC',
+		);
+
+		if ( $this_convention ) {
+			$this_convention_speaker_args = array(
+				'post_type'      => 'speaker',
+				'posts_per_page' => -1,
+				'tax_query'      => array(
+					array(
+						'taxonomy' => 'ghc_conventions_taxonomy',
+						'field'    => 'slug',
+						'terms'    => $convention_abbreviations[ $this_convention ],
+					),
+				),
+			);
+
+			$this_convention_speaker = new WP_Query( $this_convention_speaker_args );
+
+			$workshop_ids_array = array();
+
+			if ( $this_convention_speaker->have_posts() ) {
+				while ( $this_convention_speaker->have_posts() ) {
+					$this_convention_speaker->the_post();
+
+					$related_workshops = get_field( 'related_workshops' );
+					if ( is_array( $related_workshops ) ) {
+						$workshop_ids_array = array_merge( $workshop_ids_array, $related_workshops );
+					}
+				}
+			}
+			wp_reset_postdata();
+
+			$workshop_list_args['post__in'] = $workshop_ids_array;
+		}
+
+		// If speaker is specified, add to meta query.
+		if ( $shortcode_attributes['speaker'] ) {
+			$workshop_list_args['meta_key']     = 'speaker';
+			$workshop_list_args['meta_value']   = $shortcode_attributes['speaker'];
+			$workshop_list_args['meta_compare'] = 'LIKE';
+		}
+
+		$workshop_list_query = new WP_Query( $workshop_list_args );
+
+		ob_start();
+		if ( $workshop_list_query->have_posts() ) {
+			echo '<ul class="workshop-list">';
+			while ( $workshop_list_query->have_posts() ) {
+				$workshop_list_query->the_post();
+				$speaker = get_field( 'speaker' );
+
+				if ( $speaker && is_null( $shortcode_attributes['speaker'] ) ) {
+					$speaker_string = ' <span class="entry-meta"> | ';
+					foreach ( $speaker as $this_speaker ) {
+						$speaker_string .= apply_filters( 'the_title', $this_speaker->post_title ) . ', ';
+					}
+					$speaker_string = rtrim( $speaker_string, ', ' ) . '</span>';
+				} else {
+					$speaker_string = '';
+				}
+
+				echo '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a>' . $speaker_string . '</li>';
+			}
+
+			if ( -1 !== $shortcode_attributes['posts_per_page'] && ! is_null( $shortcode_attributes['convention'] ) ) {
+				echo '<li><a href="' . home_url() . '/workshops/">And <strong>many</strong> more!</a></li>';
+			}
+
+			echo '</ul>';
+		}
+		wp_reset_postdata();
+
+		return ob_get_clean();
+	}
 
 }
 
-new GHC_Shortcodes();
+GHC_Shortcodes::get_instance();

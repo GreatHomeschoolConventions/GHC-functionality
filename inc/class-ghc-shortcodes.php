@@ -180,10 +180,22 @@ class GHC_Shortcodes extends GHC_Base {
 		);
 		$this_convention      = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
-		$cta_array   = array_filter( $this->get_conventions_info()[ $this_convention ]['cta_list'], array( 'GHC_Conventions', 'get_current_cta' ) );
+		$cta_array   = array_filter( $this->get_conventions_info()[ $this_convention ]['cta_list'], array( $this, 'get_current_cta' ) );
 		$current_cta = array_pop( $cta_array )['cta_content'];
 
 		return apply_filters( 'the_content', $current_cta );
+	}
+
+	/**
+	 * Helper function to get current CTA.
+	 *
+	 * @param  array  $value List of CTAs defined for this convention.
+	 *
+	 * @return bool Whether or not this is the correct CTA.
+	 */
+	private function get_current_cta( array $value ) : bool {
+		$conventions = GHC_Conventions::get_instance();
+		return $conventions->get_current_cta( $value );
 	}
 
 	/**

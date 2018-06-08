@@ -31,6 +31,7 @@ class GHC_Post_Types extends GHC_Base {
 		// Frontend.
 		add_filter( 'get_the_archive_title', array( $this, 'cpt_archive_titles' ) );
 		add_filter( 'get_the_archive_description', array( $this, 'cpt_archive_intro' ) );
+		add_filter( 'archive_template', array ( $this, 'hotel_archive' ) );
 		add_action( 'pre_get_posts', array( $this, 'speakers_order' ) );
 		add_action( 'pre_get_posts', array( $this, 'modify_exhibitor_archive' ) );
 		add_action( 'pre_get_posts', array( $this, 'modify_special_track_tax' ) );
@@ -555,6 +556,22 @@ class GHC_Post_Types extends GHC_Base {
 		}
 
 		return $description;
+	}
+
+	/**
+	 * Use custom hotel archive template.
+	 *
+	 * @param  string $archive_template Name of template to use.
+	 *
+	 * @return string Modified name of template to use.
+	 */
+	public function hotel_archive( string $archive_template ) : string {
+		global $post;
+		if ( is_post_type_archive( 'hotel' ) ) {
+			$archive_template = $this->plugin_dir_path( 'templates/archive-hotel.php' );
+		}
+
+		return $archive_template;
 	}
 
 	/**

@@ -29,6 +29,9 @@ class GHC_Content extends GHC_Base {
 		add_filter( 'the_excerpt', array( $this, 'archive_icons' ) );
 		add_filter( 'the_content', array( $this, 'archive_icons' ) );
 
+		// Hotels.
+		add_filter( 'the_content', array( $this, 'add_hotel_single_content' ) );
+
 		// Sponsors.
 		add_filter( 'the_content', array( $this, 'add_related_sponsors' ), 15 );
 
@@ -76,6 +79,32 @@ class GHC_Content extends GHC_Base {
 			}
 		}
 		return $new_content . $content;
+	}
+
+	/**
+	 * Add hotel info to single views.
+	 *
+	 * @param  string $content HTML content.
+	 *
+	 * @return string Modified HTML content.
+	 */
+	public function add_hotel_single_content( string $content ) : string {
+		if ( is_singular( 'hotel' ) ) {
+			// Get convention info.
+			global $conventions, $convention_abbreviations;
+			$conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
+			$this_convention      = array_flip( $this->get_convention_abbreviations() )[ $conventions_taxonomy[0]->slug ];
+
+			// Get hotel details.
+			ob_start();
+			include $this->plugin_dir_path( 'templates/hotel-details.php' );
+
+			if ( get_field( 'hotel_URL' ) && ! get_field( 'sold_out' ) ) {
+				echo '<a class="button book-hotel" target="_blank" rel="noopener noreferrer" href="' . esc_url( get_field( 'hotel_URL' ) ) . '">Book Online Now</a>';
+			}
+		}
+
+		return ob_get_clean();
 	}
 
 	/**

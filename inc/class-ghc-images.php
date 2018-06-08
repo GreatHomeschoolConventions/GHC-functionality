@@ -31,7 +31,7 @@ class GHC_Images extends GHC_Base {
 		add_filter( 'upload_mimes', array( $this, 'mime_types' ) );
 		add_action( 'after_setup_theme', array( $this, 'custom_image_sizes' ) );
 		add_filter( 'image_size_names_choose', array( $this, 'ghc_custom_image_sizes_names' ) );
-		add_filter( 'wp_get_attachment_image_attributes', array( $this, 'responzive_img_sizes' ), 25, 3 );
+		add_filter( 'wp_get_attachment_image_attributes', array( $this, 'responsive_img_sizes' ), 25, 3 );
 	}
 
 	/**

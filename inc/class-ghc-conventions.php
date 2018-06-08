@@ -18,13 +18,40 @@ if ( ! function_exists( 'add_filter' ) ) {
  * GHC Conventions
  */
 class GHC_Conventions extends GHC_Base {
+	/**
+	 * All conventions with full info
+	 *
+	 * @var array
+	 */
+	protected $conventions = array();
+
+	/**
+	 * All conventions abbreviations
+	 *
+	 * @var array
+	 */
+	protected $conventions_abbreviations = array();
+
+	/**
+	 * All convention dates
+	 *
+	 * @var array
+	 */
+	protected $conventions_dates = array();
+
+	/**
+	 * Subclass instance
+	 *
+	 * @var null
+	 */
+	private static $instance = null;
 
 	/**
 	 * Kick things off
 	 *
-	 * @private
+	 * @access private
 	 */
-	public function __construct() {
+	private function __construct() {
 		// Update transients when locations are updated.
 		add_action( 'save_post_location', array( $this, 'load_conventions_info' ) );
 		add_action( 'save_post_location', array( $this, 'load_conventions_abbreviations' ) );
@@ -32,29 +59,20 @@ class GHC_Conventions extends GHC_Base {
 
 		// Add microdata.
 		add_action( 'wp_footer', array( $this, 'add_schema_org_microdata' ), 50 );
-		// FIXME: this is being added multiple times—one for each time new GHC_Conventions is called.
 	}
 
 	/**
-	 * All conventions with full info
+	 * Return only one instance of this class.
 	 *
-	 * @var array
+	 * @return GHC_Conventions class.
 	 */
-	public $conventions = array();
+	public function get_instance() {
+		if ( self::$instance === null ) {
+			self::$instance = new GHC_Conventions();
+		}
 
-	/**
-	 * All conventions abbreviations
-	 *
-	 * @var array
-	 */
-	public $conventions_abbreviations = array();
-
-	/**
-	 * All convention dates
-	 *
-	 * @var array
-	 */
-	public $conventions_dates = array();
+		return self::$instance;
+	}
 
 	/**
 	 * Get convention info
@@ -62,17 +80,17 @@ class GHC_Conventions extends GHC_Base {
 	 * @return array All convention info
 	 */
 	public function get_conventions_info() {
-		if ( ! empty( $this->conventions ) ) {
-			return $this->conventions;
-		} else {
+		if ( empty( $this->conventions ) ) {
 			$transient = get_transient( 'ghc_conventions' );
 			if ( $transient ) {
 				$this->conventions = $transient;
 				return $transient;
 			} else {
-				return $this->load_conventions_info();
+				$this->conventions = $this->load_conventions_info();
 			}
 		}
+
+		return $this->conventions;
 	}
 
 	/**
@@ -81,17 +99,16 @@ class GHC_Conventions extends GHC_Base {
 	 * @return array Convention locations abbreviations
 	 */
 	public function get_conventions_abbreviations() {
-		if ( ! empty( $this->conventions_abbreviations ) ) {
-			return $this->conventions_abbreviations;
-		} else {
+		if ( empty( $this->conventions_abbreviations ) ) {
 			$transient = get_transient( 'ghc_conventions_abbreviations' );
 			if ( $transient ) {
 				$this->conventions_abbreviations = $transient;
-				return $transient;
 			} else {
-				return $this->load_conventions_abbreviations();
+				$this->conventions_abbreviations = $this->load_conventions_abbreviations();
 			}
 		}
+
+		return $this->conventions_abbreviations;
 	}
 
 	/**
@@ -100,17 +117,15 @@ class GHC_Conventions extends GHC_Base {
 	 * @return array Conventions dates
 	 */
 	public function get_conventions_dates() {
-		if ( ! empty( $this->conventions_dates ) ) {
-			return $this->conventions_dates;
-		} else {
+		if ( empty( $this->conventions_dates ) ) {
 			$transient = get_transient( 'ghc_conventions_dates' );
 			if ( $transient ) {
 				$this->convention_dates = $transient;
-				return $transient;
 			} else {
-				return $this->load_conventions_dates();
+				$this->conventions_dates = $this->load_conventions_dates();
 			}
 		}
+		return $this->conventions_dates;
 	}
 
 	/**
@@ -205,11 +220,12 @@ class GHC_Conventions extends GHC_Base {
 	/**
 	 * Return convention icons
 	 *
-	 * @param  array         $input_conventions      Conventions to display.
+	 * @param  mixed  $input_conventions      Conventions to display.
 	 * @param  array  [array $args = array()] Extra arguments.
+	 *
 	 * @return string $convention_icons HTML string with content
 	 */
-	public function get_icons( $input_conventions, array $args = array() ) {
+	public function get_icons( mixed $input_conventions, array $args = array() ) {
 		$convention_icons      = '';
 		$conventions_to_output = array();
 
@@ -263,14 +279,15 @@ class GHC_Conventions extends GHC_Base {
 			}
 		}
 
-		return apply_filters( 'ghc_convention_icons', $convention_icons );
+		return apply_filters( 'ghc_convention_icons', $convention_icons, $input_conventions );
 	}
 
 	/**
 	 * Get convention abbreviation from full name
 	 *
-	 * @private
+	 * @access private
 	 * @param  string $convention Convention long name.
+	 *
 	 * @return string Two-letter convention abbreviation
 	 */
 	private function get_abbreviation( $convention ) {
@@ -282,7 +299,8 @@ class GHC_Conventions extends GHC_Base {
 	 *
 	 * @param  string $a Array member 1.
 	 * @param  string $b Array member 2.
-	 * @return array  sorted array
+	 *
+	 * @return int Whether key should be moved forward or backward in array.
 	 */
 	public function sort_conventions( $a, $b ) {
 		$sort_order = null;
@@ -324,10 +342,12 @@ class GHC_Conventions extends GHC_Base {
 
 	/**
 	 * Add JSON-LD microdata to each location single view
+	 *
+	 * @return  void Prints output.
 	 */
 	public function add_schema_org_microdata() {
-		$content = '';
 		if ( 'location' === get_post_type() ) {
+			$content = '';
 			$product_id = get_post_meta( get_the_ID(), 'registration', true );
 			$product    = new WC_Product( $product_id );
 
@@ -384,9 +404,8 @@ class GHC_Conventions extends GHC_Base {
 			}
 			</script>
 			<?php
-			$content .= ob_get_clean();
+			echo ob_get_clean();
 		}
-		echo $content; // WPCS: XSS ok.
 	}
 
 	/**
@@ -404,6 +423,7 @@ class GHC_Conventions extends GHC_Base {
 	 * Fix protocol-agnostic URLs
 	 *
 	 * @param  string $url Original URL.
+	 *
 	 * @return string URL with https:// prepended
 	 */
 	private function format_schema_url( $url ) {
@@ -416,4 +436,4 @@ class GHC_Conventions extends GHC_Base {
 
 }
 
-new GHC_Conventions();
+GHC_Conventions::get_instance();

@@ -104,7 +104,7 @@ class GHC_Base {
 	 */
 	public function get_conventions_info() {
 		if ( 0 === count( $this->conventions ) ) {
-			$conventions       = new GHC_Conventions();
+			$conventions       = GHC_Conventions::get_instance();
 			$this->conventions = $conventions->get_conventions_info();
 		}
 
@@ -118,7 +118,7 @@ class GHC_Base {
 	 */
 	public function get_conventions_abbreviations() {
 		if ( 0 === count( $this->conventions_abbreviations ) ) {
-			$conventions                     = new GHC_Conventions();
+			$conventions                     = GHC_Conventions::get_instance();
 			$this->conventions_abbreviations = $conventions->get_conventions_abbreviations();
 		}
 
@@ -132,7 +132,7 @@ class GHC_Base {
 	 */
 	public function get_conventions_dates() {
 		if ( 0 === count( $this->conventions_dates ) ) {
-			$conventions             = new GHC_Conventions();
+			$conventions             = GHC_Conventions::get_instance();
 			$this->conventions_dates = $conventions->get_conventions_dates();
 		}
 

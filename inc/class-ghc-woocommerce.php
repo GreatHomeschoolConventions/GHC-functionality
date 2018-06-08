@@ -384,7 +384,7 @@ class GHC_Woocommerce extends GHC_Base {
 		ob_start();
 
 		?>
-		<span class="custom-cart-total"><?php echo esc_attr( $woocommerce->cart->get_cart_total() ); ?></span>
+		<span class="custom-cart-total"><?php echo wp_kses_post( $woocommerce->cart->get_cart_total() ); ?></span>
 		<?php
 
 		$fragments['.custom-cart-total'] = ob_get_clean();

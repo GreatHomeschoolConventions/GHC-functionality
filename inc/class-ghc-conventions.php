@@ -67,7 +67,7 @@ class GHC_Conventions extends GHC_Base {
 	 * @return GHC_Conventions class.
 	 */
 	public function get_instance() : GHC_Conventions {
-		if ( self::$instance === null ) {
+		if ( null === self::$instance ) {
 			self::$instance = new GHC_Conventions();
 		}
 
@@ -220,12 +220,12 @@ class GHC_Conventions extends GHC_Base {
 	/**
 	 * Return convention icons.
 	 *
-	 * @param  mixed  $input_conventions      Conventions to display.
+	 * @param  mixed         $input_conventions      Conventions to display.
 	 * @param  array  [array $args = array()] Extra arguments.
 	 *
 	 * @return string $convention_icons HTML string with content.
 	 */
-	public function get_icons( mixed $input_conventions, array $args = array() ) : string {
+	public function get_icons( $input_conventions, array $args = array() ) : string {
 		$convention_icons      = '';
 		$conventions_to_output = array();
 
@@ -302,7 +302,7 @@ class GHC_Conventions extends GHC_Base {
 	 *
 	 * @return int Whether key should be moved forward or backward in array.
 	 */
-	public function sort_conventions( mixed $a, mixed $b ) : int {
+	public function sort_conventions( $a, $b ) : int {
 		$sort_order = null;
 
 		// Convert objects.
@@ -347,7 +347,7 @@ class GHC_Conventions extends GHC_Base {
 	 */
 	public function add_schema_org_microdata() {
 		if ( 'location' === get_post_type() ) {
-			$content = '';
+			$content    = '';
 			$product_id = get_post_meta( get_the_ID(), 'registration', true );
 			$product    = new WC_Product( $product_id );
 
@@ -404,7 +404,7 @@ class GHC_Conventions extends GHC_Base {
 			}
 			</script>
 			<?php
-			echo ob_get_clean();
+			echo ob_get_clean(); // WPCS: XSS ok because it’s all escaped above.
 		}
 	}
 

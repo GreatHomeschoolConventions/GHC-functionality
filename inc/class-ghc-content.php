@@ -65,7 +65,7 @@ class GHC_Content extends GHC_Base {
 		if ( 'exhibitor' === get_post_type( $post->ID ) ) {
 			// TODO: don’t add icon to exhibitor archive description.
 			if ( ! is_tax() ) {
-				$conventions  = new GHC_Conventions();
+				$conventions  = GHC_Conventions::get_instance();
 				$new_content .= $conventions->get_icons( $post->ID );
 			}
 			if ( is_singular() && get_field( 'exhibitor_URL', $post->ID ) ) {
@@ -272,10 +272,10 @@ class GHC_Content extends GHC_Base {
 	/**
 	 * Get special track related sponsor name(s) and link(s).
 	 *
-	 * @param  int     $term_id              ghc_special_track term ID.
-	 * @param  string  [ $context             = 'inline'] “inline” or “standalone” context.
+	 * @param  int    $term_id ghc_special_track term ID.
+	 * @param  string $context Either “inline” or “standalone”.
 	 *
-	 * @return string  HTML output with sponsor name(s) and link(s).
+	 * @return string HTML output with sponsor name(s) and link(s).
 	 */
 	private function get_special_track_related_sponsor_names( int $term_id, string $context = 'inline' ) : string {
 		$track_output = '';
@@ -344,7 +344,7 @@ class GHC_Content extends GHC_Base {
 			$post_terms = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 
 			if ( $post_terms ) {
-				$conventions = new GHC_Conventions();
+				$conventions = GHC_Conventions::get_instance();
 				$content     = '<p class="conventions">' . $conventions->get_icons( $post_terms ) . '</p>' . $content;
 			}
 		}

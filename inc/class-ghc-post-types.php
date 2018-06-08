@@ -577,12 +577,12 @@ class GHC_Post_Types extends GHC_Base {
 	/**
 	 * Display sort order on speakers backend
 	 *
-	 * @param string  $column  Column name.
-	 * @param int $post_id Post ID.
+	 * @param string $column  Column name.
+	 * @param int    $post_id Post ID.
 	 *
-	 * @return  string Content for custom column.
+	 * @return  void Prints content for custom column.
 	 */
-	public function speaker_column_content( string $column, int $post_id ) : string {
+	public function speaker_column_content( string $column, int $post_id ) {
 		global $post;
 		if ( 'menu_order' === $column ) {
 			echo esc_attr( $post->menu_order );
@@ -620,8 +620,8 @@ class GHC_Post_Types extends GHC_Base {
 	/**
 	 * Display speaker name on workshops backend.
 	 *
-	 * @param string  $column  Column name.
-	 * @param int     $post_id Post ID.
+	 * @param string $column  Column name.
+	 * @param int    $post_id Post ID.
 	 *
 	 * @return  void Prints content.
 	 */
@@ -659,7 +659,7 @@ class GHC_Post_Types extends GHC_Base {
 	/**
 	 * Sort workshops by speaker name.
 	 *
-	 * @param object $query WP_Query.
+	 * @param WP_Query $query WP_Query.
 	 *
 	 * @return  void Sets query vars.
 	 */
@@ -676,7 +676,7 @@ class GHC_Post_Types extends GHC_Base {
 	/**
 	 * Sort speakers and hide non-featured speakers.
 	 *
-	 * @param  object $query WP_Query.
+	 * @param  WP_Query $query WP_Query.
 	 *
 	 * @return  void Sets query vars.
 	 */
@@ -700,7 +700,7 @@ class GHC_Post_Types extends GHC_Base {
 	/**
 	 * Sort exhibitors.
 	 *
-	 * @param object $query WP_Query.
+	 * @param WP_Query $query WP_Query.
 	 *
 	 * @return  void Sets query vars.
 	 */
@@ -716,7 +716,7 @@ class GHC_Post_Types extends GHC_Base {
 	/**
 	 * Sort special track CPTs.
 	 *
-	 * @param object $query WP_Query.
+	 * @param WP_Query $query WP_Query.
 	 *
 	 * @return  void Sets query vars.
 	 */
@@ -732,7 +732,7 @@ class GHC_Post_Types extends GHC_Base {
 	/**
 	 * Sort sponsors.
 	 *
-	 * @param object $query WP_Query.
+	 * @param WP_Query $query WP_Query.
 	 *
 	 * @return  void Sets query vars.
 	 */

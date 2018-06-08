@@ -23,7 +23,7 @@ function convention_cta_shortcode( $attributes ) {
 	);
 	$this_convention      = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
-	$cta_array   = array_filter( $conventions[ $this_convention ]['cta_list'], 'get_current_cta' );
+	$cta_array   = array_filter( $conventions[ $this_convention ]['cta_list'], array( 'GHC_Conventions', 'get_current_cta' ) );
 	$current_cta = array_pop( $cta_array )['cta_content'];
 
 	return apply_filters( 'the_content', $current_cta );

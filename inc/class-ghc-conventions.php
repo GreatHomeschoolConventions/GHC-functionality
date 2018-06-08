@@ -3,9 +3,7 @@
  * GHC Conventions
  *
  * @author AndrewRMinion Design
- *
- * @package WordPress
- * @subpackage GHC_Functionality
+ * @package GHC_Functionality
  */
 
 if ( ! function_exists( 'add_filter' ) ) {
@@ -433,6 +431,21 @@ class GHC_Conventions extends GHC_Base {
 		}
 
 		return $url;
+	}
+
+	/**
+	 * Get the current convention for a CTA.
+	 *
+	 * @param  array $value Input array.
+	 *
+	 * @return bool Whether or not this is the correct convention.
+	 */
+	public function get_current_cta( array $value ) : bool {
+		if ( ( ! isset( $value['begin_date'] ) || strtotime( $value['begin_date'] ) <= time() ) && ( ! isset( $value['end_date'] ) || strtotime( $value['end_date'] ) >= time() ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

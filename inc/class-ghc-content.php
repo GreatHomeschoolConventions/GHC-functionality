@@ -22,6 +22,9 @@ class GHC_Content extends GHC_Base {
 	 * @private
 	 */
 	public function __construct() {
+		// General.
+		add_filter( 'body_class', array( $this, 'add_slug_body_class' ) );
+
 		// Convention icons.
 		add_filter( 'the_excerpt', array( $this, 'archive_icons' ) );
 		add_filter( 'the_content', array( $this, 'archive_icons' ) );
@@ -127,6 +130,22 @@ class GHC_Content extends GHC_Base {
 			}
 		}
 		return $content;
+	}
+
+	/**
+	 * Add slug to body class.
+	 *
+	 * @param  array $classes Body classes.
+	 *
+	 * @return array Body classes.
+	 */
+	function add_slug_body_class( array $classes ) : array {
+		global $post;
+		if ( isset( $post ) ) {
+			$classes[] = $post->post_type . '-' . $post->post_name;
+		}
+
+		return $classes;
 	}
 
 	/**

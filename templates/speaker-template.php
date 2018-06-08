@@ -35,11 +35,11 @@ if ( ! is_array( $shortcode_attributes ) ) {
 			<?php } ?>
 			<?php if ( strpos( $shortcode_attributes['show'], 'conventions' ) !== false ) { ?>
 				<div class="conventions-attending">
-					<?php echo $conventions->get_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ); ?>
+					<?php echo wp_kses_post( $conventions->get_icons( get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' ) ) ); ?>
 				</div>
 			<?php } ?>
 			<?php if ( strpos( $shortcode_attributes['show'], 'bio' ) !== false ) { ?>
-				<?php echo $speakers->get_short_bio( get_the_ID() ); ?>
+				<?php echo wp_kses_post( $speakers->get_short_bio( get_the_ID() ) ); ?>
 			<?php } ?>
 		</header>
 		<!-- entry-header -->

@@ -168,7 +168,7 @@ class GHC_Content extends GHC_Base {
 	 *
 	 * @return array Body classes.
 	 */
-	function add_slug_body_class( array $classes ) : array {
+	public function add_slug_body_class( array $classes ) : array {
 		global $post;
 		if ( isset( $post ) ) {
 			$classes[] = $post->post_type . '-' . $post->post_name;

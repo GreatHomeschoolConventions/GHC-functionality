@@ -24,13 +24,20 @@ if ( $exhibitors ) {
 }
 ?>
 <tr id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<td data-cell-title="Time" class="time"><i class="fa fa-clock-o"></i><?php echo date( 'g:i A', strtotime( get_field( 'date_and_time' ) ) ); ?></td>
-	<td data-cell-title="Location" class="location"><i class="fa fa-map-marker"></i><?php echo get_the_term_list( get_the_ID(), 'ghc_session_locations_taxonomy' ); ?></td>
-	<td data-cell-title="Speaker" class="speaker"><i class="fa fa-user"></i><?php echo $speakers_string . ( $exhibitors ? ' <span class="exhibitor">(' . $exhibitors_string . ')</span>' : '' ); ?></td>
+	<td data-cell-title="Time" class="time"><i class="fa fa-clock-o"></i><?php echo esc_attr( date( 'g:i A', strtotime( get_field( 'date_and_time' ) ) ) ); ?></td>
+	<td data-cell-title="Location" class="location"><i class="fa fa-map-marker"></i><?php echo esc_attr( get_the_term_list( get_the_ID(), 'ghc_session_locations_taxonomy' ) ); ?></td>
+	<td data-cell-title="Speaker" class="speaker">
+		<i class="fa fa-user"></i><?php echo wp_kses_post( $speakers_string ); ?>
+		<?php
+		if ( $exhibitors ) {
+			echo ' <span class="exhibitor">(' . wp_kses_post( $exhibitors_string ) . ')</span>';
+		}
+		?>
+	</td>
 	<td data-cell-title="Session Title" class="title"><i class="fa fa-book"></i><a href="<?php the_permalink( get_field( 'session_description' ) ); ?>"><?php the_title(); ?></a></td>
 	<?php
 	if ( is_user_logged_in() && current_user_can( 'edit_others_posts' ) ) {
-		echo '<td><a href="' . get_edit_post_link() . '">Edit</a></td>';
+		echo '<td><a href="' . esc_url( get_edit_post_link() ) . '">Edit</a></td>';
 	}
 	?>
 </tr>

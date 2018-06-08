@@ -8,7 +8,7 @@
 	$speaker_slug = get_post_meta( get_the_ID(), 'session-speaker', true );
 	$speaker      = get_page_by_path( $speaker_slug, OBJECT, 'speaker' );
 ?>
-<article id="<?php the_ID(); ?>" <?php echo post_class(); ?>>
+<article id="<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="post-header">
 		<h3>
 			<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
@@ -17,7 +17,7 @@
 		// Add speaker photo.
 		if ( $speaker ) {
 			echo '<div class="speaker-thumbnail">
-				<a href="' . get_permalink( $speaker->ID ) . '">' . ( has_post_thumbnail( $speaker->ID ) ? get_the_post_thumbnail( $speaker->ID, array( 80, 80 ) ) : '' ) . '<br/>' . get_the_title( $speaker->ID ) . '</a>
+				<a href="' . esc_url( get_permalink( $speaker->ID ) ) . '">' . ( has_post_thumbnail( $speaker->ID ) ? get_the_post_thumbnail( $speaker->ID, array( 80, 80 ) ) : '' ) . '<br/>' . get_the_title( $speaker->ID ) . '</a>
 			</div>';
 		}
 

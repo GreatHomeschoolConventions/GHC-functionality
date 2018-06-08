@@ -51,7 +51,7 @@ class GHC_Images extends GHC_Base {
 	 * Set sizes atribute for responsive images and better performance.
 	 *
 	 * @param  array        $attr       Markup attributes.
-	 * @param  object       $attachment WP_Post image attachment post.
+	 * @param  WP_Post      $attachment Image attachment post.
 	 * @param  string|array $size       Named image size or array.
 	 *
 	 * @return array Markup attributes.

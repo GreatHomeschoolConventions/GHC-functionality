@@ -110,10 +110,8 @@ class GHC_Base {
 		add_action( 'after_setup_theme', array( $this, 'get_conventions_dates' ) );
 
 		// Register/enqueue assets.
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
-
-		// TODO: move to GHC_Exhibitors sub-class.
-		add_action( 'admin_enqueue_scripts', array( $this, 'register_backend_resources' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_frontend_assets' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_backend_assets' ) );
 	}
 
 	/**
@@ -189,14 +187,26 @@ class GHC_Base {
 	}
 
 	/**
-	 * Register or enqueue frontend assets
+	 * Register or enqueue frontend assets.
 	 *
 	 * @return  void Enqueues assets.
 	 */
-	public function register_assets() {
+	public function register_frontend_assets() {
 		wp_enqueue_style( 'ghc-functionality', $this->plugin_dir_url( 'dist/css/style.min.css' ), array(), $this->version );
 
 		wp_enqueue_script( 'ghc-popups', $this->plugin_dir_url( 'dist/js/popups.min.js' ), array( 'jquery', 'popup-maker-site' ), $this->version, true );
+	}
+
+	/**
+	 * Register backend assets.
+	 *
+	 * @return void Enqueues assets.
+	 */
+	public function register_backend_assets() {
+		global $post_type;
+		if ( 'exhibitor' === $post_type ) {
+			wp_enqueue_script( 'ghc-exhibitor-backend', $this->plugin_dir_url( 'js/exhibitor-backend.min.js' ), array( 'jquery' ), $this->version, true );
+		}
 	}
 
 	/**
@@ -228,14 +238,6 @@ class GHC_Base {
 		} else {
 			// General case (spans calendar years).
 			return $d1->format( 'F j, Y' ) . '&ndash;' . $d2->format( 'F j, Y' );
-		}
-	}
-
-	// TODO: move to exhibitor sub-class?
-	function register_backend_resources() {
-		global $post_type;
-		if ( 'exhibitor' === $post_type ) {
-			wp_enqueue_script( 'ghc-exhibitor-backend', plugins_url( 'js/exhibitor-backend.min.js', __FILE__ ), array( 'jquery' ), $this->version, true );
 		}
 	}
 

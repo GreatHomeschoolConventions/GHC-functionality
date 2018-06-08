@@ -24,7 +24,11 @@
  * @package GHC_Functionality_Plugin
  */
 
-defined( 'ABSPATH' ) or die( 'No access allowed' );
+if ( ! function_exists( 'add_filter' ) ) {
+	header( 'Status: 403 Forbidden' );
+	header( 'HTTP/1.1 403 Forbidden' );
+	exit();
+}
 
 if ( ! function_exists( 'ghc_admin_options' ) ) {
 	include 'inc/acf.php';
@@ -99,7 +103,7 @@ add_action( 'init', 'ghc_e3_cpts' );
  * @return object modified WP_Query object
  */
 function ghc_e3_post_order( $query ) {
-	if ( ! is_admin() && $query->is_archive && 'e3_workshop' == $query->get( 'post_type' ) ) {
+	if ( ! is_admin() && $query->is_archive && 'e3_workshop' === $query->get( 'post_type' ) ) {
 		$query->set( 'orderby', 'post_title' );
 		$query->set( 'order', 'ASC' );
 		$query->set( 'posts_per_page', '-1' );
@@ -117,7 +121,7 @@ add_action( 'pre_get_posts', 'ghc_e3_post_order' );
  */
 function ghc_e3_content( $content ) {
 	$new_content = '';
-	if ( 'e3_workshop' == get_post_type() ) {
+	if ( 'e3_workshop' === get_post_type() ) {
 		$speaker_bio         = get_field( 'e3_speaker_biography' );
 		$speaker_bio_content = '<a class="button expand-trigger">About ' . $speaker_name . ' <span class="dashicons dashicons-arrow-down-alt2"></span></a><div class="click-to-expand">' . $speaker_bio . '</div>';
 
@@ -154,7 +158,7 @@ add_filter( 'the_excerpt', 'ghc_e3_content' );
  * @return string       featured image HTML
  */
 function ghc_e3_thumbnail_content( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
-	if ( 'e3_workshop' == get_post_type( $post_id ) ) {
+	if ( 'e3_workshop' === get_post_type( $post_id ) ) {
 		$speaker_name        = get_field( 'e3_speaker_name' );
 		$speaker_company     = get_field( 'e3_speaker_company' );
 		$speaker_company_url = get_field( 'e3_speaker_company_url' );
@@ -196,18 +200,18 @@ function ghc_e3_get_signed_url( $resource ) {
 	// Get private key.
 	$key = openssl_get_privatekey( $private_key );
 	if ( ! $key ) {
-		error_log( 'Failed to read private key: ' . openssl_error_string() );
+		error_log( 'Failed to read private key: ' . openssl_error_string() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		return $resource;
 	}
 
 	// Sign the policy with the private key.
 	if ( ! openssl_sign( $json, $signed_policy, $key ) ) {
-		error_log( 'Failed to sign url: ' . openssl_error_string() );
+		error_log( 'Failed to sign url: ' . openssl_error_string() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		return $resource;
 	}
 
 	// Create signature.
-	$base64_signed_policy = base64_encode( $signed_policy );
+	$base64_signed_policy = base64_encode( $signed_policy ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 	$signature            = str_replace( array( '+', '=', '/' ), array( '-', '_', '~' ), $base64_signed_policy );
 
 	// Construct the URL.
@@ -290,15 +294,15 @@ function ghc_e3_workshop_promo_list( $attributes ) {
 		while ( $shortcode_query->have_posts() ) {
 			$shortcode_query->the_post();
 
-			echo '<article class="' . implode( ' ', get_post_class() ) . '">';
+			echo '<article class="' . esc_attr( implode( ' ', get_post_class() ) ) . '">';
 
 			if ( has_post_thumbnail() ) {
 				the_post_thumbnail( 'speaker_xs', array( 'class' => '' ) );
 			}
 
-			echo '<h3>' . get_the_title() . '</h3>
+			echo '<h3>' . esc_attr( get_the_title() ) . '</h3>
 			<p><a class="workshop-description expand-trigger dashicons-after">Workshop Description <span class="dashicons dashicons-arrow-down-alt2"></span></a></p>
-			<div class="excerpt click-to-expand">' . get_the_content() . '</div>
+			<div class="excerpt click-to-expand">' . wp_kses_post( get_the_content() ) . '</div>
 			</article>';
 		}
 		echo '</section>';
@@ -326,8 +330,8 @@ function ghc_e3_buy_now_button( $attributes ) {
 	ob_start();
 	if ( $shortcode_attributes['product_id'] ) {
 		echo '<section class="buy-now">
-		<p><a class="button" rel="nofollow" href="' . home_url() . '/checkout/?add-to-cart=' . $shortcode_attributes['product_id'] . '">' . $shortcode_attributes['button_text'] . '</a><br/>
-		<img src="' . plugin_dir_url( __FILE__ ) . 'dist/images/svg/credit-cards.svg" alt="credit card icons" /></p>
+		<p><a class="button" rel="nofollow" href="' . esc_url( home_url() ) . '/checkout/?add-to-cart=' . esc_attr( $shortcode_attributes['product_id'] ) . '">' . esc_attr( $shortcode_attributes['button_text'] ) . '</a><br/>
+		<img src="' . esc_url( plugin_dir_url( __FILE__ ) ) . 'dist/images/svg/credit-cards.svg" alt="credit card icons" /></p>
 		</section>';
 	}
 	return ob_get_clean();

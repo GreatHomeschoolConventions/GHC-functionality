@@ -189,7 +189,7 @@ class GHC_Shortcodes extends GHC_Base {
 	/**
 	 * Helper function to get current CTA.
 	 *
-	 * @param  array  $value List of CTAs defined for this convention.
+	 * @param  array $value List of CTAs defined for this convention.
 	 *
 	 * @return bool Whether or not this is the correct CTA.
 	 */
@@ -271,9 +271,9 @@ class GHC_Shortcodes extends GHC_Base {
 					require $this->plugin_dir_path( 'templates/exhibitor-template.php' );
 				} else {
 					if ( 'list' === $shortcode_attributes['style'] ) {
-						echo '<li id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '">';
+						echo '<li id="post-' . get_the_ID() . '" class="' . esc_attr( implode( ' ', get_post_class() ) ) . '">';
 					}
-					echo '<a href="' . get_permalink() . '">' . get_the_title() . '</a>';
+					echo '<a href="' . esc_url( get_permalink() ) . '">' . get_the_title() . '</a>';
 					if ( 'list' === $shortcode_attributes['style'] ) {
 						echo '</li>';
 					}
@@ -395,10 +395,10 @@ class GHC_Shortcodes extends GHC_Base {
 					$next_convention = $convention_abbreviation;
 				}
 				?>
-				<input class="registration-choice convention" type="radio" name="convention" value="<?php echo $convention_abbreviation; ?>" id="convention-<?php echo $convention_abbreviation; ?>" <?php checked( $next_convention, $convention_abbreviation ); ?> />
-					<label class="registration-choice convention theme bg <?php echo $convention_abbreviation; ?>" for="convention-<?php echo $convention_abbreviation; ?>">
-						<h4><?php echo $convention['convention_short_name']; ?></h4>
-						<p class="info"><?php echo $this->format_date_range( $convention['begin_date'], $convention['end_date'], 'Ymd' ); ?></p>
+				<input class="registration-choice convention" type="radio" name="convention" value="<?php echo esc_attr( $convention_abbreviation ); ?>" id="convention-<?php echo esc_attr( $convention_abbreviation ); ?>" <?php checked( $next_convention, $convention_abbreviation ); ?> />
+					<label class="registration-choice convention theme bg <?php echo esc_attr( $convention_abbreviation ); ?>" for="convention-<?php echo esc_attr( $convention_abbreviation ); ?>">
+						<h4><?php echo esc_attr( $convention['convention_short_name'] ); ?></h4>
+						<p class="info"><?php echo esc_attr( $this->format_date_range( $convention['begin_date'], $convention['end_date'], 'Ymd' ) ); ?></p>
 					</label>
 			<?php } ?>
 
@@ -416,7 +416,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 			foreach ( $registration_query as $this_product ) {
 				$product_object  = get_post( $this_product->get_id() );
-				$GLOBALS['post'] = &$product_object;
+				$GLOBALS['post'] = &$product_object; // phpcs:ignore WordPress.Variables.GlobalVariables.OverrideProhibited
 				setup_postdata( $product_object );
 				global $product;
 
@@ -435,7 +435,7 @@ class GHC_Shortcodes extends GHC_Base {
 			if ( count( $special_events_query ) > 0 ) {
 				foreach ( $special_events_query as $this_product ) {
 					$product_object  = get_post( $this_product->get_id() );
-					$GLOBALS['post'] = &$product_object;
+					$GLOBALS['post'] = &$product_object; // phpcs:ignore WordPress.Variables.GlobalVariables.OverrideProhibited
 					setup_postdata( $product_object );
 					global $product;
 
@@ -457,10 +457,10 @@ class GHC_Shortcodes extends GHC_Base {
 				<tr class="cart-totals">
 					<td colspan="2" class="header">Total</td>
 					<td class="total">
-						<span class="custom-cart-total"><?php echo WC()->cart->get_cart_total(); ?></span>
+						<span class="custom-cart-total"><?php echo esc_attr( WC()->cart->get_cart_total() ); ?></span>
 					</td>
 					<td class="actions">
-						<a class="button" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'Review your shopping cart' ); ?>">Check Out&rarr;</a>
+						<a class="button" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'Review your shopping cart', 'woocommerce' ); ?>">Check Out&rarr;</a>
 						<!-- TODO: after allowing dynamic updates, change to checkout URL, basically making this shortcode replace the cart -->
 					</td>
 				</tr>
@@ -568,10 +568,10 @@ class GHC_Shortcodes extends GHC_Base {
 		if ( $speaker_query->have_posts() ) {
 			echo '<div class="speaker-container ghc-cpt container shortcode';
 			if ( $this_alignment ) {
-				echo ' ' . $this_alignment;
+				echo ' ' . esc_attr( $this_alignment );
 			}
 			if ( $extra_classes ) {
-				echo ' ' . $extra_classes;
+				echo ' ' . esc_attr( $extra_classes );
 			}
 			echo '">';
 
@@ -588,7 +588,7 @@ class GHC_Shortcodes extends GHC_Base {
 							<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 							<?php if ( ! $no_conventions ) { ?>
 								<div class="conventions-attending">
-									<?php echo $conventions->get_icons( get_the_ID() ); ?>
+									<?php echo wp_kses_post( $conventions->get_icons( get_the_ID() ) ); ?>
 								</div>
 							<?php } ?>
 						</div>
@@ -672,7 +672,7 @@ class GHC_Shortcodes extends GHC_Base {
 			echo '<ul class="speaker-list ' . esc_attr( $shortcode_attributes['ul_class'] ) . '">';
 			while ( $speaker_list_query->have_posts() ) {
 				$speaker_list_query->the_post();
-				echo '<li class="' . esc_attr( $shortcode_attributes['li_class'] ) . '"><a class="' . esc_attr( $shortcode_attributes['a_class'] ) . '" href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
+				echo '<li class="' . esc_attr( $shortcode_attributes['li_class'] ) . '"><a class="' . esc_attr( $shortcode_attributes['a_class'] ) . '" href="' . esc_url( get_permalink() ) . '">' . esc_attr( get_the_title() ) . '</a></li>';
 			}
 			echo '</ul>';
 		}
@@ -751,9 +751,7 @@ class GHC_Shortcodes extends GHC_Base {
 			echo '<div class="speaker-container ghc-cpt container">';
 			while ( $special_track_speakers_query->have_posts() ) {
 				$special_track_speakers_query->the_post();
-				ob_start();
 				require $this->plugin_dir_path( 'templates/speaker-template.php' );
-				echo ob_get_clean();
 			}
 			echo '</div>';
 		}
@@ -797,8 +795,8 @@ class GHC_Shortcodes extends GHC_Base {
 			echo '<div class="sponsor-container ghc-cpt container">';
 			while ( $sponsors_query->have_posts() ) {
 				$sponsors_query->the_post();
-				echo '<article id="post-' . get_the_ID() . '" class="ghc-cpt item ' . implode( ' ', get_post_class() ) . '">';
-				echo '<a href="' . get_permalink() . '">
+				echo '<article id="post-' . esc_attr( get_the_ID() ) . '" class="ghc-cpt item ' . esc_attr( implode( ' ', get_post_class() ) ) . '">';
+				echo '<a href="' . esc_attr( get_permalink() ) . '">
 					<div class="sponsor-thumbnail">';
 				if ( $shortcode_attributes['gray'] ) {
 					if ( $shortcode_attributes['width'] ) {
@@ -916,11 +914,11 @@ class GHC_Shortcodes extends GHC_Base {
 					$speaker_string = '';
 				}
 
-				echo '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a>' . $speaker_string . '</li>';
+				echo '<li><a href="' . esc_attr( get_permalink() ) . '">' . get_the_title() . '</a>' . esc_attr( $speaker_string ) . '</li>';
 			}
 
 			if ( -1 !== $shortcode_attributes['posts_per_page'] && ! is_null( $shortcode_attributes['convention'] ) ) {
-				echo '<li><a href="' . home_url() . '/workshops/">And <strong>many</strong> more!</a></li>';
+				echo '<li><a href="' . esc_url( home_url() ) . '/workshops/">And <strong>many</strong> more!</a></li>';
 			}
 
 			echo '</ul>';

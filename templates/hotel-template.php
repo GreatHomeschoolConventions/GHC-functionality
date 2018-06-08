@@ -15,7 +15,7 @@ if ( is_post_type_archive( 'hotel' ) || $is_shortcode ) {
 		get_field( 'sold_out' ) ? 'sold-out' : '',
 	);
 ?>
-<div class="<?php echo implode( ' ', get_post_class( $post_classes ) ); ?>">
+<div class="<?php echo esc_attr( implode( ' ', get_post_class( $post_classes ) ) ); ?>">
 	<?php
 	if ( ( is_post_type_archive( 'hotel' ) || $is_shortcode ) && ! isset( $this_convention ) ) {
 		echo do_shortcode( '[convention_icon convention="' . $this_convention . '"]' );
@@ -34,7 +34,7 @@ if ( is_post_type_archive( 'hotel' ) || $is_shortcode ) {
 		?>
 			<a class="button" target="_blank" rel="noopener noreferrer" href="<?php the_field( 'hotel_URL' ); ?>">Book Online Now&rarr;</a>
 		<?php } elseif ( get_field( 'hotel_phone' ) ) { ?>
-			<a class="button" target="_blank" rel="noopener noreferrer" href="tel:+1<?php echo str_replace( '-', '', get_field( 'hotel_phone' ) ); ?>">Call to Book Now&rarr;</a>
+			<a class="button" target="_blank" rel="noopener noreferrer" href="tel:+1<?php echo esc_attr( str_replace( '-', '', get_field( 'hotel_phone' ) ) ); ?>">Call to Book Now&rarr;</a>
 		<?php
 }
 	}

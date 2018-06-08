@@ -17,10 +17,10 @@ if ( $product->is_in_stock() ) { ?>
 			?>
 		</td>
 		<td class="title">
-			<?php echo $product->get_title(); ?>
+			<?php echo esc_attr( $product->get_title() ); ?>
 			<?php
 			if ( get_field( 'subtitle' ) ) {
-				echo '<div class="entry-meta">' . get_field( 'subtitle' ) . '</div>';
+				echo '<div class="entry-meta">' . esc_attr( get_field( 'subtitle' ) ) . '</div>';
 			}
 			?>
 			<?php
@@ -28,14 +28,14 @@ if ( $product->is_in_stock() ) { ?>
 				echo '<div class="small">Parents are welcome to attend without tickets</div>'; }
 ?>
 		</td>
-		<td class="price"><?php echo $product->get_price_html(); ?></td>
+		<td class="price"><?php echo wp_kses_post( $product->get_price_html() ); ?></td>
 		<td class="actions">
 			<?php
 			$product_terms        = get_the_terms( get_the_ID(), 'product_cat' );
 			$registration_product = false;
 
 			foreach ( $product_terms as $term ) {
-				if ( 'registration' == $term->slug ) {
+				if ( 'registration' === $term->slug ) {
 					$registration_product = true;
 				}
 			}
@@ -48,15 +48,15 @@ if ( $product->is_in_stock() ) { ?>
 					<button type="button" class="increment btn">+</button>
 				</label>';
 			} else {
-				echo '<label class="qty" for="qty-' . $variation_array['variation_id'] . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
+				echo '<label class="qty" for="qty-' . esc_attr( $variation_array['variation_id'] ) . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
 					<button type="button" class="decrement btn">-</button>
-					<input class="qty" name="qty-' . $variation_array['variation_id'] . '" type="number" value="0" min="0" max="6" />
+					<input class="qty" name="qty-' . esc_attr( $variation_array['variation_id'] ) . '" type="number" value="0" min="0" max="6" />
 					<button type="button" class="increment btn">+</button>
 				</label>';
 			}
 			?>
 			<p class="product woocommerce add_to_cart_inline">
-				<a rel="nofollow" href="<?php echo $variation->add_to_cart_url(); ?>" data-quantity="1" data-product_id="<?php echo get_the_ID(); ?>" class="button product_type_variation add_to_cart_button ajax_add_to_cart">Add to my order</a>
+				<a rel="nofollow" href="<?php echo esc_url( $variation->add_to_cart_url() ); ?>" data-quantity="1" data-product_id="<?php echo esc_attr( get_the_ID() ); ?>" class="button product_type_variation add_to_cart_button ajax_add_to_cart">Add to my order</a>
 				<span class="spinner hidden"></span>
 			</p>
 		</td>

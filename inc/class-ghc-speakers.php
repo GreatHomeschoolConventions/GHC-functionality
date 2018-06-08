@@ -54,7 +54,7 @@ class GHC_Speakers extends GHC_Base {
 	public function get_short_bio( int $post_id ) : string {
 		$speaker_position    = get_field( 'position', $post_id );
 		$speaker_company     = get_field( 'company', $post_id );
-		$speaker_company_URL = get_field( 'company_url', $post_id );
+		$speaker_company_url = get_field( 'company_url', $post_id );
 
 		ob_start();
 		if ( $speaker_position || $speaker_company ) {
@@ -66,7 +66,13 @@ class GHC_Speakers extends GHC_Base {
 				echo ' <span class="separator">|</span> ';
 			}
 			if ( $speaker_company ) {
-				echo ( $speaker_company_URL ? '<a target="_blank" rel="noopener noreferrer" href="' . esc_url( $speaker_company_URL ) . '">' : '' ) . esc_attr( $speaker_company ) . ( $speaker_company_URL ? '</a>' : '' );
+				if ( $speaker_company_url ) {
+					echo '<a target="_blank" rel="noopener noreferrer" href="' . esc_url( $speaker_company_url ) . '">';
+				}
+				echo esc_attr( $speaker_company );
+				if ( $speaker_company_url ) {
+					echo '</a>';
+				}
 			}
 			echo '</p>';
 		}

@@ -44,7 +44,6 @@ $hotel_query = new WP_Query( $hotel_args );
 	<?php
 	while ( $hotel_query->have_posts() ) {
 		$hotel_query->the_post();
-		global $conventions;
 		include 'hotel-template.php';
 	}
 	echo '</div>';

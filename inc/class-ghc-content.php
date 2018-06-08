@@ -91,7 +91,6 @@ class GHC_Content extends GHC_Base {
 	public function add_hotel_single_content( string $content ) : string {
 		if ( is_singular( 'hotel' ) ) {
 			// Get convention info.
-			global $conventions, $convention_abbreviations;
 			$conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 			$this_convention      = array_flip( $this->get_convention_abbreviations() )[ $conventions_taxonomy[0]->slug ];
 

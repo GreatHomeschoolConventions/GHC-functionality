@@ -90,7 +90,6 @@ class GHC_Shortcodes extends GHC_Base {
 	 * @return string HTML output.
 	 */
 	private function cpt_grid( array $attributes = array() ) : string {
-		global $convention_abbreviations;
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'post_type'      => 'speaker',
@@ -128,7 +127,7 @@ class GHC_Shortcodes extends GHC_Base {
 				array(
 					'taxonomy' => 'ghc_conventions_taxonomy',
 					'field'    => 'slug',
-					'terms'    => $convention_abbreviations[ $this_convention ],
+					'terms'    => $this->get_single_convention_abbreviation( $this_convention ),
 				),
 			);
 
@@ -824,7 +823,6 @@ class GHC_Shortcodes extends GHC_Base {
 	 * @return string HTML output.
 	 */
 	public function workshop_list( array $attributes = array() ) : string {
-		global $convention_abbreviations;
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'convention'     => null,
@@ -856,7 +854,7 @@ class GHC_Shortcodes extends GHC_Base {
 					array(
 						'taxonomy' => 'ghc_conventions_taxonomy',
 						'field'    => 'slug',
-						'terms'    => $convention_abbreviations[ $this_convention ],
+						'terms'    => $this->get_single_convention_abbreviation( $this_convention ),
 					),
 				),
 			);

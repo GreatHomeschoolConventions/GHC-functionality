@@ -29,7 +29,7 @@ class GHC_Speakers extends GHC_Base {
 	 *
 	 * @return GHC_Speakers class.
 	 */
-	public function get_instance() : GHC_Speakers {
+	public static function get_instance() : GHC_Speakers {
 		if ( null === self::$instance ) {
 			self::$instance = new GHC_Speakers();
 		}

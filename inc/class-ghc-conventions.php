@@ -64,7 +64,7 @@ class GHC_Conventions extends GHC_Base {
 	 *
 	 * @return GHC_Conventions class.
 	 */
-	public function get_instance() : GHC_Conventions {
+	public static function get_instance() : GHC_Conventions {
 		if ( null === self::$instance ) {
 			self::$instance = new GHC_Conventions();
 		}

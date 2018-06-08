@@ -36,7 +36,7 @@ class GHC_Woocommerce extends GHC_Base {
 	 *
 	 * @return GHC_Woocommerce class.
 	 */
-	public function get_instance() : GHC_Woocommerce {
+	public static function get_instance() : GHC_Woocommerce {
 		if ( null === self::$instance ) {
 			self::$instance = new GHC_Woocommerce();
 		}

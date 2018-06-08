@@ -78,7 +78,7 @@ class GHC_Base {
 	 *
 	 * @return GHC_Base class.
 	 */
-	public function get_main_instance() : GHC_Base {
+	public static function get_main_instance() : GHC_Base {
 		if ( null === self::$instance ) {
 			self::$instance = new GHC_Base();
 		}

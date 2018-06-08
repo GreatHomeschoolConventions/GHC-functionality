@@ -29,7 +29,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return GHC_Shortcodes class.
 	 */
-	public function get_instance() : GHC_Shortcodes {
+	public static function get_instance() : GHC_Shortcodes {
 		if ( null === self::$instance ) {
 			self::$instance = new GHC_Shortcodes();
 		}

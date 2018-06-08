@@ -296,7 +296,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function exhibit_hall_hours_shortcode() : string {
+	public function exhibit_hall_hours() : string {
 		return get_field( 'exhibit_hall_hours', 'option' );
 	}
 
@@ -349,7 +349,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string Formatted price string.
 	 */
-	public function product_price_shortcode() : string {
+	public function product_price() : string {
 		$registration_product = new WC_Product_Variable( get_field( 'registration_product' ) );
 		return $registration_product->get_price_html();
 	}
@@ -706,7 +706,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function special_event_list_shortcode() {
+	public function special_event_list() {
 		$special_event_list_args = array(
 			'taxonomy' => 'ghc_special_tracks_taxonomy',
 			'title_li' => '',

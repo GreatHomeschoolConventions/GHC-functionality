@@ -102,9 +102,10 @@ class GHC_Content extends GHC_Base {
 			if ( get_field( 'hotel_URL' ) && ! get_field( 'sold_out' ) ) {
 				echo '<a class="button book-hotel" target="_blank" rel="noopener noreferrer" href="' . esc_url( get_field( 'hotel_URL' ) ) . '">Book Online Now</a>';
 			}
+			$content .= ob_get_clean();
 		}
 
-		return ob_get_clean();
+		return $content;
 	}
 
 	/**

@@ -17,9 +17,7 @@ if ( ! function_exists( 'add_filter' ) ) {
 class GHC_ACF extends GHC_Base {
 
 	/**
-	 * Kick things off
-	 *
-	 * @private
+	 * Kick things off.
 	 */
 	public function __construct() {
 		if ( function_exists( 'acf_add_options_page' ) ) {
@@ -31,7 +29,9 @@ class GHC_ACF extends GHC_Base {
 	}
 
 	/**
-	 * Add ACF options page
+	 * Add ACF options page.
+	 *
+	 * @return  void Adds options page.
 	 */
 	public function admin_options() {
 		acf_add_options_page(
@@ -46,29 +46,33 @@ class GHC_ACF extends GHC_Base {
 	}
 
 	/**
-	 * Add Google Maps API key for ACF use
+	 * Add Google Maps API key for ACF use.
+	 *
+	 * @return void Sets Google API key.
 	 */
 	public function acf_init() {
 		acf_update_setting( 'google_api_key', get_option( 'options_api_key' ) );
 	}
 
 	/**
-	 * Set ACF local JSON save directory
+	 * Set ACF local JSON save directory.
 	 *
 	 * @param  string $path ACF local JSON save directory.
-	 * @return string ACF local JSON save directory
+	 *
+	 * @return string ACF local JSON save directory.
 	 */
-	public function acf_json_save_point( $path ) {
+	public function acf_json_save_point( string $path ) : string {
 		return $this->plugin_dir_path() . '/acf-json';
 	}
 
 	/**
-	 * Set ACF local JSON open directory
+	 * Set ACF local JSON open directory.
 	 *
-	 * @param  array $path ACF local JSON open directory.
-	 * @return array ACF local JSON open directory
+	 * @param  array $paths ACF local JSON open directory.
+	 *
+	 * @return array ACF local JSON open directory.
 	 */
-	public function acf_json_load_point( $path ) {
+	public function acf_json_load_point( array $paths ) : array {
 		$paths[] = $this->plugin_dir_path() . '/acf-json';
 		return $paths;
 	}

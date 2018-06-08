@@ -56,9 +56,10 @@ class GHC_Content extends GHC_Base {
 	 * Show convention icons for each exhibitor
 	 *
 	 * @param  string $content HTML content.
-	 * @return string modified content
+	 *
+	 * @return string modified content.
 	 */
-	public function archive_icons( $content ) {
+	public function archive_icons( string $content ) : string {
 		global $post;
 		$new_content = '';
 		if ( 'exhibitor' === get_post_type( $post->ID ) ) {
@@ -75,12 +76,13 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Add related sponsor(s) to posts/pages
+	 * Add related sponsor(s) to posts/pages.
 	 *
 	 * @param  string $content HTML content.
-	 * @return string modified HTML content
+	 *
+	 * @return string modified HTML content.
 	 */
-	public function add_related_sponsors( $content ) {
+	public function add_related_sponsors( string $content ) : string {
 		if ( is_singular() ) {
 			// Get related sponsors.
 			$related_sponsors = get_field( 'related_sponsors' );
@@ -128,7 +130,9 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Add video OpenGraph data if featured_video is specified
+	 * Add video OpenGraph data if featured_video is specified.
+	 *
+	 * @return  void Prints <meta> tags.
 	 */
 	public function add_opengraph_video() {
 		$featured_video = get_field( 'featured_video' );
@@ -161,10 +165,11 @@ class GHC_Content extends GHC_Base {
 	/**
 	 * Save featured_video thumbnail to postmeta
 	 *
-	 * @param  integer $post_id wp post ID.
-	 * @return boolean Whether postmeta was succesfully updated
+	 * @param  int $post_id wp post ID.
+	 *
+	 * @return bool Whether postmeta was succesfully updated.
 	 */
-	public function opengraph_video_get_meta( $post_id ) {
+	public function opengraph_video_get_meta( int $post_id ) : bool {
 		if ( ! empty( get_field( 'featured_video' ) ) ) {
 			$video_id = $this->get_video_id( esc_url( get_field( 'featured_video' ) ) );
 
@@ -188,12 +193,13 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Retrieve ID from YouTube URL
+	 * Retrieve ID from YouTube URL.
 	 *
 	 * @param  string $video_url Public URL of video.
-	 * @return string video ID
+	 *
+	 * @return string video ID.
 	 */
-	public function get_video_id( $video_url ) {
+	public function get_video_id( string $video_url ) : string {
 		if ( strpos( $video_url, '//youtu.be' ) !== false ) {
 			$video_id = basename( wp_parse_url( $video_url, PHP_URL_PATH ) );
 		} elseif ( strpos( $video_url, 'youtube.com' ) !== false ) {
@@ -205,12 +211,13 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Add special track info to speakers/workshops
+	 * Add special track info to speakers/workshops.
 	 *
 	 * @param  string $content HTML content.
-	 * @return string modified HTML content
+	 *
+	 * @return string modified HTML content.
 	 */
-	public function list_special_tracks( $content ) {
+	public function list_special_tracks( string $content ) : string {
 		$intro_content = '';
 
 		if ( is_singular( array( 'speaker', 'workshop' ) ) ) {
@@ -263,13 +270,14 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Get special track related sponsor name(s) and link(s)
+	 * Get special track related sponsor name(s) and link(s).
 	 *
-	 * @param  integer   $term_id              ghc_special_track term ID.
+	 * @param  int     $term_id              ghc_special_track term ID.
 	 * @param  string  [ $context             = 'inline'] “inline” or “standalone” context.
-	 * @return string  HTML output with sponsor name(s) and link(s)
+	 *
+	 * @return string  HTML output with sponsor name(s) and link(s).
 	 */
-	private function get_special_track_related_sponsor_names( $term_id, $context = 'inline' ) {
+	private function get_special_track_related_sponsor_names( int $term_id, string $context = 'inline' ) : string {
 		$track_output = '';
 		$sponsors     = get_field( 'related_sponsors', 'ghc_special_tracks_taxonomy_' . $term_id );
 		if ( $sponsors ) {
@@ -313,23 +321,25 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Add sponsor info to special track archive
+	 * Add sponsor info to special track archive.
 	 *
 	 * @param  string $content HTML archive description.
-	 * @return string HTML archive description with sponsor(s) name(s) and link(s) appended
+	 *
+	 * @return string HTML archive description with sponsor(s) name(s) and link(s) appended.
 	 */
-	public function list_special_track_sponsors( $content ) {
+	public function list_special_track_sponsors( string $content ) : string {
 		$content .= $this->get_special_track_related_sponsor_names( get_queried_object_id(), 'standalone' );
 		return $content;
 	}
 
 	/**
-	 * Add speaker location info to each speaker/workshop
+	 * Add speaker location info to each speaker/workshop.
 	 *
 	 * @param  string $content HTML content or excerpt.
-	 * @return string modified HTML content or excerpt
+	 *
+	 * @return string modified HTML content or excerpt.
 	 */
-	public function show_locations( $content ) {
+	public function show_locations( string $content ) : string {
 		if ( is_singular( array( 'special_event', 'speaker', 'workshop' ) ) || is_tax( 'ghc_special_tracks_taxonomy' ) ) {
 			$post_terms = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 
@@ -343,12 +353,13 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Show title and subtitle on speaker bio pages
+	 * Show title and subtitle on speaker bio pages.
 	 *
 	 * @param  string $content HTML content.
-	 * @return string modified HTML content
+	 *
+	 * @return string modified HTML content.
 	 */
-	public function show_title_info( $content ) {
+	public function show_title_info( string $content ) : string {
 		if ( is_singular( 'speaker' ) ) {
 			$speaker_position    = get_field( 'position', $id );
 			$speaker_company     = get_field( 'company', $id );
@@ -376,12 +387,13 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Add workshops list to each speaker and related workshops to each workshop
+	 * Add workshops list to each speaker and related workshops to each workshop.
 	 *
 	 * @param  string $content HTML content.
-	 * @return string modified HTML content
+	 *
+	 * @return string modified HTML content.
 	 */
-	public function show_related_workshops( $content ) {
+	public function show_related_workshops( string $content ) : string {
 		$workshop_content = '';
 
 		if ( is_singular( array( 'speaker', 'workshop' ) ) ) {
@@ -448,12 +460,13 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Add related speaker(s) to workshops
+	 * Add related speaker(s) to workshops.
 	 *
 	 * @param  string $content post content.
-	 * @return string post content with speaker info added
+	 *
+	 * @return string post content with speaker info added.
 	 */
-	public function show_related_speaker( $content ) {
+	public function show_related_speaker( string $content ) : string {
 		$speaker_content = '';
 
 		if ( is_singular( 'workshop' ) ) {
@@ -466,12 +479,13 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Add hotel details to single hotel views
+	 * Add hotel details to single hotel views.
 	 *
 	 * @param  string $content post content.
-	 * @return string post content with hotel info appended
+	 *
+	 * @return string post content with hotel info appended.
 	 */
-	public function show_hotel_details( $content ) {
+	public function show_hotel_details( string $content ) : string {
 		if ( 'hotel' === get_post_type() ) {
 			$conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 			$this_convention      = array_flip( $this->get_conventions_abbreviations() )[ $conventions_taxonomy[0]->slug ];

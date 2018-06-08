@@ -17,9 +17,7 @@ if ( ! function_exists( 'add_filter' ) ) {
 class GHC_Post_Types extends GHC_Base {
 
 	/**
-	 * Kick things off
-	 *
-	 * @private
+	 * Kick things off.
 	 */
 	public function __construct() {
 		// Post types.
@@ -50,7 +48,7 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Flush rewrite rules on activation
+	 * Flush rewrite rules on activation.
 	 */
 	public function activate() {
 		$this->register_post_types();
@@ -58,7 +56,7 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Register custom post types
+	 * Register custom post types.
 	 */
 	public function register_post_types() {
 
@@ -387,7 +385,7 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Register custom taxonomies
+	 * Register custom taxonomies.
 	 */
 	public function register_taxonomies() {
 		$convention_labels = array(
@@ -532,12 +530,13 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Remove “Archives: ” from archive titles
+	 * Remove “Archives: ” from archive titles.
 	 *
 	 * @param  string $title Archive title.
-	 * @return string modified archive title
+	 *
+	 * @return string modified archive title.
 	 */
-	public function cpt_archive_titles( $title ) {
+	public function cpt_archive_titles( string $title ) : string {
 		return str_replace( 'Archives: ', '', $title );
 	}
 
@@ -545,9 +544,10 @@ class GHC_Post_Types extends GHC_Base {
 	 * Add CPT descriptions at top of archive pages
 	 *
 	 * @param  string $description Default description text.
-	 * @return string description with custom message prepended
+	 *
+	 * @return string description with custom message prepended.
 	 */
-	public function cpt_archive_intro( $description ) {
+	public function cpt_archive_intro( string $description ) : string {
 		foreach ( get_field( 'archive_descriptions', 'option' ) as $cpt_message ) {
 			if ( is_post_type_archive( $cpt_message['post_type'] ) ) {
 				$description = apply_filters( 'the_content', $cpt_message['message'] );
@@ -561,9 +561,10 @@ class GHC_Post_Types extends GHC_Base {
 	 * Add sort order header to speakers backend
 	 *
 	 * @param  array $columns Array of all columns.
-	 * @return array array of modified columns
+	 *
+	 * @return array array of modified columns.
 	 */
-	public function speaker_columns( $columns ) {
+	public function speaker_columns( array $columns ) : array {
 		$columns = array_merge(
 			array_slice( $columns, 0, 1, true ),
 			array( 'thumbnail' => 'Thumbnail' ),
@@ -577,9 +578,11 @@ class GHC_Post_Types extends GHC_Base {
 	 * Display sort order on speakers backend
 	 *
 	 * @param string  $column  Column name.
-	 * @param integer $post_id Post ID.
+	 * @param int $post_id Post ID.
+	 *
+	 * @return  string Content for custom column.
 	 */
-	public function speaker_column_content( $column, $post_id ) {
+	public function speaker_column_content( string $column, int $post_id ) : string {
 		global $post;
 		if ( 'menu_order' === $column ) {
 			echo esc_attr( $post->menu_order );
@@ -592,20 +595,22 @@ class GHC_Post_Types extends GHC_Base {
 	 * Make speakers order column header sortable
 	 *
 	 * @param  array $columns Array of all columns.
-	 * @return array array of modified columns
+	 *
+	 * @return array array of modified columns.
 	 */
-	public function speaker_sortable_columns( $columns ) {
+	public function speaker_sortable_columns( array $columns ) : array {
 		$columns['menu_order'] = 'menu_order';
 		return $columns;
 	}
 
 	/**
-	 * Add workshop date/time and speaker headers to workshops backend
+	 * Add workshop date/time and speaker headers to workshops backend.
 	 *
 	 * @param  array $columns Array of all columns.
-	 * @return array array of modified columns
+	 *
+	 * @return array Array of modified columns.
 	 */
-	public function workshop_columns( $columns ) {
+	public function workshop_columns( array $columns ) : array {
 		$columns['date_time'] = 'Date/Time';
 		$columns['speaker']   = 'Speaker';
 		unset( $columns['date'] );
@@ -613,12 +618,14 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Display speaker name on workshops backend
+	 * Display speaker name on workshops backend.
 	 *
 	 * @param string  $column  Column name.
-	 * @param integer $post_id Post ID.
+	 * @param int     $post_id Post ID.
+	 *
+	 * @return  void Prints content.
 	 */
-	public function workshop_column_content( $column, $post_id ) {
+	public function workshop_column_content( string $column, int $post_id ) {
 		global $post;
 		if ( 'date_time' === $column ) {
 			echo esc_attr( date( 'n/d/y g:i A', strtotime( get_field( 'date_and_time' ) ) ) );
@@ -632,30 +639,31 @@ class GHC_Post_Types extends GHC_Base {
 					$speaker_string .= $speaker->post_title . ', ';
 				}
 				echo esc_attr( rtrim( $speaker_string, ', ' ) );
-			} else {
-				return;
 			}
 		}
 	}
 
 	/**
-	 * Make workshop speaker name header sortable
+	 * Make workshop speaker name header sortable.
 	 *
 	 * @param  array $columns Array of all columns.
-	 * @return array array of modified columns
+	 *
+	 * @return array array of modified columns.
 	 */
-	public function workshop_sortable_columns( $columns ) {
+	public function workshop_sortable_columns( $columns ) : array {
 		$columns['date_time'] = 'date_time';
 		$columns['speaker']   = 'speaker';
 		return $columns;
 	}
 
 	/**
-	 * Sort workshops by speaker name
+	 * Sort workshops by speaker name.
 	 *
 	 * @param object $query WP_Query.
+	 *
+	 * @return  void Sets query vars.
 	 */
-	public function sort_workshops_admin( $query ) {
+	public function sort_workshops_admin( WP_Query $query ) {
 		if ( is_admin() && array_key_exists( 'post_type', $query->query ) && 'workshop' === $query->query['post_type'] && $query->is_main_query() ) {
 			if ( 'date_time' === $query->get( 'orderby' ) && 'menu_order title' === $query->get( 'orderby' ) ) {
 				$query->set( 'meta_key', 'date_and_time' );
@@ -666,11 +674,13 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Sort speakers and hide non-featured speakers
+	 * Sort speakers and hide non-featured speakers.
 	 *
 	 * @param  object $query WP_Query.
+	 *
+	 * @return  void Sets query vars.
 	 */
-	public function speakers_order( $query ) {
+	public function speakers_order( WP_Query $query ) {
 		if ( array_key_exists( 'post_type', $query->query ) && 'speaker' === $query->query['post_type'] ) {
 			$query->set( 'orderby', 'menu_order' );
 			$query->set( 'order', 'ASC' );
@@ -688,11 +698,13 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Sort exhibitors
+	 * Sort exhibitors.
 	 *
 	 * @param object $query WP_Query.
+	 *
+	 * @return  void Sets query vars.
 	 */
-	public function modify_exhibitor_archive( $query ) {
+	public function modify_exhibitor_archive( WP_Query $query ) {
 		if ( array_key_exists( 'post_type', $query->query ) && 'exhibitor' === $query->query['post_type'] && ! is_admin() && $query->is_main_query() ) {
 			$query->set( 'posts_per_page', '-1' );
 			$query->set( 'pagination', 'false' );
@@ -702,11 +714,13 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Sort special track CPTs
+	 * Sort special track CPTs.
 	 *
 	 * @param object $query WP_Query.
+	 *
+	 * @return  void Sets query vars.
 	 */
-	public function modify_special_track_tax( $query ) {
+	public function modify_special_track_tax( WP_Query $query ) {
 		if ( array_key_exists( 'ghc_special_tracks_taxonomy', $query->query ) && ! is_admin() && $query->is_main_query() ) {
 			$query->set( 'posts_per_page', '-1' );
 			$query->set( 'pagination', 'false' );
@@ -716,11 +730,13 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Sort sponsors
+	 * Sort sponsors.
 	 *
 	 * @param object $query WP_Query.
+	 *
+	 * @return  void Sets query vars.
 	 */
-	public function modify_sponsor_archive( $query ) {
+	public function modify_sponsor_archive( WP_Query $query ) {
 		if ( ! is_admin() && $query->is_main_query() && is_post_type_archive( 'sponsor' ) ) {
 			$query->set( 'posts_per_page', -1 );
 			$query->set( 'orderby', 'menu_order' );
@@ -729,11 +745,13 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Add all the given speaker’s workshops to post_meta for performance
+	 * Add all the given speaker’s workshops to post_meta for performance.
 	 *
 	 * @param integer $post_id WP post ID.
+	 *
+	 * @return  void Saves data to post_meta.
 	 */
-	public function add_speaker_workshop_meta( $post_id ) {
+	public function add_speaker_workshop_meta( int $post_id ) {
 		if ( 'speaker' === get_post_type() ) {
 			$this->save_speaker_workshops( $post_id );
 		} elseif ( 'workshop' === get_post_type() ) {
@@ -746,12 +764,13 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Get workshop IDs for a given speaker
+	 * Get workshop IDs for a given speaker.
 	 *
 	 * @param  integer $speaker_id Speaker post ID.
-	 * @return array   array of workshop IDs
+	 *
+	 * @return bool   Whether post_meta was updated.
 	 */
-	private function save_speaker_workshops( $speaker_id ) {
+	private function save_speaker_workshops( int $speaker_id ) : bool {
 		$speaker_workshops_args = array(
 			'post_type'      => 'workshop',
 			'posts_per_page' => -1,

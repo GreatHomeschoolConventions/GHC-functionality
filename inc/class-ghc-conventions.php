@@ -19,35 +19,35 @@ if ( ! function_exists( 'add_filter' ) ) {
  */
 class GHC_Conventions extends GHC_Base {
 	/**
-	 * All conventions with full info
+	 * All conventions with full info.
 	 *
 	 * @var array
 	 */
 	protected $conventions = array();
 
 	/**
-	 * All conventions abbreviations
+	 * All conventions abbreviations.
 	 *
 	 * @var array
 	 */
 	protected $conventions_abbreviations = array();
 
 	/**
-	 * All convention dates
+	 * All convention dates.
 	 *
 	 * @var array
 	 */
 	protected $conventions_dates = array();
 
 	/**
-	 * Subclass instance
+	 * Subclass instance.
 	 *
 	 * @var null
 	 */
 	private static $instance = null;
 
 	/**
-	 * Kick things off
+	 * Kick things off.
 	 *
 	 * @access private
 	 */
@@ -66,7 +66,7 @@ class GHC_Conventions extends GHC_Base {
 	 *
 	 * @return GHC_Conventions class.
 	 */
-	public function get_instance() {
+	public function get_instance() : GHC_Conventions {
 		if ( self::$instance === null ) {
 			self::$instance = new GHC_Conventions();
 		}
@@ -75,11 +75,11 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Get convention info
+	 * Get convention info.
 	 *
-	 * @return array All convention info
+	 * @return array All convention info.
 	 */
-	public function get_conventions_info() {
+	public function get_conventions_info() : array {
 		if ( empty( $this->conventions ) ) {
 			$transient = get_transient( 'ghc_conventions' );
 			if ( $transient ) {
@@ -94,11 +94,11 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Get convention abbreviations
+	 * Get convention abbreviations.
 	 *
-	 * @return array Convention locations abbreviations
+	 * @return array Convention locations abbreviations.
 	 */
-	public function get_conventions_abbreviations() {
+	public function get_conventions_abbreviations() : array {
 		if ( empty( $this->conventions_abbreviations ) ) {
 			$transient = get_transient( 'ghc_conventions_abbreviations' );
 			if ( $transient ) {
@@ -112,11 +112,11 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Get convention dates
+	 * Get convention dates.
 	 *
-	 * @return array Conventions dates
+	 * @return array Conventions dates.
 	 */
-	public function get_conventions_dates() {
+	public function get_conventions_dates() : array {
 		if ( empty( $this->conventions_dates ) ) {
 			$transient = get_transient( 'ghc_conventions_dates' );
 			if ( $transient ) {
@@ -129,13 +129,13 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Read convention info into global array
+	 * Read convention info into global array.
 	 *
 	 * Each key is the two-letter convention abbreviation.
 	 *
-	 * @return array associative array with convention info
+	 * @return array Associative array with convention info.
 	 */
-	public function load_conventions_info() {
+	public function load_conventions_info() : array {
 		$conventions = array();
 
 		$args = array(
@@ -185,11 +185,11 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Set up convention abbreviations array
+	 * Set up convention abbreviations array.
 	 *
-	 * @return array associative array with convention abbreviation => convention short name
+	 * @return array Associative array with convention abbreviation => convention short name
 	 */
-	public function load_conventions_abbreviations() {
+	public function load_conventions_abbreviations() : array {
 		$conventions_abbreviations = array();
 
 		foreach ( $this->get_conventions_info() as $key => $values ) {
@@ -202,11 +202,11 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Set up convention dates array
+	 * Set up convention dates array.
 	 *
-	 * @return array associative array with convention abbreviation => Unix time
+	 * @return array Associative array with convention abbreviation => Unix time.
 	 */
-	public function load_conventions_dates() {
+	public function load_conventions_dates() : array {
 		$conventions_dates = array();
 		foreach ( $this->get_conventions_info() as $key => $values ) {
 			$convention_dates[ $key ] = mktime( get_field( 'end_date', $values['ID'] ) );
@@ -218,14 +218,14 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Return convention icons
+	 * Return convention icons.
 	 *
 	 * @param  mixed  $input_conventions      Conventions to display.
 	 * @param  array  [array $args = array()] Extra arguments.
 	 *
-	 * @return string $convention_icons HTML string with content
+	 * @return string $convention_icons HTML string with content.
 	 */
-	public function get_icons( mixed $input_conventions, array $args = array() ) {
+	public function get_icons( mixed $input_conventions, array $args = array() ) : string {
 		$convention_icons      = '';
 		$conventions_to_output = array();
 
@@ -283,26 +283,26 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Get convention abbreviation from full name
+	 * Get convention abbreviation from full name.
 	 *
 	 * @access private
 	 * @param  string $convention Convention long name.
 	 *
-	 * @return string Two-letter convention abbreviation
+	 * @return string Two-letter convention abbreviation.
 	 */
-	private function get_abbreviation( $convention ) {
+	private function get_abbreviation( string $convention ) : string {
 		return str_replace( $this->get_conventions_abbreviations(), array_keys( $this->get_conventions_abbreviations() ), $convention );
 	}
 
 	/**
-	 * Sort locations in correct order
+	 * Sort locations in correct order.
 	 *
-	 * @param  string $a Array member 1.
-	 * @param  string $b Array member 2.
+	 * @param  mixed $a Array member 1.
+	 * @param  mixed $b Array member 2.
 	 *
 	 * @return int Whether key should be moved forward or backward in array.
 	 */
-	public function sort_conventions( $a, $b ) {
+	public function sort_conventions( mixed $a, mixed $b ) : int {
 		$sort_order = null;
 
 		// Convert objects.
@@ -341,7 +341,7 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Add JSON-LD microdata to each location single view
+	 * Add JSON-LD microdata to each location single view.
 	 *
 	 * @return  void Prints output.
 	 */
@@ -409,24 +409,25 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Format date as Y-m-d for schema.org use
+	 * Format date as Y-m-d for schema.org use.
 	 *
 	 * @param  string $date Ymd-formatted date.
-	 * @return string Y-m-d-formatted date
+	 *
+	 * @return string Y-m-d-formatted date.
 	 */
-	private function format_schema_org_date( $date ) {
+	private function format_schema_org_date( string $date ) : string {
 		$date = date_create_from_format( 'Ymd', $date );
 		return $date->format( 'Y-m-d' );
 	}
 
 	/**
-	 * Fix protocol-agnostic URLs
+	 * Fix protocol-agnostic URLs.
 	 *
 	 * @param  string $url Original URL.
 	 *
-	 * @return string URL with https:// prepended
+	 * @return string URL with https:// prepended.
 	 */
-	private function format_schema_url( $url ) {
+	private function format_schema_url( string $url ) : string {
 		if ( strpos( $url, 'http' ) === false || strpos( $url, 'http' ) === 0 ) {
 			$url = 'https:' . $url;
 		}

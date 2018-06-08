@@ -19,57 +19,59 @@ if ( ! function_exists( 'add_filter' ) ) {
  */
 class GHC_Base {
 	/**
-	 * Plugin version
+	 * Plugin version.
 	 *
-	 * @var string Plugin version string for cache-busting
+	 * @var string Plugin version string for cache-busting.
 	 */
 	private $version = '3.2.10';
 
 	/**
-	 * All active conventions
+	 * All active conventions.
 	 *
 	 * @var array
 	 */
 	protected $conventions = array();
 
 	/**
-	 * Convention abbreviations
+	 * Convention abbreviations.
 	 *
 	 * @var array
 	 */
 	protected $conventions_abbreviations = array();
 
 	/**
-	 * Convention dates
+	 * Convention dates.
 	 *
 	 * @var array
 	 */
 	protected $conventions_dates = array();
 
 	/**
-	 * Get this plugin directory path
+	 * Get this plugin directory path.
 	 *
 	 * @param  string [ $path       = ''] Optional path to append.
-	 * @return string Base path for this plugin’s directory
+	 *
+	 * @return string Base path for this plugin’s directory.
 	 */
-	protected function plugin_dir_path( $path = '' ) {
+	protected function plugin_dir_path( $path = '' ) : string {
 		return plugin_dir_path( GHC_PLUGIN_FILE ) . $path;
 	}
 
 	/**
-	 * Get this plugin directory URL
+	 * Get this plugin directory URL.
 	 *
 	 * @param  string [ $path       = ''] Optional path to append.
+	 *
 	 * @return string Base URL for this plugin’s directory
 	 */
-	protected function plugin_dir_url( $path = '' ) {
+	protected function plugin_dir_url( $path = '' ) : string {
 		return plugin_dir_url( GHC_PLUGIN_FILE ) . $path;
 	}
 
 	/**
-	 * Kick things off
+	 * Kick things off.
 	 *
-	 * @private
+	 * @access public
 	 */
 	public function __construct() {
 
@@ -98,11 +100,11 @@ class GHC_Base {
 	}
 
 	/**
-	 * Get all convention info
+	 * Get all convention info.
 	 *
 	 * @return array All convention info.
 	 */
-	public function get_conventions_info() {
+	public function get_conventions_info() : array {
 		if ( 0 === count( $this->conventions ) ) {
 			$conventions       = GHC_Conventions::get_instance();
 			$this->conventions = $conventions->get_conventions_info();
@@ -112,11 +114,11 @@ class GHC_Base {
 	}
 
 	/**
-	 * Get convention abbreviations
+	 * Get convention abbreviations.
 	 *
 	 * @return array Convention abbreviations.
 	 */
-	public function get_conventions_abbreviations() {
+	public function get_conventions_abbreviations() : array {
 		if ( 0 === count( $this->conventions_abbreviations ) ) {
 			$conventions                     = GHC_Conventions::get_instance();
 			$this->conventions_abbreviations = $conventions->get_conventions_abbreviations();
@@ -126,11 +128,11 @@ class GHC_Base {
 	}
 
 	/**
-	 * Get convention dates
+	 * Get convention dates.
 	 *
 	 * @return array Convention dates.
 	 */
-	public function get_conventions_dates() {
+	public function get_conventions_dates() : array {
 		if ( 0 === count( $this->conventions_dates ) ) {
 			$conventions             = GHC_Conventions::get_instance();
 			$this->conventions_dates = $conventions->get_conventions_dates();
@@ -140,18 +142,24 @@ class GHC_Base {
 	}
 
 	/**
-	 * Get info for a single convention
+	 * Get info for a single convention.
 	 *
 	 * @param  string [ $convention       = ''] Two-letter convention abbreviation.
-	 * @return array  Convention info
+	 *
+	 * @return array  Convention info.
 	 */
-	public function get_single_convention_info( $convention = '' ) {
-		$all_conventions = $this->get_conventions_info();
-		return $all_conventions[ $convention ];
+	public function get_single_convention_info( $convention = '' ) : array {
+		if ( ! empty( $convention ) ) {
+			return $this->get_conventions_info( $convention );
+		}
+
+		return array();
 	}
 
 	/**
 	 * Register or enqueue frontend assets
+	 *
+	 * @return  void Enqueues assets.
 	 */
 	public function register_assets() {
 		wp_enqueue_style( 'ghc-functionality', $this->plugin_dir_url( 'dist/css/style.min.css' ), array(), $this->version );
@@ -159,7 +167,7 @@ class GHC_Base {
 		wp_enqueue_script( 'ghc-popups', $this->plugin_dir_url( 'dist/js/popups.min.js' ), array( 'jquery', 'popup-maker-site' ), $this->version, true );
 	}
 
-	// TODO: move to sub-class.
+	// TODO: move to WooCommerce sub-class.
 	public function ghc_register_frontend_resources() {
 		wp_register_script( 'ghc-woocommerce', $this->plugin_dir_url( 'dist/js/woocommerce.min.js' ), array( 'jquery', 'woocommerce' ), $this->version );
 		wp_register_script( 'ghc-price-sheets', $this->plugin_dir_url( 'dist/js/price-sheets.min.js' ), array( 'jquery' ), $this->version );
@@ -173,7 +181,7 @@ class GHC_Base {
 		}
 	}
 
-	// TODO: move to sub-class.
+	// TODO: move to exhibitor sub-class?
 	function ghc_register_backend_resources() {
 		global $post_type;
 		if ( 'exhibitor' === $post_type ) {

@@ -41,7 +41,7 @@ class GHC_Images extends GHC_Base {
 	 */
 	public function get_instance() : GHC_Images {
 		if ( null === self::$instance ) {
-			self::$instance = new GHC_Woocommerce();
+			self::$instance = new GHC_Images();
 		}
 
 		return self::$instance;

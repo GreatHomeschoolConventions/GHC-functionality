@@ -239,7 +239,7 @@ class GHC_Shortcodes extends GHC_Base {
 				array(
 					'taxonomy' => 'ghc_conventions_taxonomy',
 					'field'    => 'slug',
-					'terms'    => $this->get_convention_abbreviations( $this_convention ),
+					'terms'    => $this->get_conventions_abbreviations( $this_convention ),
 				),
 			);
 		}

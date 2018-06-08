@@ -38,5 +38,5 @@ if ( ! defined( 'GHC_PLUGIN_FILE' ) ) {
 // Include the main class.
 if ( ! class_exists( 'GHC_Base' ) ) {
 	include_once dirname( __FILE__ ) . '/inc/class-ghc-base.php';
-	new GHC_Base();
+	GHC_Base::get_main_instance();
 }

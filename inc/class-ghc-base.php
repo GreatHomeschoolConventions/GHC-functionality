@@ -67,11 +67,32 @@ class GHC_Base {
 	}
 
 	/**
+	 * Class instance.
+	 *
+	 * @var null
+	 */
+	private static $instance = null;
+
+ 	/**
+	 * Return only one instance of this class.
+	 *
+	 * @return GHC_Base class.
+	 */
+	public function get_main_instance() : GHC_Base {
+		if ( null === self::$instance ) {
+			self::$instance = new GHC_Base();
+		}
+
+		return self::$instance;
+	}
+
+
+	/**
 	 * Kick things off.
 	 *
 	 * @access public
 	 */
-	public function __construct() {
+	private function __construct() {
 
 		include_once 'class-ghc-post-types.php'; // Loaded in class.
 		include_once 'class-ghc-conventions.php'; // Loaded in class.

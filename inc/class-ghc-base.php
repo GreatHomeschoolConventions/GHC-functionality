@@ -167,12 +167,27 @@ class GHC_Base {
 	 *
 	 * @return array  Convention info.
 	 */
-	public function get_single_convention_info( $convention = '' ) : array {
+	public function get_single_convention_info( string $convention = '' ) : array {
 		if ( ! empty( $convention ) ) {
-			return $this->get_conventions_info( $convention );
+			return $this->get_conventions_info()[ $convention ];
 		}
 
 		return array();
+	}
+
+	/**
+	 * Get abbreviation for a single convention.
+	 *
+	 * @param  string $convention Two-letter convention abbreviation.
+	 *
+	 * @return array  Convention abbreviation.
+	 */
+	public function get_single_convention_abbreviation( string $convention = '' ) : string {
+		if ( ! empty( $convention ) ) {
+			return $this->get_conventions_abbreviations()[ $convention ];
+		}
+
+		return '';
 	}
 
 	/**

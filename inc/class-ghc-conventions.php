@@ -434,11 +434,11 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Get the current convention for a CTA.
+	 * Get the current CTA convention for a convention.
 	 *
 	 * @param  array $value Input array.
 	 *
-	 * @return bool Whether or not this is the correct convention.
+	 * @return bool Whether or not this is the correct CTA for this convention.
 	 */
 	public function get_current_cta( array $value ) : bool {
 		if ( ( ! isset( $value['begin_date'] ) || strtotime( $value['begin_date'] ) <= time() ) && ( ! isset( $value['end_date'] ) || strtotime( $value['end_date'] ) >= time() ) ) {

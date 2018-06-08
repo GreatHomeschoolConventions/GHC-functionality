@@ -31,7 +31,7 @@ class GHC_Post_Types extends GHC_Base {
 		// Frontend.
 		add_filter( 'get_the_archive_title', array( $this, 'cpt_archive_titles' ) );
 		add_filter( 'get_the_archive_description', array( $this, 'cpt_archive_intro' ) );
-		add_filter( 'archive_template', array ( $this, 'hotel_archive' ) );
+		add_filter( 'archive_template', array( $this, 'hotel_archive' ) );
 		add_action( 'pre_get_posts', array( $this, 'speakers_order' ) );
 		add_action( 'pre_get_posts', array( $this, 'modify_exhibitor_archive' ) );
 		add_action( 'pre_get_posts', array( $this, 'modify_special_track_tax' ) );

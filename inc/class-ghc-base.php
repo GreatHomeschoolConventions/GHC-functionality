@@ -113,7 +113,7 @@ class GHC_Base {
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
 
 		// TODO: move to GHC_Exhibitors sub-class.
-		add_action( 'admin_enqueue_scripts', 'ghc_register_backend_resources' );
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_backend_resources' ) );
 	}
 
 	/**
@@ -232,7 +232,7 @@ class GHC_Base {
 	}
 
 	// TODO: move to exhibitor sub-class?
-	function ghc_register_backend_resources() {
+	function register_backend_resources() {
 		global $post_type;
 		if ( 'exhibitor' === $post_type ) {
 			wp_enqueue_script( 'ghc-exhibitor-backend', plugins_url( 'js/exhibitor-backend.min.js', __FILE__ ), array( 'jquery' ), $this->version, true );

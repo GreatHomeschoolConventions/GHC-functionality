@@ -104,8 +104,6 @@ class GHC_Base {
 		include_once 'class-ghc-speakers.php'; // Loaded in class.
 		include_once 'class-ghc-woocommerce.php'; // Loaded in class.
 
-//		include_once 'woocommerce.php';
-
 		// Set up convention info.
 		add_action( 'after_setup_theme', array( $this, 'get_conventions_info' ) );
 		add_action( 'after_setup_theme', array( $this, 'get_conventions_abbreviations' ) );

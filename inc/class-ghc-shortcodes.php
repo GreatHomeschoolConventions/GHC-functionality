@@ -378,15 +378,15 @@ class GHC_Shortcodes extends GHC_Base {
 			<?php
 			$next_convention = '';
 			foreach ( $this->get_conventions_info() as $convention ) {
-				$convention_abbreviation = strtolower( $convention['convention_abbreviated_name'][0] );
-				if ( empty( $next_convention ) && date( 'Ymd' ) < $convention['begin_date'][0] ) {
+				$convention_abbreviation = strtolower( $convention['convention_abbreviated_name'] );
+				if ( empty( $next_convention ) && date( 'Ymd' ) < $convention['begin_date'] ) {
 					$next_convention = $convention_abbreviation;
 				}
 				?>
 				<input class="registration-choice convention" type="radio" name="convention" value="<?php echo $convention_abbreviation; ?>" id="convention-<?php echo $convention_abbreviation; ?>" <?php checked( $next_convention, $convention_abbreviation ); ?> />
 					<label class="registration-choice convention theme bg <?php echo $convention_abbreviation; ?>" for="convention-<?php echo $convention_abbreviation; ?>">
-						<h4><?php echo $convention['convention_short_name'][0]; ?></h4>
-						<p class="info"><?php echo $this->format_date_range( $convention['begin_date'][0], $convention['end_date'][0], 'Ymd' ); ?></p>
+						<h4><?php echo $convention['convention_short_name']; ?></h4>
+						<p class="info"><?php echo $this->format_date_range( $convention['begin_date'], $convention['end_date'], 'Ymd' ); ?></p>
 					</label>
 			<?php } ?>
 

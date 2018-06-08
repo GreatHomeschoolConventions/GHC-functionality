@@ -86,7 +86,7 @@ class GHC_Base {
 //		include_once 'woocommerce.php';
 
 		// Set up convention info.
-		add_action( 'after_setup_theme', array( $this, 'get_conventions' ) );
+		add_action( 'after_setup_theme', array( $this, 'get_conventions_info' ) );
 		add_action( 'after_setup_theme', array( $this, 'get_conventions_abbreviations' ) );
 		add_action( 'after_setup_theme', array( $this, 'get_conventions_dates' ) );
 

@@ -143,7 +143,7 @@ class GHC_Base {
 	 */
 	public function get_single_convention_info( string $convention = '' ) : array {
 		if ( ! empty( $convention ) ) {
-			return $this->get_conventions_info()[ $convention ];
+			return $this->get_conventions_info()[ strtolower( $convention ) ];
 		}
 
 		return array();
@@ -158,7 +158,7 @@ class GHC_Base {
 	 */
 	public function get_single_convention_abbreviation( string $convention = '' ) : string {
 		if ( ! empty( $convention ) ) {
-			return $this->get_conventions_abbreviations()[ $convention ];
+			return $this->get_conventions_abbreviations()[ strtolower( $convention ) ];
 		}
 
 		return '';

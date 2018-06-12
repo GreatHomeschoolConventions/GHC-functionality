@@ -38,13 +38,6 @@ class GHC_Base {
 	protected $conventions_abbreviations = array();
 
 	/**
-	 * Convention dates.
-	 *
-	 * @var array
-	 */
-	protected $conventions_dates = array();
-
-	/**
 	 * Get this plugin directory path.
 	 *
 	 * @param  string [ $path       = ''] Optional path to append.
@@ -107,7 +100,6 @@ class GHC_Base {
 		// Set up convention info.
 		add_action( 'after_setup_theme', array( $this, 'get_conventions_info' ) );
 		add_action( 'after_setup_theme', array( $this, 'get_conventions_abbreviations' ) );
-		add_action( 'after_setup_theme', array( $this, 'get_conventions_dates' ) );
 
 		// Register/enqueue assets.
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_frontend_assets' ) );
@@ -140,20 +132,6 @@ class GHC_Base {
 		}
 
 		return $this->conventions_abbreviations;
-	}
-
-	/**
-	 * Get convention dates.
-	 *
-	 * @return array Convention dates.
-	 */
-	public function get_conventions_dates() : array {
-		if ( 0 === count( $this->conventions_dates ) ) {
-			$conventions             = GHC_Conventions::get_instance();
-			$this->conventions_dates = $conventions->get_conventions_dates();
-		}
-
-		return $this->conventions_dates;
 	}
 
 	/**

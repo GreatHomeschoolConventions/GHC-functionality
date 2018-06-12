@@ -17,27 +17,6 @@ if ( ! function_exists( 'add_filter' ) ) {
  */
 class GHC_Conventions extends GHC_Base {
 	/**
-	 * All conventions with full info.
-	 *
-	 * @var array
-	 */
-	protected $conventions = array();
-
-	/**
-	 * All conventions abbreviations.
-	 *
-	 * @var array
-	 */
-	protected $conventions_abbreviations = array();
-
-	/**
-	 * All convention dates.
-	 *
-	 * @var array
-	 */
-	protected $conventions_dates = array();
-
-	/**
 	 * Subclass instance.
 	 *
 	 * @var null
@@ -107,23 +86,6 @@ class GHC_Conventions extends GHC_Base {
 		}
 
 		return $this->conventions_abbreviations;
-	}
-
-	/**
-	 * Get convention dates.
-	 *
-	 * @return array Conventions dates.
-	 */
-	public function get_conventions_dates() : array {
-		if ( empty( $this->conventions_dates ) ) {
-			$transient = get_transient( 'ghc_conventions_dates' );
-			if ( $transient ) {
-				$this->convention_dates = $transient;
-			} else {
-				$this->conventions_dates = $this->load_conventions_dates();
-			}
-		}
-		return $this->conventions_dates;
 	}
 
 	/**
@@ -197,22 +159,6 @@ class GHC_Conventions extends GHC_Base {
 		set_transient( 'ghc_conventions_abbreviations', $convention_abbreviations );
 
 		return $convention_abbreviations;
-	}
-
-	/**
-	 * Set up convention dates array.
-	 *
-	 * @return array Associative array with convention abbreviation => Unix time.
-	 */
-	public function load_conventions_dates() : array {
-		$conventions_dates = array();
-		foreach ( $this->get_conventions_info() as $key => $values ) {
-			$convention_dates[ $key ] = mktime( get_field( 'end_date', $values['ID'] ) );
-		}
-
-		set_transient( 'ghc_conventions_dates', $convention_dates );
-
-		return $convention_dates;
 	}
 
 	/**

@@ -44,6 +44,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 */
 	private function __construct() {
 		$this->init_shortcodes();
+		add_action( 'wpcf7_init', array( $this, 'convention_form_list_setup' ) );
 	}
 
 	/**
@@ -183,7 +184,67 @@ class GHC_Shortcodes extends GHC_Base {
 		$cta_array   = array_filter( $this->get_conventions_info()[ $this_convention ]['cta_list'], array( $this, 'get_current_cta' ) );
 		$current_cta = array_pop( $cta_array )['cta_content'];
 
+		// CF7 is not scanning form tags for some reason. This fixes it.
+		$current_cta = wpcf7_replace_all_form_tags( $current_cta );
+
 		return apply_filters( 'the_content', $current_cta );
+	}
+
+	/**
+	 * Register WPCF7 shortcode.
+	 *
+	 * @return void Register WPCF7 shortcode.
+	 */
+	public function convention_form_list_setup() {
+		wpcf7_add_form_tag( 'convention_form_list', array( $this, 'convention_form_list' ), array( 'name-attr' => true ) );
+	}
+
+	/**
+	 * Add callback handler for WPCF7 convention list checkboxes.
+	 *
+	 * @param  WPCF7_FormTag $tag Form tag.
+	 *
+	 * @return string HTML content.
+	 */
+	public function convention_form_list( WPCF7_FormTag $tag ) : string {
+		$form_options = array();
+		foreach ( $tag['options'] as $key => $value ) {
+			$form_options[ $value ] = $tag['values'][ $key ];
+		}
+		ob_start();
+		?>
+		<span class="wpcf7-form-control-wrap conventions">
+			<span class="wpcf7-form-control wpcf7-checkbox">
+
+			<?php
+			foreach ( $this->get_conventions_info() as $convention ) {
+				?>
+				<span class="wpcf7-list-item"><label><input type="checkbox" name="conventions[]" value="<?php echo esc_attr( $convention['convention_abbreviated_name'] ); ?>">&nbsp;<span class="wpcf7-list-item-label"><?php echo wp_kses_post( $this->format_form_convention_label( $form_options, $convention ) ); ?></span></label></span>
+				<?php
+			}
+			?>
+			</span>
+		</span>
+
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Format convention info for WPCF7 shortcode.
+	 *
+	 * @param  array $form_options Form options.
+	 * @param  array $convention   Convention info.
+	 *
+	 * @return string               Formatted info.
+	 */
+	private function format_form_convention_label( array $form_options, array $convention ) : string {
+		if ( 'long' === $form_options['format'] ) {
+			return '<strong>' . $convention['convention'] . '</strong>: ' . $this->get_single_convention_date( $convention['convention_abbreviated_name'] ) . ' at the ' . $convention['address']['convention_center_name'] . ' in ' . $convention['address']['city'] . ', ' . $convention['address']['state'];
+		}
+		if ( 'short' === $form_options['format'] ) {
+			return '<strong>' . $convention['convention_abbreviated_name'] . '</strong>: ' . $this->get_single_convention_date( $convention['convention_abbreviated_name'] );
+		}
 	}
 
 	/**
@@ -383,7 +444,8 @@ class GHC_Shortcodes extends GHC_Base {
 
 		$special_events_query = wc_get_products( $special_events_args );
 
-		if ( count( $registration_query ) > 0 ) { ?>
+		if ( count( $registration_query ) > 0 ) {
+		?>
 
 			<h3 id="convention">Convention</h3>
 			<p>Choose one:</p>

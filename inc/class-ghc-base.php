@@ -165,6 +165,22 @@ class GHC_Base {
 	}
 
 	/**
+	 * Get formatted date range for a single convention.
+	 *
+	 * @param  string $convention Two-letter convention abbreviation.
+	 *
+	 * @return string Convention dates.
+	 */
+	public function get_single_convention_date( string $convention = '' ) : string {
+		if ( ! empty( $convention ) ) {
+			$this_convention = $this->get_single_convention_info( $convention );
+			return $this->format_date_range( $this_convention['begin_date'], $this_convention['end_date'], 'Ymd' );
+		}
+
+		return '';
+	}
+
+	/**
 	 * Register or enqueue frontend assets.
 	 *
 	 * @return  void Enqueues assets.

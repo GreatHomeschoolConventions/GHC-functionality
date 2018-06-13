@@ -20,7 +20,7 @@ if ( $product->is_in_stock() ) { ?>
 			<?php echo esc_attr( $product->get_title() ); ?>
 			<?php
 			if ( get_field( 'subtitle' ) ) {
-				echo '<div class="entry-meta">' . esc_attr( get_field( 'subtitle' ) ) . '</div>';
+				echo '<div class="entry-meta">' . wp_kses_post( get_field( 'subtitle' ) ) . '</div>';
 			}
 			?>
 			<?php

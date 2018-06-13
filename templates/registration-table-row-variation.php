@@ -19,7 +19,7 @@ $ghc_wc = GHC_Woocommerce::get_instance();
 		<?php echo esc_attr( $variation->get_title() ); ?><br/>
 		<?php
 		if ( get_field( 'subtitle' ) ) {
-			echo '<div class="entry-meta">' . esc_attr( get_field( 'subtitle' ) ) . '</div>';
+			echo '<div class="entry-meta">' . wp_kses_post( get_field( 'subtitle' ) ) . '</div>';
 		}
 		?>
 		<?php
@@ -30,7 +30,7 @@ $ghc_wc = GHC_Woocommerce::get_instance();
 			}
 			$attribute_string .= $value . ', ';
 		}
-		echo '<div class="entry-meta">' . esc_attr( rtrim( $attribute_string, ', ' ) ) . '</div>';
+		echo '<div class="entry-meta">' . wp_kses_post( rtrim( $attribute_string, ', ' ) ) . '</div>';
 		?>
 	</td>
 	<?php if ( $variation->is_in_stock() ) { ?>

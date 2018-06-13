@@ -63,6 +63,7 @@ class GHC_Shortcodes extends GHC_Base {
 			'product_price',
 			'registration_page',
 			'speaker_archive',
+			'speaker_grid',
 			'speaker_info',
 			'speaker_list',
 			'special_event_grid',

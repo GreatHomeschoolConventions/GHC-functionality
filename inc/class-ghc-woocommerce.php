@@ -81,6 +81,10 @@ class GHC_Woocommerce extends GHC_Base {
 		// Autocomplete orders.
 		add_action( 'woocommerce_thankyou', array( $this, 'auto_complete_order' ) );
 
+		// Send failed/cancelled order notifications to customer as well.
+		add_filter( 'woocommerce_email_recipient_cancelled_order', array( $this, 'add_customer_to_cancellation_email' ), 10, 2 );
+		add_filter( 'woocommerce_email_recipient_failed_order', array( $this, 'add_customer_to_cancellation_email' ), 10, 2 );
+
 		// Modify emails.
 		add_filter( 'woocommerce_email_subject_new_order', array( $this, 'woocommerce_email_subject_new_order' ), 10, 2 );
 		add_action( 'woocommerce_email_order_details', array( $this, 'add_coupon_code_admin_email' ), 8, 4 );
@@ -687,6 +691,19 @@ class GHC_Woocommerce extends GHC_Base {
 			echo '<p>Coupon(s) used: <span class="highlighted">' . esc_attr( implode( ', ', $order->get_used_coupons() ) ) . '</span></p>';
 		}
 	}
+
+	/**
+	 * Add customer to failed/cancelled order notification email.
+	 *
+	 * @param string   $recipient Comma-separated list of email recipient(s).
+	 * @param WC_Order $order     Order object.
+	 *
+	 * @return  string Comma-separated list of email receipients.
+	 */
+	public function add_customer_to_cancellation_email( string $recipient, WC_Order $order ) : string {
+		return $recipient . ',' . $order->billing_email;
+	}
+
 
 	/**
 	 * Add intro content to customer email

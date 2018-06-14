@@ -240,6 +240,10 @@ class GHC_Shortcodes extends GHC_Base {
 	 * @return string               Formatted info.
 	 */
 	private function format_form_convention_label( array $form_options, array $convention ) : string {
+		if ( ! array_key_exists( 'format', $form_options ) ) {
+			$form_options['format'] = 'long';
+		}
+
 		if ( 'long' === $form_options['format'] ) {
 			return '<strong>' . $convention['convention_short_name'] . '</strong>: ' . $this->get_single_convention_date( $convention['convention_abbreviated_name'] ) . ' at the ' . $convention['address']['convention_center_name'] . ' in ' . $convention['address']['city'] . ', ' . $convention['address']['state'];
 		}

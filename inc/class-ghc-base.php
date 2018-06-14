@@ -227,7 +227,7 @@ class GHC_Base {
 			return $d1->format( 'F j, Y' );
 		} elseif ( $d1->format( 'Y-m' ) === $d2->format( 'Y-m' ) ) {
 			// Same calendar month.
-			return $d1->format( 'F j' ) . '&ndash;' . $d2->format( 'd, Y' );
+			return $d1->format( 'F j' ) . '&ndash;' . $d2->format( 'j, Y' );
 		} elseif ( $d1->format( 'Y' ) === $d2->format( 'Y' ) ) {
 			// Same calendar year.
 			return $d1->format( 'F j' ) . '&ndash;' . $d2->format( 'F j, Y' );

@@ -99,7 +99,6 @@ module.exports = function (grunt) {
 					'dist/js/price-sheets.min.js': ['src/js/price-sheets.js'],
 					'dist/js/robly-lists.min.js': ['src/js/robly-lists.js'],
 					'dist/js/woocommerce.min.js': ['src/js/woocommerce.js'],
-					'dist/js/workshop-filter.min.js': ['src/js/workshop-filter.js'],
 				},
 			},
 		},

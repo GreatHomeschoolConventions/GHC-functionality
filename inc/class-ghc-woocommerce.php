@@ -365,7 +365,6 @@ class GHC_Woocommerce extends GHC_Base {
 	public function register_frontend_resources() {
 		wp_register_script( 'ghc-woocommerce', $this->plugin_dir_url( 'dist/js/woocommerce.min.js' ), array( 'jquery', 'woocommerce' ), $this->version );
 		wp_register_script( 'ghc-price-sheets', $this->plugin_dir_url( 'dist/js/price-sheets.min.js' ), array( 'jquery' ), $this->version );
-		wp_register_script( 'ghc-workshop-filter', $this->plugin_dir_url( 'dist/js/workshop-filter.min.js' ), array( 'jquery' ), $this->version );
 
 		// Load WooCommerce script only on WC pages.
 		if ( function_exists( 'is_product' ) && function_exists( 'is_cart' ) ) {

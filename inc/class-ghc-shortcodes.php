@@ -241,7 +241,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 */
 	private function format_form_convention_label( array $form_options, array $convention ) : string {
 		if ( 'long' === $form_options['format'] ) {
-			return '<strong>' . $convention['convention'] . '</strong>: ' . $this->get_single_convention_date( $convention['convention_abbreviated_name'] ) . ' at the ' . $convention['address']['convention_center_name'] . ' in ' . $convention['address']['city'] . ', ' . $convention['address']['state'];
+			return '<strong>' . $convention['convention_short_name'] . '</strong>: ' . $this->get_single_convention_date( $convention['convention_abbreviated_name'] ) . ' at the ' . $convention['address']['convention_center_name'] . ' in ' . $convention['address']['city'] . ', ' . $convention['address']['state'];
 		}
 		if ( 'short' === $form_options['format'] ) {
 			return '<strong>' . $convention['convention_abbreviated_name'] . '</strong>: ' . $this->get_single_convention_date( $convention['convention_abbreviated_name'] );

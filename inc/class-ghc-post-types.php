@@ -585,9 +585,10 @@ class GHC_Post_Types extends GHC_Base {
 		$columns = array_merge(
 			array_slice( $columns, 0, 1, true ),
 			array( 'thumbnail' => 'Thumbnail' ),
-			array_slice( $columns, 1, count( $column ) - 1, true ),
+			array_slice( $columns, 1, count( $columns ) - 1, true ),
 			array( 'menu_order' => 'Order' )
 		);
+
 		return $columns;
 	}
 

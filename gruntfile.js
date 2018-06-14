@@ -1,28 +1,27 @@
-module.exports = function (grunt) {
+/* global module, require */
+'use strict';
+
+module.exports = function(grunt) {
 	grunt.initConfig({
 		watch: {
 			javascript: {
-				files: "src/js/*",
+				files: 'src/js/*',
 				tasks: ['uglify'],
 			},
 			styles: {
-				files: "src/scss/*",
+				files: 'src/scss/*',
 				tasks: ['sass', 'postcss'],
 			},
 			svg: {
-				files: "src/images/**/*.svg",
+				files: 'src/images/**/*.svg',
 				tasks: ['svgmin'],
 			},
-//			php: {
-//				files: "**/*.php",
-//				tasks: ['phpcs'],
-//			}
 		},
 
 		sass: {
 			dev: {
 				files: {
-					"dist/css/style.min.css" : "src/scss/style.scss",
+					'dist/css/style.min.css': 'src/scss/style.scss',
 				}
 			}
 		},
@@ -34,7 +33,7 @@ module.exports = function (grunt) {
 				},
 				processors: [
 					require('pixrem')(), // add fallbacks for rem units
-					require('autoprefixer')({browsers: 'last 2 versions'}), // add vendor prefixes
+					require('autoprefixer')({ browsers: 'last 2 versions' }), // add vendor prefixes
 					require('cssnano')() // minify the result
 				]
 			},
@@ -46,16 +45,16 @@ module.exports = function (grunt) {
 		browserSync: {
 			dev: {
 				bsFiles: {
-					src : ['dist/**/*', '**/*.php', '**/*.html', '!node_modules'],
+					src: ['dist/**/*', '**/*.php', '**/*.html', '!node_modules'],
 				},
 				options: {
 					watchTask: true,
-					open: "external",
-					host: "andrews-macbook-pro.local",
-					proxy: "https://ghc.dev",
+					open: 'external',
+					host: 'andrews-macbook-pro.local',
+					proxy: 'https://ghc.dev',
 					https: {
-						key: "/Users/andrew/github/dotfiles/local-dev.key",
-						cert: "/Users/andrew/github/dotfiles/local-dev.crt",
+						key: '/Users/andrew/github/dotfiles/local-dev.key',
+						cert: '/Users/andrew/github/dotfiles/local-dev.crt',
 					}
 				},
 			},
@@ -79,7 +78,7 @@ module.exports = function (grunt) {
 		},
 
 		phpcs: {
-			plugin_files: {
+			pluginFiles: {
 				src: ['**/*.php'],
 			},
 			options: {

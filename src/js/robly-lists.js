@@ -1,17 +1,22 @@
 /**
- * Update hidden Robly lists field with select values
+ * Update hidden Robly lists field with selected values.
  *
  * @package GHC_Functionality_Plugin
+ *
+ * @param  {function} $ jQuery reference.
+ *
+ * @return {null}       Modifies DOM.
  */
 
-/*global
+/* global
 	document, jQuery
 */
 
-(function ($) {
-	"use strict";
-	$(document).ready(function () {
-		$('input[type="checkbox"][name="conventions[]"]').on('change', function () {
+'use strict';
+
+(function($) {
+	$(document).ready(function() {
+		$('input[type="checkbox"][name="conventions[]"]').on('change', function() {
 			var $roblyListsInput = $('input[name="robly-lists"]'),
 				thisVal = $(this).val(),
 				currentVal = $roblyListsInput.val().split(','),

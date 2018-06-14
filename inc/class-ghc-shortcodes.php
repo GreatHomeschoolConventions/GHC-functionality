@@ -212,6 +212,9 @@ class GHC_Shortcodes extends GHC_Base {
 		foreach ( $tag['options'] as $key => $value ) {
 			$form_options[ $value ] = $tag['values'][ $key ];
 		}
+
+		wp_enqueue_script( 'ghc-robly-lists' );
+
 		ob_start();
 		?>
 		<span class="wpcf7-form-control-wrap conventions">

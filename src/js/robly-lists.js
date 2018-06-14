@@ -11,7 +11,7 @@
 (function ($) {
 	"use strict";
 	$(document).ready(function () {
-		$('input[type="checkbox"][name*="locations-of-interest"]').on('change', function () {
+		$('input[type="checkbox"][name="conventions[]"]').on('change', function () {
 			var $roblyListsInput = $('input[name="robly-lists"]'),
 				thisVal = $(this).val(),
 				currentVal = $roblyListsInput.val().split(','),

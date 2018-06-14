@@ -189,6 +189,8 @@ class GHC_Base {
 		wp_enqueue_style( 'ghc-functionality', $this->plugin_dir_url( 'dist/css/style.min.css' ), array(), $this->version );
 
 		wp_enqueue_script( 'ghc-popups', $this->plugin_dir_url( 'dist/js/popups.min.js' ), array( 'jquery', 'popup-maker-site' ), $this->version, true );
+
+		wp_register_script( 'ghc-robly-lists', $this->plugin_dir_url( 'dist/js/robly-lists.min.js' ), array( 'jquery' ), $this->version, true );
 	}
 
 	/**

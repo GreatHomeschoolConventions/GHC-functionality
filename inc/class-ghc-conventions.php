@@ -295,6 +295,7 @@ class GHC_Conventions extends GHC_Base {
 			$product_id = get_post_meta( get_the_ID(), 'registration', true );
 			$product    = new WC_Product( $product_id );
 
+			// Set up price type.
 			if ( $product->is_type( 'variable' ) ) {
 				$prices       = $product->get_variation_prices();
 				$lowest       = reset( $prices['price'] );
@@ -311,17 +312,29 @@ class GHC_Conventions extends GHC_Base {
 				';
 			}
 
+			// Set up availability.
+			if ( date( 'Ymd' ) <= get_field( 'end_date' ) ) {
+				$availability = '"availability": "http://schema.org/InStock",' . "\n" . '"validFrom": "' . $this->format_microdata_datetime( time() ) . '",' . "\n";
+			} else {
+				$availability = '"availability": "http://schema.org/SoldOut",' . "\n";
+			}
+
 			// Fix protocol-agnostic URLs.
-			$registration_url  = $this->format_schema_url( get_field( 'registration' ) );
-			$product_image_url = $this->format_schema_url( get_the_post_thumbnail_url( $product_id ) );
+			$registration_url = $this->format_microdata_url( get_field( 'registration' ) );
+			if ( has_post_thumbnail( $product_id ) ) {
+				$product_image_url    = $this->format_microdata_url( get_the_post_thumbnail_url( $product_id ) );
+				$product_image_string = '"image": "' . $product_image_url . '",';
+			} else {
+				$product_image_string = '';
+			}
 
 			ob_start(); ?>
 			<script type='application/ld+json'>
 			{
 				"@context": "http://schema.org/",
 				"@type": "Event",
-				"startDate": "<?php echo esc_attr( $this->format_schema_org_date( get_field( 'begin_date' ) ) ); ?>",
-				"endDate": "<?php echo esc_attr( $this->format_schema_org_date( get_field( 'begin_date' ) ) ); ?>",
+				"startDate": "<?php echo esc_attr( $this->format_microdata_date( get_field( 'begin_date' ) ) ); ?>",
+				"endDate": "<?php echo esc_attr( $this->format_microdata_date( get_field( 'begin_date' ) ) ); ?>",
 				"name": "<?php the_title(); ?>",
 				"location": {
 					"@type": "Place",
@@ -337,12 +350,12 @@ class GHC_Conventions extends GHC_Base {
 				},
 				"isAccessibleForFree": "false",
 				"offers": {
-					<?php echo esc_attr( $price_string ); ?>
-					"availability": "available",
+					<?php echo wp_kses_post( $price_string ); ?>
+					<?php echo wp_kses_post( $availability ); ?>
 					"url": "<?php echo esc_url( $registration_url ); ?>",
 					"priceCurrency": "USD"
 				},
-				"image": "<?php echo esc_url( $product_image_url ); ?>",
+				<?php echo wp_kses_post( $product_image_string ); ?>
 				"description": "The Homeschool Event of the Year",
 				"performer": "Dozens of outstanding featured speakers"
 			}
@@ -353,15 +366,33 @@ class GHC_Conventions extends GHC_Base {
 	}
 
 	/**
-	 * Format date as Y-m-d for schema.org use.
+	 * Format date as Y-m-d for microdata.
 	 *
 	 * @param  string $date Ymd-formatted date.
 	 *
 	 * @return string Y-m-d-formatted date.
 	 */
-	private function format_schema_org_date( string $date ) : string {
+	private function format_microdata_date( string $date ) : string {
 		$date = date_create_from_format( 'Ymd', $date );
 		return $date->format( 'Y-m-d' );
+	}
+
+	/**
+	 * Format date as ISO 8601 for microdata validFrom.
+	 *
+	 * @param  string $date   Input date.
+	 * @param  string $format Input date format.
+	 *
+	 * @return string         ISO 8601-formatted date.
+	 */
+	private function format_microdata_datetime( string $date = '', string $format = '' ) : string {
+		if ( ! empty( $date ) && ! empty( $format ) ) {
+			$date = date_create_from_format( $format, $date );
+		} else {
+			$date = date_create_from_format( 'U', time() );
+		}
+
+		return $date->format( 'c' );
 	}
 
 	/**
@@ -371,10 +402,12 @@ class GHC_Conventions extends GHC_Base {
 	 *
 	 * @return string URL with https:// prepended.
 	 */
-	private function format_schema_url( string $url ) : string {
-		if ( strpos( $url, 'http' ) === false || strpos( $url, 'http' ) === 0 ) {
+	private function format_microdata_url( string $url ) : string {
+		if ( strpos( $url, 'http' ) === false && strpos( $url, '//' ) !== false ) {
 			$url = 'https:' . $url;
 		}
+
+		$url = str_replace( 'http://', 'https://', $url );
 
 		return $url;
 	}

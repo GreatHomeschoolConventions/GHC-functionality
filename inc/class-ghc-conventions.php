@@ -164,8 +164,8 @@ class GHC_Conventions extends GHC_Base {
 	/**
 	 * Return convention icons.
 	 *
-	 * @param  mixed         $input_conventions      Conventions to display.
-	 * @param  array  [array $args = array()] Extra arguments.
+	 * @param  int|string|array $input_conventions Conventions to display; accepts a post ID, a convention abbreviation, or an array of convention abbreviations or WP_Term objects.
+	 * @param  array            $args              Extra arguments.
 	 *
 	 * @return string $convention_icons HTML string with content.
 	 */

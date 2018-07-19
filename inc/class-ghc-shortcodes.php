@@ -54,6 +54,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 */
 	public function init_shortcodes() {
 		$shortcodes = array(
+			'carousel',
 			'convention_cta',
 			'convention_icon',
 			'exhibitor_list',
@@ -162,6 +163,115 @@ class GHC_Shortcodes extends GHC_Base {
 		}
 
 		// Restore original post data.
+		wp_reset_postdata();
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Display the specified posts in a carousel layout.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param  array $attributes Shortcode attributes.
+	 *
+	 * @return string            HTML content.
+	 */
+	public function carousel( array $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'post_type'      => 'speaker',
+				'convention'     => null,
+				'posts_per_page' => 12,
+				'offset'         => null,
+				'show'           => null,
+				'image_size'     => 'medium',
+				'slick_args'     => null,
+			), $attributes
+		);
+
+		// Set defaults.
+		$carousel_args = array(
+			'post_type'      => $shortcode_attributes['post_type'],
+			'posts_per_page' => $shortcode_attributes['posts_per_page'],
+			'offset'         => $shortcode_attributes['offset'],
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
+			'tax_query'      => [],
+		);
+
+		if ( is_null( $shortcode_attributes['show'] ) ) {
+			$shortcode_attributes['show'] = 'image,title';
+		}
+
+		// Get featured speakers only.
+		if ( 'speaker' === $shortcode_attributes['post_type'] ) {
+			$carousel_args['tax_query'][] = array(
+				'taxonomy' => 'ghc_speaker_category_taxonomy',
+				'field'    => 'slug',
+				'terms'    => 'featured',
+			);
+		}
+
+		// Get items for the specified convention only.
+		if ( ! empty( $shortcode_attributes['convention'] ) ) {
+			$this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+			$carousel_args['tax_query']['relation'] = 'AND';
+			$carousel_args['tax_query'][]           = array(
+				'taxonomy' => 'ghc_conventions_taxonomy',
+				'field'    => 'slug',
+				'terms'    => $this->get_single_convention_abbreviation( $this_convention ),
+			);
+		}
+
+		// Set image size.
+		if ( strpos( $shortcode_attributes['image_size'], ',' ) !== false ) {
+			$shortcode_attributes['image_size'] = str_replace( ' ', '', $shortcode_attributes['image_size'] );
+			$thumbnail_size                     = explode( ',', $shortcode_attributes['image_size'] );
+			array_walk( $thumbnail_size, 'intval' );
+		} else {
+			$thumbnail_size = $shortcode_attributes['image_size'];
+		}
+
+		$carousel_query = new WP_Query( $carousel_args );
+
+		ob_start();
+
+		// Get posts.
+		if ( $carousel_query->have_posts() ) {
+			$slider_id  = 'carousel-' . md5( json_encode( $carousel_args ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+			$slick_data = wp_parse_args(
+				[
+					'slidesToShow'   => 4,
+					'slidesToScroll' => 1,
+					'autoplay'       => true,
+					'autoplaySpeed'  => 3000,
+					'adaptiveHeight' => true,
+					'infinite'       => true,
+				],
+				json_decode( $shortcode_attributes['slick_args'] )
+			);
+
+			wp_enqueue_script( 'slick' );
+			wp_enqueue_style( 'slick' );
+
+			wp_add_inline_script( 'slick', 'jQuery(document).ready(function(){jQuery("#' . $slider_id . '").slick(' . wp_json_encode( $slick_data ) . ');});', 'after' );
+
+			echo '<div class="container">';
+			printf(
+				'<section id="%1$s" class="shortcode carousel %2$s">',
+				esc_attr( $slider_id ),
+				esc_attr( $shortcode_attributes['post_type'] )
+			);
+			while ( $carousel_query->have_posts() ) {
+				$carousel_query->the_post();
+				include $this->plugin_dir_path( 'templates/carousel-single.php' );
+			}
+			echo '</section>
+			</div>';
+		}
+
 		wp_reset_postdata();
 
 		return ob_get_clean();

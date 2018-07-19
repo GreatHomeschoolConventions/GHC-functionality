@@ -3,6 +3,22 @@
     "title": "Home Page",
     "fields": [
         {
+            "key": "field_5b50d6ff2f03d",
+            "label": "Tagline",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
             "key": "field_5b508dff5eefe",
             "label": "Tagline Stripe",
             "name": "tagline_stripe",
@@ -76,6 +92,22 @@
                     "placeholder": "https:\/\/greathomeschoolconventions.com\/"
                 }
             ]
+        },
+        {
+            "key": "field_5b50d70b2f03e",
+            "label": "CTA",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
         },
         {
             "key": "field_5b509879d36c4",
@@ -155,5 +187,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1532008637
+    "modified": 1532024629
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Single exhibitor template
+ * Single speaker template
  *
  * @author AndrewRMinion Design
  * @package GHC_Functionality_Plugin

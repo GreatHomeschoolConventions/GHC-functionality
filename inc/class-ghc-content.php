@@ -213,11 +213,11 @@ class GHC_Content extends GHC_Base {
 	/**
 	 * Save featured_video thumbnail to postmeta
 	 *
-	 * @param  int $post_id wp post ID.
+	 * @param  int|string $post_id WP post ID.
 	 *
 	 * @return bool Whether postmeta was succesfully updated.
 	 */
-	public function opengraph_video_get_meta( int $post_id ) : bool {
+	public function opengraph_video_get_meta( $post_id ) : bool {
 		if ( ! empty( get_field( 'featured_video' ) ) ) {
 			$video_id = $this->get_video_id( esc_url( get_field( 'featured_video' ) ) );
 

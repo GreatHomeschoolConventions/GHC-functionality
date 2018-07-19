@@ -765,11 +765,11 @@ class GHC_Post_Types extends GHC_Base {
 	/**
 	 * Add all the given speaker’s workshops to post_meta for performance.
 	 *
-	 * @param integer $post_id WP post ID.
+	 * @param int|string $post_id WP post ID.
 	 *
 	 * @return  void Saves data to post_meta.
 	 */
-	public function add_speaker_workshop_meta( int $post_id ) {
+	public function add_speaker_workshop_meta( $post_id ) {
 		if ( 'speaker' === get_post_type() ) {
 			$this->save_speaker_workshops( $post_id );
 		} elseif ( 'workshop' === get_post_type() ) {

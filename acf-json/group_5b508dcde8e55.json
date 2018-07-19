@@ -1,0 +1,99 @@
+{
+    "key": "group_5b508dcde8e55",
+    "title": "Home Page",
+    "fields": [
+        {
+            "key": "field_5b508dff5eefe",
+            "label": "Tagline Stripe",
+            "name": "tagline_stripe",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_5b508e0b5eeff",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "text",
+                    "instructions": "Dashicons icon name",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "dashicons-admin-home",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5b508e755ef00",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "text",
+                    "instructions": "Text shown on icon hover",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "Hundreds of workshops…",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": 250
+                },
+                {
+                    "key": "field_5b508e955ef01",
+                    "label": "URL",
+                    "name": "url",
+                    "type": "url",
+                    "instructions": "Link for the icon\/text",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "https:\/\/greathomeschoolconventions.com\/"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-home.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1532008410
+}

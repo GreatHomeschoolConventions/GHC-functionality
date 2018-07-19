@@ -1,0 +1,104 @@
+{
+    "key": "group_5b4e9d9632370",
+    "title": "Page Options",
+    "fields": [
+        {
+            "key": "field_5b4e9d9c43b36",
+            "label": "Page Title",
+            "name": "page_title",
+            "type": "text",
+            "instructions": "Optional title to display in header in place of page title",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Leave empty to use page title above.",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b4e9dc743b37",
+            "label": "Page Subtitle",
+            "name": "page_subtitle",
+            "type": "text",
+            "instructions": "Optional subtitle to display in header",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b4e9dde43b38",
+            "label": "Button URL",
+            "name": "button_url",
+            "type": "url",
+            "instructions": "Header button URL",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5b4e9dfc43b39",
+            "label": "Button Text",
+            "name": "button_text",
+            "type": "text",
+            "instructions": "Header button text",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b4e9dde43b38",
+                        "operator": "!=empty"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Don’t Miss Out",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1531879001
+}

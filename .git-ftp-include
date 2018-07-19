@@ -1,3 +1,5 @@
+dist/fonts/*:src/fonts/.
+
 dist/images/svg/SE.svg:src/images/svg/SE.svg
 dist/images/svg/TX.svg:src/images/svg/TX.svg
 dist/images/svg/MW.svg:src/images/svg/MW.svg
@@ -14,8 +16,14 @@ dist/js/price-sheets.min.js:src/js/price-sheets.js
 dist/js/price-sheets.min.js.map:src/js/price-sheets.js
 dist/js/robly-lists.min.js:src/js/robly-lists.js
 dist/js/robly-lists.min.js.map:src/js/robly-lists.js
+dist/js/slick.min.js:src/js/slick.js
+dist/js/slick.min.js.map:src/js/slick.js
 dist/js/woocommerce.min.js:src/js/woocommerce.js
 dist/js/woocommerce.min.js.map:src/js/woocommerce.js
 
+dist/css/slick.min.css:src/scss/slick.scss
+dist/css/slick.min.css.map:src/scss/slick.scss
+dist/css/slick.min.css:src/scss/slick-theme.scss
+dist/css/slick.min.css.map:src/scss/slick-theme.scss
 dist/css/style.min.css:src/scss/style.scss
 dist/css/style.min.css.map:src/scss/style.scss

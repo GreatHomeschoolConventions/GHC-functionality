@@ -21,6 +21,7 @@ module.exports = function(grunt) {
 		sass: {
 			dev: {
 				files: {
+					'dist/css/slick.min.css': 'src/scss/slick.scss',
 					'dist/css/style.min.css': 'src/scss/style.scss',
 				}
 			}
@@ -87,6 +88,7 @@ module.exports = function(grunt) {
 					'dist/js/popups.min.js': ['src/js/popups.js'],
 					'dist/js/price-sheets.min.js': ['src/js/price-sheets.js'],
 					'dist/js/robly-lists.min.js': ['src/js/robly-lists.js'],
+					'dist/js/slick.min.js': ['src/js/slick.js'],
 					'dist/js/woocommerce.min.js': ['src/js/woocommerce.js'],
 				},
 			},

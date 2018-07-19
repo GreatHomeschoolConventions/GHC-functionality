@@ -1,0 +1,121 @@
+{
+    "key": "group_5b508b9fc19d3",
+    "title": "E3 Options",
+    "fields": [
+        {
+            "key": "field_5b508b9fc55bf",
+            "label": "AWS Cloudfront Key Pair ID",
+            "name": "aws_cloudfront_key_pair_id",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "APKA…",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b508b9fc55e1",
+            "label": "AWS Cloudfront Private Key",
+            "name": "aws_cloudfront_private_key",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "67",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "-----BEGIN RSA PRIVATE KEY-----",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_5b508b9fc55ee",
+            "label": "AWS Cloudfront Signed URL Lifetime",
+            "name": "aws_cloudfront_signed_url_lifetime",
+            "type": "number",
+            "instructions": "Length of time signed URLs should be active, in seconds",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 300,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5b508b9fc55fa",
+            "label": "AWS S3 Domain",
+            "name": "aws_s3_domain",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "ghc-e3.s3.amazonaws.com",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b508b9fc5605",
+            "label": "AWS CloudFront Domain",
+            "name": "aws_cloudfront_domain",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "d1gr71q7flmr3m.cloudfront.net",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-e3-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1532005323
+}

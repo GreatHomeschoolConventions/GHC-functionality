@@ -34,15 +34,30 @@ class GHC_ACF extends GHC_Base {
 	 * @return  void Adds options page.
 	 */
 	public function admin_options() {
-		acf_add_options_page(
+		$parent = acf_add_options_page(
 			array(
 				'page_title' => 'GHC Options',
 				'menu_title' => 'GHC Options',
 				'menu_slug'  => 'theme-options',
-				'capability' => 'edit_posts',
+				'capability' => 'manage_options',
+				'icon_url'   => 'dashicons-admin-settings',
 				'redirect'   => false,
 			)
 		);
+
+		$theme = wp_get_theme();
+
+		if ( 'GHC E3 Bundle' === $theme->get( 'Name' ) ) {
+			acf_add_options_sub_page(
+				array(
+					'page_title'  => 'E3 Options',
+					'menu_title'  => 'E3 Options',
+					'parent_slug' => $parent['menu_slug'],
+					'capability'  => 'manage_options',
+					'redirect'    => false,
+				)
+			);
+		}
 	}
 
 	/**

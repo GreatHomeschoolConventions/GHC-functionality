@@ -16,7 +16,7 @@
 		<?php
 		// Add speaker photo.
 		if ( $speaker ) {
-			echo '<div class="speaker-thumbnail">
+			echo '<div class="thumbnail">
 				<a href="' . esc_url( get_permalink( $speaker->ID ) ) . '">' . ( has_post_thumbnail( $speaker->ID ) ? get_the_post_thumbnail( $speaker->ID, array( 80, 80 ) ) : '' ) . '<br/>' . get_the_title( $speaker->ID ) . '</a>
 			</div>';
 		}

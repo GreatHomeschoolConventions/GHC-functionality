@@ -243,12 +243,37 @@ class GHC_Shortcodes extends GHC_Base {
 			$slider_id  = 'carousel-' . md5( json_encode( $carousel_args ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 			$slick_data = wp_parse_args(
 				[
+					'dots'           => true,
 					'slidesToShow'   => 4,
 					'slidesToScroll' => 1,
+					'infinite'       => true,
 					'autoplay'       => true,
 					'autoplaySpeed'  => 3000,
 					'adaptiveHeight' => true,
-					'infinite'       => true,
+					'prevArrow'      => '<a class="slick-arrow prev dashicons dashicons-arrow-left-alt2">',
+					'nextArrow'      => '<a class="slick-arrow next dashicons dashicons-arrow-right-alt2">',
+					'swipeToSlide'   => true,
+					'responsive'     => array(
+						array(
+							'breakpoint' => '700',
+							'settings'   => array(
+								'slidesToShow' => 3,
+							),
+						),
+						array(
+							'breakpoint' => '500',
+							'settings'   => array(
+								'slidesToShow' => 2,
+							),
+						),
+						array(
+							'breakpoint' => '400',
+							'settings'   => array(
+								'slidesToShow' => 1,
+								'dots'         => false,
+							),
+						),
+					),
 				],
 				json_decode( $shortcode_attributes['slick_args'] )
 			);

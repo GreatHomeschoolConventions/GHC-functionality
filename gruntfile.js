@@ -77,16 +77,6 @@ module.exports = function(grunt) {
 			},
 		},
 
-		phpcs: {
-			pluginFiles: {
-				src: ['**/*.php'],
-			},
-			options: {
-				bin: '/usr/local/bin/phpcs',
-				standard: 'WordPress-Extra',
-			}
-		},
-
 		uglify: {
 			options: {
 				sourceMap: true

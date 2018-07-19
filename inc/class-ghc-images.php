@@ -87,6 +87,8 @@ class GHC_Images extends GHC_Base {
 			$attr['sizes'] = '450px';
 		} elseif ( 'special-event-large' === $size ) {
 			$attr['sizes'] = '600px';
+		} elseif ( 'header-2019' === $size ) {
+			$attr['sizes'] = '1920px';
 		}
 		// If changed, update custom_image_sizes and custom_image_sizes_names.
 		return $attr;
@@ -113,6 +115,7 @@ class GHC_Images extends GHC_Base {
 		add_image_size( 'special-event-small', 300, 150, true );
 		add_image_size( 'special-event-medium', 450, 225, true );
 		add_image_size( 'special-event-large', 600, 300, true );
+		add_image_size( 'header-2019', 1920, 1080, false );
 		// Update responsive_image_sizes() function as well.
 	}
 

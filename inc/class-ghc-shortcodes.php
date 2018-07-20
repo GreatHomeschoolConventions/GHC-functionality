@@ -248,7 +248,7 @@ class GHC_Shortcodes extends GHC_Base {
 					'slidesToScroll' => 1,
 					'infinite'       => true,
 					'autoplay'       => true,
-					'autoplaySpeed'  => 3000,
+					'autoplaySpeed'  => 5000,
 					'adaptiveHeight' => true,
 					'prevArrow'      => '<a class="slick-arrow prev dashicons dashicons-arrow-left-alt2">',
 					'nextArrow'      => '<a class="slick-arrow next dashicons dashicons-arrow-right-alt2">',

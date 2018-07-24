@@ -106,6 +106,12 @@
 							$('.map-info:visible').fadeOut('slow', function() {
 								$('.map-info#' + key).fadeIn();
 							});
+
+							if (window.innerWidth <= 600) {
+								$('html, body').animate({
+									scrollTop: $('.map-info:visible').offset().top
+								}, 750);
+							}
 						}
 					}(marker, key)));
 				}

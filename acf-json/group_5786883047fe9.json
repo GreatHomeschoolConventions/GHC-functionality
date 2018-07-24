@@ -205,6 +205,24 @@
             "maxlength": ""
         },
         {
+            "key": "field_5b5688ac4e412",
+            "label": "Map",
+            "name": "map",
+            "type": "google_map",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "center_lat": 35,
+            "center_lng": -80,
+            "zoom": 6,
+            "height": ""
+        },
+        {
             "key": "field_57866b3600efd",
             "label": "Registration Product",
             "name": "registration_product",
@@ -587,5 +605,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1519917792
+    "modified": 1532397904
 }

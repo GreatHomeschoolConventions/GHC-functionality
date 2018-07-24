@@ -10,6 +10,8 @@ dist/images/svg/NY.svg:src/images/svg/NY.svg
 
 dist/js/exhibitor-backend.min.js:src/js/exhibitor-backend.js
 dist/js/exhibitor-backend.min.js.map:src/js/exhibitor-backend.js
+dist/js/maps.min.js:src/js/maps.js
+dist/js/maps.min.js.map:src/js/maps.js
 dist/js/popups.min.js:src/js/popups.js
 dist/js/popups.min.js.map:src/js/popups.js
 dist/js/price-sheets.min.js:src/js/price-sheets.js

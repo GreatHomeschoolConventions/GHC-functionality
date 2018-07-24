@@ -188,6 +188,9 @@ class GHC_Base {
 	public function register_frontend_assets() {
 		wp_enqueue_style( 'ghc-functionality', $this->plugin_dir_url( 'dist/css/style.min.css' ), array(), $this->version );
 
+		wp_register_script( 'ghc-maps', $this->plugin_dir_url( 'dist/js/maps.min.js' ), array( 'jquery', 'google-maps-api' ), $this->version, true );
+		wp_register_script( 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'options_api_key' ), array(), null, true );
+
 		wp_enqueue_script( 'ghc-popups', $this->plugin_dir_url( 'dist/js/popups.min.js' ), array( 'jquery', 'popup-maker-site' ), $this->version, true );
 
 		wp_register_script( 'ghc-robly-lists', $this->plugin_dir_url( 'dist/js/robly-lists.min.js' ), array( 'jquery' ), $this->version, true );

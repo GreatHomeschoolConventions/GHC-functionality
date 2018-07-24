@@ -85,6 +85,7 @@ module.exports = function(grunt) {
 			custom: {
 				files: {
 					'dist/js/exhibitor-backend.min.js': ['src/js/exhibitor-backend.js'],
+					'dist/js/maps.min.js': ['src/js/maps.js'],
 					'dist/js/popups.min.js': ['src/js/popups.js'],
 					'dist/js/price-sheets.min.js': ['src/js/price-sheets.js'],
 					'dist/js/robly-lists.min.js': ['src/js/robly-lists.js'],

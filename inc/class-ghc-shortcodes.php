@@ -60,6 +60,7 @@ class GHC_Shortcodes extends GHC_Base {
 			'exhibitor_list',
 			'exhibit_hall_hours',
 			'hotel_grid',
+			'locations_map',
 			'price_sheet',
 			'product_price',
 			'registration_page',
@@ -523,6 +524,70 @@ class GHC_Shortcodes extends GHC_Base {
 		ob_start();
 		$is_shortcode = true;
 		require $this->plugin_dir_path( 'templates/loop-hotel.php' );
+		return ob_get_clean();
+	}
+
+	/**
+	 * Display locations map.
+	 *
+	 * @since  2.0.0
+	 *
+	 * @param array $attributes Shortcode attributes.
+	 *
+	 * @return string HTML content.
+	 */
+	public function locations_map( $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'convention' => null,
+			), $attributes
+		);
+
+		// Get single or all conventions.
+		if ( isset( $shortcode_attributes['convention'] ) ) {
+			$conventions = $this->get_single_convention_info( $shortcode_attributes['convention'] );
+		} else {
+			$conventions = $this->get_conventions_info();
+		}
+
+		// Get map data.
+		$map_data     = [];
+		$display_data = '';
+		$i            = 0;
+		foreach ( $conventions as $key => $convention ) {
+			$map_data[ $key ] = array(
+				'title'   => $convention['title'],
+				'icon'    => $convention['icon'],
+				'address' => $convention['address'],
+			);
+
+			$display_data .= '<div class="map-info" id="' . esc_attr( $key ) . '" style="background-image: url(' . esc_url( $convention['icon'] ) . ');' . ( 0 === $i ? '' : 'display: none;' ) . '">
+				<h1>' . esc_attr( $convention['title'] ) . '</h1>
+				<p class="meta">' . esc_attr( $this->get_single_convention_date( $key ) ) . '</p>
+				<address>
+					<strong>' . esc_attr( $convention['address']['convention_center_name'] ) . '</strong><br />
+					' . esc_attr( $convention['address']['street_address'] ) . '<br />
+					' . esc_attr( $convention['address']['city'] ) . ', ' . esc_attr( $convention['address']['state'] ) . ' ' . esc_attr( $convention['address']['zip'] ) . '
+				</address>
+				' . $this->convention_cta( array( 'convention' => $key ) ) . '
+			</div>
+			';
+			$i++;
+		}
+
+		$map_json       = wp_json_encode( $map_data );
+		$map_identifier = md5( $map_json );
+
+		wp_enqueue_script( 'ghc-maps' );
+		wp_add_inline_script( 'ghc-maps', 'var ghcMap_' . esc_attr( $map_identifier ) . ' = ' . $map_json . ';', 'before' );
+
+		ob_start();
+		echo '<div class="ghc-map-container shortcode">
+			<div class="container">
+				<div class="ghc-map" id="ghcMap_' . esc_attr( $map_identifier ) . '"></div>
+				<div class="map-locations-info">' . $display_data . '</div>
+			</div>
+		</div>'; // WPCS: XSS ok since it’s all escaped above.
 		return ob_get_clean();
 	}
 

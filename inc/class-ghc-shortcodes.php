@@ -290,7 +290,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 			echo '<div class="container">';
 			printf(
-				'<section id="%1$s" class="shortcode carousel %2$s">',
+				'<section id="%1$s" class="shortcode carousel %2$s" data-slick=' . wp_json_encode( $custom_args ) . '>',
 				esc_attr( $slider_id ),
 				esc_attr( $shortcode_attributes['post_type'] )
 			);

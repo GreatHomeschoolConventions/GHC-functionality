@@ -80,40 +80,42 @@
 				 * Add pins
 				 */
 				for (var key in thisMapData) {
-					thisPin = thisMapData[key];
+					if ({}.hasOwnProperty.call(thisMapData, key)) {
+						thisPin = thisMapData[key];
 
-					thisIcon = {
-						url: thisPin.icon,
-						scaledSize: new google.maps.Size(50, 50),
-						origin: new google.maps.Point(0, 0),
-						anchor: new google.maps.Point(25, 25)
-					};
+						thisIcon = {
+							url: thisPin.icon,
+							scaledSize: new google.maps.Size(50, 50),
+							origin: new google.maps.Point(0, 0),
+							anchor: new google.maps.Point(25, 25)
+						};
 
-					// Add marker pin.
-					marker = new google.maps.Marker({
-						position: new google.maps.LatLng(thisPin.address.map.lat, thisPin.address.map.lng),
-						map: map,
-						icon: thisIcon,
-						title: thisPin.title,
-					});
+						// Add marker pin.
+						marker = new google.maps.Marker({
+							position: new google.maps.LatLng(thisPin.address.map.lat, thisPin.address.map.lng),
+							map: map,
+							icon: thisIcon,
+							title: thisPin.title,
+						});
 
-					// Add pin to LatLng list for fit-to-bounds.
-					LatLngList.push(new google.maps.LatLng(thisPin.address.map.lat, thisPin.address.map.lng));
+						// Add pin to LatLng list for fit-to-bounds.
+						LatLngList.push(new google.maps.LatLng(thisPin.address.map.lat, thisPin.address.map.lng));
 
-					// Add infoWindow listener and content.
-					google.maps.event.addListener(marker, 'click', (function(marker, key) {
-						return function() {
-							$('.map-info:visible').fadeOut('slow', function() {
-								$('.map-info#' + key).fadeIn();
-							});
+						// Add infoWindow listener and content.
+						google.maps.event.addListener(marker, 'click', (function(marker, key) {
+							return function() {
+								$('.map-info:visible').fadeOut('slow', function() {
+									$('.map-info#' + key).fadeIn();
+								});
 
-							if (window.innerWidth <= 600) {
-								$('html, body').animate({
-									scrollTop: $('.map-info:visible').offset().top
-								}, 750);
-							}
-						}
-					}(marker, key)));
+								if (window.innerWidth <= 600) {
+									$('html, body').animate({
+										scrollTop: $('.map-info:visible').offset().top
+									}, 750);
+								}
+							};
+						}(marker, key)));
+					}
 				}
 
 				/**
@@ -121,7 +123,9 @@
 				 */
 				if (1 < LatLngList.length) {
 					for (var j in LatLngList) {
-						bounds.extend(LatLngList[j]);
+						if ({}.hasOwnProperty.call(LatLngList, j)) {
+							bounds.extend(LatLngList[j]);
+						}
 					}
 					map.fitBounds(bounds, 25);
 				} else {

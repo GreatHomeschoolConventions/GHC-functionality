@@ -172,6 +172,8 @@ class GHC_Shortcodes extends GHC_Base {
 	/**
 	 * Display the specified posts in a carousel layout.
 	 *
+	 * @uses https://kenwheeler.github.io/slick/ Slick Carousel
+	 *
 	 * @since  4.0.0
 	 *
 	 * @param  array $attributes Shortcode attributes.
@@ -187,7 +189,7 @@ class GHC_Shortcodes extends GHC_Base {
 				'offset'         => null,
 				'show'           => null,
 				'image_size'     => 'medium',
-				'slick_args'     => null,
+				'slick_args'     => null, // Note: must use single quotes to wrap the parameter and double quotes in the JSON.
 			), $attributes
 		);
 
@@ -241,8 +243,9 @@ class GHC_Shortcodes extends GHC_Base {
 
 		// Get posts.
 		if ( $carousel_query->have_posts() ) {
-			$slider_id  = 'carousel-' . md5( json_encode( $carousel_args ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
-			$slick_data = wp_parse_args(
+			$custom_args = json_decode( $shortcode_attributes['slick_args'] );
+			$slick_data  = wp_parse_args(
+				$custom_args,
 				[
 					'dots'           => true,
 					'slidesToShow'   => 4,
@@ -254,30 +257,31 @@ class GHC_Shortcodes extends GHC_Base {
 					'prevArrow'      => '<a class="slick-arrow prev dashicons dashicons-arrow-left-alt2">',
 					'nextArrow'      => '<a class="slick-arrow next dashicons dashicons-arrow-right-alt2">',
 					'swipeToSlide'   => true,
-					'responsive'     => array(
-						array(
+					'responsive'     => [
+						[
 							'breakpoint' => '700',
-							'settings'   => array(
+							'settings'   => [
 								'slidesToShow' => 3,
-							),
-						),
-						array(
+							],
+						],
+						[
 							'breakpoint' => '500',
-							'settings'   => array(
+							'settings'   => [
 								'slidesToShow' => 2,
-							),
-						),
-						array(
+							],
+						],
+						[
 							'breakpoint' => '400',
-							'settings'   => array(
+							'settings'   => [
 								'slidesToShow' => 1,
 								'dots'         => false,
-							),
-						),
-					),
-				],
-				json_decode( $shortcode_attributes['slick_args'] )
+							],
+						],
+					],
+				]
 			);
+
+			$slider_id = 'carousel-' . md5( json_encode( $slick_data ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 
 			wp_enqueue_script( 'slick' );
 			wp_enqueue_style( 'slick' );

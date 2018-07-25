@@ -48,7 +48,10 @@ $show = explode( ',', $shortcode_attributes['show'] );
 		<!-- .post-header -->
 
 		<?php if ( array_search( 'excerpt', $show, true ) !== false ) { ?>
-			<div class="excerpt"><?php the_excerpt(); ?></div>
+			<div class="excerpt">
+				<?php the_excerpt(); ?>
+				<p><a href="<?php the_permalink(); ?>" class="button">Read More</a></p>
+			</div>
 		<?php } ?>
 	<?php } ?>
 </article>

@@ -545,7 +545,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 		// Get single or all conventions.
 		if ( isset( $shortcode_attributes['convention'] ) ) {
-			$conventions = $this->get_single_convention_info( $shortcode_attributes['convention'] );
+			$conventions = array( $shortcode_attributes['convention'] => $this->get_single_convention_info( $shortcode_attributes['convention'] ) );
 		} else {
 			$conventions = $this->get_conventions_info();
 		}

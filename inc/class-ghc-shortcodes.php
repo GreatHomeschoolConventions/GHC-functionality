@@ -57,6 +57,7 @@ class GHC_Shortcodes extends GHC_Base {
 			'carousel',
 			'convention_cta',
 			'convention_icon',
+			'convention_features',
 			'exhibitor_list',
 			'exhibit_hall_hours',
 			'hotel_grid',
@@ -410,6 +411,28 @@ class GHC_Shortcodes extends GHC_Base {
 	private function get_current_cta( array $value ) : bool {
 		$conventions = GHC_Conventions::get_instance();
 		return $conventions->get_current_cta( $value );
+	}
+
+	/**
+	 * Show all convention feature icons.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param  array $attributes Shortcode attributes.
+	 *
+	 * @return string            HTML output.
+	 */
+	public function convention_features( $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'convention' => null,
+			), $attributes
+		);
+		$this_convention      = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
+
+		ob_start();
+		include $this->plugin_dir_path( 'templates/location-features.php' );
+		return ob_get_clean();
 	}
 
 	/**

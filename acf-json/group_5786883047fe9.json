@@ -335,10 +335,10 @@
                 },
                 {
                     "key": "field_5a6f8ca7781d6",
-                    "label": "Icon (Dashicon)",
-                    "name": "icon_dashicon",
-                    "type": "text",
-                    "instructions": "",
+                    "label": "Background Image",
+                    "name": "image",
+                    "type": "image",
+                    "instructions": "Square image at 450×450px; will be “rounded” and have color overlay added automatically.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -346,11 +346,16 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
-                    "placeholder": "dashicons-",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
+                    "return_format": "url",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "min_width": 450,
+                    "min_height": 450,
+                    "min_size": "",
+                    "max_width": 600,
+                    "max_height": 600,
+                    "max_size": "",
+                    "mime_types": ""
                 },
                 {
                     "key": "field_5a6f8ab2d65af",
@@ -366,25 +371,6 @@
                         "id": ""
                     },
                     "return_format": "url"
-                },
-                {
-                    "key": "field_5a6f8aded65b0",
-                    "label": "Text",
-                    "name": "text",
-                    "type": "wysiwyg",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "100",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "tabs": "all",
-                    "toolbar": "basic",
-                    "media_upload": 0,
-                    "delay": 0
                 }
             ]
         },
@@ -605,5 +591,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1532397904
+    "modified": 1532553960
 }

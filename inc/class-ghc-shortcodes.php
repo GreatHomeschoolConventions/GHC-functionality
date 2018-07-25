@@ -203,8 +203,14 @@ class GHC_Shortcodes extends GHC_Base {
 			'tax_query'      => [],
 		);
 
+		// Set default items to show.
 		if ( is_null( $shortcode_attributes['show'] ) ) {
 			$shortcode_attributes['show'] = 'image,title';
+		}
+
+		// Set default convention if on a single convention.
+		if ( is_singular( 'location' ) && ! isset( $shortcode_attributes['convention'] ) ) {
+			$shortcode_attributes['convention'] = strtolower( get_field( 'convention_abbreviated_name' ) );
 		}
 
 		// Get featured speakers only.

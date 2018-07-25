@@ -540,6 +540,7 @@ class GHC_Shortcodes extends GHC_Base {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'convention' => null,
+				'display'    => 'side',
 			), $attributes
 		);
 
@@ -582,7 +583,7 @@ class GHC_Shortcodes extends GHC_Base {
 		wp_add_inline_script( 'ghc-maps', 'var ghcMap_' . esc_attr( $map_identifier ) . ' = ' . $map_json . ';', 'before' );
 
 		ob_start();
-		echo '<div class="ghc-map-container shortcode">
+		echo '<div class="ghc-map-container shortcode display-' . esc_attr( $shortcode_attributes['display'] ) . '">
 			<div class="container">
 				<div class="ghc-map" id="ghcMap_' . esc_attr( $map_identifier ) . '"></div>
 				<div class="map-locations-info">' . $display_data . '</div>

@@ -14,7 +14,14 @@
 		 */
 		$('.ghc-map').each(function() {
 			var thisMapId = $(this).attr('id'),
-				thisMapData = window[thisMapId];
+				thisMapData = window[thisMapId],
+				displayMode;
+
+			if ($(this).hasClass('display-side')) {
+				displayMode = 'side';
+			} else if ($(this).hasClass('display-infoWindow')) {
+				displayMode = 'infoWindow';
+			}
 
 			/**
 			 * Set up map data.
@@ -25,6 +32,8 @@
 				var thisPin,
 					thisIcon,
 					marker,
+					infoWindow = new google.maps.InfoWindow( {} ),
+					infoWindowContent,
 					LatLngList = [],
 					bounds = new google.maps.LatLngBounds(),
 					map = new google.maps.Map($('#' + thisMapId).get(0), {
@@ -104,14 +113,26 @@
 						// Add infoWindow listener and content.
 						google.maps.event.addListener(marker, 'click', (function(marker, key) {
 							return function() {
-								$('.map-info:visible:not(:only-child)').fadeOut('slow', function() {
-									$('.map-info#' + key).fadeIn();
-								});
 
-								if (window.innerWidth <= 600) {
-									$('html, body').animate({
-										scrollTop: $('.map-info:visible').offset().top
-									}, 750);
+								// Side mode.
+								if ('side' === displayMode) {
+									$('.map-info:visible:not(:only-child)').fadeOut('slow', function() {
+										$('.map-info#' + key).fadeIn();
+									});
+
+									if (window.innerWidth <= 600) {
+										$('html, body').animate({
+											scrollTop: $('.map-info:visible').offset().top
+										}, 750);
+									}
+								} else if ('infoWindow' === displayMode) {
+
+									// Title.
+									infoWindowContent = $('.map-locations-info #' + key).html();
+
+									// Display infoWindow.
+									infoWindow.setContent(infoWindowContent);
+									infoWindow.open(map, marker);
 								}
 							};
 						}(marker, key)));

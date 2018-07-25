@@ -250,6 +250,7 @@ class GHC_Shortcodes extends GHC_Base {
 		// Get posts.
 		if ( $carousel_query->have_posts() ) {
 			$custom_args = json_decode( $shortcode_attributes['slick_args'] );
+			$slider_id   = 'carousel-' . md5( json_encode( $carousel_args ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 			$slick_data  = wp_parse_args(
 				$custom_args,
 				[
@@ -286,8 +287,6 @@ class GHC_Shortcodes extends GHC_Base {
 					],
 				]
 			);
-
-			$slider_id = 'carousel-' . md5( json_encode( $slick_data ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 
 			wp_enqueue_script( 'slick' );
 			wp_enqueue_style( 'slick' );

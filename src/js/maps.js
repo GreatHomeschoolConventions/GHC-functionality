@@ -104,7 +104,7 @@
 						// Add infoWindow listener and content.
 						google.maps.event.addListener(marker, 'click', (function(marker, key) {
 							return function() {
-								$('.map-info:visible').fadeOut('slow', function() {
+								$('.map-info:visible:not(:only-child)').fadeOut('slow', function() {
 									$('.map-info#' + key).fadeIn();
 								});
 

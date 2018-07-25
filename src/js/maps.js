@@ -130,7 +130,7 @@
 					map.fitBounds(bounds, 25);
 				} else {
 					map.setCenter(LatLngList[0]);
-					map.setZoom(8);
+					map.setZoom(3);
 				}
 			}
 		});

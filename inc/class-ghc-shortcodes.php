@@ -55,6 +55,7 @@ class GHC_Shortcodes extends GHC_Base {
 	public function init_shortcodes() {
 		$shortcodes = array(
 			'carousel',
+			'convention_address',
 			'convention_cta',
 			'convention_icon',
 			'convention_features',
@@ -335,6 +336,32 @@ class GHC_Shortcodes extends GHC_Base {
 		$current_cta = wpcf7_replace_all_form_tags( $current_cta );
 
 		return apply_filters( 'the_content', $current_cta );
+	}
+
+	/**
+	 * Display convention address for the current location.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @return string HTML content.
+	 */
+	public function convention_address() : string {
+		$key      = strtolower( get_field( 'convention_abbreviated_name' ) );
+		$location = $this->get_single_convention_info( $key );
+		$address  = $location['address']['street_address'] . ', ' . $location['address']['city'] . ', ' . $location['address']['state'] . ' ' . $location['address']['zip'];
+
+		ob_start();
+		?>
+			<div class="address-stripe" style="background-image: url(<?php the_post_thumbnail_url(); ?>)">
+				<div class="container">
+					<span class="dashicons dashicons-location"></span>
+					<h2><?php echo esc_attr( $location['address']['convention_center_name'] ); ?></h2>
+					<address class="meta"><?php echo wp_kses_post( $address ); ?></address>
+					<p><a class="button" target="_blank" href="<?php echo esc_url( 'https://www.google.com/maps/dir/?api=1&destination=' . rawurlencode( $address ) ); ?>">Get Directions</a></p>
+				</div>
+			</div>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**

@@ -375,21 +375,6 @@
             ]
         },
         {
-            "key": "field_5a707e819fcd7",
-            "label": "Price Sheet",
-            "name": "price_sheet",
-            "type": "link",
-            "instructions": "Displayed with the features icon list",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "25",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "url"
-        },
-        {
             "key": "field_5a707ee19fcda",
             "label": "Workshop Schedule",
             "name": "workshop_schedule",
@@ -398,7 +383,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "67",
                 "class": "",
                 "id": ""
             },
@@ -477,7 +462,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "25",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -572,6 +557,179 @@
                     "delay": 0
                 }
             ]
+        },
+        {
+            "key": "field_5b59f6b7e1bba",
+            "label": "Pricing",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5b59f6c1e1bbb",
+            "label": "Price Comparison",
+            "name": "price_comparison",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_5b59f75ee1bbd",
+                    "label": "Price",
+                    "name": "price",
+                    "type": "repeater",
+                    "instructions": "Price point",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "75",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "block",
+                    "button_label": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_5b59f78fe1bbe",
+                            "label": "Title",
+                            "name": "title",
+                            "type": "text",
+                            "instructions": "Main title for this price point",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "32",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_5b59f7a4e1bbf",
+                            "label": "Begin Date",
+                            "name": "begin_date",
+                            "type": "date_time_picker",
+                            "instructions": "When this price point starts",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "34",
+                                "class": "",
+                                "id": ""
+                            },
+                            "display_format": "F j, Y g:i a",
+                            "return_format": "U",
+                            "first_day": 0
+                        },
+                        {
+                            "key": "field_5b59f7fce1bc0",
+                            "label": "End Date",
+                            "name": "end_date",
+                            "type": "date_time_picker",
+                            "instructions": "When this price point ends",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "34",
+                                "class": "",
+                                "id": ""
+                            },
+                            "display_format": "F j, Y g:i a",
+                            "return_format": "U",
+                            "first_day": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "field_5b59f848e1bc1",
+                    "label": "Denominator",
+                    "name": "denominator",
+                    "type": "text",
+                    "instructions": "Denominator (per day, per family, etc.)",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5b59f86ce1bc2",
+                    "label": "Description",
+                    "name": "description",
+                    "type": "wysiwyg",
+                    "instructions": "Any extra text and bullet points for this price point",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "full",
+                    "media_upload": 1,
+                    "delay": 0
+                }
+            ]
+        },
+        {
+            "key": "field_5b59fa93762c4",
+            "label": "Background Image",
+            "name": "price_background_image",
+            "type": "image",
+            "instructions": "A normal-color background image, at 2000×800px. The dark overlay will be added.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": 2000,
+            "min_height": 600,
+            "min_size": "",
+            "max_width": 2000,
+            "max_height": 900,
+            "max_size": "",
+            "mime_types": ""
         }
     ],
     "location": [
@@ -591,5 +749,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1532553960
+    "modified": 1532627770
 }

@@ -59,6 +59,7 @@ class GHC_Shortcodes extends GHC_Base {
 			'convention_cta',
 			'convention_icon',
 			'convention_features',
+			'convention_pricing',
 			'exhibitor_list',
 			'exhibit_hall_hours',
 			'hotel_grid',
@@ -479,6 +480,25 @@ class GHC_Shortcodes extends GHC_Base {
 
 		$conventions = GHC_Conventions::get_instance();
 		return $conventions->get_icons( $this_convention );
+	}
+
+	/**
+	 * Display convention pricing stripe for the current location.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @return string HTML content.
+	 */
+	public function convention_pricing() : string {
+		ob_start();
+
+		$price_comparison = get_field( 'price_comparison' );
+
+		if ( ! empty( $price_comparison ) ) {
+			include $this->plugin_dir_path( 'templates/pricing-stripe.php' );
+		}
+
+		return ob_get_clean();
 	}
 
 	/**

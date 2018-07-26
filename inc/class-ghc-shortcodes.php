@@ -55,6 +55,7 @@ class GHC_Shortcodes extends GHC_Base {
 	public function init_shortcodes() {
 		$shortcodes = array(
 			'carousel',
+			'container',
 			'convention_address',
 			'convention_cta',
 			'convention_icon',
@@ -312,6 +313,24 @@ class GHC_Shortcodes extends GHC_Base {
 
 		wp_reset_postdata();
 
+		return ob_get_clean();
+	}
+
+	/**
+	 * Add .container wrapper to post content.
+	 *
+	 * Necessary because all the other shortcodes include their own .container; can’t add .container to entry because other shortcodes need to be full-width.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param  array  $attributes Shortcode attributes.
+	 * @param  string $content    Shortcode content.
+	 *
+	 * @return string             HTML content with div.container surrounding it.
+	 */
+	public function container( $attributes = array(), string $content = '' ) : string {
+		ob_start();
+		echo '<div class="container">' . wp_kses_post( $content ) . '</div>';
 		return ob_get_clean();
 	}
 

@@ -827,7 +827,9 @@ class GHC_Shortcodes extends GHC_Base {
 
 
 	/**
-	 * Display custom registration.
+	 * Display custom registration page with all conventions.
+	 *
+	 * @since  2.x
 	 *
 	 * @return string HTML output.
 	 */

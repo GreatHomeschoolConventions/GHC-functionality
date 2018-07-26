@@ -67,6 +67,7 @@ class GHC_Shortcodes extends GHC_Base {
 			'locations_map',
 			'price_sheet',
 			'product_price',
+			'register',
 			'registration_page',
 			'speaker_archive',
 			'speaker_grid',
@@ -720,6 +721,108 @@ class GHC_Shortcodes extends GHC_Base {
 	public function product_price() : string {
 		$registration_product = new WC_Product_Variable( get_field( 'registration_product' ) );
 		return $registration_product->get_price_html();
+	}
+
+	/**
+	 * Single or all convention registration form.
+	 *
+	 * If on a single location page or if `convention` parameter is specified anywhere, includes products only for the given convention.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param  array $attributes Shortcode attributes; accepts two-letter convention parameter.
+	 *
+	 * @return string             HTML output.
+	 */
+	public function register( $attributes = array() ) : string {
+		$shortcode_attributes = shortcode_atts(
+			array(
+				'convention' => null,
+			), $attributes
+		);
+
+		// Set default convention if on a single convention.
+		if ( is_singular( 'location' ) && ! isset( $shortcode_attributes['convention'] ) ) {
+			$shortcode_attributes['convention'] = strtolower( get_field( 'convention_abbreviated_name' ) );
+		}
+
+		// Get convention categories.
+		if ( ! empty( $shortcode_attributes['convention'] ) ) {
+			$convention_categories = array( strtolower( $this->get_single_convention_info( $shortcode_attributes['convention'] )['convention_short_name'] ) );
+		} else {
+			$convention_categories = wp_list_pluck( $this->get_conventions_info(), 'convention_short_name' );
+		}
+
+		// Get main products.
+		$registration_args = array(
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
+			'posts_per_page' => -1,
+			'tax_query'      => array(
+				'relation' => 'AND',
+				array(
+					'taxonomy' => 'product_cat',
+					'field'    => 'slug',
+					'terms'    => $convention_categories,
+				),
+				array(
+					'taxonomy' => 'product_cat',
+					'field'    => 'slug',
+					'terms'    => 'registration',
+				),
+			),
+		);
+
+		$registration_products = wc_get_products( $registration_args );
+		$registration_options  = array();
+
+		foreach ( $registration_products as $product ) {
+
+			if ( $product->is_type( 'variable' ) ) {
+				$variations = $product->get_available_variations();
+
+				foreach ( $variations as $variation_array ) {
+					$variation = new WC_Product_Variation( $variation_array['variation_id'] );
+
+					$registration_options[ $variation->get_id() ] = $variation->get_name() . ' (' . $variation->get_price_html() . ')';
+				}
+			} else {
+				require $this->plugin_dir_path( 'templates/registration-table-row.php' );
+			}
+		}
+
+		// Get special events.
+		$special_events_args = array(
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
+			'posts_per_page' => -1,
+			'tax_query'      => array(
+				'relation' => 'AND',
+				array(
+					'taxonomy' => 'product_cat',
+					'field'    => 'slug',
+					'terms'    => $convention_categories,
+				),
+				array(
+					'taxonomy' => 'product_cat',
+					'field'    => 'slug',
+					'terms'    => 'special-events',
+				),
+			),
+		);
+
+		$special_events_products = wc_get_products( $special_events_args );
+
+		ob_start();
+		?>
+
+		<div class="container" id="register">
+			<h2>Register</h2>
+			<?php echo do_shortcode( '[products category="' . implode( ',', $convention_categories ) . '" orderby="menu_order"]' ); ?>
+		</div>
+
+		<?php
+		return ob_get_clean();
 	}
 
 

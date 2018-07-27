@@ -176,6 +176,28 @@ class GHC_Shortcodes extends GHC_Base {
 	}
 
 	/**
+	 * Get buttons to filter conventions.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param  string $style Whether to display links or filter buttons.
+	 *
+	 * @return string Sanitized and escaped HTML content.
+	 */
+	private function get_locations_buttons( $style = 'link' ) : string {
+		$content = '';
+		foreach ( $this->get_conventions_info() as $convention ) {
+			if ( 'link' === $style ) {
+				$content .= '<a class="button hollow" href="' . esc_url( $convention['permalink'] ) . '"">' . wp_kses_post( $convention['convention_short_name'] ) . '</a> ';
+			} elseif ( in_array( $style, array( 'radio', 'checkbox' ), true ) ) {
+				$content .= '<input type="' . esc_attr( $style ) . '" class="filter" name="convention" id="' . esc_attr( strtolower( $convention['convention_short_name'] ) ) . '">
+				<label for="' . esc_attr( strtolower( $convention['convention_short_name'] ) ) . '" class="filter button hollow">' . wp_kses_post( $convention['convention_short_name'] ) . '</label> ';
+			}
+		}
+		return $content;
+	}
+
+	/**
 	 * Display the specified posts in a carousel layout.
 	 *
 	 * @uses https://kenwheeler.github.io/slick/ Slick Carousel
@@ -830,9 +852,29 @@ class GHC_Shortcodes extends GHC_Base {
 		ob_start();
 		?>
 
-		<div class="container" id="register">
+		<div class="container register shortcode" id="register">
 			<h2>Register</h2>
-			<?php echo do_shortcode( '[products category="' . implode( ',', $convention_categories ) . '" orderby="menu_order"]' ); ?>
+
+			<?php
+			if ( count( $convention_categories ) > 1 ) {
+				echo '<h3>Choose a Convention</h3>';
+				echo $this->get_locations_buttons( 'radio' ); // WPCS: XSS ok because it’s all escaped above.
+			}
+
+			# FIXME: use form instead of this shortcode.
+			echo do_shortcode( '[products category="' . implode( ',', $convention_categories ) . '" orderby="menu_order"]' );
+			?>
+
+<!-- 			<form method="post" action="<?php echo esc_url( wc_get_cart_url() ); ?>">
+				<select name="product_id" class="select2">
+					<?php
+					foreach ( $registration_options as $key => $value ) {
+						echo '<option value="' . esc_attr( $key ) . '">' . wp_kses_post( $value ) . '</option>';
+					}
+					?>
+				</select>
+			</form>
+-->
 		</div>
 
 		<?php

@@ -89,7 +89,7 @@ class GHC_Post_Types extends GHC_Base {
 			'description'         => __( 'Exhibitors', 'GHC' ),
 			'labels'              => $exhibitors_labels,
 			'supports'            => array( 'title', 'revisions', 'page-attributes' ),
-			'taxonomies'          => array( 'ghc_conventions_taxonomy', 'post_tag' ),
+			'taxonomies'          => array( 'ghc_content_tags_taxonomy', 'ghc_conventions_taxonomy' ),
 			'hierarchical'        => true,
 			'public'              => true,
 			'show_ui'             => true,
@@ -227,7 +227,7 @@ class GHC_Post_Types extends GHC_Base {
 			'description'         => __( 'Speakers', 'GHC' ),
 			'labels'              => $speakers_labels,
 			'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes' ),
-			'taxonomies'          => array( 'ghc_speaker_category_taxonomy', 'ghc_conventions_taxonomy', 'ghc_special_tracks_taxonomy', 'post_tag' ),
+			'taxonomies'          => array( 'ghc_content_tags_taxonomy', 'ghc_speaker_category_taxonomy', 'ghc_conventions_taxonomy', 'ghc_special_tracks_taxonomy' ),
 			'hierarchical'        => true,
 			'public'              => true,
 			'show_ui'             => true,
@@ -273,7 +273,7 @@ class GHC_Post_Types extends GHC_Base {
 			'description'         => __( 'Special Events', 'GHC' ),
 			'labels'              => $special_events_labels,
 			'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes' ),
-			'taxonomies'          => array( 'ghc_conventions_taxonomy' ),
+			'taxonomies'          => array( 'ghc_content_tags_taxonomy', 'ghc_conventions_taxonomy' ),
 			'hierarchical'        => true,
 			'public'              => true,
 			'show_ui'             => true,
@@ -365,7 +365,7 @@ class GHC_Post_Types extends GHC_Base {
 			'description'         => __( 'Workshops', 'GHC' ),
 			'labels'              => $workshops_labels,
 			'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes' ),
-			'taxonomies'          => array( 'ghc_conventions_taxonomy', 'ghc_special_tracks_taxonomy', 'ghc_workshop_locations_taxonomy', 'post_tag' ),
+			'taxonomies'          => array( 'ghc_content_tags_taxonomy', 'ghc_conventions_taxonomy', 'ghc_special_tracks_taxonomy', 'ghc_workshop_locations_taxonomy' ),
 			'hierarchical'        => true,
 			'public'              => true,
 			'show_ui'             => true,
@@ -390,6 +390,42 @@ class GHC_Post_Types extends GHC_Base {
 	 * Register custom taxonomies.
 	 */
 	public function register_taxonomies() {
+		$content_tag_labels  = array(
+			'name'                       => _x( 'Content Tags', 'Taxonomy General Name', 'GHC' ),
+			'singular_name'              => _x( 'Content Tag', 'Taxonomy Singular Name', 'GHC' ),
+			'menu_name'                  => __( 'Content Tags', 'GHC' ),
+			'all_items'                  => __( 'All Content Tags', 'GHC' ),
+			'parent_item'                => __( 'Parent Content Tag', 'GHC' ),
+			'parent_item_colon'          => __( 'Parent Content Tag:', 'GHC' ),
+			'new_item_name'              => __( 'New Content Tag Name', 'GHC' ),
+			'add_new_item'               => __( 'Add New Content Tag', 'GHC' ),
+			'edit_item'                  => __( 'Edit Content Tag', 'GHC' ),
+			'update_item'                => __( 'Update Content Tag', 'GHC' ),
+			'view_item'                  => __( 'View Content Tag', 'GHC' ),
+			'separate_items_with_commas' => __( 'Separate content tags with commas', 'GHC' ),
+			'add_or_remove_items'        => __( 'Add or remove content tags', 'GHC' ),
+			'choose_from_most_used'      => __( 'Choose from the most used', 'GHC' ),
+			'popular_items'              => __( 'Popular Content Tags', 'GHC' ),
+			'search_items'               => __( 'Search Content Tags', 'GHC' ),
+			'not_found'                  => __( 'Not Found', 'GHC' ),
+		);
+		$content_tag_rewrite = array(
+			'slug'         => 'content/type',
+			'with_front'   => true,
+			'hierarchical' => true,
+		);
+		$content_tag_args    = array(
+			'labels'            => $content_tag_labels,
+			'hierarchical'      => false,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => true,
+			'show_tagcloud'     => true,
+			'rewrite'           => $content_tag_rewrite,
+		);
+		register_taxonomy( 'ghc_content_tags_taxonomy', array( 'exhibitor', 'speaker', 'special_event', 'workshop' ), $content_tag_args );
+
 		$convention_labels = array(
 			'name'                       => _x( 'Conventions', 'Taxonomy General Name', 'GHC' ),
 			'singular_name'              => _x( 'Convention', 'Taxonomy Singular Name', 'GHC' ),

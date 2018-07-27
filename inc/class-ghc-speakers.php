@@ -45,6 +45,19 @@ class GHC_Speakers extends GHC_Base {
 	private function __construct() {}
 
 	/**
+	 * Get speakers.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param array $args Optional additional args.
+	 *
+	 * @return WP_Query   All speakers.
+	 */
+	public static function get_posts( array $args = array() ) : array {
+		return parent::get_posts( wp_parse_args( $args, array( 'post_type' => 'speaker' ) ) );
+	}
+
+	/**
 	 * Get speaker’s position and company name/link.
 	 *
 	 * @param  int $post_id WP post ID.

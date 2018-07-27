@@ -181,6 +181,22 @@ class GHC_Base {
 	}
 
 	/**
+	 * Get posts for the specified args.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param  array $args WP_Query args.
+	 *
+	 * @return WP_Query    Query object.
+	 */
+	public static function get_posts( array $args = array() ) : array {
+		$query = new WP_Query( $args );
+		wp_reset_postdata();
+
+		return $query->posts;
+	}
+
+	/**
 	 * Register or enqueue frontend assets.
 	 *
 	 * @return  void Enqueues assets.

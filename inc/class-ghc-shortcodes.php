@@ -98,7 +98,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	private function cpt_grid( array $attributes = array() ) : string {
+	private function cpt_grid( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'post_type'      => 'speaker',
@@ -185,7 +185,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string            HTML content.
 	 */
-	public function carousel( array $attributes = array() ) : string {
+	public function carousel( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'post_type'      => 'speaker',
@@ -342,7 +342,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML content.
 	 */
-	public function convention_cta( array $attributes = array() ) : string {
+	public function convention_cta( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'convention' => null,
@@ -490,7 +490,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function convention_icon( array $attributes = array() ) : string {
+	public function convention_icon( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'convention' => null,
@@ -530,7 +530,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string  HTML output.
 	 */
-	public function exhibitor_list( array $attributes = array() ) : string {
+	public function exhibitor_list( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'convention' => null,
@@ -611,7 +611,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function hotel_grid( array $attributes = array() ) : string {
+	public function hotel_grid( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'convention'   => null,
@@ -698,7 +698,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function price_sheet( array $attributes = array() ) : string {
+	public function price_sheet( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'convention' => null,
@@ -976,7 +976,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function speaker_grid( array $attributes = array() ) : string {
+	public function speaker_grid( $attributes = array() ) : string {
 		$attributes['post_type'] = 'speaker';
 		return $this->cpt_grid( $attributes );
 	}
@@ -993,7 +993,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function speaker_info( array $attributes = array() ) : string {
+	public function speaker_info( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'postid'         => null,
@@ -1092,7 +1092,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function speaker_list( array $attributes = array() ) : string {
+	public function speaker_list( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'convention'     => null,
@@ -1170,7 +1170,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function special_event_grid( array $attributes = array() ) : string {
+	public function special_event_grid( $attributes = array() ) : string {
 		$attributes['post_type'] = 'special_event';
 		return $this->cpt_grid( $attributes );
 	}
@@ -1197,7 +1197,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function special_track_speakers( array $attributes = array() ) : string {
+	public function special_track_speakers( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'track' => null,
@@ -1247,7 +1247,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function sponsors( array $attributes = array() ) : string {
+	public function sponsors( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'gray'  => null,
@@ -1306,7 +1306,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @return string HTML output.
 	 */
-	public function workshop_list( array $attributes = array() ) : string {
+	public function workshop_list( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'convention'     => null,

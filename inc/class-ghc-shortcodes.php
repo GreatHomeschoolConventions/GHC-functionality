@@ -784,7 +784,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 		// Get convention categories.
 		if ( ! empty( $shortcode_attributes['convention'] ) ) {
-			$convention_categories = array( strtolower( $this->get_single_convention_info( $shortcode_attributes['convention'] )['convention_short_name'] ) );
+			$convention_categories = array( $this->get_single_convention_info( $shortcode_attributes['convention'] )['convention_short_name'] );
 		} else {
 			$convention_categories = wp_list_pluck( $this->get_conventions_info(), 'convention_short_name' );
 		}

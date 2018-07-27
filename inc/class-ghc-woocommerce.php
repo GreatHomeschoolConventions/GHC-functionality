@@ -224,14 +224,16 @@ class GHC_Woocommerce extends GHC_Base {
 		$max_quantity = 1;
 
 		// Loop over products in cart searching for a product with an attendee-type attribute.
-		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+		if ( WC()->cart ) {
+			foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 
-			$attributes = $cart_item['data']->get_attributes();
+				$attributes = $cart_item['data']->get_attributes();
 
-			if ( array_key_exists( 'attendee-type', $attributes ) && 'Family' === $attributes['attendee-type'] ) {
-				// Get family member quantity.
-				if ( array_key_exists( 'family_members', $cart_item ) ) {
-					$max_quantity = (int) $cart_item['family_members'];
+				if ( array_key_exists( 'attendee-type', $attributes ) && 'Family' === $attributes['attendee-type'] ) {
+					// Get family member quantity.
+					if ( array_key_exists( 'family_members', $cart_item ) ) {
+						$max_quantity = (int) $cart_item['family_members'];
+					}
 				}
 			}
 		}

@@ -53,5 +53,11 @@ $show = explode( ',', $shortcode_attributes['show'] );
 				<p><a href="<?php the_permalink(); ?>" class="button">Read More</a></p>
 			</div>
 		<?php } ?>
+
+		<?php if ( array_search( 'link', $show, true ) !== false ) { ?>
+			<div class="excerpt">
+				<p><a href="<?php the_permalink(); ?>" class="button">Read More</a></p>
+			</div>
+		<?php } ?>
 	<?php } ?>
 </article>

@@ -256,42 +256,7 @@ class GHC_Shortcodes extends GHC_Base {
 		if ( $carousel_query->have_posts() ) {
 			$custom_args = json_decode( $shortcode_attributes['slick_args'] );
 			$slider_id   = 'carousel-' . md5( json_encode( $carousel_args ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
-			$slick_data  = wp_parse_args(
-				$custom_args,
-				[
-					'dots'           => true,
-					'slidesToShow'   => 4,
-					'slidesToScroll' => 1,
-					'infinite'       => true,
-					'autoplay'       => true,
-					'autoplaySpeed'  => 5000,
-					'adaptiveHeight' => true,
-					'prevArrow'      => '<a class="slick-arrow prev dashicons dashicons-arrow-left-alt2">',
-					'nextArrow'      => '<a class="slick-arrow next dashicons dashicons-arrow-right-alt2">',
-					'swipeToSlide'   => true,
-					'responsive'     => [
-						[
-							'breakpoint' => '700',
-							'settings'   => [
-								'slidesToShow' => 3,
-							],
-						],
-						[
-							'breakpoint' => '500',
-							'settings'   => [
-								'slidesToShow' => 2,
-							],
-						],
-						[
-							'breakpoint' => '400',
-							'settings'   => [
-								'slidesToShow' => 1,
-								'dots'         => false,
-							],
-						],
-					],
-				]
-			);
+			$slick_data  = $this->get_slick_options( $custom_args );
 
 			wp_enqueue_script( 'slick' );
 			wp_enqueue_style( 'slick' );
@@ -300,7 +265,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 			echo '<div class="container">';
 			printf(
-				'<section id="%1$s" class="shortcode carousel %2$s" data-slick=' . wp_json_encode( $custom_args ) . '>',
+				'<section id="%1$s" class="shortcode carousel %2$s">',
 				esc_attr( $slider_id ),
 				esc_attr( $shortcode_attributes['post_type'] )
 			);
@@ -315,6 +280,54 @@ class GHC_Shortcodes extends GHC_Base {
 		wp_reset_postdata();
 
 		return ob_get_clean();
+	}
+
+	/**
+	 * Get Slick carousel settings.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param  array $custom_args Custom arguments to modify the defaults.
+	 *
+	 * @return array              Merged arguments.
+	 */
+	private function get_slick_options( $custom_args = array() ) : array {
+		return wp_parse_args(
+			$custom_args,
+			[
+				'dots'           => true,
+				'slidesToShow'   => 4,
+				'slidesToScroll' => 1,
+				'infinite'       => true,
+				'autoplay'       => true,
+				'autoplaySpeed'  => 5000,
+				'adaptiveHeight' => true,
+				'prevArrow'      => '<a class="slick-arrow prev dashicons dashicons-arrow-left-alt2">',
+				'nextArrow'      => '<a class="slick-arrow next dashicons dashicons-arrow-right-alt2">',
+				'swipeToSlide'   => true,
+				'responsive'     => [
+					[
+						'breakpoint' => '700',
+						'settings'   => [
+							'slidesToShow' => 3,
+						],
+					],
+					[
+						'breakpoint' => '500',
+						'settings'   => [
+							'slidesToShow' => 2,
+						],
+					],
+					[
+						'breakpoint' => '400',
+						'settings'   => [
+							'slidesToShow' => 1,
+							'dots'         => false,
+						],
+					],
+				],
+			]
+		);
 	}
 
 	/**

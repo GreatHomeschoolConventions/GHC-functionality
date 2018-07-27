@@ -331,7 +331,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 */
 	public function container( $attributes = array(), string $content = '' ) : string {
 		ob_start();
-		echo '<div class="container">' . wp_kses_post( $content ) . '</div>';
+		echo '<div class="container shortcode wrapper">' . wp_kses_post( $content ) . '</div>';
 		return ob_get_clean();
 	}
 

@@ -187,10 +187,10 @@
         },
         {
             "key": "field_5b50b1f00f2c0",
-            "label": "Testimonial Background",
+            "label": "Testimonial Shortcode Background",
             "name": "testimonial_background",
             "type": "image",
-            "instructions": "",
+            "instructions": "Background image at least 2000×800px for <code>[testimonial]<\/code> shortcode; overlay will be applied automatically.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -201,8 +201,32 @@
             "return_format": "url",
             "preview_size": "medium",
             "library": "all",
-            "min_width": "",
-            "min_height": "",
+            "min_width": 2000,
+            "min_height": 800,
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_5b5b2e67fc430",
+            "label": "Speaker Tags Shortcode Background",
+            "name": "speaker_tag_background",
+            "type": "image",
+            "instructions": "Background image at least 2000×800px for <code>[speaker_tags]<\/code> shortcode; overlay will be applied automatically.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": 2000,
+            "min_height": 800,
             "min_size": "",
             "max_width": "",
             "max_height": "",
@@ -227,5 +251,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1532015130
+    "modified": 1532702512
 }

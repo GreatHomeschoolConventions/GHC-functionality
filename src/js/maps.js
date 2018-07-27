@@ -17,7 +17,7 @@
 				thisMapData = window[thisMapId],
 				displayMode;
 
-			if ($(this).hasClass('display-side')) {
+			if ($(this).parents('.ghc-map-container').hasClass('display-side')) {
 				displayMode = 'side';
 			} else if ($(this).hasClass('display-infoWindow')) {
 				displayMode = 'infoWindow';
@@ -32,7 +32,7 @@
 				var thisPin,
 					thisIcon,
 					marker,
-					infoWindow = new google.maps.InfoWindow( {} ),
+					infoWindow = new google.maps.InfoWindow({}),
 					infoWindowContent,
 					LatLngList = [],
 					bounds = new google.maps.LatLngBounds(),

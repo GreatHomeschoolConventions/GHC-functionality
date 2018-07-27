@@ -57,6 +57,7 @@ class GHC_Speakers extends GHC_Base {
 		$speaker_company_url = get_field( 'company_url', $post_id );
 
 		ob_start();
+
 		if ( $speaker_position || $speaker_company ) {
 			echo '<p class="entry-meta speaker-info">';
 			if ( $speaker_position ) {
@@ -66,12 +67,12 @@ class GHC_Speakers extends GHC_Base {
 				echo ' <span class="separator">|</span> ';
 			}
 			if ( $speaker_company ) {
-				if ( $speaker_company_url ) {
+				if ( is_singular( 'speaker' ) && $speaker_company_url ) {
 					echo '<a target="_blank" rel="noopener noreferrer" href="' . esc_url( $speaker_company_url ) . '">';
 				}
 				echo esc_attr( $speaker_company );
-				if ( $speaker_company_url ) {
-					echo '</a>';
+				if ( is_singular( 'speaker' ) && $speaker_company_url ) {
+					echo '<span class="dashicons dashicons-external"></span></a>';
 				}
 			}
 			echo '</p>';

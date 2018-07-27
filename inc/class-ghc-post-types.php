@@ -237,7 +237,7 @@ class GHC_Post_Types extends GHC_Base {
 			'show_in_admin_bar'   => true,
 			'show_in_nav_menus'   => true,
 			'can_export'          => true,
-			'has_archive'         => 'speakers/all',
+			'has_archive'         => 'speakers/archive',
 			'exclude_from_search' => false,
 			'publicly_queryable'  => true,
 			'rewrite'             => $speakers_rewrite,

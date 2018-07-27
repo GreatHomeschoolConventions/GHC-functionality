@@ -409,27 +409,8 @@ class GHC_Content extends GHC_Base {
 	 */
 	public function show_title_info( string $content ) : string {
 		if ( is_singular( 'speaker' ) ) {
-			$speaker_position    = get_field( 'position', $id );
-			$speaker_company     = get_field( 'company', $id );
-			$speaker_company_url = get_field( 'company_url', $id );
-
-			ob_start();
-
-			if ( $speaker_position || $speaker_company ) {
-				echo '<p class="entry-meta speaker-info">';
-				if ( $speaker_position ) {
-					echo wp_kses_post( $speaker_position );
-				}
-				if ( $speaker_position && $speaker_company ) {
-					echo ' <span class="separator">|</span> ';
-				}
-				if ( $speaker_company ) {
-					echo ( $speaker_company_url && is_singular( 'speaker' ) ? '<a target="_blank" rel="noopener noreferrer" href="' . esc_url( $speaker_company_url ) . '">' : '' ) . wp_kses_post( $speaker_company ) . ( esc_url( $speaker_company_url ) ? '</a>' : '' );
-				}
-				echo '</p>';
-			}
-
-			$content = ob_get_clean() . $content;
+			$speaker = GHC_Speakers::get_instance();
+			$content = $speaker->get_short_bio( get_the_ID() ) . $content;
 		}
 		return $content;
 	}

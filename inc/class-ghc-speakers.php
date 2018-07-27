@@ -61,7 +61,7 @@ class GHC_Speakers extends GHC_Base {
 		if ( $speaker_position || $speaker_company ) {
 			echo '<p class="entry-meta speaker-info">';
 			if ( $speaker_position ) {
-				echo esc_attr( $speaker_position );
+				echo wp_kses_post( $speaker_position );
 			}
 			if ( $speaker_position && $speaker_company ) {
 				echo ' <span class="separator">|</span> ';
@@ -70,7 +70,7 @@ class GHC_Speakers extends GHC_Base {
 				if ( is_singular( 'speaker' ) && $speaker_company_url ) {
 					echo '<a target="_blank" rel="noopener noreferrer" href="' . esc_url( $speaker_company_url ) . '">';
 				}
-				echo esc_attr( $speaker_company );
+				echo wp_kses_post( $speaker_company );
 				if ( is_singular( 'speaker' ) && $speaker_company_url ) {
 					echo '<span class="dashicons dashicons-external"></span></a>';
 				}

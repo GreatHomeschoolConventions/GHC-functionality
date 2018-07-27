@@ -191,8 +191,10 @@ class GHC_Content extends GHC_Base {
 			// Check for old-style meta.
 			// FUTURE: remove after featured_video_meta no longer exists in db.
 			if ( empty( $featured_video_thumbnail ) ) {
-				$featured_video_meta      = get_post_meta( get_the_ID(), 'featured_video_meta', true );
-				$featured_video_thumbnail = $featured_video_meta->snippet->thumbnails->maxres;
+				$featured_video_meta = get_post_meta( get_the_ID(), 'featured_video_meta', true );
+				if ( is_object( $featured_video_meta ) ) {
+					$featured_video_thumbnail = $featured_video_meta->snippet->thumbnails->maxres;
+				}
 
 				// Delete old meta.
 				update_post_meta( get_the_ID(), 'featured_video_thumbnail', $featured_video_thumbnail );
@@ -200,13 +202,15 @@ class GHC_Content extends GHC_Base {
 			}
 
 			// Add video tags.
-			echo '<meta property="og:video" content="' . esc_url( $featured_video ) . '" />';
-			echo strpos( $featured_video, 'https' ) !== false ? '<meta property="og:video:secure_url" content="' . esc_url( $featured_video ) . '" />' : '';
-			echo '<meta property="og:video:width" content="' . esc_attr( $featured_video_thumbnail->width ) . '" />';
-			echo '<meta property="og:video:height" content="' . esc_attr( $featured_video_thumbnail->height ) . '" />';
+			if ( isset( $featured_video ) && is_object( $featured_video_thumbnail ) ) {
+				echo '<meta property="og:video" content="' . esc_url( $featured_video ) . '" />';
+				echo strpos( $featured_video, 'https' ) !== false ? '<meta property="og:video:secure_url" content="' . esc_url( $featured_video ) . '" />' : '';
+				echo '<meta property="og:video:width" content="' . esc_attr( $featured_video_thumbnail->width ) . '" />';
+				echo '<meta property="og:video:height" content="' . esc_attr( $featured_video_thumbnail->height ) . '" />';
 
-			// Add placeholder image.
-			echo '<meta property="og:image" content="' . esc_url( $featured_video_thumbnail->url ) . '" />';
+				// Add placeholder image.
+				echo '<meta property="og:image" content="' . esc_url( $featured_video_thumbnail->url ) . '" />';
+			}
 		}
 	}
 

@@ -91,6 +91,7 @@ class GHC_Base {
 		include_once 'class-ghc-conventions.php'; // Loaded in class.
 
 		include_once 'class-ghc-acf.php'; // Loaded in class.
+		include_once 'class-ghc-ajax.php'; // Loaded in class.
 		include_once 'class-ghc-content.php'; // Loaded in class.
 		include_once 'class-ghc-images.php'; // Loaded in class.
 		include_once 'class-ghc-shortcodes.php'; // Loaded in class.
@@ -203,6 +204,8 @@ class GHC_Base {
 	 */
 	public function register_frontend_assets() {
 		wp_enqueue_style( 'ghc-functionality', $this->plugin_dir_url( 'dist/css/style.min.css' ), array(), $this->version );
+
+		wp_register_script( 'ghc-content-types-filter', $this->plugin_dir_url( 'dist/js/content-types.min.js' ), array( 'jquery' ), $this->version, true );
 
 		wp_register_script( 'ghc-maps', $this->plugin_dir_url( 'dist/js/maps.min.js' ), array( 'jquery', 'google-maps-api' ), $this->version, true );
 		wp_register_script( 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'options_api_key' ), array(), null, true );

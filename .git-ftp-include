@@ -8,6 +8,8 @@ dist/images/svg/MO.svg:src/images/svg/MO.svg
 dist/images/svg/FL.svg:src/images/svg/FL.svg
 dist/images/svg/NY.svg:src/images/svg/NY.svg
 
+dist/js/content-types.min.js:src/js/content-types.js
+dist/js/content-types.min.js.map:src/js/content-types.js
 dist/js/exhibitor-backend.min.js:src/js/exhibitor-backend.js
 dist/js/exhibitor-backend.min.js.map:src/js/exhibitor-backend.js
 dist/js/maps.min.js:src/js/maps.js

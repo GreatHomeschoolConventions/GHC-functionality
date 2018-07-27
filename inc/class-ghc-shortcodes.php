@@ -73,6 +73,7 @@ class GHC_Shortcodes extends GHC_Base {
 			'speaker_grid',
 			'speaker_info',
 			'speaker_list',
+			'speaker_tags',
 			'special_event_grid',
 			'special_event_list',
 			'special_track_speakers',
@@ -1167,6 +1168,58 @@ class GHC_Shortcodes extends GHC_Base {
 		// Reset the post data.
 		wp_reset_postdata();
 
+		return ob_get_clean();
+	}
+
+	/**
+	 * Display stripe with content type tags and associated CPTs.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param  array $attributes Shortcode parameters.
+	 *
+	 * @return string            HTML content.
+	 */
+	public function speaker_tags( $attributes = array() ) : string {
+		ob_start();
+		?>
+		<div class="speaker-tags shortcode" style="background-image: url(<?php echo esc_url( get_field( 'speaker_tag_background', 'option' ) ); ?>);">
+			<div class="container overlay">
+				<h2>What Interests You?</h2>
+				<?php
+				// Get categories.
+				$category_args = array(
+					'taxonomy' => 'ghc_content_tags_taxonomy',
+				);
+				$categories    = get_categories( $category_args );
+
+				// Display categories.
+				echo '<p class="filter">';
+				foreach ( $categories as $category ) {
+					echo '<a class="button hollow" href="' . esc_url( get_category_link( $category ) ) . '" data-content-tag-id="' . esc_attr( $category->term_id ) . '">' . wp_kses_post( $category->name ) . '</a> ';
+				}
+				echo '</p>';
+
+				// Script.
+				wp_add_inline_script( 'ghc-content-types-filter', 'var speakerAjaxUrl = "' . esc_url( admin_url( 'admin-ajax.php' ) ) . '", speakerTagSlickArgs = ' . wp_json_encode( $this->get_slick_options() ) . ';', 'before' );
+				wp_enqueue_script( 'ghc-content-types-filter' );
+
+				// Container.
+				echo '<div class="speakers-container carousel shortcode speaker">';
+				$speakers_query = new WP_Query( array( 'post_type' => 'speaker' ) );
+				if ( $speakers_query->have_posts() ) {
+					while ( $speakers_query->have_posts() ) {
+						$speakers_query->the_post();
+						include $this->plugin_dir_path( 'templates/carousel-single.php' );
+					}
+				}
+				wp_reset_postdata();
+				echo '</div>';
+
+				?>
+			</div>
+		</div>
+		<?php
 		return ob_get_clean();
 	}
 

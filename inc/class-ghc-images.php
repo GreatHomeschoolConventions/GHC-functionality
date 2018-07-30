@@ -104,6 +104,7 @@ class GHC_Images extends GHC_Base {
 		add_image_size( 'thumbnail-no-crop', 140, 140, false );
 		add_image_size( 'pinterest-thumb', 173, 345, true );
 		add_image_size( 'pinterest-medium', 346, 690, true );
+		add_image_size( 'square-miniscule', 75, 75, true );
 		add_image_size( 'square-tiny', 150, 150, true );
 		add_image_size( 'square-thumb', 250, 250, true );
 		add_image_size( 'square-small', 400, 400, true );

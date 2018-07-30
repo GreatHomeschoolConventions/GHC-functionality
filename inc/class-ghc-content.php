@@ -33,7 +33,7 @@ class GHC_Content extends GHC_Base {
 		add_filter( 'the_content', array( $this, 'add_hotel_single_content' ) );
 
 		// Sponsors.
-		add_filter( 'the_content', array( $this, 'add_related_sponsors' ), 15 );
+		add_action( 'loop_start', array( $this, 'add_related_sponsors' ), 10 );
 
 		// Social media.
 		add_action( 'wp_head', array( $this, 'add_opengraph_video' ), 8 );
@@ -41,7 +41,6 @@ class GHC_Content extends GHC_Base {
 
 		// Special tracks.
 		add_filter( 'the_content', array( $this, 'list_special_tracks' ), 8 );
-		add_filter( 'get_the_archive_description', array( $this, 'list_special_track_sponsors' ) );
 
 		// Speakers and Special Events.
 		add_filter( 'the_content', array( $this, 'show_locations' ), 11 );
@@ -113,55 +112,57 @@ class GHC_Content extends GHC_Base {
 	/**
 	 * Add related sponsor(s) to posts/pages.
 	 *
-	 * @param  string $content HTML content.
+	 * @param  WP_Query $query WP query object.
 	 *
-	 * @return string modified HTML content.
+	 * @return void            Prints HTML content.
 	 */
-	public function add_related_sponsors( string $content ) : string {
-		if ( is_singular() ) {
-			// Get related sponsors.
-			$related_sponsors = get_field( 'related_sponsors' );
+	public function add_related_sponsors( WP_Query $query ) {
+		$object = get_queried_object();
+		$id     = $object->id;
 
-			if ( isset( $related_sponsors ) && ! empty( $related_sponsors ) ) {
-				$show_content_with_logo = get_field( 'show_content_with_logo' );
+		if ( is_a( $object, 'WP_Term' ) ) {
+			$id = 'category_' . $object->term_id;
+		}
 
-				$related_sponsors_query_args = array(
-					'post_type'      => 'sponsor',
-					'orderby'        => 'menu_order',
-					'order'          => 'ASC',
-					'posts_per_page' => -1,
-					'post__in'       => $related_sponsors,
-				);
+		// Get related sponsors.
+		$related_sponsors = get_field( 'related_sponsors', $id );
 
-				$related_sponsors_query = new WP_Query( $related_sponsors_query_args );
+		if ( ! empty( $related_sponsors ) ) {
+			$show_content_with_logo = get_field( 'show_content_with_logo' );
 
-				if ( $related_sponsors_query->have_posts() ) {
-					$content .= '<div id="related-sponsors">
-					<h3 class="related-sponsors">Sponsors</h3>
-					<div class="sponsor-container ghc-cpt container show-content-' . $show_content_with_logo . '">';
+			$related_sponsors_query_args = array(
+				'post_type'      => 'sponsor',
+				'orderby'        => 'menu_order',
+				'order'          => 'ASC',
+				'posts_per_page' => -1,
+				'post__in'       => $related_sponsors,
+			);
 
-					while ( $related_sponsors_query->have_posts() ) {
-						$related_sponsors_query->the_post();
-						$content .= '<div class="sponsor">
-						<div class="post-thumbnail">
-						<a href="' . get_permalink() . '">' . get_the_post_thumbnail( get_the_ID(), 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>';
+			$related_sponsors = get_posts( $related_sponsors_query_args );
 
-						if ( $show_content_with_logo ) {
-							$content .= apply_filters( 'the_content', get_the_content() );
-						}
+			if ( count( $related_sponsors ) > 1 ) {
+				echo '<div class="related-sponsors" id="related-sponsors" style="background-image: url(' . esc_url( get_field( 'related_sponsors_background', 'option' ) ) . ')">
+				<div class="container overlay">
+					<h3>Sponsored By:</h3>
+					<div class="sponsor-container ghc-cpt">';
 
-						$content .= '</div>
-						</div><!-- .sponsor -->';
+				foreach ( $related_sponsors as $sponsor ) {
+					echo '<div class="sponsor">
+					<div class="post-thumbnail">
+					<a href="' . esc_url( get_permalink( $sponsor->ID ) ) . '">' . get_the_post_thumbnail( $sponsor->ID, 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>';
+
+					if ( $show_content_with_logo ) {
+						echo wp_kses_post( apply_filters( 'the_content', get_the_content( $sponsor->ID ) ) );
 					}
-					$content .= '</div><!-- .sponsor-container.ghc-cpt.container -->
-					</div><!-- #sponsor-container.ghc-cpt.container -->';
-				}
 
-				// Restore original post data.
-				wp_reset_postdata();
+					echo '</div>
+					</div><!-- .sponsor -->';
+				}
+				echo '</div>
+				</div><!-- .sponsor-container.ghc-cpt -->
+				</div><!-- .related-sponsors -->';
 			}
 		}
-		return $content;
 	}
 
 	/**
@@ -327,21 +328,16 @@ class GHC_Content extends GHC_Base {
 	/**
 	 * Get special track related sponsor name(s) and link(s).
 	 *
-	 * @param  int    $term_id ghc_special_track term ID.
-	 * @param  string $context Either “inline” or “standalone”.
+	 * @param  int $term_id ghc_special_track term ID.
 	 *
-	 * @return string HTML output with sponsor name(s) and link(s).
+	 * @return string       HTML output with sponsor name(s) and link(s).
 	 */
-	private function get_special_track_related_sponsor_names( int $term_id, string $context = 'inline' ) : string {
+	private function get_special_track_related_sponsor_names( int $term_id ) : string {
 		$track_output = '';
 		$sponsors     = get_field( 'related_sponsors', 'ghc_special_tracks_taxonomy_' . $term_id );
 		if ( $sponsors ) {
 			$sponsor_index = 1;
-			if ( 'inline' === $context ) {
-				$track_output .= ' <small>(sponsored by ';
-			} elseif ( 'standalone' === $context ) {
-				$track_output .= '<p>This track is sponsored by ';
-			}
+			$track_output .= ' <small>(sponsored by ';
 			foreach ( $sponsors as $sponsor ) {
 				$track_output .= '<a href="' . esc_url( get_permalink( $sponsor ) ) . '">' . wp_kses_post( get_the_title( $sponsor ) ) . '</a>';
 				if ( count( $sponsors ) > 2 ) {
@@ -354,37 +350,10 @@ class GHC_Content extends GHC_Base {
 				}
 				$sponsor_index++;
 			}
-			if ( 'inline' === $context ) {
-				$track_output .= ')</small>';
-			} elseif ( 'standalone' === $context ) {
-				$track_output .= '.</p>';
-				$track_output .= '<div id="related-sponsors">
-					<div class="sponsor-container ghc-cpt container">';
-				foreach ( $sponsors as $sponsor ) {
-					$track_output .= '<div class="sponsor">
-						<div class="post-thumbnail">
-						<a href="' . esc_url( get_permalink( $sponsor ) ) . '">' . wp_kses_post( get_the_post_thumbnail( $sponsor, 'post-thumbnail', array( 'class' => 'sponsor' ) ) ) . '</a>
-						</div>
-						</div><!-- .sponsor -->';
-				}
-				$track_output .= '</div><!-- .sponsor-container.ghc-cpt.container -->
-				</div><!-- #sponsor-container.ghc-cpt.container -->';
-			}
+			$track_output .= ')</small>';
 		}
 
 		return $track_output;
-	}
-
-	/**
-	 * Add sponsor info to special track archive.
-	 *
-	 * @param  string $content HTML archive description.
-	 *
-	 * @return string HTML archive description with sponsor(s) name(s) and link(s) appended.
-	 */
-	public function list_special_track_sponsors( string $content ) : string {
-		$content .= $this->get_special_track_related_sponsor_names( get_queried_object_id(), 'standalone' );
-		return $content;
 	}
 
 	/**

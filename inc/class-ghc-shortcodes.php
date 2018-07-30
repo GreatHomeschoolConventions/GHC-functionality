@@ -674,6 +674,8 @@ class GHC_Shortcodes extends GHC_Base {
 	 * @since  2.0.0
 	 *
 	 * @param array $attributes Shortcode attributes.
+	 *                          ['convention']      Two-letter lowercase convention code.
+	 *                          ['display']         Accepts one of 'side' or 'infoWindow' to determine where to show content.
 	 *
 	 * @return string HTML content.
 	 */

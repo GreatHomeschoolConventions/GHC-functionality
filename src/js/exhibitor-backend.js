@@ -16,7 +16,7 @@
 	$('#acf-field-exhibitor_URL').on('focus', function() {
 		var thisUrl = $(this).val();
 
-		if (thisUrl.indexOf('http') === -1) {
+		if (-1 === thisUrl.indexOf('http')) {
 			$(this).val('http://' + thisUrl);
 		}
 

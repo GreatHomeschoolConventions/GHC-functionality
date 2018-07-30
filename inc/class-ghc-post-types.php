@@ -31,9 +31,9 @@ class GHC_Post_Types extends GHC_Base {
 		// Frontend.
 		add_filter( 'get_the_archive_title', array( $this, 'cpt_archive_titles' ) );
 		add_filter( 'get_the_archive_description', array( $this, 'cpt_archive_intro' ) );
-		add_filter( 'archive_template', array( $this, 'hotel_archive' ) );
 		add_action( 'pre_get_posts', array( $this, 'speakers_order' ) );
 		add_action( 'pre_get_posts', array( $this, 'modify_exhibitor_archive' ) );
+		add_action( 'pre_get_posts', array( $this, 'modify_hotel_archive' ) );
 		add_action( 'pre_get_posts', array( $this, 'modify_special_track_tax' ) );
 		add_action( 'pre_get_posts', array( $this, 'modify_sponsor_archive' ) );
 
@@ -147,7 +147,7 @@ class GHC_Post_Types extends GHC_Base {
 			'show_in_admin_bar'   => true,
 			'show_in_nav_menus'   => true,
 			'can_export'          => true,
-			'has_archive'         => 'hotels-all',
+			'has_archive'         => 'hotels',
 			'exclude_from_search' => false,
 			'publicly_queryable'  => true,
 			'rewrite'             => $hotels_rewrite,
@@ -607,22 +607,6 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Use custom hotel archive template.
-	 *
-	 * @param  string $archive_template Name of template to use.
-	 *
-	 * @return string Modified name of template to use.
-	 */
-	public function hotel_archive( string $archive_template ) : string {
-		global $post;
-		if ( is_post_type_archive( 'hotel' ) ) {
-			$archive_template = $this->plugin_dir_path( 'templates/archive-hotel.php' );
-		}
-
-		return $archive_template;
-	}
-
-	/**
 	 * Add sort order header to speakers backend
 	 *
 	 * @param  array $columns Array of all columns.
@@ -774,6 +758,29 @@ class GHC_Post_Types extends GHC_Base {
 		if ( array_key_exists( 'post_type', $query->query ) && 'exhibitor' === $query->query['post_type'] && ! is_admin() && $query->is_main_query() ) {
 			$query->set( 'orderby', 'title' );
 			$query->set( 'order', 'ASC' );
+		}
+	}
+
+	/**
+	 * Sort hotels.
+	 *
+	 * @param WP_Query $query WP_Query.
+	 *
+	 * @return  void Sets query vars.
+	 */
+	public function modify_hotel_archive( WP_Query $query ) {
+		if ( array_key_exists( 'post_type', $query->query ) && 'hotel' === $query->query['post_type'] && ! is_admin() && $query->is_main_query() ) {
+			$query->set( 'orderby', 'menu_order' );
+			$query->set( 'order', 'ASC' );
+			$query->set( 'meta_query', wp_parse_args( $query->get( 'meta_query' ), array(
+				'relation' => 'AND',
+				array(
+					'meta_key' => 'discount_valid_date', // phpcs:ignore WordPress.DB.SlowDBQuery -- since we need to order this way.
+					'value'    => date( 'Ymd' ),
+					'compare'  => '<=',
+				),
+			) ) );
+
 		}
 	}
 

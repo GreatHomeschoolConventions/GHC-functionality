@@ -91,7 +91,8 @@ class GHC_Content extends GHC_Base {
 	 * @return string Modified HTML content.
 	 */
 	public function add_hotel_single_content( string $content ) : string {
-		if ( is_singular( 'hotel' ) ) {
+		if ( is_singular( 'hotel' ) && in_the_loop() ) {
+
 			// Get convention info.
 			$conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 			$this_convention      = array_flip( $this->get_conventions_abbreviations() )[ $conventions_taxonomy[0]->slug ];
@@ -491,7 +492,7 @@ class GHC_Content extends GHC_Base {
 	 * @return string post content with hotel info appended.
 	 */
 	public function show_hotel_details( string $content ) : string {
-		if ( 'hotel' === get_post_type() ) {
+		if ( 'hotel' === get_post_type() && in_the_loop() ) {
 			$conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 			$this_convention      = array_flip( $this->get_conventions_abbreviations() )[ $conventions_taxonomy[0]->slug ];
 

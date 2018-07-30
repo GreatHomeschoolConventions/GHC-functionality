@@ -14,7 +14,7 @@ if ( is_post_type_archive( 'hotel' ) || $is_shortcode ) {
 		$this_convention,
 		get_field( 'sold_out' ) ? 'sold-out' : '',
 	);
-?>
+	?>
 <div class="<?php echo esc_attr( implode( ' ', get_post_class( $post_classes ) ) ); ?>">
 	<?php
 	if ( ( is_post_type_archive( 'hotel' ) || $is_shortcode ) && ! isset( $this_convention ) ) {
@@ -31,12 +31,12 @@ if ( is_post_type_archive( 'hotel' ) || $is_shortcode ) {
 	<?php
 	if ( ! get_field( 'sold_out' ) ) {
 		if ( get_field( 'hotel_URL' ) ) {
-		?>
+			?>
 			<a class="button" target="_blank" rel="noopener noreferrer" href="<?php the_field( 'hotel_URL' ); ?>">Book Online Now&rarr;</a>
 		<?php } elseif ( get_field( 'hotel_phone' ) ) { ?>
 			<a class="button" target="_blank" rel="noopener noreferrer" href="tel:+1<?php echo esc_attr( str_replace( '-', '', get_field( 'hotel_phone' ) ) ); ?>">Call to Book Now&rarr;</a>
-		<?php
-}
+			<?php
+		} // phpcs:ignore Generic.WhiteSpace.ScopeIndent
 	}
 	?>
 </div>

@@ -579,14 +579,17 @@ class GHC_Post_Types extends GHC_Base {
 	}
 
 	/**
-	 * Remove “Archives: ” from archive titles.
+	 * Remove prefix from archive titles.
 	 *
 	 * @param  string $title Archive title.
 	 *
 	 * @return string modified archive title.
 	 */
 	public function cpt_archive_titles( string $title ) : string {
-		return str_replace( 'Archives: ', '', $title );
+		$search  = array( 'Archives: ', 'Special Track: ' );
+		$replace = array( '', '' );
+
+		return str_replace( $search, $replace, $title );
 	}
 
 	/**

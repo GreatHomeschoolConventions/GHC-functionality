@@ -59,26 +59,29 @@ class GHC_Content extends GHC_Base {
 	}
 
 	/**
-	 * Show convention icons for each exhibitor
+	 * Show convention icons for each exhibitor.
 	 *
 	 * @param  string $content HTML content.
 	 *
 	 * @return string modified content.
 	 */
 	public function archive_icons( string $content ) : string {
-		global $post;
-		$new_content = '';
-		if ( 'exhibitor' === get_post_type( $post->ID ) ) {
-			// TODO: don’t add icon to exhibitor archive description.
+		if ( 'exhibitor' === get_post_type() && in_the_loop() ) {
+			ob_start();
+
 			if ( ! is_tax() ) {
-				$conventions  = GHC_Conventions::get_instance();
-				$new_content .= $conventions->get_icons( $post->ID );
+				$conventions = GHC_Conventions::get_instance();
+				echo wp_kses_post( $conventions->get_icons( get_the_ID() ) );
 			}
-			if ( is_singular() && get_field( 'exhibitor_URL', $post->ID ) ) {
-				$new_content .= '<p><a class="button" href="' . get_field( 'exhibitor_URL', $post->ID ) . '" target="_blank" rel="noopener noreferrer">Visit website&rarr;</a></p>';
+
+			if ( get_field( 'exhibitor_URL' ) ) {
+				echo '<p><a class="button" href="' . esc_url( get_field( 'exhibitor_URL' ) ) . '" target="_blank" rel="noopener noreferrer">Visit website&rarr;</a></p>';
 			}
+
+			$content = ob_get_clean() . $content;
 		}
-		return $new_content . $content;
+
+		return $content;
 	}
 
 	/**

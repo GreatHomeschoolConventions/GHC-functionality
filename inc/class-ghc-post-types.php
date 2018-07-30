@@ -772,8 +772,6 @@ class GHC_Post_Types extends GHC_Base {
 	 */
 	public function modify_exhibitor_archive( WP_Query $query ) {
 		if ( array_key_exists( 'post_type', $query->query ) && 'exhibitor' === $query->query['post_type'] && ! is_admin() && $query->is_main_query() ) {
-			$query->set( 'posts_per_page', '-1' );
-			$query->set( 'pagination', 'false' );
 			$query->set( 'orderby', 'title' );
 			$query->set( 'order', 'ASC' );
 		}

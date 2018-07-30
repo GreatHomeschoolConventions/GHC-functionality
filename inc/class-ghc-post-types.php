@@ -288,7 +288,7 @@ class GHC_Post_Types extends GHC_Base {
 			'show_in_admin_bar'   => true,
 			'show_in_nav_menus'   => true,
 			'can_export'          => true,
-			'has_archive'         => 'special-events',
+			'has_archive'         => 'special-events/archive',
 			'exclude_from_search' => false,
 			'publicly_queryable'  => true,
 			'rewrite'             => $special_events_rewrite,

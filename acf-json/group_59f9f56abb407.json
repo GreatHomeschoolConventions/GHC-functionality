@@ -1,6 +1,6 @@
 {
     "key": "group_59f9f56abb407",
-    "title": "Speaker\/Special Event Info",
+    "title": "Speaker Info",
     "fields": [
         {
             "key": "field_59f9f56abf8f1",
@@ -115,5 +115,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1532965146
+    "modified": 1532982019
 }

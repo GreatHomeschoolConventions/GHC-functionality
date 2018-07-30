@@ -68,7 +68,6 @@ class GHC_Shortcodes extends GHC_Base {
 			'price_sheet',
 			'product_price',
 			'register',
-			'registration_page',
 			'speaker_archive',
 			'speaker_grid',
 			'speaker_info',
@@ -128,7 +127,7 @@ class GHC_Shortcodes extends GHC_Base {
 		);
 
 		if ( 'speaker' === $shortcode_attributes['post_type'] ) {
-			$cpt_grid_args['tax_query'] = array(
+			$cpt_grid_args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 				array(
 					'taxonomy' => 'ghc_speaker_category_taxonomy',
 					'field'    => 'slug',
@@ -148,9 +147,9 @@ class GHC_Shortcodes extends GHC_Base {
 			);
 
 			if ( array_key_exists( 'tax_query', $cpt_grid_args ) ) {
-				$cpt_grid_args['tax_query'] = array_merge( $cpt_grid_args['tax_query'], array( 'relation' => 'AND' ), $convention_tax_query );
+				$cpt_grid_args['tax_query'] = array_merge( $cpt_grid_args['tax_query'], array( 'relation' => 'AND' ), $convention_tax_query ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 			} else {
-				$cpt_grid_args['tax_query'] = $convention_tax_query;
+				$cpt_grid_args['tax_query'] = $convention_tax_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 			}
 		}
 
@@ -234,7 +233,7 @@ class GHC_Shortcodes extends GHC_Base {
 			'offset'         => $shortcode_attributes['offset'],
 			'orderby'        => 'menu_order',
 			'order'          => 'ASC',
-			'tax_query'      => [],
+			'tax_query'      => [], // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 		);
 
 		// Set default items to show.
@@ -592,7 +591,7 @@ class GHC_Shortcodes extends GHC_Base {
 		);
 
 		if ( $shortcode_attributes['convention'] ) {
-			$exhibitor_args['tax_query'] = array(
+			$exhibitor_args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 				array(
 					'taxonomy' => 'ghc_conventions_taxonomy',
 					'field'    => 'slug',
@@ -802,7 +801,7 @@ class GHC_Shortcodes extends GHC_Base {
 			'orderby'        => 'menu_order',
 			'order'          => 'ASC',
 			'posts_per_page' => -1,
-			'tax_query'      => array(
+			'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 				'relation' => 'AND',
 				array(
 					'taxonomy' => 'product_cat',
@@ -840,7 +839,7 @@ class GHC_Shortcodes extends GHC_Base {
 			'orderby'        => 'menu_order',
 			'order'          => 'ASC',
 			'posts_per_page' => -1,
-			'tax_query'      => array(
+			'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 				'relation' => 'AND',
 				array(
 					'taxonomy' => 'product_cat',
@@ -869,7 +868,7 @@ class GHC_Shortcodes extends GHC_Base {
 				echo $this->get_locations_buttons( 'radio' ); // WPCS: XSS ok because it’s all escaped above.
 			}
 
-			# FIXME: use form instead of this shortcode.
+			// FIXME: use form instead of this shortcode.
 			echo do_shortcode( '[products category="' . implode( ',', $convention_categories ) . '" orderby="menu_order"]' );
 			?>
 
@@ -886,132 +885,6 @@ class GHC_Shortcodes extends GHC_Base {
 		</div>
 
 		<?php
-		return ob_get_clean();
-	}
-
-
-	/**
-	 * Display custom registration page with all conventions.
-	 *
-	 * @since  2.x
-	 *
-	 * @return string HTML output.
-	 */
-	public function registration_page() : string {
-		ob_start();
-
-		echo '<div class="register">';
-
-		$registration_args = array(
-			'category'       => 'registration',
-			'orderby'        => 'menu_order',
-			'order'          => 'ASC',
-			'posts_per_page' => -1,
-		);
-
-		$registration_query = wc_get_products( $registration_args );
-
-		$special_events_args = array(
-			'category'       => array( 'special-events', 'program-guide' ),
-			'orderby'        => 'menu_order',
-			'order'          => 'ASC',
-			'posts_per_page' => -1,
-		);
-
-		$special_events_query = wc_get_products( $special_events_args );
-
-		if ( count( $registration_query ) > 0 ) {
-		?>
-
-			<h3 id="convention">Convention</h3>
-			<p>Choose one:</p>
-			<?php
-			$next_convention = '';
-			foreach ( $this->get_conventions_info() as $convention ) {
-				$convention_abbreviation = strtolower( $convention['convention_abbreviated_name'] );
-				if ( empty( $next_convention ) && date( 'Ymd' ) < $convention['begin_date'] ) {
-					$next_convention = $convention_abbreviation;
-				}
-				?>
-				<input class="registration-choice convention" type="radio" name="convention" value="<?php echo esc_attr( $convention_abbreviation ); ?>" id="convention-<?php echo esc_attr( $convention_abbreviation ); ?>" <?php checked( $next_convention, $convention_abbreviation ); ?> />
-					<label class="registration-choice convention theme bg <?php echo esc_attr( $convention_abbreviation ); ?>" for="convention-<?php echo esc_attr( $convention_abbreviation ); ?>">
-						<h4><?php echo esc_attr( $convention['convention_short_name'] ); ?></h4>
-						<p class="info"><?php echo esc_attr( $this->format_date_range( $convention['begin_date'], $convention['end_date'], 'Ymd' ) ); ?></p>
-					</label>
-			<?php } ?>
-
-			<h3 id="attendee-type">Attendee Type</h3>
-			<p>Choose one:</p>
-			<input class="registration-choice attendee-type" type="radio" name="attendee-type" value="individual" id="attendee-individual" />
-				<label class="registration-choice attendee-type theme bg se dashicons-before dashicons-admin-users" for="attendee-individual"><h4>Individual</h4></label>
-			<input class="registration-choice attendee-type" type="radio" name="attendee-type" value="family" id="attendee-family" checked="checked" />
-				<label class="registration-choice attendee-type theme bg se dashicons-before dashicons-groups" for="attendee-family"><h4>Family</h4></label>
-
-			<table class="products">
-			<tbody>
-			<?php
-			wp_enqueue_script( 'ghc-woocommerce' );
-
-			foreach ( $registration_query as $this_product ) {
-				$product_object  = get_post( $this_product->get_id() );
-				$GLOBALS['post'] = &$product_object; // phpcs:ignore WordPress.Variables.GlobalVariables.OverrideProhibited
-				setup_postdata( $product_object );
-				global $product;
-
-				if ( $product->is_type( 'variable' ) ) {
-					$variations = $product->get_available_variations();
-
-					foreach ( $variations as $variation_array ) {
-						$variation = new WC_Product_Variation( $variation_array['variation_id'] );
-						require $this->plugin_dir_path( 'templates/registration-table-row-variation.php' );
-					}
-				} else {
-					require $this->plugin_dir_path( 'templates/registration-table-row.php' );
-				}
-			}
-
-			if ( count( $special_events_query ) > 0 ) {
-				foreach ( $special_events_query as $this_product ) {
-					$product_object  = get_post( $this_product->get_id() );
-					$GLOBALS['post'] = &$product_object; // phpcs:ignore WordPress.Variables.GlobalVariables.OverrideProhibited
-					setup_postdata( $product_object );
-					global $product;
-
-					if ( $product->is_type( 'variable' ) ) {
-						$variations = $product->get_available_variations();
-
-						foreach ( $variations as $variation_array ) {
-							$variation = new WC_Product_Variation( $variation_array['variation_id'] );
-							require $this->plugin_dir_path( 'templates/registration-table-row-variation.php' );
-						}
-					} else {
-						require $this->plugin_dir_path( 'templates/registration-table-row.php' );
-					}
-				}
-			}
-			?>
-			</tbody>
-			<tfoot>
-				<tr class="cart-totals">
-					<td colspan="2" class="header">Total</td>
-					<td class="total">
-						<span class="custom-cart-total"><?php echo esc_attr( WC()->cart->get_cart_total() ); ?></span>
-					</td>
-					<td class="actions">
-						<a class="button" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'Review your shopping cart', 'woocommerce' ); ?>">Check Out&rarr;</a>
-						<!-- TODO: after allowing dynamic updates, change to checkout URL, basically making this shortcode replace the cart -->
-					</td>
-				</tr>
-			</tfoot>
-
-			<?php
-			echo '</table>';
-		}
-
-		echo '</div><!-- .register -->';
-
-		wp_reset_postdata();
-
 		return ob_get_clean();
 	}
 
@@ -1170,7 +1043,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 		// Workaround for posts_per_page overriding offset.
 		if ( ! is_null( $shortcode_attributes['offset'] ) && -1 === $shortcode_attributes['posts_per_page'] ) {
-			$shortcode_attributes['posts_per_page'] = 500;
+			$shortcode_attributes['posts_per_page'] = 500; // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 		}
 		$this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
@@ -1180,7 +1053,7 @@ class GHC_Shortcodes extends GHC_Base {
 			'offset'         => esc_attr( $shortcode_attributes['offset'] ),
 			'orderby'        => 'menu_order',
 			'order'          => 'ASC',
-			'tax_query'      => array(
+			'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 				array(
 					'taxonomy' => 'ghc_speaker_category_taxonomy',
 					'field'    => 'slug',
@@ -1191,7 +1064,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 		// If single convention is specified, add to the WP_Query.
 		if ( $this_convention ) {
-			$speaker_list_args['tax_query'] = array_merge(
+			$speaker_list_args['tax_query'] = array_merge( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 				$speaker_list_args['tax_query'], array(
 					'relation' => 'AND',
 					array(
@@ -1325,7 +1198,7 @@ class GHC_Shortcodes extends GHC_Base {
 			'posts_per_page' => -1,
 			'orderby'        => 'menu_order',
 			'order'          => 'ASC',
-			'tax_query'      => array(
+			'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 				array(
 					'taxonomy' => 'ghc_special_tracks_taxonomy',
 					'field'    => 'slug',
@@ -1434,7 +1307,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 		// Add workaround for posts_per_page overriding offset.
 		if ( ! is_null( $shortcode_attributes['offset'] ) && -1 === $shortcode_attributes['posts_per_page'] ) {
-			$shortcode_attributes['posts_per_page'] = 500;
+			$shortcode_attributes['posts_per_page'] = 500; // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 		}
 		$this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
@@ -1450,7 +1323,7 @@ class GHC_Shortcodes extends GHC_Base {
 			$this_convention_speaker_args = array(
 				'post_type'      => 'speaker',
 				'posts_per_page' => -1,
-				'tax_query'      => array(
+				'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 					array(
 						'taxonomy' => 'ghc_conventions_taxonomy',
 						'field'    => 'slug',
@@ -1480,8 +1353,8 @@ class GHC_Shortcodes extends GHC_Base {
 
 		// If speaker is specified, add to meta query.
 		if ( $shortcode_attributes['speaker'] ) {
-			$workshop_list_args['meta_key']     = 'speaker';
-			$workshop_list_args['meta_value']   = $shortcode_attributes['speaker'];
+			$workshop_list_args['meta_key']     = 'speaker';  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- depend on frontend caching to help performance
+			$workshop_list_args['meta_value']   = $shortcode_attributes['speaker'];  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- depend on frontend caching to help performance
 			$workshop_list_args['meta_compare'] = 'LIKE';
 		}
 

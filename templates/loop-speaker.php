@@ -5,13 +5,13 @@
  * @package GHC_Functionality_Plugin
  */
 
-	$top_speakers_args = array(
+	$speakers_args = array(
 		'post_type'              => 'speaker',
 		'pagination'             => false,
 		'posts_per_archive_page' => -1,
 		'order'                  => 'ASC',
 		'orderby'                => 'menu_order',
-		'tax_query'              => array(
+		'tax_query'              => array(// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 			array(
 				'taxonomy' => 'ghc_speaker_category_taxonomy',
 				'field'    => 'slug',
@@ -20,12 +20,12 @@
 		),
 	);
 
-	$top_speakers_query = new WP_Query( $top_speakers_args );
+	$speakers_query = new WP_Query( $speakers_args );
 
-	if ( $top_speakers_query->have_posts() ) {
+	if ( $speakers_query->have_posts() ) {
 		echo '<div class="speaker-container ghc-cpt container">';
-		while ( $top_speakers_query->have_posts() ) {
-			$top_speakers_query->the_post();
+		while ( $speakers_query->have_posts() ) {
+			$speakers_query->the_post();
 			$thumbnail_size = 'medium';
 			include 'speaker-template.php';
 		}

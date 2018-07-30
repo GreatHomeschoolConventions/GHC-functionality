@@ -57,7 +57,7 @@ class GHC_Ajax extends GHC_Base {
 		$category_id = intval( $_POST['category'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 
 		$speakers_args = array(
-			'tax_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+			'tax_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- depend on frontend caching to help performance
 				array(
 					'taxonomy' => 'ghc_content_tags_taxonomy',
 					'field'    => 'term_id',

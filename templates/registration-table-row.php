@@ -26,7 +26,7 @@ if ( $product->is_in_stock() ) { ?>
 			<?php
 			if ( strpos( $product->get_title(), 'teen track' ) !== false ) {
 				echo '<div class="small">Parents are welcome to attend without tickets</div>'; }
-?>
+			?>
 		</td>
 		<td class="price"><?php echo wp_kses_post( $product->get_price_html() ); ?></td>
 		<td class="actions">

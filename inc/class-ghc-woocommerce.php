@@ -129,7 +129,7 @@ class GHC_Woocommerce extends GHC_Base {
 	 */
 	public function add_cart_item_family_members_metadata( array $cart_item_data, int $product_id, int $variation_id ) : array {
 		if ( isset( $_REQUEST['familyMembers'] ) ) { // WPCS: CSRF ok.
-			$cart_item_data['family_members'] = sanitize_text_field( wp_unslash( $_REQUEST['familyMembers'] ) );
+			$cart_item_data['family_members'] = sanitize_text_field( wp_unslash( $_REQUEST['familyMembers'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
 		}
 
 		return $cart_item_data;
@@ -436,7 +436,7 @@ class GHC_Woocommerce extends GHC_Base {
 
 		// Output buttons.
 		echo '<div class="variations_button">';
-			woocommerce_quantity_input( array( 'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : 1 ) ); // WPCS: CSRF ok, input var ok.
+			woocommerce_quantity_input( array( 'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : 1 ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- since we’re just checking to see if the first key is set.
 			echo '<button type="submit" class="single_add_to_cart_button button alt';
 		if ( $disable_purchase ) {
 			echo ' disabled" disabled="true';
@@ -524,7 +524,7 @@ class GHC_Woocommerce extends GHC_Base {
 				'post_type'      => 'product',
 				'orderby'        => 'menu_order',
 				'order'          => 'ASC',
-				'tax_query'      => array(
+				'tax_query'      => array( // FUTURE: cache related tickets to post_meta?
 					array(
 						'taxonomy' => 'product_cat',
 						'field'    => 'id',

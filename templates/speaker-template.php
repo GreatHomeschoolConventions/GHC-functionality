@@ -28,10 +28,21 @@ if ( ! is_array( $shortcode_attributes ) ) {
 		</div>
 	<?php } ?>
 
-	<?php if ( strpos( $shortcode_attributes['show'], 'name' ) !== false || strpos( $shortcode_attributes['show'], 'conventions' ) !== false ) { ?>
+	<?php if ( strpos( $shortcode_attributes['show'], 'name' ) !== false || strpos( $shortcode_attributes['show'], 'title' ) !== false || strpos( $shortcode_attributes['show'], 'conventions' ) !== false || strpos( $shortcode_attributes['show'], 'related_speakers' ) !== false ) { ?>
 		<header class="post-header">
-			<?php if ( strpos( $shortcode_attributes['show'], 'name' ) !== false ) { ?>
+			<?php if ( strpos( $shortcode_attributes['show'], 'name' ) !== false || strpos( $shortcode_attributes['show'], 'title' ) !== false ) { ?>
 				<h3 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h3>
+			<?php } ?>
+			<?php if ( strpos( $shortcode_attributes['show'], 'related_speakers' ) !== false ) { ?>
+				<div class="related-speakers">
+					<?php
+					foreach ( get_field( 'related_speakers' ) as $speaker ) {
+						?>
+						<a href="<?php echo esc_url( get_the_permalink( $speaker ) ); ?>" title="<?php echo wp_kses_post( get_the_title( $speaker ) ); ?>"><?php echo wp_kses_post( get_the_post_thumbnail( $speaker, 'square-miniscule', array( 'class' => 'speaker miniscule' ) ) ); ?></a>
+						<?php
+					}
+					?>
+				</div>
 			<?php } ?>
 			<?php if ( strpos( $shortcode_attributes['show'], 'conventions' ) !== false ) { ?>
 				<div class="conventions-attending">
@@ -46,9 +57,9 @@ if ( ! is_array( $shortcode_attributes ) ) {
 
 		<?php if ( strpos( $shortcode_attributes['show'], 'excerpt' ) !== false ) { ?>
 			<div class="excerpt"><?php the_excerpt(); ?></div>
-		<?php } else { ?>
-			<p class="text-center"><a class="button" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">Biography</a></p>
 		<?php } ?>
+
+		<p class="text-center"><a class="button" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">Read More</a></p>
 
 		<?php if ( strpos( $shortcode_attributes['show'], 'workshops' ) !== false && get_field( 'related_workshops' ) !== null ) { ?>
 			<p class="text-center"><a class="button" href="<?php the_permalink(); ?>#workshops">Workshops</a></p>

@@ -698,7 +698,7 @@ class GHC_Shortcodes extends GHC_Base {
 		$display_data = '';
 		$i            = 0;
 		foreach ( $conventions as $key => $convention ) {
-			$map_data[ $key ] = array(
+			$map_data['points'][ $key ] = array(
 				'title'   => $convention['title'],
 				'icon'    => $convention['icon'],
 				'address' => $convention['address'],

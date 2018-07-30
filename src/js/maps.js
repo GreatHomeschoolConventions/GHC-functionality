@@ -29,6 +29,7 @@
 			 * @return {void} Sets up map.
 			 */
 			if ('object' === typeof thisMapData) {
+
 				var thisPin,
 					thisIcon,
 					marker,
@@ -36,21 +37,14 @@
 					infoWindowContent,
 					LatLngList = [],
 					bounds = new google.maps.LatLngBounds(),
-					map = new google.maps.Map($('#' + thisMapId).get(0), {
-						center: {
-							lat: 35,
-							lng: -80
-						},
-						zoom: 6,
-						scrollwheel: false,
-						disableDefaultUI: true
-					});
+					map,
+					mapStyles = [];
 
 				/**
 				 * Set styles
 				 */
 				if ('plain' === thisMapData.style) {
-					map.styles = [
+					mapStyles = [
 						{
 							elementType: 'geometry',
 							stylers: [{
@@ -92,11 +86,26 @@
 				}
 
 				/**
+				 * Create map.
+				 */
+				map = new google.maps.Map($('#' + thisMapId).get(0), {
+					center: {
+						lat: 35,
+						lng: -80
+					},
+					zoom: 6,
+					scrollwheel: false,
+					disableDefaultUI: true,
+					styles: mapStyles,
+				});
+
+
+				/**
 				 * Add pins
 				 */
-				for (var key in thisMapData) {
-					if ({}.hasOwnProperty.call(thisMapData, key)) {
-						thisPin = thisMapData[key];
+				for (var key in thisMapData.points) {
+					if ({}.hasOwnProperty.call(thisMapData.points, key)) {
+						thisPin = thisMapData.points[key];
 
 						thisIcon = {
 							url: thisPin.icon,

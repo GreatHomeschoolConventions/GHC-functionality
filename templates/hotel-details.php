@@ -27,15 +27,17 @@ if ( get_field( 'location' ) ) {
 	$location        = get_field( 'location' );
 	$convention_info = $this->get_single_convention_info( $this_convention );
 	$location_data   = array(
-		'convention' => array(
-			'title'   => $convention_info['title'],
-			'icon'    => $convention_info['icon'],
-			'address' => $convention_info['address'],
-		),
-		'hotel'      => array(
-			'title'   => get_the_title(),
-			'icon'    => $this->plugin_dir_url( 'dist/images/svg/hotel.svg' ),
-			'address' => array( 'map' => $location ),
+		'points' => array(
+			'convention' => array(
+				'title'   => $convention_info['title'],
+				'icon'    => $convention_info['icon'],
+				'address' => $convention_info['address'],
+			),
+			'hotel'      => array(
+				'title'   => get_the_title(),
+				'icon'    => $this->plugin_dir_url( 'dist/images/svg/hotel.svg' ),
+				'address' => array( 'map' => $location ),
+			),
 		),
 	);
 

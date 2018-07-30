@@ -109,6 +109,30 @@
                     "toolbar": "full",
                     "media_upload": 1,
                     "delay": 0
+                },
+                {
+                    "key": "field_5b5f593fea720",
+                    "label": "Header Image",
+                    "name": "header_image",
+                    "type": "image",
+                    "instructions": "Background image at least 2000×800px for archive header; overlay will be applied automatically.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": ""
                 }
             ]
         },
@@ -275,5 +299,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1532973370
+    "modified": 1532975461
 }

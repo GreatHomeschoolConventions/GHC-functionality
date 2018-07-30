@@ -129,7 +129,7 @@ class GHC_Woocommerce extends GHC_Base {
 	 */
 	public function add_cart_item_family_members_metadata( array $cart_item_data, int $product_id, int $variation_id ) : array {
 		if ( isset( $_REQUEST['familyMembers'] ) ) { // WPCS: CSRF ok.
-			$cart_item_data['family_members'] = sanitize_text_field( $_REQUEST['familyMembers'] );
+			$cart_item_data['family_members'] = sanitize_text_field( wp_unslash( $_REQUEST['familyMembers'] ) );
 		}
 
 		return $cart_item_data;
@@ -312,7 +312,7 @@ class GHC_Woocommerce extends GHC_Base {
 			'post_status'    => 'publish',
 			'post_type'      => 'product',
 			'fields'         => 'ids',
-			'tax_query'      => array(
+			'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery -- since this isn’t run on any frontend page load.
 				array(
 					'taxonomy' => 'product_cat',
 					'field'    => 'slug',
@@ -365,7 +365,7 @@ class GHC_Woocommerce extends GHC_Base {
 	 * @return void Enqueues WooCommerce assets.
 	 */
 	public function register_frontend_resources() {
-		wp_register_script( 'ghc-woocommerce', $this->plugin_dir_url( 'dist/js/woocommerce.min.js' ), array( 'jquery', 'woocommerce' ), $this->version );
+		wp_register_script( 'ghc-woocommerce', $this->plugin_dir_url( 'dist/js/woocommerce.min.js' ), array( 'jquery', 'woocommerce' ), $this->version, true );
 		wp_register_script( 'ghc-price-sheets', $this->plugin_dir_url( 'dist/js/price-sheets.min.js' ), array( 'jquery' ), $this->version, true );
 
 		// Load WooCommerce script only on WC pages.
@@ -436,7 +436,7 @@ class GHC_Woocommerce extends GHC_Base {
 
 		// Output buttons.
 		echo '<div class="variations_button">';
-			woocommerce_quantity_input( array( 'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( $_POST['quantity'] ) : 1 ) ); // WPCS: CSRF ok, input var ok.
+			woocommerce_quantity_input( array( 'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : 1 ) ); // WPCS: CSRF ok, input var ok.
 			echo '<button type="submit" class="single_add_to_cart_button button alt';
 		if ( $disable_purchase ) {
 			echo ' disabled" disabled="true';
@@ -553,7 +553,7 @@ class GHC_Woocommerce extends GHC_Base {
 					woocommerce_product_loop_end();
 					?>
 				</div>
-			<?php
+				<?php
 			}
 			wp_reset_postdata();
 		}
@@ -722,7 +722,7 @@ class GHC_Woocommerce extends GHC_Base {
 		}
 
 		if ( $plain_text ) {
-		?>
+			?>
 			Order Confirmation
 
 			Your recent order on %s has been completed and your order details are shown below. Please print a copy of this email and bring it to the convention with you.
@@ -746,7 +746,7 @@ class GHC_Woocommerce extends GHC_Base {
 			<p>Watch your email in the coming weeks for FAQs, deals on hotels, and more.</p>
 
 			<p>If you would like to add anything to your order, log in and <a href="https://www.greathomeschoolconventions.com/product-category/special-events/?utm_source=woocommerce&utm_medium=email-receipt&utm_campaign=registration-receipt&utm_content=add-to-order">place another order online</a> or email us at <a href="mailto:addtomyorder@greathomeschoolconventions.com/" target="_blank" >addtomyorder@greathomeschoolconventions.com</a>.</p>
-		<?php
+			<?php
 		} // phpcs:ignore Generic.WhiteSpace.ScopeIndent.IncorrectExact
 	}
 

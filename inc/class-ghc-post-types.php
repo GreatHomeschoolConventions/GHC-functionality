@@ -842,7 +842,7 @@ class GHC_Post_Types extends GHC_Base {
 			'posts_per_page' => -1,
 			'orderby'        => 'title',
 			'order'          => 'ASC',
-			'meta_query'     => array(
+			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery -- since this isn’t run on any frontend page load.
 				'relation' => 'AND',
 				array(
 					'key'     => 'speaker',

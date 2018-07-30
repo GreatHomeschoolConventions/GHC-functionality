@@ -104,7 +104,7 @@ class GHC_Conventions extends GHC_Base {
 			'post_status'    => 'publish',
 			'order'          => 'ASC',
 			'orderby'        => 'meta_value',
-			'meta_key'       => 'begin_date',
+			'meta_key'       => 'begin_date', // phpcs:ignore WordPress.DB.SlowDBQuery -- since this isn’t normally run on any frontend page load.
 			'no_found_rows'  => true,
 		);
 

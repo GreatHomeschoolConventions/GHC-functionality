@@ -208,7 +208,7 @@ class GHC_Base {
 		wp_register_script( 'ghc-content-types-filter', $this->plugin_dir_url( 'dist/js/content-types.min.js' ), array( 'jquery' ), $this->version, true );
 
 		wp_register_script( 'ghc-maps', $this->plugin_dir_url( 'dist/js/maps.min.js' ), array( 'jquery', 'google-maps-api' ), $this->version, true );
-		wp_register_script( 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'options_api_key' ), array(), null, true );
+		wp_register_script( 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'options_api_key' ), array(), null, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters -- let Google Maps handle cache invalidation.
 
 		wp_enqueue_script( 'ghc-popups', $this->plugin_dir_url( 'dist/js/popups.min.js' ), array( 'jquery', 'popup-maker-site' ), $this->version, true );
 

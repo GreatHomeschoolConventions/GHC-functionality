@@ -54,10 +54,10 @@ class GHC_Ajax extends GHC_Base {
 	 * @return void Prints HTML content and dies.
 	 */
 	public function get_speakers_by_content_tag() : string {
-		$category_id = intval( $_POST['category'] );
+		$category_id = intval( $_POST['category'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 
 		$speakers_args = array(
-			'tax_query' => array(
+			'tax_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 				array(
 					'taxonomy' => 'ghc_content_tags_taxonomy',
 					'field'    => 'term_id',

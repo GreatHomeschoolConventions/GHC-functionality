@@ -113,6 +113,12 @@ class GHC_Shortcodes extends GHC_Base {
 
 		$this_convention = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
+		// Set default content.
+		if ( is_null( $shortcode_attributes['show'] ) ) {
+			$shortcode_attributes['show'] = 'image,title';
+		}
+
+		// Set WP_Query args.
 		$cpt_grid_args = array(
 			'post_type'      => $shortcode_attributes['post_type'],
 			'posts_per_page' => $shortcode_attributes['posts_per_page'],
@@ -161,7 +167,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 		ob_start();
 		if ( $cpt_grid_query->have_posts() ) {
-			echo '<div class="' . esc_attr( $shortcode_attributes['post_type'] ) . '-container ghc-cpt container">';
+			echo '<div class="ghc-grid shortcode ' . esc_attr( $shortcode_attributes['post_type'] ) . '-container ghc-cpt container">';
 			while ( $cpt_grid_query->have_posts() ) {
 				$cpt_grid_query->the_post();
 				require $this->plugin_dir_path( 'templates/speaker-template.php' );
@@ -1033,7 +1039,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 * @return string HTML output.
 	 */
 	public function speaker_grid( $attributes = array() ) : string {
-		$attributes['post_type'] = 'speaker';
+		$attributes = wp_parse_args( $attributes, array( 'post_type' => 'speaker' ) );
 		return $this->cpt_grid( $attributes );
 	}
 
@@ -1279,7 +1285,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 * @return string HTML output.
 	 */
 	public function special_event_grid( $attributes = array() ) : string {
-		$attributes['post_type'] = 'special_event';
+		$attributes = wp_parse_args( $attributes, array( 'post_type' => 'special_event' ) );
 		return $this->cpt_grid( $attributes );
 	}
 

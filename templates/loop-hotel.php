@@ -6,20 +6,19 @@
  */
 
 $hotel_args = array(
-	'post_type'      => 'hotel',
-	'posts_per_page' => -1,
-	'orderby'        => 'menu_order',
-	'order'          => 'ASC',
-	'meta_query'     => array(
+	'post_type'  => 'hotel',
+	'orderby'    => 'menu_order',
+	'order'      => 'ASC',
+	'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery -- since we need to order this way.
 		array(
-			'meta_key' => 'discount_valid_date',
+			'meta_key' => 'discount_valid_date', // phpcs:ignore WordPress.DB.SlowDBQuery -- since we need to order this way.
 			'value'    => date( 'Ymd' ),
 			'compare'  => '<=',
 		),
 	),
 );
 if ( $this_convention ) {
-	$hotel_args['tax_query'] = array(
+	$hotel_args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery -- since we need to order this way.
 		array(
 			'taxonomy' => 'ghc_conventions_taxonomy',
 			'field'    => 'slug',
@@ -29,17 +28,15 @@ if ( $this_convention ) {
 }
 
 $hotel_query = new WP_Query( $hotel_args );
-?>
 
-<h3>Hotel Scam Alert</h3>
+foreach ( get_field( 'archive_descriptions', 'option' ) as $description ) {
+	if ( 'hotel' === $description['post_type'] ) {
+		echo '<div class="container">' . wp_kses_post( apply_filters( 'the_content', $description['message'] ) ) . '</div>';
+	}
+}
 
-<p>Each year, a third-party company claims to be booking rooms on behalf of Great Homeschool Conventions. This is a scam; their rates are $45&ndash;70 higher than what GHC has negotiated with area hotels.</p>
-
-<p>We have nothing to do with this company and they do not represent us in any way.</p>
-
-<p>Please book your accommodations through one of the options below to take advantage of our negotiated rates.</p>
-
-<?php if ( $hotel_query->have_posts() ) { ?>
+if ( $hotel_query->have_posts() ) {
+	?>
 	<div class="hotel-container ghc-cpt container">
 	<?php
 	while ( $hotel_query->have_posts() ) {
@@ -51,6 +48,8 @@ $hotel_query = new WP_Query( $hotel_args );
 	echo '<h3>Note</h3>
 	<p>We&rsquo;re still working on the hotel discount codes. Please check back later for a list of participating hotels.</p>';
 }
+
+echo '<p class="pages">' . wp_kses_post( paginate_links( array( 'show_all' => true ) ) ) . '</p>';
 
 // Restore original post data.
 wp_reset_postdata(); ?>

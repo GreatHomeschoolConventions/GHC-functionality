@@ -134,7 +134,7 @@
 								} else if ('infoWindow' === displayMode) {
 
 									// Title.
-									infoWindowContent = $('.map-locations-info #' + key).html();
+									infoWindowContent = $('.map-locations-info .key-' + key).html();
 
 									// Display infoWindow.
 									infoWindow.setContent(infoWindowContent);

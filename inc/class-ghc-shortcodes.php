@@ -693,7 +693,7 @@ class GHC_Shortcodes extends GHC_Base {
 		}
 
 		// Get map data.
-		$map_data     = [];
+		$map_data     = [ 'style' => 'plain' ];
 		$display_data = '';
 		$i            = 0;
 		foreach ( $conventions as $key => $convention ) {

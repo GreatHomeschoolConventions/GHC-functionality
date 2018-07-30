@@ -43,47 +43,53 @@
 						},
 						zoom: 6,
 						scrollwheel: false,
-						disableDefaultUI: true,
-						styles: [
-							{
-								elementType: 'geometry',
-								stylers: [{
-									color: '#dbdbdb'
-								}]
-							}, {
-								elementType: 'labels',
-								stylers: [{
-									visibility: 'off'
-								}]
-							}, {
-								featureType: 'administrative',
-								stylers: [{
-									visibility: 'off'
-								}]
-							}, {
-								featureType: 'poi',
-								stylers: [{
-									visibility: 'off'
-								}]
-							}, {
-								featureType: 'road',
-								stylers: [{
-									visibility: 'off'
-								}]
-							}, {
-								featureType: 'transit',
-								stylers: [{
-									visibility: 'off'
-								}]
-							}, {
-								featureType: 'water',
-								elementType: 'geometry',
-								stylers: [{
-									color: '#ffffff'
-								}]
-							}
-						]
+						disableDefaultUI: true
 					});
+
+				/**
+				 * Set styles
+				 */
+				if ('plain' === thisMapData.style) {
+					map.styles = [
+						{
+							elementType: 'geometry',
+							stylers: [{
+								color: '#dbdbdb'
+							}]
+						}, {
+							elementType: 'labels',
+							stylers: [{
+								visibility: 'off'
+							}]
+						}, {
+							featureType: 'administrative',
+							stylers: [{
+								visibility: 'off'
+							}]
+						}, {
+							featureType: 'poi',
+							stylers: [{
+								visibility: 'off'
+							}]
+						}, {
+							featureType: 'road',
+							stylers: [{
+								visibility: 'off'
+							}]
+						}, {
+							featureType: 'transit',
+							stylers: [{
+								visibility: 'off'
+							}]
+						}, {
+							featureType: 'water',
+							elementType: 'geometry',
+							stylers: [{
+								color: '#ffffff'
+							}]
+						}
+					];
+				}
 
 				/**
 				 * Add pins

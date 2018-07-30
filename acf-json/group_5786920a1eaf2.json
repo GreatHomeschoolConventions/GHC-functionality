@@ -186,6 +186,30 @@
             "endpoint": 0
         },
         {
+            "key": "field_5b5f51215b936",
+            "label": "Related Sponsors Background",
+            "name": "related_sponsors_background",
+            "type": "image",
+            "instructions": "Background image at least 2000×800px for related sponsors section; overlay will be applied automatically.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": 2000,
+            "min_height": 800,
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
             "key": "field_5b50b1f00f2c0",
             "label": "Testimonial Shortcode Background",
             "name": "testimonial_background",
@@ -251,5 +275,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1532702512
+    "modified": 1532973370
 }

@@ -16,6 +16,7 @@
 
 # Launch checklist
 - [ ] Resave permalinks
+- [ ] Regenerate missing media thumbnails (speaker-miniscule)
 - [ ] Sync all ACF groups
 - [ ] Run `convention CTAs.sql`
 - [ ] Update each location’s map and features
@@ -24,6 +25,7 @@
 
 # Dev
 - [ ] Add lightbox to speaker carousel (all carousels?)
+- [ ] Move WC email content to ACF option
 - [ ] Finish `[register]` per Josh’s design
 	+ [ ] Add Select2 to `.select2` on frontend
 - [ ] Add auto cache-clearing when CTA or pricing schedule rolls over

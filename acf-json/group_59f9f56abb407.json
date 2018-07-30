@@ -7,7 +7,6 @@
             "label": "Position",
             "name": "position",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -27,7 +26,6 @@
             "label": "Company",
             "name": "company",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -47,7 +45,6 @@
             "label": "Company URL",
             "name": "company_url",
             "type": "url",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -58,6 +55,45 @@
             },
             "default_value": "",
             "placeholder": "https:\/\/acme.inc\/"
+        },
+        {
+            "key": "field_5b5f2af7f2345",
+            "label": "Featured Image",
+            "name": "",
+            "type": "message",
+            "instructions": "Add a <strong>square<\/strong> featured image here, ideally 1200×1200px; it will automatically be rounded, so a JPG is probably best.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "Add a <strong>square<\/strong> featured image in the “Featured Image” box to the right. Ideally, the image should be 1200×1200px, and it will automatically be displayed as a circle.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_5b5f2b81f2346",
+            "label": "Featured Speaker",
+            "name": "featured_speaker",
+            "type": "taxonomy",
+            "instructions": "Is this a featured or non-featured speaker? Featured will show up in the archive and carousels; non-featured are basically only for linking workshops.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "ghc_speaker_category_taxonomy",
+            "field_type": "radio",
+            "allow_null": 1,
+            "add_term": 0,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0
         }
     ],
     "location": [
@@ -67,13 +103,6 @@
                 "operator": "==",
                 "value": "speaker"
             }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "special_event"
-            }
         ]
     ],
     "menu_order": 0,
@@ -81,8 +110,10 @@
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
-    "hide_on_screen": "",
+    "hide_on_screen": [
+        "featured_image"
+    ],
     "active": 1,
     "description": "",
-    "modified": 1509553835
+    "modified": 1532965146
 }

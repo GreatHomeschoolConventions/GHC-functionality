@@ -1,14 +1,13 @@
 {
-    "key": "group_596d216a70385",
-    "title": "Speaker Information",
+    "key": "group_5b5f2bd0f1c1a",
+    "title": "Special Event Info",
     "fields": [
         {
-            "key": "field_59aec05cdb355",
-            "label": "Featured Speaker",
-            "name": "featured_speaker",
-            "type": "taxonomy",
-            "value": null,
-            "instructions": "",
+            "key": "field_5b5f2bd71ca64",
+            "label": "Related Speakers",
+            "name": "related_speakers",
+            "type": "post_object",
+            "instructions": "Choose speaker(s) presenting at this event.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -16,14 +15,16 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "ghc_speaker_category_taxonomy",
-            "field_type": "radio",
+            "post_type": [
+                "speaker"
+            ],
+            "taxonomy": [
+                "ghc_speaker_category_taxonomy:featured"
+            ],
             "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
+            "multiple": 1,
             "return_format": "id",
-            "multiple": 0
+            "ui": 1
         }
     ],
     "location": [
@@ -31,7 +32,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "speaker"
+                "value": "special_event"
             }
         ]
     ],
@@ -43,5 +44,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1509553740
+    "modified": 1532965589
 }

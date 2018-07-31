@@ -150,8 +150,8 @@ class GHC_Content extends GHC_Base {
 
 					foreach ( $related_sponsors as $sponsor ) {
 						echo '<div class="sponsor">
-						<div class="post-thumbnail">
-						<a href="' . esc_url( get_permalink( $sponsor->ID ) ) . '">' . get_the_post_thumbnail( $sponsor->ID, 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>';
+						<div class="thumbnail">
+						<a href="' . esc_url( get_permalink( $sponsor->ID ) ) . '">' . get_the_post_thumbnail( $sponsor->ID, 'thumbnail', array( 'class' => 'sponsor' ) ) . '</a>';
 
 						if ( $show_content_with_logo ) {
 							echo wp_kses_post( apply_filters( 'the_content', get_the_content( $sponsor->ID ) ) );

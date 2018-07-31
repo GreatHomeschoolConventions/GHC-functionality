@@ -991,7 +991,7 @@ class GHC_Shortcodes extends GHC_Base {
 				?>
 
 				<div class="speaker ghc-cpt item">
-					<div class="post-thumbnail">
+					<div class="thumbnail">
 						<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium', array( 'class' => 'speaker-thumb' ) ); ?></a>
 					</div>
 					<?php if ( ! $photo_only ) { ?>

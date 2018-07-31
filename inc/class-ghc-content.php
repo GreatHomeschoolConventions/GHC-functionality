@@ -369,7 +369,7 @@ class GHC_Content extends GHC_Base {
 	 * @return string modified HTML content or excerpt.
 	 */
 	public function show_locations( string $content ) : string {
-		if ( is_singular( array( 'special_event', 'speaker', 'workshop' ) ) || is_tax( 'ghc_special_tracks_taxonomy' ) ) {
+		if ( in_the_loop() ) {
 			$post_terms = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
 
 			if ( $post_terms ) {

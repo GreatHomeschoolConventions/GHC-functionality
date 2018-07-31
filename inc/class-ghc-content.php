@@ -118,50 +118,52 @@ class GHC_Content extends GHC_Base {
 	 * @return void            Prints HTML content.
 	 */
 	public function add_related_sponsors( WP_Query $query ) {
-		$object = get_queried_object();
-		$id     = $object->id;
+		if ( $query->is_main_query() && is_singular() ) {
+			$object = get_queried_object();
+			$id     = $object->id;
 
-		if ( is_a( $object, 'WP_Term' ) ) {
-			$id = 'category_' . $object->term_id;
-		}
+			if ( is_a( $object, 'WP_Term' ) ) {
+				$id = 'category_' . $object->term_id;
+			}
 
-		// Get related sponsors.
-		$related_sponsors = get_field( 'related_sponsors', $id );
+			// Get related sponsors.
+			$related_sponsors = get_field( 'related_sponsors', $id );
 
-		if ( ! empty( $related_sponsors ) ) {
-			$show_content_with_logo = get_field( 'show_content_with_logo' );
+			if ( ! empty( $related_sponsors ) ) {
+				$show_content_with_logo = get_field( 'show_content_with_logo' );
 
-			$related_sponsors_query_args = array(
-				'post_type'      => 'sponsor',
-				'orderby'        => 'menu_order',
-				'order'          => 'ASC',
-				'posts_per_page' => -1,
-				'post__in'       => $related_sponsors,
-			);
+				$related_sponsors_query_args = array(
+					'post_type'      => 'sponsor',
+					'orderby'        => 'menu_order',
+					'order'          => 'ASC',
+					'posts_per_page' => -1,
+					'post__in'       => $related_sponsors,
+				);
 
-			$related_sponsors = get_posts( $related_sponsors_query_args );
+				$related_sponsors = get_posts( $related_sponsors_query_args );
 
-			if ( count( $related_sponsors ) > 1 ) {
-				echo '<div class="related-sponsors" id="related-sponsors" style="background-image: url(' . esc_url( get_field( 'related_sponsors_background', 'option' ) ) . ')">
-				<div class="container overlay">
-					<h3>Sponsored By:</h3>
-					<div class="sponsor-container ghc-cpt">';
+				if ( count( $related_sponsors ) > 1 ) {
+					echo '<div class="related-sponsors" id="related-sponsors" style="background-image: url(' . esc_url( get_field( 'related_sponsors_background', 'option' ) ) . ')">
+					<div class="container overlay">
+						<h3>Sponsored By:</h3>
+						<div class="sponsor-container ghc-cpt">';
 
-				foreach ( $related_sponsors as $sponsor ) {
-					echo '<div class="sponsor">
-					<div class="post-thumbnail">
-					<a href="' . esc_url( get_permalink( $sponsor->ID ) ) . '">' . get_the_post_thumbnail( $sponsor->ID, 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>';
+					foreach ( $related_sponsors as $sponsor ) {
+						echo '<div class="sponsor">
+						<div class="post-thumbnail">
+						<a href="' . esc_url( get_permalink( $sponsor->ID ) ) . '">' . get_the_post_thumbnail( $sponsor->ID, 'post-thumbnail', array( 'class' => 'sponsor' ) ) . '</a>';
 
-					if ( $show_content_with_logo ) {
-						echo wp_kses_post( apply_filters( 'the_content', get_the_content( $sponsor->ID ) ) );
+						if ( $show_content_with_logo ) {
+							echo wp_kses_post( apply_filters( 'the_content', get_the_content( $sponsor->ID ) ) );
+						}
+
+						echo '</div>
+						</div><!-- .sponsor -->';
 					}
-
 					echo '</div>
-					</div><!-- .sponsor -->';
+					</div><!-- .sponsor-container.ghc-cpt -->
+					</div><!-- .related-sponsors -->';
 				}
-				echo '</div>
-				</div><!-- .sponsor-container.ghc-cpt -->
-				</div><!-- .related-sponsors -->';
 			}
 		}
 	}

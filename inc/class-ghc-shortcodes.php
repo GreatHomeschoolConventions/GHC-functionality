@@ -999,7 +999,10 @@ class GHC_Shortcodes extends GHC_Base {
 							<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 							<?php if ( ! $no_conventions ) { ?>
 								<div class="conventions-attending">
-									<?php echo wp_kses_post( $conventions->get_icons( get_the_ID() ) ); ?>
+									<?php
+									$conventions = GHC_Conventions::get_instance();
+									echo wp_kses_post( $conventions->get_icons( get_the_ID() ) );
+									?>
 								</div>
 							<?php } ?>
 						</div>

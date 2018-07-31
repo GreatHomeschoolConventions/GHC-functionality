@@ -11,18 +11,6 @@
 <div class="features">
 	<div class="container">
 		<?php
-		/**
-		 * Price sheet
-		 *
-		 * #FIXME: needs image field on backend and here.
-		 */
-		if ( get_field( 'price_sheet' ) ) {
-			echo '<div class="feature" style="background-image: url(' . esc_url( $icon['image'] ) . ')">
-				<a class="icon" href="' . esc_attr( get_field( 'price_sheet' ) ) . '">
-					<h3>Detailed Pricing</h3>
-				</a>
-			</div>';
-		}
 
 		foreach ( get_field( 'feature_icons' ) as $icon ) {
 			/**

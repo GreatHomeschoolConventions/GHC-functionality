@@ -25,10 +25,6 @@ class GHC_Content extends GHC_Base {
 		// General.
 		add_filter( 'body_class', array( $this, 'add_slug_body_class' ) );
 
-		// Convention icons.
-		add_filter( 'the_excerpt', array( $this, 'archive_icons' ) );
-		add_filter( 'the_content', array( $this, 'archive_icons' ) );
-
 		// Hotels.
 		add_filter( 'the_content', array( $this, 'add_hotel_single_content' ) );
 
@@ -55,32 +51,6 @@ class GHC_Content extends GHC_Base {
 
 		// Hotels.
 		add_filter( 'the_content', array( $this, 'show_hotel_details' ) );
-	}
-
-	/**
-	 * Show convention icons for each exhibitor.
-	 *
-	 * @param  string $content HTML content.
-	 *
-	 * @return string modified content.
-	 */
-	public function archive_icons( string $content ) : string {
-		if ( 'exhibitor' === get_post_type() && in_the_loop() ) {
-			ob_start();
-
-			if ( ! is_tax() ) {
-				$conventions = GHC_Conventions::get_instance();
-				echo wp_kses_post( $conventions->get_icons( get_the_ID() ) );
-			}
-
-			if ( get_field( 'exhibitor_URL' ) ) {
-				echo '<p><a class="button" href="' . esc_url( get_field( 'exhibitor_URL' ) ) . '" target="_blank" rel="noopener noreferrer">Visit website&rarr;</a></p>';
-			}
-
-			$content = ob_get_clean() . $content;
-		}
-
-		return $content;
 	}
 
 	/**

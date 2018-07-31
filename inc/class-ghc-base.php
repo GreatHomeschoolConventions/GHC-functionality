@@ -21,7 +21,7 @@ class GHC_Base {
 	 *
 	 * @var string Plugin version string for cache-busting.
 	 */
-	protected $version = '4.0.0';
+	protected $version = '4.0.1';
 
 	/**
 	 * All active conventions.

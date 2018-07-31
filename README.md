@@ -110,6 +110,12 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 4.0.1
+	+ Bugfixes pre-launch
+
+- 4.0.0
+	+ Major rewrite for 2019 season
+
 - 3.2.7
     - Include convention icons as `<img>`s rather than SVG `<use>` for better performance
 

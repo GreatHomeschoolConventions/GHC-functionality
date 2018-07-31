@@ -41,7 +41,7 @@
 					mapStyles = [];
 
 				/**
-				 * Set styles
+				 * Set styles.
 				 */
 				if ('plain' === thisMapData.style) {
 					mapStyles = [
@@ -101,7 +101,7 @@
 
 
 				/**
-				 * Add pins
+				 * Add pins.
 				 */
 				for (var key in thisMapData.points) {
 					if ({}.hasOwnProperty.call(thisMapData.points, key)) {

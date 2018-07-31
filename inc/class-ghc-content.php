@@ -176,9 +176,11 @@ class GHC_Content extends GHC_Base {
 	 * @return array Body classes.
 	 */
 	public function add_slug_body_class( array $classes ) : array {
-		global $post;
-		if ( isset( $post ) ) {
-			$classes[] = $post->post_type . '-' . $post->post_name;
+		if ( is_singular() ) {
+			global $post;
+			if ( isset( $post ) ) {
+				$classes[] = $post->post_type . '-' . $post->post_name;
+			}
 		}
 
 		return $classes;

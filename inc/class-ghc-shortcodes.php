@@ -704,7 +704,7 @@ class GHC_Shortcodes extends GHC_Base {
 				'address' => $convention['address'],
 			);
 
-			$display_data .= '<div class="map-info" class="key-' . esc_attr( $key ) . '" style="background-image: url(' . esc_url( $convention['icon'] ) . ');' . ( 0 === $i ? '' : 'display: none;' ) . '">
+			$display_data .= '<div class="map-info key-' . esc_attr( $key ) . '" style="background-image: url(' . esc_url( $convention['icon'] ) . ');' . ( 0 === $i ? '' : 'display: none;' ) . '">
 				<h1>' . esc_attr( $convention['title'] ) . '</h1>
 				<p class="meta">' . esc_attr( $this->get_single_convention_date( $key ) ) . '</p>
 				<address>

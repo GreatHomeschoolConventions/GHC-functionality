@@ -1,6 +1,6 @@
 <?php
 /**
- * Register page single row template for variable products (addons)
+ * Register shortcode single row template for variable products.
  *
  * @package GHC_Functionality_Plugin
  */

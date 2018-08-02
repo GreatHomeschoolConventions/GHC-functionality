@@ -1,6 +1,6 @@
 <?php
 /**
- * Register page single row template for normal products (convention locations)
+ * Register shortcode single row template for simple products.
  *
  * @package GHC_Functionality_Plugin
  */

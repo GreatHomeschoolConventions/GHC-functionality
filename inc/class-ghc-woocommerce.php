@@ -338,7 +338,7 @@ class GHC_Woocommerce extends GHC_Base {
 	}
 
 	/**
-	 * Add product attribute classes
+	 * Add product attribute classes to post_class output.
 	 *
 	 * @param  int $variation_id Product variation ID.
 	 *

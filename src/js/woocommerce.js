@@ -31,7 +31,7 @@
 	 * @returns {void} Modifies the DOM.
 	 */
 	function changePeopleAgreement(thisField, targetField, singularString, pluralString) {
-		if (thisField.val() === '1') {
+		if ('1' === thisField.val()) {
 			targetField.html(singularString);
 		} else {
 			targetField.html(pluralString);
@@ -165,7 +165,7 @@
 
 		/** Set family members to 1 if individual ticket type is selected. */
 		$('input[name="attendee-type"]').on('change', function() {
-			if ($(this).val() === 'individiual') {
+			if ('individual' === $(this).val()) {
 				$('input#family-members').val('1').trigger('change');
 			} else {
 				fixMaxTickets($('input#family-members'));
@@ -224,7 +224,7 @@
 				// Update family members.
 				if (typeof allParameters.familyMembers !== 'undefined') {
 					$('input#family-members').val(allParameters.familyMembers).trigger('change');
-					if (allParameters.familyMembers === '1') {
+					if ('1' === allParameters.familyMembers) {
 						$('input#attendee-individual').prop('checked', true);
 					}
 				}
@@ -239,7 +239,7 @@
 			}
 		}
 
-		// set cookie to disable popup when adding a product to cart
+		// Set cookie to disable popup when adding a product to cart.
 		$(document.body).on('added_to_cart', function() {
 			var i;
 

@@ -98,6 +98,16 @@
 
 	$(document).ready(function() {
 
+		/** Hide all options if no convention is selected. */
+		if ($('input.convention.filter').length > 0 && 0 === $('input.convention.filter:checked').length) {
+			$('.filter-target').hide();
+		}
+
+		/** Reset options visibility once a convention has been chosen. */
+		$('input.convention.filter').one('change', function() {
+			$('.filter-target, table .filter-target').css({ display: '' });
+		});
+
 		/** Fix pluralization on registration page, product pages, and in cart. */
 		$('.quantity input[type=number]').on('change keyup', changePeopleAgreement($(this), $('.quantity .people'), 'person', 'people'));
 		$('input.qty').on('change keyup', function() {

@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 		},
 
 		sass: {
-			dev: {
+			dist: {
 				files: {
 					'dist/css/slick.min.css': 'src/scss/slick.scss',
 					'dist/css/style.min.css': 'src/scss/style.scss',

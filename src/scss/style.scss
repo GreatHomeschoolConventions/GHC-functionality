@@ -7,12 +7,10 @@ $theme-teal:            #0c7f84;
 $theme-gray:            #dddddd;
 $theme-black:           #333333;
 
-.text-center { text-align: center; }
 
-// conventions icons
+// Convention icons.
 .convention-link,
 .speaker-convention-link {
-	.entry-content & { box-shadow: none; }
 
 	.convention-icon {
 		width: 3em;
@@ -26,167 +24,128 @@ $theme-black:           #333333;
 	}
 }
 
-// hotels
-.hotels.flexbox-wrapper {
-	@media (min-width: 768px) {
-		display: flex;
-		margin-bottom: 50px;
-	}
+// Hotels.
+.hotel .sold-out ~ * {
+	text-decoration: line-through;
 
-	.hotel {
-		height: 100%;
-		margin-bottom: 50px;
-	}
-
-	h4.sold-out ~ * {
-		text-decoration: line-through;
-
-		.sold-out { text-decoration: none; }
-	}
+	.sold-out { text-decoration: none; }
 }
 
-// custom registration
-.registration-choice {
-	display: inline-block;
-	margin: 0 1em 1em 0;
-	margin-right: 0;
+// Register shortcode.
+.register.shortcode {
 
-	&:not(.family-members) {
-		cursor: pointer;
-		padding: 2rem;
-	}
+	// Hide all radio buttons.
+	input[type="radio"].filter { display: none; }
 
-	@at-root {
-		input#{&} {
-			display: none;
-
-			&:not(:checked) + label.theme {
-				background-color: $theme-gray;
-
-				&, * { color: $theme-black; }
-			}
-
-			+ label:after {
+	// Set up conventions filters.
+	$conventions: southeast texas midwest california missouri new-york florida;
+	@each $convention in $conventions {
+		input.filter#convention-filter-#{$convention}:checked {
+			~ .filter-target:not(.#{$convention}),
+			~ table .filter-target:not(.#{$convention}) {
 				display: none;
-				content: "\002713";
-				position: absolute;
-				font-size: 24px;
-				top: 16px;
-				right: 16px;
 			}
+		}
+	}
 
-			&:checked + label:after{ display: block; }
+	// Handle individual vs. family attendees.
+	input[id*="attendee-type-individual"]:checked {
+		~ * label.qty,
+		~ .products .filter-target[class*="attendee-type-family"],
+		~ .products .product_cat-teen-track,
+		~ .products .product_cat-program-guide { display: none; }
+	}
+	input[id*="attendee-type-family"]:checked ~ .products .filter-target[class*="attendee-type-individual"] { display: none; }
+
+	// Handle shopping vs. full convention ticket types.
+	input[id*="ticket-type-full-convention"]:checked ~ .products .filter-target[class*="ticket-type-shopping-only"] { display: none; }
+	input[id*="ticket-type-shopping-only"]:checked ~ .products .filter-target[class*="ticket-type-full-convention"] { display: none; }
+
+	// Attribute icons general styles.
+	label[for="individual"]:before,
+	label[for="family"]:before,
+	label[for="full-convention"]:before,
+	label[for="shopping-only"]:before {
+		display: inline-block;
+		font-family: dashicons;
+		line-height: 1;
+		width: 1em;
+		height: 1em;
+		position: relative;
+		top: 0.1em;
+		margin-right: 0.2em;
+	}
+
+	// Attribute icon individual icons.
+	label[for="individual"]:before { content: "\f110"; }
+	label[for="family"]:before { content: "\f307"; }
+	label[for="full-convention"]:before { content: "\f155"; }
+	label[for="shopping-only"]:before { content: "\f174"; }
+
+
+	table.products {
+		input[type="number"] {
+			display: inline-block;
+			width: 5em;
 		}
 
-		label#{&} {
-			margin-right: 1em;
+		@media screen and (max-width: 600px) {
+			table.products {
+				&, tbody { display: block; }
+			}
+
+			tr.product, tr.cart-totals {
+				width: 100%;
+				display: flex;
+				flex-wrap: wrap;
+
+				.thumb { width: 25%; }
+				.title { width: 75%; }
+				.price, .actions {
+					width: 100%;
+					text-align: center;
+				}
+			}
+		}
+
+		td.thumb { min-width: 50px; }
+
+		.post-30530 {
+			/* program guide ticket quantity text */
+			.tickets-qty, .tickets-separator { display: none; }
+		}
+
+		.spinner {
 			position: relative;
+			top: 10px;
+			display: inline-block;
+			position: relative;
+			text-indent: -9999em;
+			border-top: 0.5em solid $theme-blue;
+			border-right: 0.5em solid $theme-yellow;
+			border-bottom: 0.5em solid $theme-green;
+			border-left: 0.5em solid $theme-orange;
+			transform: translateZ(0);
+			animation: load8 1.1s infinite linear;
 
-			h4 { margin: 0; }
-
-			.info { margin: 1em 0 0; }
-
-			@media screen and (max-width: 700px) {
-				width: 100%;
-				text-align: center;
+			&, &:after {
+				border-radius: 50%;
+				width: 2em;
+				height: 2em;
 			}
+
+			&.hidden { display: none; }
+		}
+
+		@keyframes load8 {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
 		}
 	}
 
-	&.dashicons-before:before {
-		font-size: 30px;
-		height: 30px;
-		width: 30px;
-		margin-right: 5px;
-	}
-}
-
-input#convention-se:checked ~ .products tr.product:not(.product_cat-southeast)     { display: none; }
-input#convention-tx:checked ~ .products tr.product:not(.product_cat-texas)         { display: none; }
-input#convention-mw:checked ~ .products tr.product:not(.product_cat-midwest)       { display: none; }
-input#convention-ca:checked ~ .products tr.product:not(.product_cat-california)    { display: none; }
-input#convention-mo:checked ~ .products tr.product:not(.product_cat-missouri)      { display: none; }
-
-input#attendee-individual:checked {
-	~ label[for="family-members"], // immediately following radio buttons
-	~ * label[for="family-members"], // in each product row
-	~ * label.qty,
-	~ .products .attribute_attendee-type-family,
-	~ .products .product_cat-teen-track,
-	~ .products .product_cat-program-guide { display: none; }
-}
-input#attendee-family:checked ~ .products .attribute_attendee-type-individual { display: none; }
-
-.register {
-	input[type="number"] {
-		display: inline-block;
-		width: 5em;
-	}
-
-	@media screen and (max-width: 600px) {
-		table.products {
-			&, tbody { display: block; }
+	.woocommerce {
+		&-checkout-review-order {
+			.cart_item.registration .product-quantity { display: none; } // unnecessary because of family members line
 		}
-
-		tr.product, tr.cart-totals {
-			width: 100%;
-			display: flex;
-			flex-wrap: wrap;
-
-			.thumb { width: 25%; }
-			.title { width: 75%; }
-			.price, .actions {
-				width: 100%;
-				text-align: center;
-			}
-		}
-	}
-
-	td.thumb { min-width: 50px; }
-
-	.post-30530 {
-		/* program guide ticket quantity text */
-		.tickets-qty, .tickets-separator { display: none; }
-	}
-
-	/* visually disable special events */
-	/* only for logged-out users, since this page doesn’t know what people have purchased in the past */
-	body:not(.logged-in) & tr.product {
-		&:not(.product_cat-registration) { opacity: 0.5; }
-
-		&.added-to-cart ~ tr.product:not(.product_cat-registration) { opacity: inherit; }
-	}
-
-	.spinner {
-		position: relative;
-		top: 10px;
-		display: inline-block;
-		position: relative;
-		text-indent: -9999em;
-		border-top: 0.5em solid $theme-blue;
-		border-right: 0.5em solid $theme-yellow;
-		border-bottom: 0.5em solid $theme-green;
-		border-left: 0.5em solid $theme-orange;
-		transform: translateZ(0);
-		animation: load8 1.1s infinite linear;
-
-		&, &:after {
-			border-radius: 50%;
-			width: 2em;
-			height: 2em;
-		}
-
-		&.hidden { display: none; }
-	}
-
-	@keyframes load8 {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
-	}
-}
-
-.woocommerce {
-	&-checkout-review-order {
-		.cart_item.registration .product-quantity { display: none; } // unnecessary because of family members line
 	}
 }

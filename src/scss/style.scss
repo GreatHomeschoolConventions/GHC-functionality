@@ -42,7 +42,7 @@ $theme-black:           #333333;
 	@each $convention in $conventions {
 		input.filter#convention-filter-#{$convention}:checked {
 			~ .filter-target:not(.#{$convention}),
-			~ table .filter-target:not(.#{$convention}) {
+			~ .products .filter-target:not(.#{$convention}) {
 				display: none;
 			}
 		}
@@ -50,16 +50,19 @@ $theme-black:           #333333;
 
 	// Handle individual vs. family attendees.
 	input[id*="attendee-type-individual"]:checked {
-		~ * label.qty,
+		~ .products td.actions:not(.add-to-cart),
 		~ .products .filter-target[class*="attendee-type-family"],
-		~ .products .product_cat-teen-track,
-		~ .products .product_cat-program-guide { display: none; }
+		~ .products .teen-track,
+		~ .products .program-guide { display: none; }
 	}
 	input[id*="attendee-type-family"]:checked ~ .products .filter-target[class*="attendee-type-individual"] { display: none; }
 
 	// Handle shopping vs. full convention ticket types.
 	input[id*="ticket-type-full-convention"]:checked ~ .products .filter-target[class*="ticket-type-shopping-only"] { display: none; }
-	input[id*="ticket-type-shopping-only"]:checked ~ .products .filter-target[class*="ticket-type-full-convention"] { display: none; }
+	input[id*="ticket-type-shopping-only"]:checked ~ .products {
+		.filter-target[class*="ticket-type-full-convention"],
+		.filter-target[class*="special-events"] { display: none; }
+	}
 
 	// Attribute icons general styles.
 	label[for="individual"]:before,

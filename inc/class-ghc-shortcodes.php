@@ -915,6 +915,7 @@ class GHC_Shortcodes extends GHC_Base {
 			}
 
 			?>
+			<form method="post" action="<?php echo esc_url( wc_get_cart_url() ); ?>" class="products">
 			<table class="products">
 				<tbody>
 					<?php
@@ -956,14 +957,13 @@ class GHC_Shortcodes extends GHC_Base {
 						<td class="total">
 							<span class="custom-cart-total"><?php echo wp_kses_post( WC()->cart->get_cart_total() ); ?></span>
 						</td>
-						<td class="actions">
-							<a class="button" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'Review your shopping cart', 'woocommerce' ); ?>">Check Out&rarr;</a>
-							<!-- TODO: after allowing dynamic updates, change to checkout URL, basically making this shortcode replace the cart -->
+						<td class="actions add-to-cart">
+							<input type="submit" value="Add All to Cart&rarr;" />
 						</td>
 					</tr>
 				</tfoot>
 			</table>
-
+			</form>
 		</div>
 
 		<?php

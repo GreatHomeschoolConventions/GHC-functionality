@@ -18,15 +18,15 @@ if ( $product->is_in_stock() ) { ?>
 			?>
 		</td>
 		<td class="title">
-			<?php echo esc_attr( $product->get_title() ); ?>
+			<?php echo wp_kses_post( $product->get_title() ); ?>
 			<?php
 			if ( get_field( 'subtitle' ) ) {
-				echo '<div class="entry-meta">' . wp_kses_post( get_field( 'subtitle' ) ) . '</div>';
+				echo '<p class="meta">' . wp_kses_post( get_field( 'subtitle' ) ) . '</p>';
 			}
 			?>
 			<?php
 			if ( strpos( $product->get_title(), 'teen track' ) !== false ) {
-				echo '<div class="small">Parents are welcome to attend without tickets</div>'; }
+				echo '<p class="meta small">Parents are welcome to attend without tickets.</p>'; }
 			?>
 		</td>
 		<td class="price"><?php echo wp_kses_post( $product->get_price_html() ); ?></td>

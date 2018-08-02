@@ -17,21 +17,23 @@ $ghc_wc = GHC_Woocommerce::get_instance();
 		?>
 	</td>
 	<td class="title">
-		<?php echo esc_attr( $variation->get_title() ); ?><br/>
+		<h4><?php echo wp_kses_post( $variation->get_title() ); ?></h4>
 		<?php
 		if ( get_field( 'subtitle' ) ) {
-			echo '<div class="entry-meta">' . wp_kses_post( get_field( 'subtitle' ) ) . '</div>';
+			echo '<p class="meta">' . wp_kses_post( get_field( 'subtitle' ) ) . '</p>';
 		}
 		?>
 		<?php
-		$attribute_string = '';
+		$attributes = array();
 		foreach ( $variation->get_variation_attributes() as $key => $value ) {
-			if ( 'Family' === $value ) {
-				$value .= ' <span class="lowercase">(parents, children/teens, and grandparents)</span>';
+			$name = $this->get_attribute_nicename( str_replace( 'attribute_', '', $key ), $value );
+
+			if ( 'Family' === $name ) {
+				$name .= ' <span class="lowercase">(parents, children/teens, and grandparents)</span>';
 			}
-			$attribute_string .= $value . ', ';
+			$attributes[] = $name;
 		}
-		echo '<div class="entry-meta">' . wp_kses_post( rtrim( $attribute_string, ', ' ) ) . '</div>';
+		echo '<p class="meta">' . wp_kses_post( implode( ' | ', $attributes ) ) . '</p>';
 		?>
 	</td>
 	<?php if ( $variation->is_in_stock() ) { ?>

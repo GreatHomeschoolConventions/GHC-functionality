@@ -66,7 +66,6 @@ $ghc_wc = GHC_Woocommerce::get_instance();
 			?>
 			<p class="product woocommerce add_to_cart_inline">
 				<a rel="nofollow" href="<?php echo esc_url( $variation->add_to_cart_url() ); ?>" data-quantity="1" data-family-members="1" data-product_id="<?php echo esc_attr( $variation_array['variation_id'] ); ?>" class="button product_type_variation add_to_cart_button ajax_add_to_cart">Add to my order</a>
-				<span class="spinner hidden"></span>
 			</p>
 		</td>
 	<?php } else { ?>

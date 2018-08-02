@@ -185,36 +185,6 @@
 		});
 
 		/**
-		 * Show visual feedback while adding product to cart.
-		 *
-		 * @since  3.0.0.
-		 *
-		 * @param  {event}  e      JS event.
-		 * @param  {object} button Button clicked.
-		 *
-		 * @return {void}          Modifies the DOM.
-		 */
-		$(document.body).on('adding_to_cart', function(e, button) {
-			$(button).parent('.add_to_cart_inline').find('.spinner').removeClass('hidden');
-		});
-
-		/**
-		 * Hide visual feedback after adding product to cart and add class to parent row for visual indicator.
-		 *
-		 * @since  3.0.0
-		 *
-		 * @param  {event} e          JS event.
-		 * @param  {Object} fragments Fragments to update.
-		 * @param  {string} cartHash  WooCommerce cart hash.
-		 * @param  {Object} $button)  The button cliked.
-		 *
-		 * @return {void}             Modifies DOM.
-		 */
-		$(document.body).on('added_to_cart', function(e, fragments, cartHash, $button) {
-			$($button).parent('.add_to_cart_inline').find('.spinner').addClass('hidden');
-		});
-
-		/**
 		 * Set cookie to disable popup when adding a product to cart.
 		 *
 		 * @since  3.0.0.

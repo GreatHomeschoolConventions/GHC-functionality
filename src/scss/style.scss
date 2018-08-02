@@ -94,7 +94,7 @@ $theme-black:           #333333;
 		}
 
 		td.actions {
-			min-width: 13em;
+			min-width: 14em;
 		}
 
 		@media screen and (max-width: 600px) {
@@ -115,8 +115,6 @@ $theme-black:           #333333;
 				}
 			}
 		}
-
-		td.thumb { min-width: 50px; }
 
 		.post-30530 {
 			// Program guide ticket quantity text.

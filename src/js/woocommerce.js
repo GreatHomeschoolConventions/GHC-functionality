@@ -118,7 +118,11 @@
 
 		/** Fix for browsers allowing out-of-range inputs. */
 		if (($('input.qty[max], input.qty[min]').length > 0) || ($('input.qty[min]').length > 0)) {
+
+			// Run on change.
 			$('input.qty[max], input.qty[min]').on('change', fixMaxTickets($(this)));
+
+			// Run on load.
 			$('input.qty[max], input.qty[min]').each(function() {
 				fixMaxTickets($(this));
 			});

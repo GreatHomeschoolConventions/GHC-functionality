@@ -72,12 +72,12 @@
 	$(document).ready(function() {
 
 		/** Hide all options if no convention is selected. */
-		if ($('input.filter[required]').length > 0 && 0 === $('input.filter[required]:checked').length) {
+		if ($('input.convention.filter').length > 0 && 0 === $('input.convention.filter:checked').length) {
 			$('.filter-target').hide();
 		}
 
 		/** Reset options visibility once a convention has been chosen. */
-		$('input.filter[required]').one('change', function() {
+		$('input.convention.filter').one('change', function() {
 			$('.filter-target, table .filter-target').css({ display: '' });
 		});
 

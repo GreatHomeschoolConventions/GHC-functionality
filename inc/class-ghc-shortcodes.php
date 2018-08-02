@@ -202,6 +202,32 @@ class GHC_Shortcodes extends GHC_Base {
 		return $content;
 	}
 
+	/** Get radio button filters for all available attributes.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param  array  $attributes WC_Product_Variable attributes array.
+	 * @param  string $slug       Optional slug to add as class name.
+	 *
+	 * @return string             Sanitized and escaped HTML content.
+	 */
+	private function get_variation_attribute_filters( array $attributes, string $slug = '' ) : string {
+		ob_start();
+
+		if ( ! empty( $attributes ) ) {
+			foreach ( $attributes as $key => $values ) {
+				echo '<h3 class="filter-target ' . esc_attr( $slug ) . '">' . esc_attr( wc_attribute_label( $key ) ) . '</h3>';
+
+				foreach ( $values as $value ) {
+					echo '<input type="radio" class="filter" name="' . esc_attr( $key ) . '" id="' . esc_attr( strtolower( $slug . '-' . $key . '-' . $value ) ) . '" class="' . esc_attr( $slug ) . '" required>
+					<label for="' . esc_attr( strtolower( $slug . '-' . $key . '-' . $value ) ) . '" class="filter filter-target button hollow ' . esc_attr( $slug ) . '">' . esc_attr( $this->get_attribute_nicename( $key, $value ) ) . '</label> ';
+				}
+			}
+		}
+
+		return ob_get_clean();
+	}
+
 	/**
 	 * Display the specified posts in a carousel layout.
 	 *

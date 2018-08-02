@@ -69,27 +69,6 @@
 		}
 	}
 
-	/**
-	 * Extract parameters from URI fragment
-	 *
-	 * @param   {string} hash window.location.hash string
-	 *
-	 * @returns {Object} named key/value pairs for all parameters in fragment hash
-	 */
-	function extractParametersFromHash(hash) {
-		var i,
-			parameters = {},
-			hashParameters = hash.slice(1).split('&');
-
-		for (i = 0; i < hashParameters.length; i++) {
-			var parameterValue = hashParameters[i].split('=');
-
-			parameters[parameterValue[0]] = parameterValue[1];
-		}
-
-		return parameters;
-	}
-
 	$(document).ready(function() {
 
 		/** Hide all options if no convention is selected. */
@@ -232,36 +211,8 @@
 		 * @return {void}             Modifies DOM.
 		 */
 		$(document.body).on('added_to_cart', function(e, fragments, cartHash, $button) {
-			$($button).parent('.add_to_cart_inline').find('.spinner').addClass('hidden').parents('tr.product').addClass('added-to-cart');
+			$($button).parent('.add_to_cart_inline').find('.spinner').addClass('hidden');
 		});
-
-		/** Handle location-specific registration page. */
-		if (window.location.hash) {
-			var thisConvention;
-
-			// Name and info from FB bot.
-			if (window.location.hash.length > 3) {
-				var allParameters = extractParametersFromHash(window.location.hash);
-
-				thisConvention = allParameters.convention.toLowerCase();
-
-				// Update family members.
-				if (typeof allParameters.familyMembers !== 'undefined') {
-					$('input#family-members').val(allParameters.familyMembers).trigger('change');
-					if ('1' === allParameters.familyMembers) {
-						$('input#attendee-individual').prop('checked', true);
-					}
-				}
-			} else {
-				thisConvention = window.location.hash.replace('#', '').toLowerCase();
-			}
-
-			var thisConventionSelector = 'input.registration-choice.convention[value="' + thisConvention + '"]';
-
-			if ((thisConventionSelector).length > 0) {
-				$(thisConventionSelector).attr('checked', true).trigger('change');
-			}
-		}
 
 		/**
 		 * Set cookie to disable popup when adding a product to cart.
@@ -271,11 +222,11 @@
 		 * @return {void} Sets a cookie.
 		 */
 		$(document.body).on('added_to_cart', function() {
-			var i;
 
-			/* eslint guard-for-in: "off" */
-			for (i in popupMakerCookie) {
-				Cookies.set(popupMakerCookie[i], true, { expires: 365 });
+			for (var i in popupMakerCookie) {
+				if (popupMakerCookie[i]) {
+					Cookies.set(popupMakerCookie[i], true, { expires: 365 });
+				}
 			}
 
 			// TODO: change to on checkout submit or something further down the process so we don’t lose people who abandoned checkout.

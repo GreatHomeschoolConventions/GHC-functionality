@@ -24,6 +24,7 @@
 - [ ] Add 2019 Robly lists and update all products and forms
 
 # Dev
+- [ ] Pricing table pages using ACF content
 - [ ] Add lightbox to speaker carousel (all carousels?)
 - [ ] Move WC email content to ACF option
 - [ ] Finish `[register]` per Josh’s design

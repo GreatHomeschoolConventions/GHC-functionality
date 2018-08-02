@@ -10,8 +10,9 @@ $ghc_wc = GHC_Woocommerce::get_instance();
 <tr id="post-<?php echo esc_attr( $variation_array['variation_id'] ); ?>" class="<?php echo esc_attr( $ghc_wc->product_post_class( $variation, array( $product->get_slug() ) ) ); ?>">
 	<td class="thumb">
 		<?php
-		if ( has_post_thumbnail() ) {
-			the_post_thumbnail( array( 50, 50 ) );
+		$image = $product->get_image( array( 50, 50 ) );
+		if ( $image ) {
+			echo wp_kses_post( $image );
 		}
 		?>
 	</td>

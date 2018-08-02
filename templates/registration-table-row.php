@@ -11,8 +11,9 @@ if ( $product->is_in_stock() ) { ?>
 	<tr id="post-<?php the_ID(); ?>" class="<?php echo esc_attr( $ghc_wc->product_post_class( $product, array( $product->get_slug() ) ) ); ?>">
 		<td class="thumb">
 			<?php
-			if ( has_post_thumbnail() ) {
-				the_post_thumbnail( array( 50, 50 ) );
+			$image = $product->get_image( array( 50, 50 ) );
+			if ( $image ) {
+				echo wp_kses_post( $image );
 			}
 			?>
 		</td>

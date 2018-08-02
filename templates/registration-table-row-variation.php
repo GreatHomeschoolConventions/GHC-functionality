@@ -7,7 +7,7 @@
 
 $ghc_wc = GHC_Woocommerce::get_instance();
 ?>
-<tr id="post-<?php echo esc_attr( $variation_array['variation_id'] ); ?>" <?php $ghc_wc->product_post_class( $variation_array['variation_id'] ); ?>>
+<tr id="post-<?php echo esc_attr( $variation_array['variation_id'] ); ?>" class="<?php echo esc_attr( $ghc_wc->product_post_class( $variation, array( $product->get_slug() ) ) ); ?>">
 	<td class="thumb">
 		<?php
 		if ( has_post_thumbnail() ) {

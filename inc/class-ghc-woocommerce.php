@@ -340,23 +340,27 @@ class GHC_Woocommerce extends GHC_Base {
 	/**
 	 * Add product attribute classes to post_class output.
 	 *
-	 * @param  int $variation_id Product variation ID.
+	 * @param int|WC_Product $product       Product object or ID.
+	 * @param array          $extra_classes Extra classes to add.
 	 *
-	 * @return void Prints `post_class` output.
+	 * @return string                       Space-separated classes.
 	 */
-	public function product_post_class( int $variation_id ) {
-		$variation_classes = array();
+	public function product_post_class( $product, array $extra_classes = array() ) {
 
-		if ( $variation_id ) {
-			if ( 'product_variation' === get_post_type( $variation_id ) ) {
-				$variation = new WC_Product_Variation( $variation_id );
-				foreach ( $variation->get_attributes() as $key => $value ) {
-					$variation_classes[] = 'attribute_' . $key . '-' . strtolower( str_replace( ' ', '-', $value ) );
-				}
+		// Handle input types.
+		if ( is_int( $product ) ) {
+			$product = wc_get_product( $product );
+		}
+
+		$classes = array_merge( array( 'filter-target' ), $extra_classes );
+
+		if ( $product && $product->is_type( 'variation' ) ) {
+			foreach ( $product->get_attributes() as $key => $value ) {
+				$classes[] = 'attribute_' . $key . '-' . strtolower( str_replace( ' ', '-', $value ) );
 			}
 		}
 
-		post_class( $variation_classes );
+		return implode( ' ', get_post_class( $classes, $product->get_id() ) );
 	}
 
 	/**

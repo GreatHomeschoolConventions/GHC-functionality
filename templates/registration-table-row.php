@@ -8,7 +8,7 @@
 $ghc_wc = GHC_Woocommerce::get_instance();
 
 if ( $product->is_in_stock() ) { ?>
-	<tr id="post-<?php the_ID(); ?>" <?php $ghc_wc->product_post_class( get_the_ID() ); ?>>
+	<tr id="post-<?php the_ID(); ?>" class="<?php echo esc_attr( $ghc_wc->product_post_class( $product, array( $product->get_slug() ) ) ); ?>">
 		<td class="thumb">
 			<?php
 			if ( has_post_thumbnail() ) {

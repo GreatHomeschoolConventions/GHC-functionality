@@ -229,6 +229,31 @@ class GHC_Shortcodes extends GHC_Base {
 	}
 
 	/**
+	 * Get global attribute nice name.
+	 *
+	 * @since  4.0.0
+	 *
+	 * @param  string $key   Attribute taxonomy name.
+	 * @param  string $value Attribute name.
+	 *
+	 * @return string        Attribute nice name.
+	 */
+	private function get_attribute_nicename( string $key, string $value ) : string {
+		$taxonomy = wc_attribute_taxonomy_name( str_replace( 'pa_', '', urldecode( $key ) ) );
+
+		if ( taxonomy_exists( $taxonomy ) ) {
+
+			// If this is a term slug, get the term’s nice name.
+			$term = get_term_by( 'slug', $value, $taxonomy );
+			if ( ! is_wp_error( $term ) && $term && $term->name ) {
+				$value = $term->name;
+			}
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Display the specified posts in a carousel layout.
 	 *
 	 * @uses https://kenwheeler.github.io/slick/ Slick Carousel

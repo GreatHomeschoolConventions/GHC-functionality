@@ -21,7 +21,7 @@ if ( $product->is_in_stock() ) { ?>
 			<?php echo wp_kses_post( $product->get_title() ); ?>
 			<?php
 			if ( get_field( 'subtitle' ) ) {
-				echo '<p class="meta">' . wp_kses_post( get_field( 'subtitle' ) ) . '</p>';
+				echo '<p class="meta">' . wp_kses_post( get_field( 'subtitle', $product->get_ID() ) ) . '</p>';
 			}
 			?>
 			<?php
@@ -32,7 +32,7 @@ if ( $product->is_in_stock() ) { ?>
 		<td class="price"><?php echo wp_kses_post( $product->get_price_html() ); ?></td>
 		<td class="actions">
 			<?php
-			$product_terms        = get_the_terms( get_the_ID(), 'product_cat' );
+			$product_terms        = get_the_terms( $product->get_ID(), 'product_cat' );
 			$registration_product = false;
 
 			foreach ( $product_terms as $term ) {
@@ -42,16 +42,16 @@ if ( $product->is_in_stock() ) { ?>
 			}
 
 			if ( $registration_product ) {
-				echo '<input name="qty-' . get_the_ID() . '" type="hidden" value="1" min="1" max="1" />
+				echo '<input name="qty-' . esc_attr( $product->get_ID() ) . '" type="hidden" value="1" min="1" max="1" />
 				<label for="family-members">Family members: <br/>
 					<button type="button" class="decrement btn">-</button>
 					<input name="family-members-display" type="number" value="1" disabled />
 					<button type="button" class="increment btn">+</button>
 				</label>';
 			} else {
-				echo '<label class="qty" for="qty-' . esc_attr( $variation_array['variation_id'] ) . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
+				echo '<label class="qty" for="qty-' . esc_attr( $variation->get_ID() ) . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
 					<button type="button" class="decrement btn">-</button>
-					<input class="qty" name="qty-' . esc_attr( $variation_array['variation_id'] ) . '" type="number" value="0" min="0" max="' . esc_attr( get_field( 'max_family_members', 'option' ) ) . '" />
+					<input class="qty" name="qty-' . esc_attr( $variation->get_ID() ) . '" type="number" value="0" min="0" max="' . esc_attr( get_field( 'max_family_members', 'option' ) ) . '" />
 					<button type="button" class="increment btn">+</button>
 				</label>';
 			}

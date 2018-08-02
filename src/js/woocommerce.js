@@ -124,22 +124,6 @@
 			});
 		}
 
-		/** Handle convention changes. */
-		var oldConventionChoice = $('input.registration-choice.convention:checked').val(),
-			newConventionChoice;
-
-		$('.registration-choice.convention').on('click, change', function() {
-			newConventionChoice = $(this).val();
-			$('label.registration-choice.attendee-type').removeClass(oldConventionChoice).addClass(newConventionChoice);
-			oldConventionChoice = newConventionChoice;
-			$('html, body').animate({
-				scrollTop: $('#attendee-type').offset().top - 50
-			}, 500);
-
-			// Update family members quantities.
-			$('input[name="family-members"]').trigger('change');
-		});
-
 		/** Update all family members display fields when changed. */
 		$('input[name="family-members"]').on('change keyup', function() {
 			fixMaxTickets($(this));

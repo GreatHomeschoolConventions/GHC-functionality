@@ -122,6 +122,7 @@ class GHC_Conventions extends GHC_Base {
 					'convention'                  => get_field( 'convention' ),
 					'convention_short_name'       => get_field( 'convention_short_name' ),
 					'convention_abbreviated_name' => get_field( 'convention_abbreviated_name' ),
+					'slug'                        => get_post_field( 'post_name', get_the_ID() ),
 					'icon'                        => $this->plugin_dir_url( 'dist/images/svg/' . strtoupper( $convention_key ) . '.svg' ),
 					'begin_date'                  => get_field( 'begin_date' ),
 					'end_date'                    => get_field( 'end_date' ),

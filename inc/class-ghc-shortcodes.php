@@ -195,8 +195,8 @@ class GHC_Shortcodes extends GHC_Base {
 			if ( 'link' === $style ) {
 				$content .= '<a class="button hollow" href="' . esc_url( $convention['permalink'] ) . '"">' . wp_kses_post( $convention['convention_short_name'] ) . '</a> ';
 			} elseif ( in_array( $style, array( 'radio', 'checkbox' ), true ) ) {
-				$content .= '<input type="' . esc_attr( $style ) . '" class="filter" name="convention" id="' . esc_attr( strtolower( $convention['convention_short_name'] ) ) . '">
-				<label for="' . esc_attr( strtolower( $convention['convention_short_name'] ) ) . '" class="filter button hollow">' . wp_kses_post( $convention['convention_short_name'] ) . '</label> ';
+				$content .= '<input type="' . esc_attr( $style ) . '" class="filter" name="convention" id="' . esc_attr( $convention['slug'] ) . '">
+				<label for="' . esc_attr( $convention['slug'] ) . '" class="filter button hollow">' . wp_kses_post( $convention['convention_short_name'] ) . '</label> ';
 			}
 		}
 		return $content;

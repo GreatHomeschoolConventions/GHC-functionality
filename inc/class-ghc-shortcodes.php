@@ -868,22 +868,6 @@ class GHC_Shortcodes extends GHC_Base {
 		);
 
 		$registration_products = wc_get_products( $registration_args );
-		$registration_options  = array();
-
-		foreach ( $registration_products as $product ) {
-
-			if ( $product->is_type( 'variable' ) ) {
-				$variations = $product->get_available_variations();
-
-				foreach ( $variations as $variation_array ) {
-					$variation = new WC_Product_Variation( $variation_array['variation_id'] );
-
-					$registration_options[ $variation->get_id() ] = $variation->get_name() . ' (' . $variation->get_price_html() . ')';
-				}
-			} else {
-				require $this->plugin_dir_path( 'templates/registration-table-row.php' );
-			}
-		}
 
 		// Get special events.
 		$special_events_args = array(
@@ -914,25 +898,72 @@ class GHC_Shortcodes extends GHC_Base {
 			<h2>Register</h2>
 
 			<?php
-			if ( count( $convention_categories ) > 1 ) {
-				echo '<h3>Choose a Convention</h3>';
-				echo $this->get_locations_buttons( 'radio' ); // WPCS: XSS ok because it’s all escaped above.
+
+			wp_enqueue_script( 'ghc-woocommerce' );
+
+			// Get locations filters if convention is not specified.
+			if ( empty( $shortcode_attributes['convention'] ) ) {
+				echo $this->get_locations_buttons( 'radio' ); // phpcs:ignore WordPress.Security.EscapeOutput -- it’s all sanitized and escaped in the function
 			}
 
-			// FIXME: use form instead of this shortcode.
-			echo do_shortcode( '[products category="' . implode( ',', $convention_categories ) . '" orderby="menu_order"]' );
-			?>
+			// Get attribute filters.
+			foreach ( $registration_products as $product ) {
+				if ( $product->is_type( 'variable' ) ) {
+					$attributes = $product->get_variation_attributes();
+					echo $this->get_variation_attribute_filters( $attributes, $product->get_slug() ); // phpcs:ignore WordPress.Security.EscapeOutput -- it’s all sanitized and escaped in the function
+				}
+			}
 
-<!-- 			<form method="post" action="<?php echo esc_url( wc_get_cart_url() ); ?>">
-				<select name="product_id" class="select2">
+			?>
+			<table class="products">
+				<tbody>
 					<?php
-					foreach ( $registration_options as $key => $value ) {
-						echo '<option value="' . esc_attr( $key ) . '">' . wp_kses_post( $value ) . '</option>';
+
+					// Display registration products.
+					foreach ( $registration_products as $product ) {
+						if ( $product->is_type( 'variable' ) ) {
+							$variations = $product->get_available_variations();
+
+							foreach ( $variations as $variation_array ) {
+								$variation = new WC_Product_Variation( $variation_array['variation_id'] );
+								require $this->plugin_dir_path( 'templates/registration-table-row-variation.php' );
+							}
+						} else {
+							require $this->plugin_dir_path( 'templates/registration-table-row.php' );
+						}
+					}
+
+					// Display special event products.
+					if ( count( $special_events_products ) > 0 ) {
+						foreach ( $special_events_products as $product ) {
+							if ( $product->is_type( 'variable' ) ) {
+								$variations = $product->get_available_variations();
+
+								foreach ( $variations as $variation_array ) {
+									$variation = new WC_Product_Variation( $variation_array['variation_id'] );
+									require $this->plugin_dir_path( 'templates/registration-table-row-variation.php' );
+								}
+							} else {
+								require $this->plugin_dir_path( 'templates/registration-table-row.php' );
+							}
+						}
 					}
 					?>
-				</select>
-			</form>
--->
+				</tbody>
+				<tfoot>
+					<tr class="cart-totals">
+						<td colspan="2" class="header">Total</td>
+						<td class="total">
+							<span class="custom-cart-total"><?php echo wp_kses_post( WC()->cart->get_cart_total() ); ?></span>
+						</td>
+						<td class="actions">
+							<a class="button" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'Review your shopping cart', 'woocommerce' ); ?>">Check Out&rarr;</a>
+							<!-- TODO: after allowing dynamic updates, change to checkout URL, basically making this shortcode replace the cart -->
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+
 		</div>
 
 		<?php

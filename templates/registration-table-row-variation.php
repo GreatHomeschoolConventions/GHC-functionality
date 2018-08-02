@@ -53,13 +53,13 @@ $ghc_wc = GHC_Woocommerce::get_instance();
 				echo '<input class="qty" name="qty-' . esc_attr( $variation_array['variation_id'] ) . '" type="hidden" value="1" min="1" max="1" />
 				<label for="family-members">Family members:<br/>
 					<button type="button" class="decrement btn">-</button>
-					<input name="family-members" type="number" value="2" min="2" max="6" />
+					<input name="family-members" type="number" value="2" min="2" max="' . esc_attr( get_field( 'max_family_members', 'option' ) ) . '" />
 					<button type="button" class="increment btn">+</button>
 				</label>';
 			} else {
 				echo '<label class="qty" for="qty-' . esc_attr( $variation_array['variation_id'] ) . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
 					<button type="button" class="decrement btn">-</button>
-					<input class="qty" name="qty-' . esc_attr( $variation_array['variation_id'] ) . '" type="number" value="0" min="0" max="6" />
+					<input class="qty" name="qty-' . esc_attr( $variation_array['variation_id'] ) . '" type="number" value="0" min="2" max="' . esc_attr( get_field( 'max_family_members', 'option' ) ) . '" />
 					<button type="button" class="increment btn">+</button>
 				</label>';
 			}

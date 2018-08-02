@@ -154,7 +154,7 @@
         },
         {
             "key": "field_5ade2f1b1fab0",
-            "label": "WooCommerce Product Categories",
+            "label": "WooCommerce Main Product Category",
             "name": "woocommerce_product_categories",
             "type": "taxonomy",
             "instructions": "Which category are the main registration products in?",
@@ -192,6 +192,27 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_5b634ed097d98",
+            "label": "Maximum Family Members",
+            "name": "max_family_members",
+            "type": "number",
+            "instructions": "The max number of family members and special event tickets that customers can purchase.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 6,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
         },
         {
             "key": "field_5b50b1e80f2bf",
@@ -299,5 +320,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1532975461
+    "modified": 1533235408
 }

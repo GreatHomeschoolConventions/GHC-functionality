@@ -306,7 +306,7 @@ class GHC_Woocommerce extends GHC_Base {
 	 *
 	 * @return array All convention variation product IDs.
 	 */
-	private function set_convention_variation_ids_transient() : array {
+	public function set_convention_variation_ids_transient() : array {
 		$all_conventions_query_args = array(
 			'posts_per_page' => -1,
 			'post_status'    => 'publish',

@@ -89,6 +89,10 @@ $theme-black:           #333333;
 			width: 5em;
 		}
 
+		td.actions {
+			min-width: 12em;
+		}
+
 		@media screen and (max-width: 600px) {
 			table.products {
 				&, tbody { display: block; }
@@ -111,7 +115,7 @@ $theme-black:           #333333;
 		td.thumb { min-width: 50px; }
 
 		.post-30530 {
-			/* program guide ticket quantity text */
+			// Program guide ticket quantity text.
 			.tickets-qty, .tickets-separator { display: none; }
 		}
 
@@ -145,7 +149,7 @@ $theme-black:           #333333;
 
 	.woocommerce {
 		&-checkout-review-order {
-			.cart_item.registration .product-quantity { display: none; } // unnecessary because of family members line
+			.cart_item.registration .product-quantity { display: none; } // Product quantity is unnecessary because of family members line.
 		}
 	}
 }

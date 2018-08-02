@@ -40,7 +40,7 @@ $ghc_wc = GHC_Woocommerce::get_instance();
 		<td class="price"><?php echo wp_kses_post( $variation->get_price_html() ); ?></td>
 		<td class="actions">
 			<?php
-			$product_terms        = get_the_terms( get_the_ID(), 'product_cat' );
+			$product_terms        = get_the_terms( $product->get_ID(), 'product_cat' );
 			$registration_product = false;
 
 			foreach ( $product_terms as $term ) {

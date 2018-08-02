@@ -360,7 +360,10 @@ class GHC_Woocommerce extends GHC_Base {
 			}
 		}
 
-		return implode( ' ', get_post_class( $classes, $product->get_id() ) );
+		$class_list = implode( ' ', get_post_class( $classes, $product->get_id() ) );
+
+		// Strip `product_cat` so the CSS filters work.
+		return str_replace( 'product_cat-', '', $class_list );
 	}
 
 	/**

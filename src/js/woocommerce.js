@@ -9,9 +9,17 @@
 'use strict';
 
 (function($) {
+
+	/**
+	 * Set popup maker cookies values so we can unset the cookie later.
+	 *
+	 * @since  3.0.0
+	 *
+	 * @type {Array}
+	 */
 	var popupMakerCookie = [
 		'pum-57405', // Live site.
-		'pum-56888' // Local dev site.
+		'pum-56888', // Local dev site.
 	];
 
 	/**

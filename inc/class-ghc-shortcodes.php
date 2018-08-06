@@ -605,7 +605,28 @@ class GHC_Shortcodes extends GHC_Base {
 	public function convention_pricing() : string {
 		ob_start();
 
-		$price_comparison = get_field( 'price_comparison' );
+		$price_comparison = get_field( 'price_comparison_points' );
+		$scheduled_prices = get_field( 'pricing' );
+
+		// Get current price point.
+		foreach ( $scheduled_prices as $schedule ) {
+			// Test date range.
+			$date       = new DateTime();
+			$begin_date = date_create_from_format( 'Ymd', $schedule['begin_date'] );
+			$end_date   = date_create_from_format( 'Ymd', $schedule['end_date'] );
+
+			if ( $date >= $begin_date && $date <= $end_date ) {
+				$price_comparison[] = array(
+					'price'       => array(
+						'title'      => '$' . $schedule['family_price'],
+						'begin_date' => $schedule['begin_date'],
+						'end_date'   => $schedule['end_date'],
+					),
+					'denominator' => get_field( 'pricing_details_family_denominator' ),
+					'description' => get_field( 'pricing_details_family_description' ),
+				);
+			}
+		}
 
 		if ( ! empty( $price_comparison ) ) {
 			include $this->plugin_dir_path( 'templates/pricing-stripe.php' );

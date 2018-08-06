@@ -13,21 +13,17 @@
 		// Loop over price points.
 		foreach ( $price_comparison as $price_point ) {
 
-			// Loop over scheduled prices.
-			foreach ( $price_point['price'] as $key => $level ) {
+			// Get current price point.
+			if ( empty( $price_point['price']['begin_date'] ) && empty( $price_point['price']['end_date'] ) ) {
+				$current_price_point = $price_point['price']['title'];
+			} else {
+				// Test date range.
+				$date       = new DateTime();
+				$begin_date = date_create_from_format( 'Ymd', $price_point['price']['begin_date'] );
+				$end_date   = date_create_from_format( 'Ymd', $price_point['price']['end_date'] );
 
-				// Get current price point.
-				if ( empty( $level['begin_date'] ) && empty( $level['end_date'] ) ) {
-					$current_price_point = $level['title'];
-				} else {
-					// test date range.
-					$date       = new DateTime();
-					$begin_date = date_create_from_format( 'U', $level['begin_date'] );
-					$end_date   = date_create_from_format( 'U', $level['end_date'] );
-
-					if ( $date >= $begin_date && $date <= $end_date ) {
-						$current_price_point = $level['title'];
-					}
+				if ( $date >= $begin_date && $date <= $end_date ) {
+					$current_price_point = $price_point['price']['title'];
 				}
 			}
 

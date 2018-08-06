@@ -132,7 +132,7 @@
 								// Side mode.
 								if ('side' === displayMode) {
 									$('.map-info:visible:not(:only-child)').fadeOut('slow', function() {
-										$('.map-info#' + key).fadeIn();
+										$('.map-info.key-' + key).fadeIn();
 									});
 
 									if (window.innerWidth <= 600) {

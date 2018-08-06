@@ -135,7 +135,6 @@ class GHC_Conventions extends GHC_Base {
 						'map'                    => get_field( 'map' ),
 					),
 					'registration'                => get_field( 'registration' ),
-					'cta_list'                    => get_field( 'cta' ),
 				);
 			}
 		}

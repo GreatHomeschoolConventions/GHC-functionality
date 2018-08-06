@@ -143,6 +143,11 @@ class GHC_Base {
 	 * @return array  Convention info.
 	 */
 	public function get_single_convention_info( string $convention = '' ) : array {
+		// Handle legacy abbreviations.
+		$find       = array( 'se', 'mw' );
+		$replace    = array( 'sc', 'oh' );
+		$convention = str_replace( $find, $replace, $convention );
+
 		if ( ! empty( $convention ) ) {
 			return $this->get_conventions_info()[ strtolower( $convention ) ];
 		}

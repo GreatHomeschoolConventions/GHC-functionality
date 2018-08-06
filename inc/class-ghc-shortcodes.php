@@ -442,8 +442,9 @@ class GHC_Shortcodes extends GHC_Base {
 		);
 		$this_convention      = strtolower( esc_attr( $shortcode_attributes['convention'] ) );
 
-		$cta_array   = array_filter( $this->get_conventions_info()[ $this_convention ]['cta_list'], array( $this, 'get_current_cta' ) );
-		$current_cta = array_pop( $cta_array )['cta_content'];
+		$all_ctas    = get_field( 'cta', $this->get_single_convention_info( $this_convention )['ID'] );
+		$current_cta = array_filter( $all_ctas, array( $this, 'get_current_cta' ) );
+		$current_cta = array_pop( $current_cta )['cta_content'];
 
 		// CF7 is not scanning form tags for some reason. This fixes it.
 		$current_cta = wpcf7_replace_all_form_tags( $current_cta );

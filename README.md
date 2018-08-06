@@ -110,6 +110,9 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 4.1.1
+	+ Fix map click action
+
 - 4.1.0
 	+ Major overhaul of `[register]` shortcode
 	+ Style tweaks

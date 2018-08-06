@@ -16,6 +16,14 @@
 
 # Launch checklist
 - [ ] Resave permalinks
+- [ ] Update SE, MW, FL conventions:
+	- [ ] Location name, slug, and info
+	- [ ] Location tax name and slug
+	- [ ] Product name, slug, info, and image
+	- [ ] product_cat name, slug, and image
+- [ ] Add 301 redirects:
+	- [ ] locations/southeast -> locations/south-carolina
+	- [ ] locations/midwest -> locations/ohio
 - [ ] Regenerate missing media thumbnails (speaker-miniscule)
 - [ ] Sync all ACF groups
 - [ ] Run `convention CTAs.sql`

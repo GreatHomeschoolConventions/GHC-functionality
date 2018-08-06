@@ -27,10 +27,13 @@
 - [ ] Pricing table pages using ACF content
 - [ ] Add lightbox to speaker carousel (all carousels?)
 - [ ] Move WC email content to ACF option
-- [ ] Finish `[register]` per Josh’s design
-	+ [ ] Add Select2 to `.select2` on frontend
+- [x] Finish `[register]` per Josh’s design
+	- [ ] Fix totals calculation
+	- [ ] Fix min going into negative
+	- [ ] Wire up add-all-to-cart button
 - [ ] Add auto cache-clearing when CTA or pricing schedule rolls over
 	+ On `save_post_location`, add wp-cron job to clear locations transient and WP Super Cache on each future date?
+	+ Or set a cron job to clear and cache at 1AM?
 - [ ] Update `load_conventions_info`:
 	+ Run on `save_post_location` and `save_post_product`
 	+ Include main registration product ID + title

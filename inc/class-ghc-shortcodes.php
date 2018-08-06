@@ -955,7 +955,7 @@ class GHC_Shortcodes extends GHC_Base {
 					<tr class="cart-totals">
 						<td colspan="2" class="header">Total</td>
 						<td class="total">
-							<span class="custom-cart-total"><?php echo wp_kses_post( WC()->cart->get_cart_total() ); ?></span>
+							<span class="custom-cart-total"><?php echo wp_kses_post( wc_cart_totals_subtotal_html() ); ?></span>
 						</td>
 						<td class="actions add-to-cart">
 							<input type="submit" value="Add All to Cart&rarr;" />

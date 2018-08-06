@@ -830,7 +830,7 @@ class GHC_Shortcodes extends GHC_Base {
 	}
 
 	/**
-	 * Show product sale/regular prices.
+	 * Show product sale/regular prices for the current convention.
 	 *
 	 * @return string Formatted price string.
 	 */

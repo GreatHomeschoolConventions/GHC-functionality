@@ -126,7 +126,7 @@
 						LatLngList.push(new google.maps.LatLng(thisPin.address.map.lat, thisPin.address.map.lng));
 
 						// Add infoWindow listener and content.
-						google.maps.event.addListener(marker, 'click', (function(marker, key) {
+						google.maps.event.addListener(marker, 'click', (function(marker, key) { // eslint-disable-line no-loop-func, no-shadow
 							return function() {
 
 								// Side mode.

@@ -8,9 +8,9 @@
 
 $convention = $this->get_single_convention_info( $this_convention );
 ?>
-
+<div class="container">
 <table class="price-sheet <?php echo esc_attr( $convention['slug'] ); ?>">
-	<caption><?php echo esc_attr( $convention['convention_short_name'] ); ?> Homeschool Convention</caption>
+	<caption><h2><?php echo esc_attr( $convention['convention_short_name'] ); ?> Homeschool Convention</h2></caption>
 	<thead>
 		<th scope="col">Benefits</th>
 		<th scope="col">Free Shopping<br/><span class="smaller">(Thursday Night Only)</span></th>
@@ -60,8 +60,8 @@ $convention = $this->get_single_convention_info( $this_convention );
 						<dd><?php echo wp_kses_post( $this->format_date_range( $price_item['begin_date'], $price_item['end_date'], 'Ymd' ) ); ?></dd>
 					</dl>
 				</th>
-				<td aria-label="Free Shopping" class="price unavailable">×</td>
-				<td aria-label="Shopping Only" class="price unavailable" colspan="2">×</td>
+				<td aria-label="Free Shopping" class="price unavailable"></td>
+				<td aria-label="Shopping Only" class="price unavailable" colspan="2"></td>
 				<td aria-label="Full Registration" class="price individual">$<?php echo esc_attr( $price_item['individual_price'] ); ?> individual<a href="#footnotes">**</a></td>
 				<td aria-label="Full Registration" class="price family">$<?php echo esc_attr( $price_item['family_price'] ); ?> family<a href="#footnotes">***</a></td>
 			</tr>
@@ -93,3 +93,4 @@ $convention = $this->get_single_convention_info( $this_convention );
 	<li class="individual"><a href="#return">**</a>Individual access includes children ages 4 and under.</li>
 	<li class="family"><a href="#return">***</a>Family access includes spouse, children/teens, and grandparents.</li>
 </ol>
+</div>

@@ -8,6 +8,11 @@ $theme-pink:            #EA006D;
 $theme-gray:            #dddddd;
 $theme-black:           #333333;
 
+$excluded-color:        #CC2631;
+$included-color:        #58862D;
+$unavailable-color:     #DCDCDC;
+$individual-color:      #E6E7F7;
+$family-color:          #FFF9CF;
 
 // Convention icons.
 .convention-link,
@@ -129,6 +134,121 @@ $theme-black:           #333333;
 	.woocommerce {
 		&-checkout-review-order {
 			.cart_item.registration .product-quantity { display: none; } // Product quantity is unnecessary because of family members line.
+		}
+	}
+}
+
+// Price sheets.
+table.price-sheet {
+	margin-bottom: 1em;
+	border-collapse: collapse;
+
+	&.south-carolina th { background-color: $theme-blue; }
+	&.texas th { background-color: $theme-yellow; }
+	&.ohio th { background-color: $theme-green; }
+	&.california th { background-color: $theme-orange; }
+	&.missouri th { background-color: $theme-magenta; }
+	&.new-york th { background-color: $theme-teal; }
+	&.florida th { background-color: $theme-pink; }
+
+	&.south-carolina, &.ohio, &.california, &.missouri {
+		th, th a { color: white; }
+		a { font-weight: 700; }
+	}
+
+	caption, .spacer {
+		font-weight: 700;
+		font-size: 1.2em;
+	}
+
+	th, td {
+		text-align: center;
+
+		&:first-child { text-align: left; }
+	}
+
+	.excluded, .included, .price, .available, .unavailable {
+		border: 1px solid $unavailable-color;
+	}
+
+	.excluded, .included {
+		font-size: 2em;
+		font-weight: 700;
+	}
+
+	.excluded {
+		background-color: lighten($excluded-color, 50%);
+		color: $excluded-color;
+		border-color: $excluded-color;
+	}
+
+	.included {
+		background-color: lighten($included-color, 50%);
+		color: $included-color;
+		border-color: $included-color;
+	}
+
+	.available {
+		font-weight: 700;
+		background-color: $family-color;
+		color: $included-color;
+		border-color: $included-color;
+	}
+
+	.unavailable { background-color: $unavailable-color; }
+
+	.price {
+		&.individual { background-color: $individual-color; }
+		&.family { background-color: $family-color; }
+	}
+
+	dd { font-size: smaller; }
+
+	@media screen and (min-width: 768px) {
+		th, td { padding: 13px; }
+
+		.included, .excluded, .available {
+			vertical-align: middle;
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		thead { display: none; }
+
+		tr {
+			display: flex;
+			flex-wrap: wrap;
+			margin-bottom: 1em;
+		}
+
+		th, td {
+			display: block;
+			padding: 6px;
+		}
+
+		th, .spacer { width: 100%; }
+
+		td {
+			width: 33.3%;
+
+			&:not(:last-child) { border-right: none; }
+
+			&.price {
+				width: 50%;
+				text-align: left;
+
+				&.door { width: 100%; }
+				&.unavailable { display: none; }
+			}
+
+			&:before {
+				content: attr(aria-label);
+				display: block;
+				width: 100%;
+				text-align: center;
+				font-size: 14px;
+				font-weight: 500;
+			}
 		}
 	}
 }

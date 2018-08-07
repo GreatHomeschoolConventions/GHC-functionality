@@ -179,7 +179,7 @@ class GHC_Base {
 	 */
 	public function get_single_convention_abbreviation( string $convention = '' ) : string {
 		if ( ! empty( $convention ) ) {
-			return array_flip( $this->get_conventions_abbreviations() )[ $conventions ];
+			return array_flip( $this->get_conventions_abbreviations() )[ $convention ];
 		}
 
 		return '';

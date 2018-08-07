@@ -31,7 +31,7 @@ $hotel_query = new WP_Query( $hotel_args );
 
 foreach ( get_field( 'archive_descriptions', 'option' ) as $description ) {
 	if ( 'hotel' === $description['post_type'] ) {
-		echo '<div class="container">';
+		echo '<div class="container shortcode">';
 
 		if ( $is_shortcode ) {
 			echo '<h2 class="text-center" id="hotels">Hotels</h2>';

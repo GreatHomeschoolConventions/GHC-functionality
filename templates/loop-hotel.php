@@ -39,6 +39,9 @@ if ( $hotel_query->have_posts() ) {
 	?>
 	<div class="container shortcode hotel">
 	<?php
+	if ( $is_shortcode ) {
+		echo '<h2 id="hotels">Hotels</h2>';
+	}
 	while ( $hotel_query->have_posts() ) {
 		$hotel_query->the_post();
 		include 'hotel-template.php';

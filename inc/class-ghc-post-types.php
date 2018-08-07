@@ -823,16 +823,16 @@ class GHC_Post_Types extends GHC_Base {
 	 *
 	 * @param int|string $post_id WP post ID.
 	 *
-	 * @return  void Saves data to post_meta.
+	 * @return  bool Saves data to post_meta.
 	 */
 	public function add_speaker_workshop_meta( $post_id ) {
 		if ( 'speaker' === get_post_type() ) {
-			$this->save_speaker_workshops( $post_id );
+			return $this->save_speaker_workshops( $post_id );
 		} elseif ( 'workshop' === get_post_type() ) {
 			$this_speaker = get_field( 'speaker', $post_id );
 
 			foreach ( $this_speaker as $speaker ) {
-				$this->save_speaker_workshops( $speaker->ID );
+				return $this->save_speaker_workshops( $speaker->ID );
 			}
 		}
 	}

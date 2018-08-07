@@ -52,8 +52,10 @@ if ( $hotel_query->have_posts() ) {
 	}
 	echo '</div>';
 } else {
-	echo '<h3>Note</h3>
-	<p>We&rsquo;re still working on the hotel discount codes. Please check back later for a list of participating hotels.</p>';
+	echo '<div class="container shortcode">
+	<h3>Note</h3>
+	<p>We&rsquo;re still working on the hotel discount codes. Please check back later for a list of participating hotels.</p>
+	</div>';
 }
 
 echo '<p class="pages">' . wp_kses_post( paginate_links( array( 'show_all' => true ) ) ) . '</p>';

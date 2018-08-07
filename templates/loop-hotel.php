@@ -37,7 +37,7 @@ foreach ( get_field( 'archive_descriptions', 'option' ) as $description ) {
 
 if ( $hotel_query->have_posts() ) {
 	?>
-	<div class="hotel-container ghc-cpt container">
+	<div class="container shortcode hotel">
 	<?php
 	while ( $hotel_query->have_posts() ) {
 		$hotel_query->the_post();

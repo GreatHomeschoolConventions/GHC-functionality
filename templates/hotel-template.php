@@ -9,12 +9,11 @@ if ( empty( $this_convention ) ) {
 	$this_convention = $this->get_this_convention();
 }
 	$post_classes = array(
-		'ghc-cpt item',
 		$this_convention,
 		get_field( 'sold_out' ) ? 'sold-out' : '',
 	);
 	?>
-<div class="<?php echo esc_attr( implode( ' ', get_post_class( $post_classes ) ) ); ?>">
+<article class="<?php echo esc_attr( implode( ' ', get_post_class( $post_classes ) ) ); ?>">
 	<?php
 	if ( ( is_post_type_archive( 'hotel' ) || $is_shortcode ) && ! isset( $this_convention ) ) {
 		echo do_shortcode( '[convention_icon convention="' . $this_convention . '"]' );
@@ -38,4 +37,4 @@ if ( empty( $this_convention ) ) {
 		} // phpcs:ignore Generic.WhiteSpace.ScopeIndent
 	}
 	?>
-</div>
+</article>

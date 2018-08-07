@@ -48,16 +48,17 @@ if ( get_field( 'location' ) ) {
 
 	wp_enqueue_script( 'ghc-maps' );
 	wp_add_inline_script( 'ghc-maps', 'var ghcMap_' . esc_attr( $map_identifier ) . ' = ' . $map_json . ';', 'before' );
+	?>
 
-	ob_start();
-	echo '<h4>Map</h4>
+	<h4>Map</h4>
 	<div class="ghc-map-container shortcode display-infoWindow">
 		<div class="container">
-			<div class="ghc-map" id="ghcMap_' . esc_attr( $map_identifier ) . '"></div>
+			<div class="ghc-map" id="ghcMap_<?php echo esc_attr( $map_identifier ); ?>"></div>
 		</div>
 	</div>
 
-	<p><a target="_blank" rel="noopener noreferrer" class="button dashicons-before dashicons-location-alt" href="https://www.google.com/maps/dir/' . esc_attr( str_replace( ' ', '+', $location['address'] ) ) . '/' . esc_attr( str_replace( ' ', '+', $convention_address ) ) . '/">Get directions</a></p>';
+	<p><a target="_blank" rel="noopener noreferrer" class="button dashicons-before dashicons-location-alt" href="<?php echo esc_url( 'https://www.google.com/maps/dir/' . str_replace( ' ', '+', $location['address'] ) . '/' . str_replace( ' ', '+', $convention_address ) ); ?>'/">Get directions</a></p>
+	<?php
 }
 ?>
 </div>

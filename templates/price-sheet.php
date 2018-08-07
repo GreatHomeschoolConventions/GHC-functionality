@@ -10,7 +10,10 @@ $convention = $this->get_single_convention_info( $this_convention );
 ?>
 <div class="container">
 <table class="price-sheet <?php echo esc_attr( $convention['slug'] ); ?>">
-	<caption><h2><?php echo esc_attr( $convention['convention_short_name'] ); ?> Homeschool Convention</h2></caption>
+	<caption>
+		<h2><?php echo esc_attr( $convention['convention_short_name'] ); ?> Homeschool Convention</h2>
+		<p class="text-center"><a href="<?php echo esc_url( $convention['registration'] ); ?>" class="button">Register Now</a></p>
+	</caption>
 	<thead>
 		<th scope="col">Benefits</th>
 		<th scope="col">Free Shopping<br/><span class="smaller">(Thursday Night Only)</span></th>
@@ -52,21 +55,27 @@ $convention = $this->get_single_convention_info( $this_convention );
 		<?php
 		// Prices.
 		foreach ( get_field( 'pricing', $convention['ID'] ) as $price_item ) {
-			?>
-			<tr>
-				<th aria-label="Dates" scope="col">
-					<dl>
-						<dt>Standard Registration</dt>
-						<dd><?php echo wp_kses_post( $this->format_date_range( $price_item['begin_date'], $price_item['end_date'], 'Ymd' ) ); ?></dd>
-					</dl>
-				</th>
-				<td aria-label="Free Shopping" class="price unavailable"></td>
-				<td aria-label="Shopping Only" class="price unavailable" colspan="2"></td>
-				<td aria-label="Full Registration" class="price individual">$<?php echo esc_attr( $price_item['individual_price'] ); ?> individual<a href="#footnotes">**</a></td>
-				<td aria-label="Full Registration" class="price family">$<?php echo esc_attr( $price_item['family_price'] ); ?> family<a href="#footnotes">***</a></td>
-			</tr>
 
-			<?php
+			// Test date range.
+			$date     = new DateTime();
+			$end_date = date_create_from_format( 'Ymd', $price_item['end_date'] );
+
+			if ( $date <= $end_date ) {
+				?>
+				<tr>
+					<th aria-label="Dates" scope="col">
+						<dl>
+							<dt>Standard Registration</dt>
+							<dd><?php echo wp_kses_post( $this->format_date_range( $price_item['begin_date'], $price_item['end_date'], 'Ymd' ) ); ?></dd>
+						</dl>
+					</th>
+					<td aria-label="Free Shopping" class="price unavailable"></td>
+					<td aria-label="Shopping Only" class="price unavailable" colspan="2"></td>
+					<td aria-label="Full Registration" class="price individual">$<?php echo esc_attr( $price_item['individual_price'] ); ?> individual<a href="#footnotes">**</a></td>
+					<td aria-label="Full Registration" class="price family">$<?php echo esc_attr( $price_item['family_price'] ); ?> family<a href="#footnotes">***</a></td>
+				</tr>
+				<?php
+			}
 		}
 
 		// At-the-door row.
@@ -93,4 +102,6 @@ $convention = $this->get_single_convention_info( $this_convention );
 	<li class="individual"><a href="#return">**</a>Individual access includes children ages 4 and under.</li>
 	<li class="family"><a href="#return">***</a>Family access includes spouse, children/teens, and grandparents.</li>
 </ol>
+
+<p class="text-center"><a href="<?php echo esc_url( $convention['registration'] ); ?>" class="button">Register Now</a></p>
 </div>

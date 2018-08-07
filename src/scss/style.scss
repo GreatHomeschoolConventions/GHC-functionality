@@ -2,8 +2,9 @@ $theme-blue:            #00456A;
 $theme-green:           #AAC016;
 $theme-orange:          #F05033;
 $theme-yellow:          #FEC429;
-$theme-magenta:         #b12278;
-$theme-teal:            #0c7f84;
+$theme-magenta:         #B12278;
+$theme-teal:            #0C7F84;
+$theme-pink:            #EA006D;
 $theme-gray:            #dddddd;
 $theme-black:           #333333;
 
@@ -38,7 +39,7 @@ $theme-black:           #333333;
 	input[type="radio"].filter { display: none; }
 
 	// Set up conventions filters.
-	$conventions: southeast texas midwest california missouri new-york florida;
+	$conventions: south-carolina texas ohio california missouri new-york florida;
 	@each $convention in $conventions {
 		input.filter#convention-filter-#{$convention}:checked {
 			~ .filter-target:not(.#{$convention}),

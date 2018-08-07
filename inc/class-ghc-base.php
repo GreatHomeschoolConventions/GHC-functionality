@@ -187,6 +187,24 @@ class GHC_Base {
 	}
 
 	/**
+	 * Get the abbreviation for the current convention (on a single location).
+	 *
+	 * @since  4.0.1
+	 *
+	 * @return string Two-letter lowercase convention abbrevation.
+	 */
+	public function get_this_convention() : string {
+		if ( is_singular( 'location' ) ) {
+			return strtolower( get_field( 'convention_abbreviated_name' ) );
+		} else {
+			$terms = wp_get_post_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
+			echo'<pre><code>';var_dump($terms);echo'</code></pre>';
+		}
+
+		return '';
+	}
+
+	/**
 	 * Get posts for the specified args.
 	 *
 	 * @since  4.0.0

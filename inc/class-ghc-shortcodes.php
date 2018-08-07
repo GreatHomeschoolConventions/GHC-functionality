@@ -294,7 +294,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 		// Set default convention if on a single convention.
 		if ( is_singular( 'location' ) && ! isset( $shortcode_attributes['convention'] ) ) {
-			$shortcode_attributes['convention'] = strtolower( get_field( 'convention_abbreviated_name' ) );
+			$shortcode_attributes['convention'] = $this->get_this_convention();
 		}
 
 		// Get featured speakers only.
@@ -460,7 +460,7 @@ class GHC_Shortcodes extends GHC_Base {
 	 * @return string HTML content.
 	 */
 	public function convention_address() : string {
-		$key      = strtolower( get_field( 'convention_abbreviated_name' ) );
+		$key      = $this->get_this_convention();
 		$location = $this->get_single_convention_info( $key );
 		$address  = $location['address']['street_address'] . ', ' . $location['address']['city'] . ', ' . $location['address']['state'] . ' ' . $location['address']['zip'];
 
@@ -857,7 +857,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 		// Set default convention if on a single convention.
 		if ( is_singular( 'location' ) && ! isset( $shortcode_attributes['convention'] ) ) {
-			$shortcode_attributes['convention'] = strtolower( get_field( 'convention_abbreviated_name' ) );
+			$shortcode_attributes['convention'] = $this->get_this_convention();
 		}
 
 		// Get convention categories.

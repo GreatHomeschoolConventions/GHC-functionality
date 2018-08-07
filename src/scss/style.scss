@@ -151,9 +151,12 @@ table.price-sheet {
 	&.new-york th { background-color: $theme-teal; }
 	&.florida th { background-color: $theme-pink; }
 
-	&.south-carolina, &.ohio, &.california, &.missouri {
-		th, th a { color: white; }
-		a { font-weight: 700; }
+	th, th a {
+		color: white;
+	}
+
+	&.texas {
+		th, th a { color: $theme-blue; }
 	}
 
 	caption, .spacer {

@@ -14,16 +14,16 @@
 		foreach ( $price_comparison as $price_point ) {
 
 			// Get current price point.
-			if ( empty( $price_point['price']['begin_date'] ) && empty( $price_point['price']['end_date'] ) ) {
-				$current_price_point = $price_point['price']['title'];
+			if ( empty( $price_point['begin_date'] ) && empty( $price_point['end_date'] ) ) {
+				$current_price_point = $price_point['title'];
 			} else {
 				// Test date range.
 				$date       = new DateTime();
-				$begin_date = date_create_from_format( 'Ymd', $price_point['price']['begin_date'] );
-				$end_date   = date_create_from_format( 'Ymd', $price_point['price']['end_date'] );
+				$begin_date = date_create_from_format( 'Ymd', $price_point['begin_date'] );
+				$end_date   = date_create_from_format( 'Ymd', $price_point['end_date'] );
 
 				if ( $date >= $begin_date && $date <= $end_date ) {
-					$current_price_point = $price_point['price']['title'];
+					$current_price_point = $price_point['title'];
 				}
 			}
 
@@ -46,6 +46,9 @@
 			</div>
 			<?php
 		}
+
+		$info = $this->get_single_convention_info( $this->get_this_convention() );
 		?>
+		<p class="text-center"><a href="<?php echo esc_url( get_home_url( null, 'pricing/' . $info['slug'] ) ); ?>" class="button">Detailed Pricing</a></p>
 </div>
 </div>

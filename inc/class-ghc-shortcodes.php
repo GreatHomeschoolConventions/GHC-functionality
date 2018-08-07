@@ -617,13 +617,11 @@ class GHC_Shortcodes extends GHC_Base {
 
 			if ( $date >= $begin_date && $date <= $end_date ) {
 				$price_comparison[] = array(
-					'price'       => array(
-						'title'      => '$' . $schedule['family_price'],
-						'begin_date' => $schedule['begin_date'],
-						'end_date'   => $schedule['end_date'],
-					),
-					'denominator' => get_field( 'pricing_details_family_denominator' ),
-					'description' => get_field( 'pricing_details_family_description' ),
+					'title'       => '$' . $schedule['family_price'],
+					'begin_date'  => $schedule['begin_date'],
+					'end_date'    => $schedule['end_date'],
+					'denominator' => get_field( 'family_denominator' ),
+					'description' => get_field( 'family_description' ),
 				);
 			}
 		}
@@ -825,7 +823,7 @@ class GHC_Shortcodes extends GHC_Base {
 		wp_enqueue_script( 'ghc-price-sheets' );
 
 		ob_start();
-		include $this->plugin_dir_path( 'price-sheets/price-sheet-' . $this_convention . '.html' );
+		include $this->plugin_dir_path( 'templates/price-sheet.php' );
 		return ob_get_clean();
 	}
 

@@ -110,6 +110,10 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 4.1.2
+	+ Update `[price_sheet]` shortcode to get live data from location ACF fields
+	+ Add generic header fallback image
+
 - 4.1.1
 	+ Fix map click action
 

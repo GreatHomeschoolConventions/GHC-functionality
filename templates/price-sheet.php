@@ -39,13 +39,27 @@ $convention = $this->get_single_convention_info( $this_convention );
 				<tr>
 					<th aria-label="Benefits" scope="col">
 						<dl>
-							<dt><?php echo wp_kses_post( $line_item['price_sheet_item_title'] ); ?></dt>
+							<dt>
+								<?php
+								echo wp_kses_post( $line_item['price_sheet_item_title'] );
+								if ( 'available' === $included_full ) {
+									echo '<a href="#footnotes" title="Additional tickets required.">*</a>';
+								}
+								?>
+							</dt>
 							<dd><?php echo wp_kses_post( $line_item['price_sheet_item_details'] ); ?></dd>
 						</dl>
 					</th>
 					<td aria-label="Free Shopping (Thursday Night Only)" class="<?php echo esc_attr( $included_free_shopping ); ?>"><?php echo esc_attr( $included_free_shopping_text ); ?></td>
 					<td aria-label="Shopping Only" colspan="2" class="<?php echo esc_attr( $included_shopping ); ?>"><?php echo esc_attr( $included_shopping_text ); ?></td>
-					<td aria-label="Full Registration" colspan="2" class="<?php echo esc_attr( $included_full ); ?>"><?php echo esc_attr( $included_full_text ); ?></td>
+					<td aria-label="Full Registration" colspan="2" class="<?php echo esc_attr( $included_full ); ?>">
+						<?php
+						echo esc_attr( $included_full_text );
+						if ( 'available' === $included_full ) {
+							echo '<a href="#footnotes" title="Additional tickets required.">*</a>';
+						}
+						?>
+					</td>
 				</tr>
 			<?php
 		}

@@ -31,7 +31,14 @@ $hotel_query = new WP_Query( $hotel_args );
 
 foreach ( get_field( 'archive_descriptions', 'option' ) as $description ) {
 	if ( 'hotel' === $description['post_type'] ) {
-		echo '<div class="container">' . wp_kses_post( apply_filters( 'the_content', $description['message'] ) ) . '</div>';
+		echo '<div class="container">';
+
+		if ( $is_shortcode ) {
+			echo '<h2 class="text-center" id="hotels">Hotels</h2>';
+		}
+
+		echo wp_kses_post( apply_filters( 'the_content', $description['message'] ) );
+		echo '</div>';
 	}
 }
 
@@ -39,9 +46,6 @@ if ( $hotel_query->have_posts() ) {
 	?>
 	<div class="container shortcode hotel">
 	<?php
-	if ( $is_shortcode ) {
-		echo '<h2 id="hotels">Hotels</h2>';
-	}
 	while ( $hotel_query->have_posts() ) {
 		$hotel_query->the_post();
 		include 'hotel-template.php';

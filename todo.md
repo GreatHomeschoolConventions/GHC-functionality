@@ -26,13 +26,14 @@
 	- [ ] locations/midwest -> locations/ohio
 - [ ] Regenerate missing media thumbnails (speaker-miniscule)
 - [ ] Sync all ACF groups
-- [ ] Run `convention CTAs.sql`
+- [ ] Run `convention CTAs.sql`?
 - [ ] Update each location’s map and features
 	- [ ] Remove OpenGraph video from each
 - [ ] Add 2019 Robly lists and update all products and forms
+- [ ] Update price sheet content, title, slug
 
 # Dev
-- [ ] Pricing table pages using ACF content
+- [x] Pricing table pages using ACF content
 - [ ] Add lightbox to speaker carousel (all carousels?)
 - [ ] Move WC email content to ACF option
 - [x] Finish `[register]` per Josh’s design

@@ -32,7 +32,6 @@ class GHC_Conventions extends GHC_Base {
 		// Update transients when locations are updated.
 		add_action( 'save_post_location', array( $this, 'load_conventions_info' ) );
 		add_action( 'save_post_location', array( $this, 'load_conventions_abbreviations' ) );
-		add_action( 'save_post_location', array( $this, 'load_conventions_dates' ) );
 
 		// Add microdata.
 		add_action( 'wp_footer', array( $this, 'add_schema_org_microdata' ), 50 );

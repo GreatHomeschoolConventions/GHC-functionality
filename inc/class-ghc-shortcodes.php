@@ -142,7 +142,7 @@ class GHC_Shortcodes extends GHC_Base {
 				array(
 					'taxonomy' => 'ghc_conventions_taxonomy',
 					'field'    => 'slug',
-					'terms'    => $this->get_single_convention_abbreviation( $this_convention ),
+					'terms'    => $this->get_single_convention_slug( $this_convention ),
 				),
 			);
 
@@ -314,7 +314,7 @@ class GHC_Shortcodes extends GHC_Base {
 			$carousel_args['tax_query'][]           = array(
 				'taxonomy' => 'ghc_conventions_taxonomy',
 				'field'    => 'slug',
-				'terms'    => $this->get_single_convention_abbreviation( $this_convention ),
+				'terms'    => $this->get_single_convention_slug( $this_convention ),
 			);
 		}
 
@@ -726,7 +726,7 @@ class GHC_Shortcodes extends GHC_Base {
 	public function hotel_grid( $attributes = array() ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
-				'convention'   => null,
+				'convention'   => $this->get_this_convention(),
 				'show_content' => false,
 			), $attributes
 		);
@@ -1181,7 +1181,7 @@ class GHC_Shortcodes extends GHC_Base {
 					array(
 						'taxonomy' => 'ghc_conventions_taxonomy',
 						'field'    => 'slug',
-						'terms'    => $this->get_single_convention_abbreviation( $this_convention ),
+						'terms'    => $this->get_single_convention_slug( $this_convention ),
 					),
 				)
 			);
@@ -1438,7 +1438,7 @@ class GHC_Shortcodes extends GHC_Base {
 					array(
 						'taxonomy' => 'ghc_conventions_taxonomy',
 						'field'    => 'slug',
-						'terms'    => $this->get_single_convention_abbreviation( $this_convention ),
+						'terms'    => $this->get_single_convention_slug( $this_convention ),
 					),
 				),
 			);

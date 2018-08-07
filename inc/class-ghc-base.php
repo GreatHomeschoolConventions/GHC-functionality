@@ -162,9 +162,24 @@ class GHC_Base {
 	 *
 	 * @return array  Convention abbreviation.
 	 */
+	public function get_single_convention_slug( string $convention = '' ) : string {
+		if ( ! empty( $convention ) ) {
+			return str_replace( ' ', '-', $this->get_conventions_abbreviations()[ strtolower( $convention ) ] );
+		}
+
+		return '';
+	}
+
+	/**
+	 * Get abbreviation for a single convention.
+	 *
+	 * @param  string $convention Convention slug.
+	 *
+	 * @return array  Two-letter convention abbreviation.
+	 */
 	public function get_single_convention_abbreviation( string $convention = '' ) : string {
 		if ( ! empty( $convention ) ) {
-			return $this->get_conventions_abbreviations()[ strtolower( $convention ) ];
+			return array_flip( $this->get_conventions_abbreviations() )[ $conventions ];
 		}
 
 		return '';
@@ -194,7 +209,14 @@ class GHC_Base {
 	 * @return string Two-letter lowercase convention abbrevation.
 	 */
 	public function get_this_convention() : string {
-		return strtolower( get_field( 'convention_abbreviated_name' ) );
+		if ( is_singular( 'location' ) ) {
+			return strtolower( get_field( 'convention_abbreviated_name' ) );
+		} else {
+			$location_tax = wp_get_post_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
+			return $this->get_single_convention_abbreviation( $location_tax[0]->slug );
+		}
+
+		return '';
 	}
 
 	/**

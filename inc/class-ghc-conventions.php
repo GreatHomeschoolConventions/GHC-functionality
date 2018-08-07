@@ -153,7 +153,7 @@ class GHC_Conventions extends GHC_Base {
 		$conventions_abbreviations = array();
 
 		foreach ( $this->get_conventions_info() as $key => $values ) {
-			$convention_abbreviations[ $key ] = strtolower( $values['convention_short_name'] );
+			$convention_abbreviations[ $key ] = str_replace( ' ', '-', strtolower( $values['convention_short_name'] ) );
 		}
 
 		set_transient( 'ghc_conventions_abbreviations', $convention_abbreviations );

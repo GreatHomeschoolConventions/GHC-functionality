@@ -5,9 +5,8 @@
  * @package GHC_Functionality_Plugin
  */
 
-if ( is_post_type_archive( 'hotel' ) || $is_shortcode ) {
-	$conventions_taxonomy = get_the_terms( get_the_ID(), 'ghc_conventions_taxonomy' );
-	$this_convention      = array_flip( $this->get_conventions_abbreviations() )[ $conventions_taxonomy[0]->slug ];
+if ( empty( $this_convention ) ) {
+	$this_convention = $this->get_this_convention();
 }
 	$post_classes = array(
 		'ghc-cpt item',

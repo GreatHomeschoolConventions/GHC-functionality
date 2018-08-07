@@ -22,7 +22,7 @@ if ( $this_convention ) {
 		array(
 			'taxonomy' => 'ghc_conventions_taxonomy',
 			'field'    => 'slug',
-			'terms'    => $this->get_single_convention_abbreviation( $this_convention ),
+			'terms'    => $this->get_single_convention_slug( $this_convention ),
 		),
 	);
 }

@@ -56,7 +56,7 @@ $family-color:          #FFF9CF;
 
 	// Handle individual vs. family attendees.
 	input[id*="attendee-type-individual"]:checked {
-		~ .products td.actions:not(.add-to-cart),
+		~ .products .actions label,
 		~ .products .filter-target[class*="attendee-type-family"],
 		~ .products .teen-track,
 		~ .products .program-guide { display: none; }

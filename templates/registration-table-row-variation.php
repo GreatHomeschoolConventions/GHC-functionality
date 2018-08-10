@@ -6,6 +6,21 @@
  */
 
 $ghc_wc = GHC_Woocommerce::get_instance();
+
+// Get variation type.
+$attributes = array();
+foreach ( $variation->get_variation_attributes() as $key => $value ) {
+	$name = $this->get_attribute_nicename( str_replace( 'attribute_', '', $key ), $value );
+
+	if ( 'Family' === $name ) {
+		$registration_type = 'family';
+		$name             .= ' <span class="lowercase">(parents, children/teens, and grandparents)</span>';
+	} else {
+		$registration_type = 'individual';
+	}
+	$attributes[] = $name;
+}
+
 ?>
 <tr id="post-<?php echo esc_attr( $variation->get_ID() ); ?>" class="<?php echo esc_attr( $ghc_wc->product_post_class( $variation, array( $product->get_slug() ) ) ); ?>">
 	<td class="thumb">
@@ -21,17 +36,6 @@ $ghc_wc = GHC_Woocommerce::get_instance();
 		<?php
 		if ( get_field( 'subtitle' ) ) {
 			echo '<p class="meta">' . wp_kses_post( get_field( 'subtitle' ) ) . '</p>';
-		}
-		?>
-		<?php
-		$attributes = array();
-		foreach ( $variation->get_variation_attributes() as $key => $value ) {
-			$name = $this->get_attribute_nicename( str_replace( 'attribute_', '', $key ), $value );
-
-			if ( 'Family' === $name ) {
-				$name .= ' <span class="lowercase">(parents, children/teens, and grandparents)</span>';
-			}
-			$attributes[] = $name;
 		}
 		echo '<p class="meta">' . wp_kses_post( implode( ' | ', $attributes ) ) . '</p>';
 		?>
@@ -49,19 +53,21 @@ $ghc_wc = GHC_Woocommerce::get_instance();
 				}
 			}
 
-			if ( $registration_product ) {
-				echo '<input class="qty" name="qty-' . esc_attr( $variation->get_ID() ) . '" type="hidden" value="1" min="1" max="1" />
-				<label for="family-members">Family members:<br/>
-					<button type="button" class="decrement btn">-</button>
-					<input name="family-members" type="number" value="2" min="2" max="' . esc_attr( get_field( 'max_family_members', 'option' ) ) . '" />
-					<button type="button" class="increment btn">+</button>
-				</label>';
-			} else {
-				echo '<label class="qty" for="qty-' . esc_attr( $variation->get_ID() ) . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
-					<button type="button" class="decrement btn">-</button>
-					<input class="qty" name="qty-' . esc_attr( $variation->get_ID() ) . '" type="number" value="0" min="2" max="' . esc_attr( get_field( 'max_family_members', 'option' ) ) . '" />
-					<button type="button" class="increment btn">+</button>
-				</label>';
+			if ( 'family' === $registration_type ) {
+				if ( $registration_product ) {
+					echo '<input class="qty" name="qty-' . esc_attr( $variation->get_ID() ) . '" type="hidden" value="1" min="1" max="1" />
+					<label for="family-members">Family members:<br/>
+						<button type="button" class="decrement btn">-</button>
+						<input name="family-members" type="number" value="2" min="2" max="' . esc_attr( get_field( 'max_family_members', 'option' ) ) . '" />
+						<button type="button" class="increment btn">+</button>
+					</label>';
+				} else {
+					echo '<label class="qty" for="qty-' . esc_attr( $variation->get_ID() ) . '"><span class="tickets-qty">Tickets</span><span class="tickets-separator">:</span><br/>
+						<button type="button" class="decrement btn">-</button>
+						<input class="qty" name="qty-' . esc_attr( $variation->get_ID() ) . '" type="number" value="0" min="2" max="' . esc_attr( get_field( 'max_family_members', 'option' ) ) . '" />
+						<button type="button" class="increment btn">+</button>
+					</label>';
+				}
 			}
 			?>
 			<p class="product woocommerce add_to_cart_inline">

@@ -110,6 +110,11 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 4.1.4
+	+ Fix some add-to-cart issues
+	+ Update hotel display
+	+ Add WooCommerce email content to site options ACF group
+
 - 4.1.3
 	+ Fix price sheet text colors
 	+ Fix post save behavior

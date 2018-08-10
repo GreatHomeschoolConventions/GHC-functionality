@@ -22,7 +22,7 @@ foreach ( $variation->get_variation_attributes() as $key => $value ) {
 }
 
 ?>
-<tr id="post-<?php echo esc_attr( $variation->get_ID() ); ?>" class="<?php echo esc_attr( $ghc_wc->product_post_class( $variation, array( $product->get_slug() ) ) ); ?>">
+<tr id="post-<?php echo esc_attr( $variation->get_ID() ); ?>" class="<?php echo esc_attr( $ghc_wc->product_post_class( $variation, array( $product->get_slug(), ( isset( $registration_type ) ? 'registration' : '' ) ) ) ); ?>">
 	<td class="thumb">
 		<?php
 		$image = $product->get_image( array( 50, 50 ) );

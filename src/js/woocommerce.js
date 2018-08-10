@@ -48,7 +48,7 @@
 	 * @returns {void} Modifies the DOM.
 	 */
 	function checkFamilySelection() {
-		var selectedTicketType = $('.woocommerce-content > .product_cat-registration select[name="attribute_attendee-type"]').val();
+		var selectedTicketType = $('.woocommerce-content > .registration select[name="attribute_attendee-type"]').val();
 
 		if (selectedTicketType.indexOf('Family') > -1) {
 			$('.product-addon-family-members').slideDown();
@@ -97,9 +97,9 @@
 		$('.quantity input[type=number], input.qty').trigger('change');
 
 		/** Show/hide family member quantity depending on registration type. */
-		if ($('.woocommerce-content > .product_cat-registration').length > 0) {
+		if ($('.woocommerce-content > .registration').length > 0) {
 			checkFamilySelection();
-			$('body').on('change', '.product_cat-registration select[name="attribute_attendee-type"]', checkFamilySelection);
+			$('body').on('change', '.registration select[name="attribute_attendee-type"]', checkFamilySelection);
 		}
 
 		/** Hide “family members” line from individual registrations in the cart and handle program guides. */
@@ -138,7 +138,7 @@
 				$(this).attr('max', familyCount);
 				fixMaxTickets($(this));
 			});
-			$('.product_cat-registration:visible').find('a[data-family-members]').data('family-members', familyCount);
+			$('.registration:visible').find('a[data-family-members]').data('family-members', familyCount);
 		});
 		$('input[name="family-members"]').trigger('change');
 

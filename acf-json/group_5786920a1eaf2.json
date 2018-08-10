@@ -325,6 +325,60 @@
             "max_height": "",
             "max_size": "",
             "mime_types": ""
+        },
+        {
+            "key": "field_5b6ce9a431e80",
+            "label": "Customer Emails",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5b6ce9af31e81",
+            "label": "Formatted Content",
+            "name": "customer_email_formatted_content",
+            "type": "wysiwyg",
+            "instructions": "Content added to customer emails; formatted version",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "<h2>Order Confirmation<\/h2>\r\n\r\n<p>Your order from Great Homeschool Conventions has been completed and your order details are shown below. Please print a copy of this email and bring it to the convention with you.<\/p>\r\n\r\n<p>To keep registration costs low, <strong>nothing<\/strong> will be mailed to you; your packet and any special event tickets will be available when you arrive at the convention.<\/p>\r\n\r\n<h2>Special Events and More<\/h2>\r\n\r\n<p>Watch your email in the coming weeks for FAQs, deals on hotels, and more.<\/p>\r\n\r\n<p>If you would like to add anything to your order, log in and <a href=\"https:\/\/www.greathomeschoolconventions.com\/product-category\/special-events\/?utm_source=woocommerce&utm_medium=email-receipt&utm_campaign=registration-receipt&utm_content=add-to-order\">place another order online<\/a> or email us at <a href=\"mailto:addtomyorder@greathomeschoolconventions.com\/\" target=\"_blank\" >addtomyorder@greathomeschoolconventions.com<\/a>.<\/p>",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_5b6ceb1431e82",
+            "label": "Plaintext Content",
+            "name": "customer_email_plaintext_content",
+            "type": "textarea",
+            "instructions": "Content added to customer emails; plaintext version",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Order Confirmation\r\n\r\nYour order from Great Homeschool Conventions has been completed and your order details are shown below. Please print a copy of this email and bring it to the convention with you.\r\n\r\nTo keep registration costs low, nothing will be mailed to you; your packet and any special event tickets will be available when you arrive at the convention.\r\n\r\nSpecial Events and More\r\n\r\nWatch your email in the coming weeks for FAQs, deals on hotels, and more.\r\n\r\nIf you would like to add anything to your order, log in and place another order online (https:\/\/www.greathomeschoolconventions.com\/product-category\/special-events\/) or email us at addtomyorder@greathomeschoolconventions.com.",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
         }
     ],
     "location": [
@@ -344,5 +398,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1533578723
+    "modified": 1533865121
 }

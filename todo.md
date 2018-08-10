@@ -1,9 +1,9 @@
 # Launch Dev
-- [ ] Area Hotels
-- [ ] Speakers
-- [ ] Special Events
-- [ ] Exhibitors
-- [ ] Special Tracks
+- [x] Area Hotels
+- [x] Speakers
+- [x] Special Events
+- [x] Exhibitors
+- [x] Special Tracks
 
 # Launch Content
 - [ ] Workshops
@@ -35,7 +35,7 @@
 # Dev
 - [x] Pricing table pages using ACF content
 - [ ] Add lightbox to speaker carousel (all carousels?)
-- [ ] Move WC email content to ACF option
+- [x] Move WC email content to ACF option
 - [x] Finish `[register]` per Josh’s design
 	- [ ] Fix totals calculation
 	- [ ] Fix min going into negative

@@ -129,6 +129,11 @@ $family-color:          #FFF9CF;
 			// Program guide ticket quantity text.
 			.tickets-qty, .tickets-separator { display: none; }
 		}
+
+		tfoot td {
+			text-align: right;
+			font-weight: bold;
+		}
 	}
 
 	.woocommerce {

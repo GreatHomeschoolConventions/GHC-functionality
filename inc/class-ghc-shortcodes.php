@@ -973,18 +973,13 @@ class GHC_Shortcodes extends GHC_Base {
 				</tbody>
 				<tfoot>
 					<tr class="cart-totals">
-						<td colspan="2" class="header">Total</td>
-						<td class="total">
-							<span class="custom-cart-total">
+						<td colspan="4" class="total">
+							Total:
 								<?php
 								if ( function_exists( 'wc_cart_totals_subtotal_html' ) ) { // Workaround for Yoast SEO.
 									echo wp_kses_post( wc_cart_totals_subtotal_html() );
 								}
 								?>
-							</span>
-						</td>
-						<td class="actions add-to-cart">
-							<input type="submit" value="Add All to Cart&rarr;" />
 						</td>
 					</tr>
 				</tfoot>

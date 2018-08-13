@@ -260,11 +260,12 @@ class GHC_Shortcodes extends GHC_Base {
 	 *
 	 * @since  4.0.0
 	 *
-	 * @param  array $attributes Shortcode attributes.
+	 * @param  array  $attributes Shortcode attributes.
+	 * @param  string $content    Content to include before carousel.
 	 *
 	 * @return string            HTML content.
 	 */
-	public function carousel( $attributes = array() ) : string {
+	public function carousel( $attributes = array(), $content = '' ) : string {
 		$shortcode_attributes = shortcode_atts(
 			array(
 				'post_type'      => 'speaker',
@@ -343,6 +344,12 @@ class GHC_Shortcodes extends GHC_Base {
 			wp_add_inline_script( 'slick', 'jQuery(document).ready(function(){jQuery("#' . $slider_id . '").slick(' . wp_json_encode( $slick_data ) . ');});', 'after' );
 
 			echo '<div class="container">';
+
+			// Optional content.
+			if ( ! empty( $content ) ) {
+				echo wp_kses_post( $content );
+			}
+
 			printf(
 				'<section id="%1$s" class="shortcode carousel %2$s">',
 				esc_attr( $slider_id ),

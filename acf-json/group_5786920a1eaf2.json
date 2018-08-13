@@ -38,6 +38,25 @@
             "delay": 0
         },
         {
+            "key": "field_5b71a36e7dbf9",
+            "label": "Special Event Seating Info",
+            "name": "special_event_seating",
+            "type": "wysiwyg",
+            "instructions": "Shown at the top of the <code>[register]<\/code> shortcode",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "For special events, <strong>each person<\/strong> needs a ticket, including infants and young children. Seating is available on a first-come, first-served basis.",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
             "key": "field_5b508aa4efc98",
             "label": "CPTs",
             "name": "",
@@ -398,5 +417,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1533865121
+    "modified": 1534174097
 }

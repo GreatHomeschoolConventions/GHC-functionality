@@ -923,6 +923,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 		<div class="container register shortcode" id="register">
 			<h2>Register</h2>
+			<?php echo wp_kses_post( get_field( 'special_event_seating', 'option' ) ); ?>
 
 			<?php
 

@@ -909,9 +909,17 @@ class GHC_Shortcodes extends GHC_Base {
 					'terms'    => $convention_categories,
 				),
 				array(
-					'taxonomy' => 'product_cat',
-					'field'    => 'slug',
-					'terms'    => 'special-events',
+					'relation' => 'OR',
+					array(
+						'taxonomy' => 'product_cat',
+						'field'    => 'slug',
+						'terms'    => 'special-events',
+						),
+					array(
+						'taxonomy' => 'product_cat',
+						'field'    => 'slug',
+						'terms'    => 'program-guide',
+					),
 				),
 			),
 		);

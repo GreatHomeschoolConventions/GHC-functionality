@@ -283,25 +283,6 @@
             "multiple": 0
         },
         {
-            "key": "field_59ca6bf3aa54b",
-            "label": "General Convention Hours",
-            "name": "hours",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
-        },
-        {
             "key": "field_5a708020ea654",
             "label": "Features",
             "name": "",
@@ -1188,5 +1169,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1533603345
+    "modified": 1534172028
 }

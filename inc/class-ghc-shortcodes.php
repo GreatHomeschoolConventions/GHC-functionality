@@ -804,6 +804,7 @@ class GHC_Shortcodes extends GHC_Base {
 
 		ob_start();
 		echo '<div class="ghc-map-container shortcode display-' . esc_attr( $shortcode_attributes['display'] ) . '">
+			<h2 class="text-center">Explore Our Conventions</h2>
 			<div class="container">
 				<div class="ghc-map" id="ghcMap_' . esc_attr( $map_identifier ) . '"></div>
 				<div class="map-locations-info">' . $display_data . '</div>

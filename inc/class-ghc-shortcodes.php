@@ -774,7 +774,11 @@ class GHC_Shortcodes extends GHC_Base {
 		// Get map data.
 		$map_data     = [ 'style' => 'plain' ];
 		$display_data = '';
-		$i            = 0;
+
+		// Initial display data.
+		$initial_display_data = '<div class="map-info key-initial">
+		<h1>Seven Conventions</h1>';
+
 		foreach ( $conventions as $key => $convention ) {
 			$map_data['points'][ $key ] = array(
 				'title'   => $convention['title'],
@@ -782,7 +786,9 @@ class GHC_Shortcodes extends GHC_Base {
 				'address' => $convention['address'],
 			);
 
-			$display_data .= '<div class="map-info key-' . esc_attr( $key ) . '" style="background-image: url(' . esc_url( $convention['icon'] ) . ');' . ( 0 === $i ? '' : 'display: none;' ) . '">
+			$initial_display_data .= '<p class="location" style="background-image: url(' . esc_url( $convention['icon'] ) . ');"">' . esc_attr( $convention['title'] ) . ' | ' . esc_attr( $this->get_single_convention_date( $key ) ) . ' | <a class="button" href="' . esc_url( $convention['permalink'] ) . '">Learn More</a></p>';
+
+			$display_data .= '<div class="map-info key-' . esc_attr( $key ) . '" style="background-image: url(' . esc_url( $convention['icon'] ) . '); display: none;">
 				<h1>' . esc_attr( $convention['title'] ) . '</h1>
 				<p class="meta">' . esc_attr( $this->get_single_convention_date( $key ) ) . '</p>
 				<address>
@@ -790,11 +796,14 @@ class GHC_Shortcodes extends GHC_Base {
 					' . esc_attr( $convention['address']['street_address'] ) . '<br />
 					' . esc_attr( $convention['address']['city'] ) . ', ' . esc_attr( $convention['address']['state'] ) . ' ' . esc_attr( $convention['address']['zip'] ) . '
 				</address>
-				' . $this->convention_cta( array( 'convention' => $key ) ) . '
+				<p><a class="button" href="' . esc_url( $convention['permalink'] ) . '">Learn More</a></p>
 			</div>
 			';
-			$i++;
 		}
+
+		$initial_display_data .= '</div>';
+
+		$display_data = $initial_display_data . $display_data;
 
 		$map_json       = wp_json_encode( $map_data );
 		$map_identifier = md5( $map_json );

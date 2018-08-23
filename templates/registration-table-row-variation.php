@@ -15,6 +15,8 @@ foreach ( $variation->get_variation_attributes() as $key => $value ) {
 	if ( 'Family' === $name ) {
 		$registration_type = 'family';
 		$name             .= ' <span class="lowercase">(parents, children/teens, and grandparents)</span>';
+	} elseif ( 'Shopping Pass' === $name ) {
+		$name = 'One-Day ' . $name . ' <span class="lowercase">(either Friday or Saturday)</span>';
 	} else {
 		$registration_type = 'individual';
 	}

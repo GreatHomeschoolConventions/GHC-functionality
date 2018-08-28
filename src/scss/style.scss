@@ -63,10 +63,19 @@ $family-color:          #FFF9CF;
 	}
 	input[id*="attendee-type-family"]:checked ~ .products .filter-target[class*="attendee-type-individual"] { display: none; }
 
-	// Handle shopping vs. full convention ticket types.
-	input[id*="ticket-type-full-convention"]:checked ~ .products .filter-target[class*="ticket-type-shopping-only"] { display: none; }
-	input[id*="ticket-type-shopping-only"]:checked ~ .products {
+	// Handle shopping vs. free shopping vs. full convention ticket types.
+	input[id*="ticket-type-full-convention"]:checked ~ .products {
+		.filter-target[class*="ticket-type-shopping-pass"],
+		.filter-target[class*="ticket-type-free-shopping"] { display: none; }
+	}
+	input[id*="ticket-type-shopping-pass"]:checked ~ .products {
 		.filter-target[class*="ticket-type-full-convention"],
+		.filter-target[class*="ticket-type-free-shopping"],
+		.filter-target[class*="special-events"] { display: none; }
+	}
+	input[id*="ticket-type-free-shopping"]:checked ~ .products {
+		.filter-target[class*="ticket-type-full-convention"],
+		.filter-target[class*="ticket-type-shopping-pass"],
 		.filter-target[class*="special-events"] { display: none; }
 	}
 

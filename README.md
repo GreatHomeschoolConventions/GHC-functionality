@@ -110,6 +110,12 @@ Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
 
 # Changelog
 
+- 4.1.5
+	+ Add support for intro content in `[carousel]` shortcode
+	+ Add program guide to `[register]` shortcode
+	+ Add header to `[locations]` shortcode
+	+ Add support for free shopping pass
+
 - 4.1.4
 	+ Fix some add-to-cart issues
 	+ Update hotel display

@@ -10,36 +10,35 @@
 - [ ] Speakers
 - [ ] Special Events
 - [ ] Sponsors
-- [ ] Exhibitors
-- [ ] Hotels
+- [x] Exhibitors
+- [x] Hotels
 - [ ] Testimonials
 
 # Launch checklist
-- [ ] Resave permalinks
-- [ ] Update SE, MW, FL conventions:
-	- [ ] Location name, slug, and info
-	- [ ] Location tax name and slug
-	- [ ] Product name, slug, info, and image
-	- [ ] product_cat name, slug, and image
+- [x] Resave permalinks
+- [x] Update SE, MW, FL conventions:
+	- [x] Location name, slug, and info
+	- [x] Location tax name and slug
+	- [x] Product name, slug, info, and image
+	- [x] product_cat name, slug, and image
 - [ ] Add 301 redirects:
 	- [ ] locations/southeast -> locations/south-carolina
 	- [ ] locations/midwest -> locations/ohio
 - [ ] Regenerate missing media thumbnails (speaker-miniscule)
-- [ ] Sync all ACF groups
-- [ ] Run `convention CTAs.sql`?
-- [ ] Update each location’s map and features
-	- [ ] Remove OpenGraph video from each
-- [ ] Add 2019 Robly lists and update all products and forms
-- [ ] Update price sheet content, title, slug
+- [x] Sync all ACF groups
+- [x] Run `convention CTAs.sql`?
+- [x] Update each location’s map and features
+	- [x] Remove OpenGraph video from each
+- [x] Add 2019 Robly lists and update all products and forms
+- [x] Update price sheet content, title, slug
 
 # Dev
 - [x] Pricing table pages using ACF content
 - [ ] Add lightbox to speaker carousel (all carousels?)
 - [x] Move WC email content to ACF option
 - [x] Finish `[register]` per Josh’s design
-	- [ ] Fix totals calculation
-	- [ ] Fix min going into negative
-	- [ ] Wire up add-all-to-cart button
+	- [x] Fix totals calculation
+	- [x] Fix min going into negative
 - [ ] Add auto cache-clearing when CTA or pricing schedule rolls over
 	+ On `save_post_location`, add wp-cron job to clear locations transient and WP Super Cache on each future date?
 	+ Or set a cron job to clear and cache at 1AM?
@@ -52,8 +51,8 @@
 - [ ] Add expiration date to product CPT? Restrict somehow based on associated convention dates?
 
 # Forms
-- [ ] Replace hardcoded convention locations with `[convention_form_list]` or `[convention_form_list format "short"]`
-- [ ] Remove robly-lists.min.js from [this form](https://greathomeschoolconventions.com/wp-admin/admin.php?page=wpcf7&post=57398&action=edit)
+- [x] Replace hardcoded convention locations with `[convention_form_list]` or `[convention_form_list format "short"]`
+- [x] Remove robly-lists.min.js from [this form](https://greathomeschoolconventions.com/wp-admin/admin.php?page=wpcf7&post=57398&action=edit)
 
 # Convention CTA
 - [ ] Add popups for all conventions and schedule future publish dates

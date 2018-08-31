@@ -690,11 +690,11 @@ class GHC_Woocommerce extends GHC_Base {
 	 * @param WC_Order $order          Order object.
 	 * @param bool     $sent_to_admin  Whether this goes to admin or not.
 	 * @param string   $plain_text     Plain-text email.
-	 * @param string   $email          HTML email.
+	 * @param WC_Email $email          HTML email.
 	 *
 	 * @return  void Prints content.
 	 */
-	public function add_coupon_code_admin_email( WC_Order $order, bool $sent_to_admin, string $plain_text, string $email ) {
+	public function add_coupon_code_admin_email( WC_Order $order, bool $sent_to_admin, string $plain_text, WC_Email $email ) {
 		if ( $sent_to_admin && $order->get_used_coupons() ) {
 			echo '<p>Coupon(s) used: <span class="highlighted">' . esc_attr( implode( ', ', $order->get_used_coupons() ) ) . '</span></p>';
 		}
@@ -716,14 +716,14 @@ class GHC_Woocommerce extends GHC_Base {
 	/**
 	 * Add intro content to customer email
 	 *
-	 * @param WC_Order                  $order         Order object.
-	 * @param bool                      $sent_to_admin Whether or not this email is sent to the admin.
-	 * @param bool                      $plain_text    Whether this email is HTML formatted or plain-text.
-	 * @param WC_Email_Customer_Invoice $email         Email object.
+	 * @param WC_Order $order         Order object.
+	 * @param bool     $sent_to_admin Whether or not this email is sent to the admin.
+	 * @param bool     $plain_text    Whether this email is HTML formatted or plain-text.
+	 * @param WC_Email $email         Email object.
 	 *
 	 * @return  void Prints content.
 	 */
-	public function add_customer_email_note( WC_Order $order, bool $sent_to_admin, bool $plain_text, WC_Email_Customer_Invoice $email ) {
+	public function add_customer_email_note( WC_Order $order, bool $sent_to_admin, bool $plain_text, WC_Email $email ) {
 		if ( $sent_to_admin ) {
 			return;
 		}

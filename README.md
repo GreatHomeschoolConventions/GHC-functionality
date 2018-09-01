@@ -1,6 +1,8 @@
 # Introduction
 
-A plugin to add custom post types and categories for use on [Great Homeschool Conventions’ website](https://www.greathomeschoolconventions.com/).
+A plugin to add custom post types and categories for use on [Great Homeschool Conventions’ website](https://www.greathomeschoolconventions.com/), developed by ![AndrewRMinion Design](https://andrewrminion.com/).
+
+See ![GHC documentation](https://bitbucket.org/greathomeschoolconventions/ghc-documentation/src/master/) for more info.
 
 # Usage
 
@@ -13,100 +15,33 @@ A plugin to add custom post types and categories for use on [Great Homeschool Co
 
 # Other Notes
 
-Available shortcodes (see `inc/shortcodes.php` for up-to-date information):
+Available shortcodes; see documentation in `inc/class-ghc-shortcodes.php` for up-to-date usage information:
 
-## `[author_bio]`
+- `[carousel]`
+- `[container]`
+- `[convention_address]`
+- `[convention_cta]`
+- `[convention_icon]`
+- `[convention_features]`
+- `[convention_pricing]`
+- `[exhibitor_list]`
+- `[exhibit_hall_hours]`
+- `[hotel_grid]`
+- `[locations_map]`
+- `[price_sheet]`
+- `[product_price]`
+- `[register]`
+- `[speaker_archive]`
+- `[speaker_grid]`
+- `[speaker_info]`
+- `[speaker_list]`
+- `[speaker_tags]`
+- `[special_event_grid]`
+- `[special_event_list]`
+- `[special_track_speakers]`
+- `[sponsors]`
+- `[workshop_list]`
 
-- displays bio and convention information for the author of the current article
-
-## `[convention_cta]`
-
-- displays the CTA text for the specified convention; accepts the argument `convention` (two-letter abbreviation)
-
-## `[convention_icon]`
-
-- displays the icon(s) specified; accepts the argument `convention` (two-letter abbreviation or comma-separated string)
-
-## `[discretionary_registration]`
-
-- shows a box with link to registration, optionally for the specified convention; intended for use in blog posts; accepts these arguments:
-    - `convention` (two-letter abbreviation)
-    - `year` (four-digit year)
-    - `intro_text` (string of text to precede the button/link)
-
-## `[exhibitor_list]`
-
-- displays all exhibitors, optionally for the specified convention; accepts these arguments
-    - `convention` (two-letter abbreviation)
-    - `style` (allowed values “large” and “small”)
-
-## `[exhibit_hall_hours]`
-
-- displays exhibit hall hours defined in ACF options
-
-## `[hotel_grid]`
-
-- displays a grid of hotels for the specified convention; accepts the argument `convention` (two-letter abbreviation)
-
-## `[price_sheet]`
-
-- displays price sheet of specified convention, expecting `price-sheets/price-sheet-XX.html` in the plugin folder where `XX` is the lowercase abbreviation; accepts the argument `convention` (two-letter abbreviation)
-
-## `[speaker_archive]`
-
-- displays a grid of all speakers; intended for the archive page
-
-## `[speaker_grid]`
-
-- displays a grid of speakers for the specified convention; intended for the individual locations pages; accepts these arguments:
-    - `convention` (two-letter abbreviation)
-    - `posts_per_page` (number of speakers to show; defaults to “-1”, showing all posts)
-    - `offset` (number of speakers to skip before showing the first; most useful in conjunction with a prior shortcode using “posts_per_page” to set a max number to show in that location)
-    - `show` (comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt)
-    - `image_size` (named image size or string of comma-separated integers creating an image size array)
-
-## `[speaker_info]`
-
-- displays speaker photo, name, conventions; accepts these arguments:
-    - `post_id`
-    - `pagename` (slug)
-    - `align` (left, right, etc.)
-    - `no_conventions` (true)
-    - `photo_only` (true)
-    - `extra_classes` (string of classes to add)
-
-## `[speaker_list]`
-
-- displays list of speaker names, optionally filtered by convention; accepts these arguments:
-    - `convention` (two-letter abbreviation)
-    - `posts_per_page` (number of speakers to show; defaults to “-1”, showing all posts)
-    - `offset` (number of speakers to skip before showing the first; most useful in conjunction with a prior shortcode using “posts_per_page” to set a max number to show in that location)
-    - `ul_class` (string of text to use as classes on `ul.speaker-list`)
-    - `li_class` (string of text to use as classes on each `li`)
-    - `a_class` (string of text to use as classes on each `a`)
-
-## `[special_event_grid]`
-
-- displays a grid of special events for the specified convention; intended for the individual locations pages; accepts these arguments:
-    - `convention` (two-letter abbreviation)
-    - `posts_per_page` (number of special events to show; defaults to “-1”, showing all posts)
-    - `offset` (number of special events to skip before showing the first; most useful in conjunction with a prior shortcode using “posts_per_page” to set a max number to show in that location)
-    - `show` (comma-separated list of elements to show; allowed values include any combination of the following: image, conventions, name, bio, excerpt)
-    - `image_size` (named image size or string of comma-separated integers creating an image size array; defaults to )
-
-## `[special_track_speakers]`
-
-- displays speakers’ photos, names, and conventions for specified special track category; accepts the argument `track` with a special track slug
-
-## `[sponsors]`
-
-- displays all sponsors; accepts these arguments:
-    - `gray` (specifies the grayscale logo should be used)
-    - `width` (max width of image)
-
-## `[workshops_schedule]`
-
-- displays a workshop schedule; accepts the argument `convention` (two-letter abbreviation)
 
 # Changelog
 
